@@ -1,11 +1,16 @@
 // profile_controller.dart
-import '../models/api_response_model.dart';
-import '../models/user_profile_model.dart';
-import '../services/auth_service.dart';
+import 'package:vtschool/src/models/api_response_model.dart';
+import 'package:vtschool/src/models/user_profile_model.dart';
+import 'package:vtschool/src/services/auth_service.dart';
+
+
+
 
 class ProfileController {
+
+   final AuthService authProvider = AuthService();
   Future<UserData?> fetchProfileData() async {
-    ApiResponse apiResponse = await getProfile();
+    ApiResponse apiResponse = await authProvider.getProfile();
 
     if (apiResponse.error != null) {
       return null;

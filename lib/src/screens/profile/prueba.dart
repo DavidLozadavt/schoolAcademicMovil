@@ -11,8 +11,9 @@ class UserDataWidget extends StatefulWidget {
 }
 
 class _UserDataWidgetState extends State<UserDataWidget> {
+   final AuthService authProvider = AuthService();
   Map<String, dynamic> userData = {};
-  final String apiUrl = 'http://192.168.1.101:8000/api/auth/user_data';
+  final String apiUrl = 'https://pre-school-plataform.virtualt.org/api/auth/user_data';
   // Replace with your actual auth token
 
   @override
@@ -25,7 +26,7 @@ class _UserDataWidgetState extends State<UserDataWidget> {
     final url = Uri.parse(apiUrl);
 
     try {
-      String token = await getToken();
+      String token = await authProvider.getToken();
 
       final response = await http.get(
         url,

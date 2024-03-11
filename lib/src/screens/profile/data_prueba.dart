@@ -15,6 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _userData = '';
   Map<String, dynamic> _userProfile = {};
+   final AuthService authProvider = AuthService();
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _fetchUserData() async {
-   String token = await getToken();
+   String token = await authProvider.getToken();
 
     try {
       final response = await http.get(

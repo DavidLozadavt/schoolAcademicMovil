@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/models/api_response_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:vtschool/src/models/auth_user_model.dart';
 import 'package:vtschool/src/services/auth_service.dart';
 
@@ -12,9 +13,10 @@ Future<ApiResponse> updateProfile({
   String? apellido2,
   String? idCiudadUbicacion,
 }) async {
+   final AuthService authProvider = AuthService();
   ApiResponse apiResponse = ApiResponse();
   try {
-    String token = await getToken();
+    String token = await authProvider.getToken();
     Map<String, dynamic> requestBody = {};
 
     if (nombre1 != null) requestBody["nombre1"] = nombre1;

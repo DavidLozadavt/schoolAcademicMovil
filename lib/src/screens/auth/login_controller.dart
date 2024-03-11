@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/models/auth_user_model.dart';
-import 'package:vtschool/src/services/auth_service1.dart';
+import 'package:vtschool/src/services/auth_service.dart';
 import 'package:vtschool/src/errors/failure.dart';
 
 class LoginController extends GetxController {
@@ -15,12 +15,17 @@ class LoginController extends GetxController {
   void togglePasswordVisibility() {
     passwordVisible.value = !passwordVisible.value;
   }
+
   goToRegisterPage() {
     Get.toNamed('/register');
   }
 
-  goToHomePage() {
-    Get.offAllNamed('/home');
+  goToHomePageStudent() {
+    Get.offAllNamed('/home_student');
+  }
+
+  goToHomePageTeacher() {
+    Get.offAllNamed('/home_teacher');
   }
 
   login() async {
@@ -38,11 +43,16 @@ class LoginController extends GetxController {
         passwordController.text,
       );
 
-    await pref.setString('token', responseApiLogin.accessToken);
-    await pref.setString('email', emailController.text);
-    //await pref.setString('contrasena', passwordController.text);
-
-      goToHomePage();
+      await pref.setString('token', responseApiLogin.accessToken);
+      await pref.setString('email', emailController.text);
+      await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
+      
+      //await pref.setString('contrasena', passwordController.text);
+      if (responseApiLogin.payload.roles[0] == 'ADMIN') {
+        goToHomePageTeacher();
+      } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
+        goToHomePageStudent();
+      }
     } on Failure catch (e) {
       Get.snackbar(
         'Error!',
@@ -51,10 +61,9 @@ class LoginController extends GetxController {
     }
   }
 
-   Future<void> loadEmailFromPrefs() async {
+  Future<void> loadEmailFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String savedEmail = prefs.getString('email') ?? '';
     emailController.text = savedEmail;
   }
-
 }

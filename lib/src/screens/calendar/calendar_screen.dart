@@ -12,6 +12,7 @@ class Calendar extends StatefulWidget {
 }
 class _CalendarState extends State<Calendar> {
   List<Map<String, dynamic>> _hourlyEvents = [];
+   final AuthService authProvider = AuthService();
 
   @override
   void initState() {
@@ -20,8 +21,8 @@ class _CalendarState extends State<Calendar> {
   }
 
   Future<void> _fetchEvents() async {
-    String url = 'http://192.168.1.101:8000/api/materias/horario_materia';
-    String token = await getToken();
+    String url = 'https://pre-school-plataform.virtualt.org/api/materias/horario_materia';
+    String token = await authProvider.getToken();
     Map<String, dynamic> requestData = {
       'idPrograma': 2,
       'relations': [

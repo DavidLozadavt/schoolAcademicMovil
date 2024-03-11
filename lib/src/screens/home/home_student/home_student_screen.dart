@@ -7,21 +7,21 @@ import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:vtschool/src/controllers/perfil_controller.dart';
 import 'package:vtschool/src/models/student.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
-import 'package:vtschool/src/screens/Calendar/calendar_screen.dart';
+import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
 import 'package:vtschool/src/screens/notas/Student_notas.dart';
 import 'package:vtschool/src/screens/notas/Task.dart';
 import 'package:vtschool/src/screens/profile/logout_screen.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 import 'package:vtschool/src/widgets/custom_alert.dart';
 
-class PrincipalScreen extends StatefulWidget {
-  const PrincipalScreen({super.key});
+class HomeStudentScreen extends StatefulWidget {
+  const HomeStudentScreen({super.key});
 
   @override
-  State<PrincipalScreen> createState() => _PrincipalScreenState();
+  State<HomeStudentScreen> createState() => _HomeStudentScreenState();
 }
 
-class _PrincipalScreenState extends State<PrincipalScreen>
+class _HomeStudentScreenState extends State<HomeStudentScreen>
     with SingleTickerProviderStateMixin {
   UserData? userProfile;
   bool isLoading = true;

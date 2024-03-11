@@ -1,10 +1,9 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:vtschool/src/screens/auth/login_controller.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final LoginController _loginController = LoginController();
@@ -19,13 +18,13 @@ class LoginScreen extends StatelessWidget {
         body: Container(
           margin: const EdgeInsets.all(24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _header(context),
               _inputField(context),
               _loginButton(context),
               _forgotPassword(context),
-              _signup(context),
+              //_signup(context),
             ],
           ),
         ),
@@ -45,7 +44,6 @@ class LoginScreen extends StatelessWidget {
       ],
     );
   }
-
   _inputField(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,7 +92,6 @@ class LoginScreen extends StatelessWidget {
       ],
     );
   }
-
   _forgotPassword(context) {
     return TextButton(
       onPressed: () {},
@@ -104,8 +101,7 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-  _signup(context) {
+  /*_signup(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -114,7 +110,7 @@ class LoginScreen extends StatelessWidget {
           style: kTlight,
         ),
         TextButton(
-          onPressed: () => _loginController.goToRegisterPage(),
+          onPressed: _loginController.goToRegisterPage,
           child: const Text(
             "Sign Up",
             style: TextStyle(color:  Color(0xFFFFC502)),
@@ -122,8 +118,7 @@ class LoginScreen extends StatelessWidget {
         )
       ],
     );
-  }
-
+  }*/
   _loginButton(BuildContext context) {
     return ElevatedButton(
       onPressed: _loginController.login,

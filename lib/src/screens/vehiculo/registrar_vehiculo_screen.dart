@@ -20,6 +20,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
   TextEditingController marcaController = TextEditingController();
   late File fotoFile;
   bool _imageSelected = false;
+   final AuthService authProvider = AuthService();
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -31,7 +32,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
       };
 
       try {
-        String token = await getToken();
+        String token = await authProvider.getToken();
 
         var request = http.MultipartRequest(
           'POST',

@@ -1,30 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api, file_names
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/config/fonts_styles.dart';
+import 'package:vtschool/src/screens/starting/starting_controller.dart';
 
-import '../../config/fonts_styles.dart';
-
-class StartingScreen extends StatefulWidget {
-  const StartingScreen({super.key});
-
-  @override
-  _StartingScreenState createState() => _StartingScreenState();
-}
-
-class _StartingScreenState extends State<StartingScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      _initializeScreen();
-    });
-  }
-
-  void _initializeScreen() async {
-    // ignore: use_build_context_synchronously
-     Get.toNamed('/login');
-  }
+class StartingScreen extends StatelessWidget {
+  StartingScreen({super.key});
+  final StartingController controller =
+      Get.put(StartingController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

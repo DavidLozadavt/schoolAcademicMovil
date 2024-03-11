@@ -4,15 +4,16 @@ import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:vtschool/src/models/message_service_model.dart';
 import 'package:vtschool/src/models/services_model.dart';
-import 'package:vtschool/src/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vtschool/src/services/auth_service.dart';
 
 //Pedir un servicio
 Future<ApiResponse> service(int idEmpresa, String direccion, String barrio,
   String numeroCelular, String? observacion) async {
+  final AuthService authProvider = AuthService();
   ApiResponse apiResponse = ApiResponse();
   try {
-    String token = await getToken();
+    String token = await authProvider.getToken();
 
     Map<String, dynamic> requestBody = {
       "idEmpresa": idEmpresa,
@@ -75,8 +76,9 @@ Future<ApiResponse> service(int idEmpresa, String direccion, String barrio,
 //cancelar un servicio
 Future<ApiResponse> cancelarService() async {
   ApiResponse apiResponse = ApiResponse();
+   final AuthService authProvider = AuthService();
   try {
-    String token = await getToken();
+    String token = await authProvider.getToken();
     final response = await http.put(Uri.parse(cancelarServiceUrl), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'

@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
-import 'package:vtschool/src/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vtschool/src/services/auth_service.dart';
 
 Future<void> logoutApp(BuildContext context) async {
-  logout();
+  final AuthService authProvider = AuthService();
+  authProvider.logout();
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -36,14 +36,9 @@ Future<void> logoutApp(BuildContext context) async {
   );
 
   await Future.delayed(const Duration(seconds: 1));
-  //final token = GetStorage().read('token');
-  //print('${token} aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  GetStorage().remove('token');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('token');
+  await prefs.remove('rolUser');
 
-  Get.back();
-
-  Get.offAllNamed(
-      '/login'); // o Get.toNamed('/login') dependiendo de tus necesidades
+  Get.offAllNamed('/login');
 }

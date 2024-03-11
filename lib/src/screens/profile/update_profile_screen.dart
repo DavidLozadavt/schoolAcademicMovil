@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
+import 'package:vtschool/src/services/auth_service.dart';
 import 'package:vtschool/src/services/ciudad_service.dart';
 import 'package:vtschool/src/services/update_profile_user.dart';
-import 'package:vtschool/src/services/auth_service.dart';
 import 'package:vtschool/src/widgets/custom_loading_screen.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
@@ -29,7 +29,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   TextEditingController txtApellido1 = TextEditingController();
   TextEditingController txtApellido2 = TextEditingController();
   TextEditingController txtTelefono = TextEditingController();
-
+ final AuthService authProvider = AuthService();
   List<Ciudad> ciudades = [];
   Ciudad? selectedCiudad;
 
@@ -52,7 +52,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   Future<void> fetchProfileData() async {
-    ApiResponse apiResponse = await getProfile();
+    ApiResponse apiResponse = await authProvider.getProfile();
 
     if (apiResponse.error != null) {
     } else {
@@ -235,7 +235,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          DropdownButtonFormField<Ciudad>(
+                         /* DropdownButtonFormField<Ciudad>(
                             value: selectedCiudad ??
                                 ciudades.firstWhere(
                                     (ciudad) =>
@@ -259,7 +259,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 child: Text(ciudad.descripcion),
                               );
                             }).toList(),
-                          ),
+                          ),*/
                           const SizedBox(
                             height: 15,
                           ),

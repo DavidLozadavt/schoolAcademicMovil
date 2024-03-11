@@ -1,8 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:vtschool/src/controllers/perfil_controller.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
+import 'package:vtschool/src/screens/profile/logout_screen.dart';
 import 'package:vtschool/src/widgets/custom_loading_screen.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
@@ -35,6 +38,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          BackButton(onPressed: () {
+            Get.back();
+            logoutApp(context);
+          }),
+        ],
         elevation: 0,
         title: const Center(
           child: Text(
@@ -158,7 +167,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               '${userProfile?.userData.persona.email}',
                               style: kTlight,
                             ),
-
                           ],
                         ),
                       ],
@@ -201,7 +209,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           Icons.badge_outlined,
                           '${userProfile?.userData.persona.ciudadNac.descripcion}',
                         ),
-                       const SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         buildTextFieldWithIcon(
                           "Ciudad actual",
                           Icons.location_city,
@@ -254,6 +262,3 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     );
   }
 }
-
-
-
