@@ -1,15 +1,13 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:vtschool/src/models/auth_user_model.dart';
-import 'package:vtschool/src/widgets/alert.dart';
-//import 'package:vtschool/src/models/user_profile_model.dart';
+
 
 class AuthService extends GetConnect {
   Future login(String email, String contrasena) async {

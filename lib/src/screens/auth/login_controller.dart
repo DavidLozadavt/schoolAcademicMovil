@@ -16,16 +16,16 @@ class LoginController extends GetxController {
     passwordVisible.value = !passwordVisible.value;
   }
 
-  goToRegisterPage() {
-    Get.toNamed('/register');
-  }
-
   goToHomePageStudent() {
     Get.offAllNamed('/home_student');
   }
 
   goToHomePageTeacher() {
     Get.offAllNamed('/home_teacher');
+  }
+
+   goToHomePageAdmin() {
+    Get.offAllNamed('/home_admin');
   }
 
   login() async {
@@ -49,9 +49,11 @@ class LoginController extends GetxController {
       
       //await pref.setString('contrasena', passwordController.text);
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
-        goToHomePageTeacher();
+        goToHomePageAdmin();
       } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
         goToHomePageStudent();
+      } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
+        goToHomePageTeacher();
       }
     } on Failure catch (e) {
       Get.snackbar(

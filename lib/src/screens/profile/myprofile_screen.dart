@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/controllers/perfil_controller.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
 import 'package:vtschool/src/screens/profile/logout_screen.dart';
+import 'package:vtschool/src/services/calendar_service.dart';
 import 'package:vtschool/src/widgets/custom_loading_screen.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
@@ -20,6 +21,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   UserData? userProfile;
   bool isLoading = true;
   final ProfileController _profileController = ProfileController();
+  final CalendarService _calendarService = CalendarService();
 
   @override
   void initState() {
@@ -42,6 +44,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           BackButton(onPressed: () {
             Get.back();
             logoutApp(context);
+            _calendarService.fetchEvents();
           }),
         ],
         elevation: 0,

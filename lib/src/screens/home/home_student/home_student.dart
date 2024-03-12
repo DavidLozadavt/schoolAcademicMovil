@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vtschool/src/screens/calendar/calendar_screen2.dart';
+import 'package:vtschool/src/screens/calendar/calendar_screen3.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 
 import 'package:vtschool/src/screens/profile/myprofile_screen.dart';
@@ -83,17 +85,17 @@ class HomeStudent extends StatelessWidget {
                 );
               case 1:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
-                );
-              case 1:
-                return CupertinoTabView(
-                  builder: (context) => const MyProfileScreen(),
+                  builder: (BuildContext context) => CalendarView(),
                 );
               case 2:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
+                  builder: (context) => CalendarWrapper(),
                 );
               case 3:
+                return CupertinoTabView(
+                  builder: (BuildContext context) => const MyProfileScreen(),
+                );
+              case 4:
                 return CupertinoTabView(
                   builder: (BuildContext context) => const MyProfileScreen(),
                 );

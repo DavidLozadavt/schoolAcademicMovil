@@ -85,15 +85,15 @@ class HomeAdmin extends StatelessWidget {
                 return CupertinoTabView(
                   builder: (BuildContext context) => const MyProfileScreen(),
                 );
-              case 1:
+              case 2:
                 return CupertinoTabView(
                   builder: (context) => const MyProfileScreen(),
                 );
-              case 2:
+              case 3:
                 return CupertinoTabView(
                   builder: (BuildContext context) => const MyProfileScreen(),
                 );
-              case 3:
+              case 4:
                 return CupertinoTabView(
                   builder: (BuildContext context) => const MyProfileScreen(),
                 );

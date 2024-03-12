@@ -1,8 +1,8 @@
 //const baseURL = 'http://192.168.1.101:8000/api/';
 const baseURL = 'https://pre-school-plataform.virtualt.org/api/';
 
-const registerURL = '${baseURL}register_user';
-const companyURL = '${baseURL}empresas';
+
+const horarioMateriaURL = '${baseURL}materias/horario_materia';
 const logoutUrl = '${baseURL}logout';
 const cancelarServiceUrl = '${baseURL}cancelar_servicio';
 const urlServiceByUser = '${baseURL}store-service-mobile';
