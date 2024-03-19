@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class ItemNavigationButton extends StatelessWidget {
   const ItemNavigationButton(
@@ -16,11 +17,11 @@ class ItemNavigationButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ImageIcon(AssetImage(fileIcon),
-            size: isActive ? 32 : 30,
-            color: isActive ? Color.fromARGB(255, 240, 196, 74) : Colors.grey),
+            size: isActive ? 38 : 30,
+            color: isActive ? listColor[4]: listColor[7]),
         Text(title,
             style: TextStyle(
-                color: Colors.grey,
+                color: listColor[7],
                 fontSize: 12,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.normal)),
       ],

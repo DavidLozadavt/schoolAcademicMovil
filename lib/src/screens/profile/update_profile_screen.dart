@@ -1,12 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, use_build_context_synchronously
-import 'dart:io';
+/*import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
-import 'package:vtschool/src/services/auth_service.dart';
-import 'package:vtschool/src/services/ciudad_service.dart';
-import 'package:vtschool/src/services/update_profile_user.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
+import 'package:vtschool/src/providers/ciudad_provider.dart';
+import 'package:vtschool/src/providers/update_profile_user.dart';
 import 'package:vtschool/src/widgets/custom_loading_screen.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
@@ -29,7 +29,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   TextEditingController txtApellido1 = TextEditingController();
   TextEditingController txtApellido2 = TextEditingController();
   TextEditingController txtTelefono = TextEditingController();
- final AuthService authProvider = AuthService();
+ final AuthProvider authProvider = AuthProvider();
   List<Ciudad> ciudades = [];
   Ciudad? selectedCiudad;
 
@@ -347,3 +347,4 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 }
+*/

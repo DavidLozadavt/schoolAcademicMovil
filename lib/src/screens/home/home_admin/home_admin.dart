@@ -20,11 +20,11 @@ class HomeAdmin extends StatelessWidget {
             items: const [
               BottomNavigationBarItem(
                 icon: ItemNavigationButton(
-                  fileIcon: 'assets/images/ups.png',
+                  fileIcon: 'assets/images/home.png',
                   title: 'Home',
                 ),
                 activeIcon: ItemNavigationButton(
-                  fileIcon: 'assets/images/ups.png',
+                  fileIcon: 'assets/images/home.png',
                   title: 'Home',
                   isActive: true,
                 ),
@@ -64,11 +64,11 @@ class HomeAdmin extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: ItemNavigationButton(
-                  fileIcon: 'assets/images/ups.png',
+                  fileIcon: 'assets/images/profile.png',
                   title: 'Profile',
                 ),
                 activeIcon: ItemNavigationButton(
-                  fileIcon: 'assets/images/ups.png',
+                  fileIcon: 'assets/images/profile.png',
                   title: 'Profile',
                   isActive: true,
                 ),

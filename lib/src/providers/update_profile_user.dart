@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:vtschool/src/models/auth_user_model.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 Future<ApiResponse> updateProfile({
   String? nombre1,
@@ -13,7 +13,7 @@ Future<ApiResponse> updateProfile({
   String? apellido2,
   String? idCiudadUbicacion,
 }) async {
-   final AuthService authProvider = AuthService();
+   final AuthProvider authProvider = AuthProvider();
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await authProvider.getToken();

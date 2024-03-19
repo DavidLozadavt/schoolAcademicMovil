@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:vtschool/src/services/calendar_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vtschool/src/providers/calendar_provider.dart';
 
 class CalendarController1 extends GetxController {
-  final CalendarService _calendarService = CalendarService();
+  final CalendarProvider _calendarService = CalendarProvider();
   var isLoading = true.obs;
   var events = <Map<String, dynamic>>[].obs;
 
@@ -14,10 +15,18 @@ class CalendarController1 extends GetxController {
 
   Future<void> fetchEvents() async {
     isLoading(true);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? rolUser = pref.getString('rolUser');
+    String? idUser = pref.getString('idUser');
+    
     try {
-      await _calendarService.fetchEvents();
+      if (rolUser == 'DOCENTE') {
+        await _calendarService.fetchEventsTeacher(idUser);
+      } else if (rolUser == 'ESTUDIANTE') {
+        await _calendarService.fetchEventsStudent(idUser);
+      }
+
       events.assignAll(_calendarService.events);
-      print('aaaaaaaaaaaaaaaaaaaaaaaaa $events');
     } catch (error) {
       print('Error fetching events: $error');
     } finally {

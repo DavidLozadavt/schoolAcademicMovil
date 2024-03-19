@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 Future<void> logoutApp(BuildContext context) async {
-  final AuthService authProvider = AuthService();
+  final AuthProvider authProvider = AuthProvider();
   authProvider.logout();
   showDialog(
     context: context,
@@ -19,7 +19,7 @@ Future<void> logoutApp(BuildContext context) async {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              "assets/animations/logo-3.gif",
+              "assets/images/intento.gif",
               width: 50,
               height: 50,
             ),
@@ -36,9 +36,10 @@ Future<void> logoutApp(BuildContext context) async {
   );
 
   await Future.delayed(const Duration(seconds: 1));
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.remove('token');
-  await prefs.remove('rolUser');
-
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.remove('token');
+  await pref.remove('rolUser');
+  await pref.remove('idUser');
+  Get.back();
   Get.offAllNamed('/login');
 }

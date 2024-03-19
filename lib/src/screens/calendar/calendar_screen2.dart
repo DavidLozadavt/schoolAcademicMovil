@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/calendar/calendar_controller.dart';
 
@@ -21,26 +21,20 @@ class CalendarView extends StatelessWidget {
             itemCount: controller.events.length,
             itemBuilder: (context, index) {
               final event = controller.events[index];
-              // Puedes personalizar la presentación de cada evento aquí
               return ListTile(
-
-                title: Container(
-                  child: Column(
-                    children: [
-                        Text('Evento ${event['id']}'),
-                        Text('HoraInicial ${event['horaInicial']}'),
-                        Text('HoraFinal ${event['horaFinal']}'),
-                    ],
-                  )
-                  
+                title: Column(
+                  children: [
+                      Text('Evento: ${event['id']}'),
+                      Text('HoraInicial: ${event['horaInicial']}'),
+                      Text('HoraFinal: ${event['horaFinal']}'),
+                      Text('Materia: ${event['materia']['materia']['nombreMateria']}'),
+                      Image.network('${event['infraestructura']['sede']['rutaImagenUrl']}'),
+                  ],
                 ),
-                subtitle: Container(
-                  child: Column(
-                    children: [
-                       Text('Fecha: ${event['fechaInicial']}'),
-                    ],
-                  )
-                  
+                subtitle: Column(
+                  children: [
+                     Text('Fecha: ${event['fechaInicial']}'),
+                  ],
                 ),
                
               );
@@ -51,3 +45,4 @@ class CalendarView extends StatelessWidget {
     );
   }
 }
+*/

@@ -14,6 +14,7 @@ class StartingInitScreen extends StatelessWidget {
         child: Image.asset(
           'assets/images/logo.png',
           scale: 1.5,
+          width: 10,
         ),
       ),
     );

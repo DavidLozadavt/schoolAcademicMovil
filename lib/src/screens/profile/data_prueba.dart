@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:vtschool/src/api/constant.dart';
 import 'dart:convert';
 
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _userData = '';
   Map<String, dynamic> _userProfile = {};
-   final AuthService authProvider = AuthService();
+   final AuthProvider authProvider = AuthProvider();
 
   @override
   void initState() {
@@ -119,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-}
+}*/
 
 
 

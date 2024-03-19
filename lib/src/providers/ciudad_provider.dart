@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:vtschool/src/api/constant.dart';
-import 'package:vtschool/src/models/ciudad_model.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
 
 Future<List<Ciudad>> fetchCiudades() async {

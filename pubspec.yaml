@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.3
   shared_preferences: ^2.0.6
-  google_nav_bar: ^5.0.6
+  #google_nav_bar: ^5.0.6
   onboarding: ^3.1.0
   get: ^4.6.6
   cached_network_image: ^3.2.3
@@ -66,6 +66,9 @@ dependencies:
   dropdown_button2: ^2.3.9
   flutter_credit_card: ^4.0.1
   connectivity: ^3.0.6
+  firebase_core: ^2.27.1
+  firebase_messaging: ^14.7.20
+  flutter_local_notifications: ^17.0.0
 
 
 

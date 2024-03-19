@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,7 +35,6 @@ class _CalendarState extends State<Calendar> {
     Uri uri = Uri.parse(url);
     Uri requestUri = uri
         .replace(queryParameters: {'data_encoded': json.encode(requestData)});
-
     final response = await http.get(
       requestUri,
       headers: {
@@ -52,7 +51,7 @@ class _CalendarState extends State<Calendar> {
         setState(() {
           _hourlyEvents = events;
         });
-        print(_hourlyEvents);
+        print('12 $_hourlyEvents');
       } else {
         print('La respuesta del servidor está vacía.');
       }
@@ -85,7 +84,6 @@ class _CalendarState extends State<Calendar> {
     for (var event in _hourlyEvents) {
       DateTime startTime = DateTime.parse('2024-02-12 ${event["horaInicial"]}');
       DateTime endTime = DateTime.parse('2024-02-12 ${event["horaFinal"]}');
-
       appointments.add(Appointment(
         startTime: startTime,
         endTime: endTime,
@@ -147,3 +145,4 @@ class _DataSource extends CalendarDataSource<Object?> {
     this.appointments = appointments;
   }
 }
+*/

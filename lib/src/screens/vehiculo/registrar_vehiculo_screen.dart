@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 class VehiculoForm extends StatefulWidget {
   const VehiculoForm({super.key});
@@ -20,7 +20,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
   TextEditingController marcaController = TextEditingController();
   late File fotoFile;
   bool _imageSelected = false;
-   final AuthService authProvider = AuthService();
+   final AuthProvider authProvider = AuthProvider();
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {

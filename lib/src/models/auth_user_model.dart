@@ -40,10 +40,10 @@ class Payload {
     String jti;
     String sub;
     String prv;
-    String idCompany;
+    int idCompany; // <- cambio de pre a local string a int
     List<String> roles;
     List<String> permissions;
-    Company company;
+    //Company company;
 
     Payload({
         required this.iss,
@@ -56,7 +56,7 @@ class Payload {
         required this.idCompany,
         required this.roles,
         required this.permissions,
-        required this.company,
+        //required this.company,
     });
 
     factory Payload.fromJson(Map<String, dynamic> json) => Payload(
@@ -70,7 +70,7 @@ class Payload {
         idCompany: json["idCompany"],
         roles: List<String>.from(json["roles"].map((x) => x)),
         permissions: List<String>.from(json["permissions"].map((x) => x)),
-        company: Company.fromJson(json["company"]),
+        //company: Company.fromJson(json["company"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -84,7 +84,7 @@ class Payload {
         "idCompany": idCompany,
         "roles": List<dynamic>.from(roles.map((x) => x)),
         "permissions": List<dynamic>.from(permissions.map((x) => x)),
-        "company": company.toJson(),
+        //"company": company.toJson(),
     };
 }
 
@@ -143,36 +143,36 @@ class Company {
 class User {
     int id;
     String email;
-    String idPersona;
-    DateTime emailVerifiedAt;
-    Persona persona;
-    List<ActivationCompanyUser> activationCompanyUsers;
+   // String idPersona;
+   // DateTime emailVerifiedAt;
+   // Persona persona;
+   // List<ActivationCompanyUser> activationCompanyUsers;
 
     User({
         required this.id,
         required this.email,
-        required this.idPersona,
-        required this.emailVerifiedAt,
-        required this.persona,
-        required this.activationCompanyUsers,
+       // required this.idPersona,
+       // required this.emailVerifiedAt,
+       // required this.persona,
+       // required this.activationCompanyUsers,
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         email: json["email"],
-        idPersona: json["idPersona"],
-        emailVerifiedAt: DateTime.parse(json["email_verified_at"]),
-        persona: Persona.fromJson(json["persona"]),
-        activationCompanyUsers: List<ActivationCompanyUser>.from(json["activation_company_users"].map((x) => ActivationCompanyUser.fromJson(x))),
+       // idPersona: json["idPersona"],
+       // emailVerifiedAt: DateTime.parse(json["email_verified_at"]),
+       // persona: Persona.fromJson(json["persona"]),
+       // activationCompanyUsers: List<ActivationCompanyUser>.from(json["activation_company_users"].map((x) => ActivationCompanyUser.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
-        "idPersona": idPersona,
-        "email_verified_at": emailVerifiedAt.toIso8601String(),
-        "persona": persona.toJson(),
-        "activation_company_users": List<dynamic>.from(activationCompanyUsers.map((x) => x.toJson())),
+        //"idPersona": idPersona,
+        //"email_verified_at": emailVerifiedAt.toIso8601String(),
+        //"persona": persona.toJson(),
+        //"activation_company_users": List<dynamic>.from(activationCompanyUsers.map((x) => x.toJson())),
     };
 }
 

@@ -1,69 +1,20 @@
 // ignore_for_file: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import 'package:vtschool/src/config/fonts_styles.dart';
-import 'package:vtschool/src/controllers/perfil_controller.dart';
-import 'package:vtschool/src/models/student.dart';
-import 'package:vtschool/src/models/user_profile_model.dart';
-import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
-import 'package:vtschool/src/screens/notas/Student_notas.dart';
-import 'package:vtschool/src/screens/notas/Task.dart';
-import 'package:vtschool/src/screens/profile/logout_screen.dart';
-import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
+import 'package:vtschool/src/config/theme/app_theme.dart';
+import 'package:vtschool/src/screens/calendar/calendar_screen3.dart';
+import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
 import 'package:vtschool/src/widgets/custom_alert.dart';
 
-class HomeStudentScreen extends StatefulWidget {
-  const HomeStudentScreen({super.key});
+class HomeStudentScreen extends StatelessWidget {
+  HomeStudentScreen({super.key});
 
-  @override
-  State<HomeStudentScreen> createState() => _HomeStudentScreenState();
-}
+  final HomeStudentController controller = Get.put(HomeStudentController());
 
-class _HomeStudentScreenState extends State<HomeStudentScreen>
-    with SingleTickerProviderStateMixin {
-  UserData? userProfile;
-  bool isLoading = true;
-  final ProfileController _profileController = ProfileController();
-  late TabController _tabController;
-
-  List<Task> tasks = [
-    Task('Examen de Calculo', 'Revisar apuntes de Calculo'),
-    Task('Taller de Ingles', 'Revisar apuntes de  Ingles'),
-    Task('Tarea de Informatica', 'Revisar apuntes Informatica'),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        showDialogPay();
-        _profileController.fetchAndSetProfileData(getProfileData);
-      },
-    );
-  }
-
-  void getProfileData(UserData? profile, bool loading) {
-    setState(() {
-      userProfile = profile;
-    });
-  }
-/*
-  void _showInfoModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const PagosPage();
-      },
-    );
-  }
-*/
-  void showDialogPay() {
+  void showDialogPay(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -71,7 +22,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen>
           title: 'Hola!!!',
           subtitle: ' Recuerde que su pensión  esta vencida.',
           imagePath: 'assets/images/Warning.png',
-          color: const Color(0xFFFFC502),
+          color: const Color.fromARGB(255, 245, 239, 218),
         );
       },
     );
@@ -79,175 +30,144 @@ class _HomeStudentScreenState extends State<HomeStudentScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:const Color(0xFFFFC502),
-      appBar: AppBar(
-        title: const Text(''),
-        backgroundColor: const Color(0xFFFFC502),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color:  Color(0xFFFFC502),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('assets/images/avatar.png'),
-                  ),
-                  const SizedBox(height: 13),
-                  Text(
-                    '${userProfile?.userData.persona.nombre1} ${userProfile?.userData.persona.apellido1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(height: 9),
-                  Text(
-                    '${userProfile?.userData.email}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
+    return Obx(() {
+      if (controller.isLoading.value) {
+        return const Center(child: CupertinoActivityIndicator());
+      } else {
+        return Scaffold(
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  listColor[3],
+                  listColor[2],
                 ],
               ),
             ),
-            ListTile(
-              title: const Text('pagos'),
-              leading: const Icon(Icons.wallet_rounded),
-              onTap: () {
-                Get.toNamed('/banner');
-              },
-            ),
-            ListTile(
-              title: const Text('Cerrar sesión'),
-              leading: const Icon(Icons.exit_to_app),
-              onTap: () {
-                Get.back();
-                logoutApp(context);
-              },
-            ),
-           
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Column(
+            child: Column(
+              children: [
+                const SizedBox(
+                            height: 15,
+                          ),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(18),
+                      child: Row(
                         children: [
-                          if (userProfile == null)
-                            const CupertinoActivityIndicator(
-                              radius:
-                                  15.0, // Puedes ajustar el tamaño según tus preferencias
-                            )
-                          else
-                            Text(
-                              '${userProfile?.userData.persona.nombre1} ${userProfile?.userData.persona.apellido1}',
-                              style: kTitleStylew,
+                         
+                          /* CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Colors.black,
+                            backgroundImage: NetworkImage(
+                              '${controller.userProfile['persona']['rutaFoto']}',
                             ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/avatar.png'),
-                                fit: BoxFit.cover,
+                            child: const Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [],
+                            ),
+                          ),*/
+                          ClipOval(
+                            child: Image.network(
+                              '${controller.userProfile['persona']['rutaFoto']}',
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/scl2.jpg',
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                '¡Hola! ',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'CM Sans Serif',
+                                  fontSize: 14.0,
+                                  //height: 1.5,
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                              Text(
+                                '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'CM Sans Serif',
+                                  fontSize: 20.0,
+                                  // height: 2,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  TabBarWidget(tabController: _tabController),
-                ],
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20),
-                        SizedBox(height: 20),
-                        SizedBox(height: 20),
-                        Calendar(),
-                      ],
+                    ),
+                    const SizedBox(
+                      width: 100,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.notifications_none_outlined),
+                      onPressed: () {
+                        Get.toNamed('/notification');
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                const Center(
+                  child: Text(
+                    '¡Tu semana al instante!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'CM Sans Serif',
+                      fontSize: 20.0,
                     ),
                   ),
-                  userProfile != null
-                      ? const StudentPage()
-                      : const Center(child: CircularProgressIndicator()),
-                  // You need to create UserDataWidget and pass userProfile
-                  userProfile != null
-                      ? TaskScreen(tasks)
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                  const PagosPage()
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 375,
+                    height: 400,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(18),
+                      child: Calendar(),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TabBarWidget extends StatelessWidget {
-  const TabBarWidget({
-    super.key,
-    required TabController tabController,
-  }) : _tabController = tabController;
-
-  final TabController _tabController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBar(
-        dividerColor: Colors.white,
-        controller: _tabController,
-        tabs: const [
-          Tab(text: 'Agenda'),
-          Tab(text: 'Mis notas'),
-          Tab(text: 'Mis tareas'),
-          Tab(text: 'Pagos'),
-        ],
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.grey,
-        labelStyle: kTlight,
-        unselectedLabelStyle: kTlight);
+          ),
+        );
+      }
+    });
   }
 }

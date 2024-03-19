@@ -1,14 +1,15 @@
 import 'package:get/get.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 class GlobalController extends GetxController {
-  final AuthService authProvider = AuthService();
+  final AuthProvider authProvider = AuthProvider();
   Future<void> initialRoute() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      
       bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
       if (isFirstTime) {
         await prefs.setBool('isFirstTime', false);
         Get.offNamed('/starting');
@@ -19,16 +20,20 @@ class GlobalController extends GetxController {
           Get.offAllNamed('/login');
         } else {
           if (rol_user == 'ADMIN') {
-            Get.offAllNamed('/home_admin');
+            //Get.offAllNamed('/home_admin');
+            Get.offAllNamed('/login');
           } else if (rol_user == 'ESTUDIANTE') {
             Get.offAllNamed('/home_student');
           } else if (rol_user == 'DOCENTE') {
-            Get.offAllNamed('/home_teacher');
-          } else if (rol_user == '') {}
+           // Get.offAllNamed('/home_teacher');
+            Get.offAllNamed('/login');
+          } else if (rol_user == 'INSTRUCTOR JEFE') {}
+          else{
+
+          }
         }
       }
     } catch (e) {
-      print('Error: $e');
       Get.offNamed('/starting');
     }
   }

@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/models/auth_user_model.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/errors/failure.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final AuthService authProvider = AuthService();
+  final AuthProvider authProvider = AuthProvider();
   var passwordVisible = false.obs;
 
   void togglePasswordVisibility() {
@@ -46,14 +46,16 @@ class LoginController extends GetxController {
       await pref.setString('token', responseApiLogin.accessToken);
       await pref.setString('email', emailController.text);
       await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
-      
-      //await pref.setString('contrasena', passwordController.text);
+      await pref.setString('idUser', responseApiLogin.user.id.toString());
+
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
-        goToHomePageAdmin();
+        //goToHomePageAdmin();
+        Get.snackbar('Hola!', 'Estamos trabajando en el desarrollo del administrative');
       } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
         goToHomePageStudent();
-      } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
-        goToHomePageTeacher();
+      } else if (responseApiLogin.payload.roles[0] == 'INSTRUCTOR JEFE') {
+        //goToHomePageTeacher();
+        Get.snackbar('Hola!', 'Estamos trabajando en el desarrollo del docente');
       }
     } on Failure catch (e) {
       Get.snackbar(

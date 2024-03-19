@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
-import 'package:vtschool/src/screens/starting/starting_controller.dart';
 
 class StartingScreen extends StatelessWidget {
-  StartingScreen({super.key});
-  final StartingController controller =
-      Get.put(StartingController(), permanent: true);
+  const StartingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 class UserDataWidget extends StatefulWidget {
   const UserDataWidget({super.key});
@@ -11,7 +11,7 @@ class UserDataWidget extends StatefulWidget {
 }
 
 class _UserDataWidgetState extends State<UserDataWidget> {
-   final AuthService authProvider = AuthService();
+   final AuthProvider authProvider = AuthProvider();
   Map<String, dynamic> userData = {};
   final String apiUrl = 'https://pre-school-plataform.virtualt.org/api/auth/user_data';
   // Replace with your actual auth token

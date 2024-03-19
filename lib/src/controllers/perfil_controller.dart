@@ -1,14 +1,14 @@
 // profile_controller.dart
-import 'package:vtschool/src/models/api_response_model.dart';
+/*import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:vtschool/src/models/user_profile_model.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 
 
 
 class ProfileController {
 
-   final AuthService authProvider = AuthService();
+   final AuthProvider authProvider = AuthProvider();
   Future<UserData?> fetchProfileData() async {
     ApiResponse apiResponse = await authProvider.getProfile();
 
@@ -27,7 +27,7 @@ class ProfileController {
     callback(profile, false);
   }
 }
-//update profile metodos
 
 
-  
+
+  */

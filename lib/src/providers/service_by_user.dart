@@ -1,11 +1,11 @@
-import 'dart:convert';
+/*import 'dart:convert';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/models/api_response_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:vtschool/src/models/message_service_model.dart';
 import 'package:vtschool/src/models/services_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 
 //Pedir un servicio
 Future<ApiResponse> service(int idEmpresa, String direccion, String barrio,
@@ -150,3 +150,4 @@ Future<ApiResponse> postMessageService(String body) async {
   return apiResponse;
 }
 
+*/

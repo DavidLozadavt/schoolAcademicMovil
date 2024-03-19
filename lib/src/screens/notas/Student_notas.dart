@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:vtschool/src/config/theme/app_theme.dart';
+import 'package:vtschool/src/screens/profile/logout_screen.dart';
 
 // Clases existentes
 class Student {
@@ -37,59 +40,71 @@ class _StudentPageState extends State<StudentPage> {
     double averageScore = _calculateAverageScore(selectedStudent);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 220,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(),
+      body: Container(
+        decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  listColor[3],
+                  listColor[2],
+                ],
               ),
-              child: DropdownButton<String>(
-                icon: const Icon(Icons.arrow_drop_down_sharp),
-                value: selectedSubject,
-                hint: const Text('Selecciona una materia'),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedSubject = newValue;
-                    _showSubjectDetails(newValue);
-                  });
-                },
-                underline: Container(
-                  height: 0.0,
-                  color: Colors.transparent,
+            ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 220,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(),
                 ),
-                items: selectedStudent.grades.map((Grade grade) {
-                  return DropdownMenuItem<String>(
-                    value: grade.subject,
-                    child: Text(grade.subject),
-                  );
-                }).toList(),
+                child: DropdownButton<String>(
+                  icon: const Icon(Icons.arrow_drop_down_sharp),
+                  value: selectedSubject,
+                  hint: const Text('Selecciona una materia'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSubject = newValue;
+                      _showSubjectDetails(newValue);
+                    });
+                  },
+                  underline: Container(
+                    height: 0.0,
+                    color: Colors.transparent,
+                  ),
+                  items: selectedStudent.grades.map((Grade grade) {
+                    return DropdownMenuItem<String>(
+                      value: grade.subject,
+                      child: Text(grade.subject),
+                    );
+                  }).toList(),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            const Text('Mi promedio'),
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: _buildPieChart(selectedStudent),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Promedio de ${selectedStudent.name}: $averageScore',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const Text('Estas en el puesto 01/25'),
-            const SizedBox(height: 20),
-          ],
+              SizedBox(
+                height: 3,
+              ),
+              const Text('Mi promedio'),
+              SizedBox(
+                height: 300,
+                width: 300,
+                child: _buildPieChart(selectedStudent),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Promedio de ${selectedStudent.name}: $averageScore',
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              const Text('Estas en el puesto 01/25'),
+              const SizedBox(height: 20),
+              ElevatedButton(onPressed: () {
+                logoutApp(context);
+              }, child: Text('Estas'))
+            ],
+          ),
         ),
       ),
     );
