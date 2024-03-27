@@ -25,8 +25,8 @@ class _PagosPageState extends State<PagosPage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  listColor[3],
-                  listColor[2],
+                  listColor[14],
+                  listColor[11],
                 ],
               ),
             ),

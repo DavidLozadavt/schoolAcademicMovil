@@ -8,7 +8,7 @@ class GlobalController extends GetxController {
   Future<void> initialRoute() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      
+
       bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
       if (isFirstTime) {
         await prefs.setBool('isFirstTime', false);
@@ -20,16 +20,13 @@ class GlobalController extends GetxController {
           Get.offAllNamed('/login');
         } else {
           if (rol_user == 'ADMIN') {
-            //Get.offAllNamed('/home_admin');
-            Get.offAllNamed('/login');
+            Get.offAllNamed('/home_admin');
           } else if (rol_user == 'ESTUDIANTE') {
             Get.offAllNamed('/home_student');
           } else if (rol_user == 'DOCENTE') {
-           // Get.offAllNamed('/home_teacher');
+            Get.offAllNamed('/home_teacher');
+          } else {
             Get.offAllNamed('/login');
-          } else if (rol_user == 'INSTRUCTOR JEFE') {}
-          else{
-
           }
         }
       }

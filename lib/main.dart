@@ -9,13 +9,10 @@ import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
-import 'package:vtschool/src/screens/notification/prueba.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
-import 'package:vtschool/src/screens/profile/myprofile_screen.dart';
-import 'package:vtschool/src/screens/profile/update_profile_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
 import 'package:vtschool/src/screens/wompi/card_credit.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
@@ -55,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: AppTheme(selectedColor: 2).getTheme(),
+      theme: AppTheme(selectedColor: 11).getTheme(),
       debugShowCheckedModeBanner: false,
       locale: Get.deviceLocale,
        initialRoute: '/starting_init_screen',
@@ -70,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         //GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
         GetPage(name: '/banner', page: () => const PagosPage()),
         GetPage(name: '/creditCart', page: () => const MySample()),
-        GetPage(name: '/notification', page: () => const NotificationScreen()),
+        GetPage(name: '/notification', page: () => NotificationScreen()),
         //GetPage(name: '/prueba', page: () => const Prueba()),
       ],
      

@@ -44,7 +44,6 @@ class Payload {
     List<String> roles;
     List<String> permissions;
     //Company company;
-
     Payload({
         required this.iss,
         required this.iat,

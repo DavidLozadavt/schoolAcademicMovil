@@ -26,8 +26,8 @@ class ProfileUserScreen extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  listColor[3],
-                  listColor[2],
+                  listColor[14],
+                  listColor[11],
                 ],
               ),
             ),
@@ -45,7 +45,7 @@ class ProfileUserScreen extends StatelessWidget {
                         customButton: Icon(
                           Icons.more_vert,
                           size: 34,
-                          color: listColor[0],
+                          color: listColor[10],
                         ),
                         dropdownStyleData: DropdownStyleData(
                           width: 165,
@@ -55,8 +55,8 @@ class ProfileUserScreen extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                listColor[2],
-                                listColor[3],
+                                listColor[11],
+                                listColor[12],
                               ],
                             ),
                           ),
@@ -119,12 +119,21 @@ class ProfileUserScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
-                            style: kTitleStylew,
-                          ),
+                              '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
+                              style: TextStyle(
+                                color: listColor[10],
+                                fontFamily: 'CM Sans Serif',
+                                fontSize: 24.0,
+                              )),
                           Text(
                             '${controller.userProfile['persona']['email']}',
-                            style: kTlight,
+                            style: TextStyle(
+                                color: listColor[10],
+                                fontFamily: 'Averta_Light',
+                                fontSize: 13.0,
+                                height: 1.5,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -134,12 +143,17 @@ class ProfileUserScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Información Personal",
-                      style: kTitleStyleDark,
+                      style: TextStyle(
+                        color: listColor[10],
+                        fontFamily: 'CM Sans Serif',
+                        fontSize: 16.0,
+                        height: 1.5,
+                      ),
                     ),
                   ],
                 ),
@@ -187,9 +201,9 @@ class ProfileUserScreen extends StatelessWidget {
 
   DropdownMenuItem _itemPopUpMenu(BuildContext context, String text,
       bool enabled, int value, Function onTap,
-      {Color color = Colors.white,
-      Color colorText = const Color(0XFF2D2D2D),
-      Color colorBorder = const Color(0xFFFFC403)}) {
+      {Color color = const Color(0xFFE8E8E8),
+      Color colorText = const Color(0xFF041447),
+      Color colorBorder = const Color(0xFF041447)}) {
     return DropdownMenuItem(
       onTap: (() => onTap()),
       alignment: Alignment.center,
@@ -226,7 +240,7 @@ Widget buildTextFieldWithIcon(String label, IconData icon, String value) {
     width: 900,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
-      color: Colors.white,
+      color: listColor[10],
     ),
     child: Row(
       children: [
@@ -234,7 +248,7 @@ Widget buildTextFieldWithIcon(String label, IconData icon, String value) {
           padding: const EdgeInsets.all(8.0),
           child: Icon(
             icon,
-            color: const Color.fromARGB(255, 234, 231, 71),
+            color: listColor[13],
           ),
         ),
         const SizedBox(width: 10),
@@ -243,13 +257,23 @@ Widget buildTextFieldWithIcon(String label, IconData icon, String value) {
           children: [
             Text(
               label,
-              style: kTlightproSmall,
+              style: TextStyle(
+                  color: listColor[13],
+                  fontFamily: 'Averta_Light',
+                  fontSize: 12.0,
+                  height: 1.5,
+                  fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(7.0),
               child: Text(
                 value,
-                style: kTlightpro,
+                style: TextStyle(
+                    color: listColor[13],
+                    fontFamily: 'Averta_Light',
+                    fontSize: 20.0,
+                    height: 1.5,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ],

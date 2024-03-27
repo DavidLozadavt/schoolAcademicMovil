@@ -17,12 +17,12 @@ class ItemNavigationButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ImageIcon(AssetImage(fileIcon),
-            size: isActive ? 38 : 30,
-            color: isActive ? listColor[4]: listColor[7]),
+            size: isActive ? 40 : 30,
+            color: isActive ? listColor[13] : listColor[12].withOpacity(0.7)),
         Text(title,
             style: TextStyle(
-                color: listColor[7],
-                fontSize: 12,
+                color: isActive ? listColor[13] : listColor[12].withOpacity(0.5),
+                fontSize: isActive ? 13 : 12,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.normal)),
       ],
     );

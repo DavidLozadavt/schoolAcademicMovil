@@ -11,6 +11,13 @@ const listColor = <Color>[
   Color(0xFF575757),
   Color(0xFFFFA603),
   Color(0xFFDD8A00),
+  //Colors web
+  Color(0xFFE8E8E8),
+  Color(0xFF707E97), 
+  Color(0xFFDFEBFF), 
+  Color(0xFF041447), 
+  Color(0xFF313E68), 
+
 ];
 
 class AppTheme {

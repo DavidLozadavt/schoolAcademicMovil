@@ -5,6 +5,10 @@ const baseURL = 'http://192.168.1.101:8000/api/';
 const horarioMateriaURL = '${baseURL}materias/horario_materia';
 const getDiaryTeacherUrl = '${baseURL}get_matriculas_academicas_by_id_persona_docente/';
 const getDiaryStudentUrl = '${baseURL}get_matriculas_academicas_by_id_persona/';
+const getNotificationsAllUrl = '${baseURL}notificacionesAll';
+const readNotificationsUrl = '${baseURL}notificacion/read/';
+const replyActivityUrl = '${baseURL}responder_actividad/';
+
 const logoutUrl = '${baseURL}logout';
 //const cancelarServiceUrl = '${baseURL}cancelar_servicio';
 //const urlServiceByUser = '${baseURL}store-service-mobile';

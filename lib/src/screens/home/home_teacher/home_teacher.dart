@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 
 import 'package:vtschool/src/screens/profile/myprofile_screen.dart';
+import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeTeacher extends StatelessWidget {
@@ -95,7 +96,7 @@ class HomeTeacher extends StatelessWidget {
                 );
               case 4:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
+                  builder: (BuildContext context) => ProfileUserScreen(),
                 );
               default:
                 return CupertinoTabView(

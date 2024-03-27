@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/models/auth_user_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/errors/failure.dart';
+import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -17,6 +18,7 @@ class LoginController extends GetxController {
   }
 
   goToHomePageStudent() {
+    Get.find<HomeStudentController>().fetchEvents();
     Get.offAllNamed('/home_student');
   }
 
@@ -24,7 +26,7 @@ class LoginController extends GetxController {
     Get.offAllNamed('/home_teacher');
   }
 
-   goToHomePageAdmin() {
+  goToHomePageAdmin() {
     Get.offAllNamed('/home_admin');
   }
 
@@ -33,8 +35,8 @@ class LoginController extends GetxController {
     try {
       if (emailController.text.isEmpty || passwordController.text.isEmpty) {
         Get.snackbar(
-          'Error!',
-          'Por favor completa todos los campos!',
+          '¡Error!',
+          '¡Por favor completa todos los campos!',
         );
         return;
       }
@@ -49,17 +51,15 @@ class LoginController extends GetxController {
       await pref.setString('idUser', responseApiLogin.user.id.toString());
 
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
-        //goToHomePageAdmin();
-        Get.snackbar('Hola!', 'Estamos trabajando en el desarrollo del administrative');
+        goToHomePageAdmin();
       } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
         goToHomePageStudent();
-      } else if (responseApiLogin.payload.roles[0] == 'INSTRUCTOR JEFE') {
-        //goToHomePageTeacher();
-        Get.snackbar('Hola!', 'Estamos trabajando en el desarrollo del docente');
+      } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
+        goToHomePageTeacher();
       }
     } on Failure catch (e) {
       Get.snackbar(
-        'Error!',
+        '¡Error!',
         '${e.message}!',
       );
     }

@@ -41,37 +41,26 @@ class HomeStudentScreen extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  listColor[3],
-                  listColor[2],
+                  listColor[14],
+                  listColor[11],
                 ],
               ),
             ),
             child: Column(
               children: [
                 const SizedBox(
-                            height: 15,
-                          ),
+                  height: 15,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(18),
+                      padding: const EdgeInsets.all(20),
                       child: Row(
                         children: [
-                         
-                          /* CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black,
-                            backgroundImage: NetworkImage(
-                              '${controller.userProfile['persona']['rutaFoto']}',
-                            ),
-                            child: const Stack(
-                              alignment: Alignment.bottomRight,
-                              children: [],
-                            ),
-                          ),*/
                           ClipOval(
                             child: Image.network(
-                              '${controller.userProfile['persona']['rutaFoto']}',
+                              '${controller.userProfile['persona']?['rutaFoto']}',
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
@@ -91,19 +80,19 @@ class HomeStudentScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 '¡Hola! ',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: listColor[12],
                                   fontFamily: 'CM Sans Serif',
                                   fontSize: 14.0,
                                   //height: 1.5,
                                 ),
                               ),
                               Text(
-                                '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                '${controller.userProfile['persona']?['nombre1']} ${controller.userProfile['persona']?['apellido1']}',
+                                style: TextStyle(
+                                  color: listColor[12],
                                   fontFamily: 'CM Sans Serif',
                                   fontSize: 20.0,
                                   // height: 2,
@@ -114,25 +103,47 @@ class HomeStudentScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 100,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.notifications_none_outlined),
-                      onPressed: () {
-                        Get.toNamed('/notification');
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: IconButton(
+                        icon: Stack(
+                          children: [
+                            Icon(
+                              Icons.notifications_none_outlined,
+                              size: 28,
+                              color: listColor[12],
+                            ),
+                            if (controller.notificationCount.value > 0)
+                              Positioned(
+                                right: 0,
+                                child: CircleAvatar(
+                                  radius: 6,
+                                  backgroundColor: Colors.red,
+                                  child: Text(
+                                    '${controller.notificationCount.value}',
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        onPressed: () {
+                          Get.toNamed('/notification');
+                          controller.clearNotificationCount();
+                        },
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Center(
+                Center(
                   child: Text(
                     '¡Tu semana al instante!',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: listColor[12],
                       fontFamily: 'CM Sans Serif',
                       fontSize: 20.0,
                     ),

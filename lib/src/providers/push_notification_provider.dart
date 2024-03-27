@@ -1,9 +1,15 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
+import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
+
 
 class PushNotificationProvider {
+  final HomeStudentController notificationController = Get.put(HomeStudentController());
+  
   final AuthProvider authProvider = AuthProvider();
    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -48,7 +54,7 @@ class PushNotificationProvider {
    void showFlutterNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    print('${notification?.body} aaaaaaaaaaaaaaaaaa');
+    notificationController.incrementNotificationCount();
     if (notification != null && android != null && !kIsWeb) {
      flutterLocalNotificationsPlugin.show(
         notification.hashCode,

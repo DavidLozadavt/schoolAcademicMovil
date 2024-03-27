@@ -21,8 +21,8 @@ class LoginScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              listColor[3],
-              listColor[2],
+              listColor[14],
+              listColor[11],
             ],
           ),
         ),
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox(
-              height: 30,
+              height: 15,
             ),
             _header(context),
             Container(
@@ -49,13 +49,14 @@ class LoginScreen extends StatelessWidget {
   _header(context) {
     return Column(
       children: [
-        const Text(
+        /*const Text(
           "SCHOOL",
           style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
         ),
-        const Text("Ingrese sus credenciales", style: kTlight),
+        const Text("Ingrese sus credenciales", style: kTlight),*/
         const SizedBox(height: 20),
-        Image.asset('assets/images/logon.png')
+        Image.asset('assets/images/logo_school.png',
+        width: 200,)
       ],
     );
   }
@@ -76,9 +77,12 @@ class LoginScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 borderSide: BorderSide.none,
               ),
-              fillColor: Colors.purple.withOpacity(0.1),
+              fillColor: listColor[10],
               filled: true,
-              prefixIcon: const Icon(Icons.person),
+              prefixIcon: Icon(
+              Icons.person,
+               color: listColor[13],
+                ),
             ),
           ),
         ),
@@ -97,9 +101,12 @@ class LoginScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 borderSide: BorderSide.none,
               ),
-              fillColor: Colors.purple.withOpacity(0.1),
+             fillColor: listColor[10],
               filled: true,
-              prefixIcon: const Icon(Icons.password_rounded),
+              prefixIcon: Icon(
+                Icons.password_rounded,
+                color: listColor[13],
+                ),
               suffixIcon: GestureDetector(
                 onTap: () {
                   _loginController.togglePasswordVisibility();
@@ -124,9 +131,9 @@ class LoginScreen extends StatelessWidget {
   _forgotPassword(context) {
     return TextButton(
       onPressed: () {},
-      child: const Text(
+      child: Text(
         "¿Olvido su contraseña?",
-        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        style: TextStyle(color: listColor[10]),
       ),
     );
   }
@@ -170,15 +177,15 @@ class LoginScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: _loginController.login,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFFC502),
+          backgroundColor: listColor[13],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),
-        child: const Text(
+        child: Text(
           'Iniciar sesión',
           style: TextStyle(
-            color: Colors.black,
+            color: listColor[10],
             fontSize: 14.0,
             fontWeight: FontWeight.w400,
           ),

@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/api/constant.dart';
@@ -11,7 +9,6 @@ import 'package:vtschool/src/models/auth_user_model.dart';
 
 class AuthProvider extends GetConnect {
   var dataUser = <Map<String, dynamic>>[].obs;
-  
   Future login(String email, String contrasena) async {
     try {
       UserData apiResponse;
@@ -33,7 +30,7 @@ class AuthProvider extends GetConnect {
       }
 
       if (response.statusCode == 200) {
-        //Get.snackbar('Hola!!', 'Un gusto tenerte de nuevo');
+        Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
         apiResponse = UserData.fromJson(response.body);
         return apiResponse;
       }
@@ -62,6 +59,7 @@ class AuthProvider extends GetConnect {
     }
     throw Failure('No se pudo obtener el perfil del usuario');
   }
+
 
   Future<ApiResponse> logout() async {
     ApiResponse apiResponse = ApiResponse();

@@ -5,13 +5,13 @@ import 'package:vtschool/src/models/student.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 import 'package:vtschool/src/screens/notas/Student_notas.dart';
 import 'package:vtschool/src/screens/notas/Task.dart';
-import 'package:vtschool/src/screens/profile/myprofile_screen.dart';
+import 'package:vtschool/src/screens/notas/task_student_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeStudent extends StatelessWidget {
-   HomeStudent({super.key});
+    HomeStudent({super.key});
 
    List<Task> tasks = [
     Task('Examen de Calculo', 'Revisar apuntes de Calculo'),
@@ -33,6 +33,7 @@ class HomeStudent extends StatelessWidget {
                 icon: ItemNavigationButton(
                   fileIcon: 'assets/images/home.png',
                   title: 'Home',
+                  
                 ),
                 activeIcon: ItemNavigationButton(
                   fileIcon: 'assets/images/home.png',
@@ -94,7 +95,7 @@ class HomeStudent extends StatelessWidget {
                 );
               case 1:
                 return CupertinoTabView(
-                  builder: (BuildContext context) =>   TaskScreen(tasks),
+                  builder: (BuildContext context) =>  TaskStudentScreen(),
                 );
               case 2:
                 return CupertinoTabView(

@@ -179,7 +179,7 @@ class MySampleState extends State<MySample> {
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed('/loading');
+                                Get.toNamed('/home_student');
                               },
                               child: Container(
                                 margin: const EdgeInsets.symmetric(

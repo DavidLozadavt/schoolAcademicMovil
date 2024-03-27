@@ -9,33 +9,30 @@ class TaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  listColor[3],
-                  listColor[2],
-                ],
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[14],
+              listColor[11],
+            ],
+          ),
+        ),
+        child: ListView.builder(
+          itemCount: tasks.length,
+          itemBuilder: (context, index) {
+            Task task = tasks[index];
+            return Card(
+              child: ListTile(
+                title: Text(task.title),
+                subtitle: Text(task.description),
               ),
-            ),
-        child:
-            ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                Task task = tasks[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(task.title),
-                    subtitle: Text(task.description),
-                    
-                  ),
-                );
-              },
+            );
+          },
         ),
       ),
     );

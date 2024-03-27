@@ -42,15 +42,15 @@ class _StudentPageState extends State<StudentPage> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  listColor[3],
-                  listColor[2],
-                ],
-              ),
-            ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[14],
+              listColor[11],
+            ],
+          ),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -95,14 +95,12 @@ class _StudentPageState extends State<StudentPage> {
               const SizedBox(height: 20),
               Text(
                 'Promedio de ${selectedStudent.name}: $averageScore',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               const Text('Estas en el puesto 01/25'),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: () {
-                logoutApp(context);
-              }, child: Text('Estas'))
             ],
           ),
         ),
@@ -149,7 +147,7 @@ class _StudentPageState extends State<StudentPage> {
       Colors.blue,
       Colors.green,
       Colors.red,
-      //  Colors.yellow,
+      //Colors.yellow,
     ];
 
     grades.asMap().forEach((index, grade) {
