@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+/*import 'package:get/get.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 
 class HomeStudentController extends GetxController {
@@ -41,4 +41,4 @@ class HomeStudentController extends GetxController {
     userProfile.value = {};
     isLoading.value = false;
   }
-}
+}*/

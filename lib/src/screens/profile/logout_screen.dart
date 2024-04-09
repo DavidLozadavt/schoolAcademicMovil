@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
+import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 Future<void> logoutApp(BuildContext context) async {
   final AuthProvider authProvider = AuthProvider();
-   final HomeStudentController controllerStudent = Get.put(HomeStudentController());
   authProvider.logout();
   showDialog(
     context: context,
@@ -42,7 +41,7 @@ Future<void> logoutApp(BuildContext context) async {
   await pref.remove('token');
   await pref.remove('rolUser');
   await pref.remove('idUser');
-  //controllerStudent.clearUserData();
-   Get.find<HomeStudentController>().clearUserData();
   Get.offAllNamed('/login');
+  Get.find<ProfileUserController>().clearUserData();
+  
 }

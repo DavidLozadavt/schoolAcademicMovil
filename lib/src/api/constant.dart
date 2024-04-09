@@ -1,20 +1,22 @@
 const baseURL = 'http://192.168.1.101:8000/api/';
 //const baseURL = 'https://pre-school-plataform.virtualt.org/api/';
 
+const loginURL = '${baseURL}auth/login';
 
-const horarioMateriaURL = '${baseURL}materias/horario_materia';
+const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
 const getDiaryTeacherUrl = '${baseURL}get_matriculas_academicas_by_id_persona_docente/';
 const getDiaryStudentUrl = '${baseURL}get_matriculas_academicas_by_id_persona/';
 const getNotificationsAllUrl = '${baseURL}notificacionesAll';
-const readNotificationsUrl = '${baseURL}notificacion/read/';
+const putReadNotificationsUrl = '${baseURL}notificacion/read/';
 const replyActivityUrl = '${baseURL}responder_actividad/';
 
-const logoutUrl = '${baseURL}logout';
-//const cancelarServiceUrl = '${baseURL}cancelar_servicio';
-//const urlServiceByUser = '${baseURL}store-service-mobile';
+const getTypeActivityUrl = '${baseURL}tipo_actividades?idActividad=';
+const getActivityByIdUrl = '${baseURL}actividadesByid?id=';
+const getActivityQuestionnaireUrl = '${baseURL}cuestionario/actividad_cuestionario/';
+const postReplyActivityUrl = '${baseURL}responder_actividad/';
+
+const logoutUrl = '${baseURL}auth/logout';
 const urlUpdateProfile = '${baseURL}auth/update_profile';
-//const getMessageURL = '${baseURL}comments-service-movil/';
-//const postMessageURL = '${baseURL}store-comments-service-app-movil/';
 const urlCiudad = '${baseURL}ciudades';
 
 // ----- Errors -----

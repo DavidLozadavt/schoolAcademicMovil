@@ -2,13 +2,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
+import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 
 class PushNotificationProvider {
-  final HomeStudentController notificationController = Get.put(HomeStudentController());
+  final ProfileUserController profileController = Get.put(ProfileUserController());
   
   final AuthProvider authProvider = AuthProvider();
    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -30,9 +30,9 @@ class PushNotificationProvider {
         ?.createNotificationChannel(channel);
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
-    print(fCMToken);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('token_device', fCMToken.toString());
     initPushNotications();
-    
   }
 
   void handleMessage(RemoteMessage? message) {
@@ -54,7 +54,7 @@ class PushNotificationProvider {
    void showFlutterNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    notificationController.incrementNotificationCount();
+    profileController.incrementNotificationCount();
     if (notification != null && android != null && !kIsWeb) {
      flutterLocalNotificationsPlugin.show(
         notification.hashCode,

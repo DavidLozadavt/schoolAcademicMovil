@@ -35,7 +35,7 @@ class NotificationsProvider extends GetConnect {
     String token = await authProvider.getToken();
 
     Response response = await put(
-      '$readNotificationsUrl$id',
+      '$putReadNotificationsUrl$id',
       {},
       headers: {
         'Authorization': 'Bearer $token',

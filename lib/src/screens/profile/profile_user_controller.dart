@@ -3,15 +3,26 @@ import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ProfileUserController extends GetxController {
   final AuthProvider authProvider = AuthProvider();
-  
   var isLoading = true.obs;
-  var userProfile = {}.obs; 
+  var userProfile = {}.obs;
+  
+  var notificationCount = 0.obs;
+
+  void incrementNotificationCount() {
+    notificationCount.value++;
+  }
+
+  void clearNotificationCount() {
+    notificationCount.value = 0;
+  }
+
 
   @override
   void onInit() {
     super.onInit();
     fetchEvents();
   }
+
 
   Future<void> fetchEvents() async {
     isLoading(true);
@@ -23,5 +34,10 @@ class ProfileUserController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+ void clearUserData() {
+    userProfile.value = {};
+    //isLoading.value = false;
   }
 }

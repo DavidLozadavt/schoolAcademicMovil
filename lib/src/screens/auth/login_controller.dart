@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/models/auth_user_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/errors/failure.dart';
-import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
+import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -18,7 +18,7 @@ class LoginController extends GetxController {
   }
 
   goToHomePageStudent() {
-    Get.find<HomeStudentController>().fetchEvents();
+    Get.find<ProfileUserController>().fetchEvents();
     Get.offAllNamed('/home_student');
   }
 
@@ -32,6 +32,7 @@ class LoginController extends GetxController {
 
   login() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
+    String? tokenDevice = pref.getString('token_device') ?? '';
     try {
       if (emailController.text.isEmpty || passwordController.text.isEmpty) {
         Get.snackbar(
@@ -43,6 +44,7 @@ class LoginController extends GetxController {
       final UserData responseApiLogin = await authProvider.login(
         emailController.text,
         passwordController.text,
+        tokenDevice
       );
 
       await pref.setString('token', responseApiLogin.accessToken);

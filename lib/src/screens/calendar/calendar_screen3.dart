@@ -36,7 +36,6 @@ class Calendar extends StatelessWidget {
       fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
       String fechaFormateada =
           '${DateFormat('yyyyMMddTHHmmss').format(fecha)}Z';
-      print('12 $fechaFormateada');
       DateTime startTime =
           DateTime.parse('${event["horarios"][0]["periodo"]["fechaInicial"]} ${event["horarios"][0]["horaInicial"]}');
       DateTime endTime =

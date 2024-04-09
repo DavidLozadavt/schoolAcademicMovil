@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class CardTaskStudent extends StatelessWidget {
   final String idActivity;
@@ -7,6 +8,7 @@ class CardTaskStudent extends StatelessWidget {
   final String nameOfsender;
   final String initialDate;
   final String finalDate;
+  final String subject;
 
   const CardTaskStudent({
     required this.idActivity,
@@ -15,6 +17,7 @@ class CardTaskStudent extends StatelessWidget {
     required this.nameOfsender,
     required this.initialDate,
     required this.finalDate,
+    required this.subject,
     Key? key,
   }) : super(key: key);
 
@@ -23,13 +26,13 @@ class CardTaskStudent extends StatelessWidget {
     DateTime dateToday = DateTime.now();
     DateTime final_date = DateTime.parse(finalDate);
     int comparacion = final_date.compareTo(dateToday);
-   
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         width: 350,
         decoration: BoxDecoration(
-          color: comparacion > 0 ? Colors.grey[200] : Color.fromARGB(255, 255, 144, 144),
+          color: comparacion > 0 ? listColor[10] : listColor[25],
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: Colors.grey[400]!,
@@ -53,9 +56,7 @@ class CardTaskStudent extends StatelessWidget {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      urlPhotoSender
-                      ),
+                    backgroundImage: NetworkImage(urlPhotoSender),
                     radius: 25,
                   ),
                   const SizedBox(width: 10),
@@ -65,6 +66,13 @@ class CardTaskStudent extends StatelessWidget {
                       children: [
                         Text(
                           'Docente: $nameOfsender',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Materia: $subject',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -84,17 +92,19 @@ class CardTaskStudent extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                         Text(
+                        Text(
                           comparacion > 0 ? '' : 'Actividad no contestada',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
-                            color: comparacion > 0 ? Colors.black : Colors.red,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                   ),
+                  Image.asset('assets/images/libro-vt.png',
+                  width: 50,),
                 ],
               ),
             ),

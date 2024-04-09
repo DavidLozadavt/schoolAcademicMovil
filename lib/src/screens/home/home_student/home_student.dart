@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:vtschool/src/models/student.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 import 'package:vtschool/src/screens/notas/Student_notas.dart';
-import 'package:vtschool/src/screens/notas/Task.dart';
 import 'package:vtschool/src/screens/notas/task_student_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
@@ -12,12 +10,6 @@ import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeStudent extends StatelessWidget {
     HomeStudent({super.key});
-
-   List<Task> tasks = [
-    Task('Examen de Calculo', 'Revisar apuntes de Calculo'),
-    Task('Taller de Ingles', 'Revisar apuntes de  Ingles'),
-    Task('Tarea de Informatica', 'Revisar apuntes Informatica'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +33,7 @@ class HomeStudent extends StatelessWidget {
                   isActive: true,
                 ),
               ),
-              BottomNavigationBarItem(
+              /*BottomNavigationBarItem(
                 icon: ItemNavigationButton(
                   fileIcon: 'assets/images/task.png',
                   title: 'Mis tareas',
@@ -51,7 +43,7 @@ class HomeStudent extends StatelessWidget {
                   title: 'Mis tareas',
                   isActive: true,
                 ),
-              ),
+              ),*/
               BottomNavigationBarItem(
                 icon: ItemNavigationButton(
                   fileIcon: 'assets/images/note.png',
@@ -95,17 +87,17 @@ class HomeStudent extends StatelessWidget {
                 );
               case 1:
                 return CupertinoTabView(
-                  builder: (BuildContext context) =>  TaskStudentScreen(),
+                  builder: (BuildContext context) =>  const StudentPage(),
                 );
-              case 2:
+              /*case 2:
                 return CupertinoTabView(
                   builder: (context) =>  const StudentPage(),
-                );
-              case 3:
+                );*/
+              case 2:
                 return CupertinoTabView(
                   builder: (BuildContext context) => const PagosPage(),
                 );
-              case 4:
+              case 3:
                 return CupertinoTabView(
                   builder: (BuildContext context) => ProfileUserScreen(),
                 );

@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/calendar/calendar_screen3.dart';
-import 'package:vtschool/src/screens/home/home_student/home_student_controller.dart';
+import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 import 'package:vtschool/src/widgets/custom_alert.dart';
 
 class HomeStudentScreen extends StatelessWidget {
   HomeStudentScreen({super.key});
 
-  final HomeStudentController controller = Get.put(HomeStudentController());
+  final ProfileUserController controller = Get.put(ProfileUserController());
 
   void showDialogPay(BuildContext context) {
     showDialog(
@@ -60,7 +60,7 @@ class HomeStudentScreen extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: Image.network(
-                              '${controller.userProfile['persona']?['rutaFoto']}',
+                              '${controller.userProfile['persona']['rutaFoto']}',
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
@@ -90,7 +90,7 @@ class HomeStudentScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${controller.userProfile['persona']?['nombre1']} ${controller.userProfile['persona']?['apellido1']}',
+                                '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
                                 style: TextStyle(
                                   color: listColor[12],
                                   fontFamily: 'CM Sans Serif',

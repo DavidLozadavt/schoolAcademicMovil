@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vtschool/src/screens/profile/logout_screen.dart';
 
 class HomeAdminScreen extends StatelessWidget {
   const HomeAdminScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class HomeAdminScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              // Implement logout functionality here
+              logoutApp(context);
             },
             color: Colors.white, // White icon for better visibility
           ),

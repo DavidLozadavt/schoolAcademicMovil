@@ -3,24 +3,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
-import 'package:vtschool/src/models/api_response_model.dart';
-import 'package:vtschool/src/models/auth_user_model.dart';
 
+import 'package:vtschool/src/models/auth_user_model.dart';
 
 class AuthProvider extends GetConnect {
   var dataUser = <Map<String, dynamic>>[].obs;
-  Future login(String email, String contrasena) async {
+  Future login(String email, String contrasena, String tokenDevice) async {
+    //SharedPreferences pref = await SharedPreferences.getInstance();
+    //String? tokenDevice = pref.getString('token_device') ?? '';
     try {
       UserData apiResponse;
       Response response = await post(
-        '${baseURL}auth/login',
+        loginURL,
         headers: {'Accept': 'application/json'},
-        {
-          'email': email,
-          'password': contrasena,
-        },
+        {'email': email, 'password': contrasena, 'device_token': tokenDevice},
       );
-
+      print('es una prueba ${response.statusCode}');
       if (response.statusCode == 401) {
         throw Failure('Correo o contraseña incorrectos');
       }
@@ -39,14 +37,14 @@ class AuthProvider extends GetConnect {
     }
   }
 
- Future<Map<String, dynamic>> getProfile() async {
+  Future<Map<String, dynamic>> getProfile() async {
     try {
       String token = await getToken();
       Response response = await get('${baseURL}auth/user_data', headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       });
-
+      print('profle ${response.statusCode}');
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');
       }
@@ -60,25 +58,26 @@ class AuthProvider extends GetConnect {
     throw Failure('No se pudo obtener el perfil del usuario');
   }
 
-
-  Future<ApiResponse> logout() async {
-    ApiResponse apiResponse = ApiResponse();
+  Future logout() async {
+    
     String token = await getToken();
     try {
-      Response response = await post(logoutUrl,
-          {},
-          headers: {'Authorization': 'Bearer $token'});
-
+      await post(logoutUrl, {}, headers: {'Authorization': 'Bearer $token'});
     } catch (e) {
-      apiResponse.error = serverError;
+     throw Failure('$e');
     }
 
-    return apiResponse;
+
   }
 
   Future<String> getToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString('token') ?? '';
+  }
+
+  Future<String> getTokenDevice() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('token_device') ?? '';
   }
 
   Future<String> getRolUser() async {

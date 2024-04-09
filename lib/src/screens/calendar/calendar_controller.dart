@@ -30,7 +30,7 @@ class CalendarController1 extends GetxController {
 
       events.assignAll(_calendarProvider.events);
     } catch (error) {
-      print('Error fetching events: $error');
+      //print('Error fetching events: $error');
     } finally {
       isLoading(false);
     }
