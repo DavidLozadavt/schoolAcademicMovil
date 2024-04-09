@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/screens/profile/logout_screen.dart';
 
-// Clases existentes
 class Student {
   final String name;
   final List<Grade> grades;

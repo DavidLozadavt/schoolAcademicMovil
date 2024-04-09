@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 
-import 'package:vtschool/src/screens/profile/myprofile_screen.dart';
+import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
@@ -84,15 +83,15 @@ class HomeTeacher extends StatelessWidget {
                 );
               case 1:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
+                  builder: (BuildContext context) => ProfileUserScreen(),
                 );
               case 2:
                 return CupertinoTabView(
-                  builder: (context) => const MyProfileScreen(),
+                  builder: (context) => ProfileUserScreen(),
                 );
               case 3:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
+                  builder: (BuildContext context) => ProfileUserScreen(),
                 );
               case 4:
                 return CupertinoTabView(
@@ -100,7 +99,7 @@ class HomeTeacher extends StatelessWidget {
                 );
               default:
                 return CupertinoTabView(
-                  builder: (BuildContext context) => const MyProfileScreen(),
+                  builder: (BuildContext context) => ProfileUserScreen(),
                 );
             }
           },

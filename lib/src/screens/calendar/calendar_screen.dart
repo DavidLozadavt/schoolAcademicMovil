@@ -1,98 +1,73 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:vtschool/src/services/auth_service.dart';
+import 'package:get/get.dart';
+import 'package:vtschool/src/screens/calendar/calendar_controller.dart';
 
-class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+class Calendar extends StatelessWidget {
+  final CalendarController1 controller = Get.put(CalendarController1());
 
-  @override
-  _CalendarState createState() => _CalendarState();
-}
-class _CalendarState extends State<Calendar> {
-  List<Map<String, dynamic>> _hourlyEvents = [];
-   final AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchEvents();
-  }
-
-  Future<void> _fetchEvents() async {
-    String url = 'https://pre-school-plataform.virtualt.org/api/materias/horario_materia';
-    String token = await authService.getToken();
-    Map<String, dynamic> requestData = {
-      'idPrograma': 2,
-      'relations': [
-        'infraestructura.sede',
-        'dia',
-        'materia.materia',
-        'materia.grado.programa'
-      ]
-    };
-    Uri uri = Uri.parse(url);
-    Uri requestUri = uri
-        .replace(queryParameters: {'data_encoded': json.encode(requestData)});
-    final response = await http.get(
-      requestUri,
-      headers: {
-        'Authorization': 'Bearer $token',
-        'accept': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
-        final List<dynamic> decodedData = json.decode(response.body);
-        final List<Map<String, dynamic>> events =
-            List<Map<String, dynamic>>.from(decodedData);
-        setState(() {
-          _hourlyEvents = events;
-        });
-        print('12 $_hourlyEvents');
-      } else {
-        print('La respuesta del servidor está vacía.');
-      }
-    } else {
-      print('Error: ${response.statusCode}');
-      throw Exception('Failed to load events');
-    }
-  }
+  Calendar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      height: 475,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Horario 📆📌'),
-        ),
-        body: SfCalendar(
-          view: CalendarView.day,
-          dataSource: _getDataSource(),
-          onTap: _onTap,
-        ),
-      ),
+    return Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CupertinoActivityIndicator());
+            } else {
+              return SfCalendar(
+                firstDayOfWeek: 1,
+                view: CalendarView.week,
+                dataSource: _getDataSource(controller.events),
+                onTap: (details) => _onTap(context, details, controller.events),
+              );
+            }
+          }
     );
   }
 
-  CalendarDataSource<Object?> _getDataSource() {
+  CalendarDataSource<Object?> _getDataSource(
+      List<Map<String, dynamic>> hourlyEvents) {
     List<Appointment> appointments = [];
-    for (var event in _hourlyEvents) {
-      DateTime startTime = DateTime.parse('2024-02-12 ${event["horaInicial"]}');
-      DateTime endTime = DateTime.parse('2024-02-12 ${event["horaFinal"]}');
+    for (var event in hourlyEvents) {
+      var endTimeData = event["horarios"][0]["periodo"]["fechaFinal"];
+      DateTime fecha = DateTime.parse(endTimeData);
+      fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
+      String fechaFormateada =
+          '${DateFormat('yyyyMMddTHHmmss').format(fecha)}Z';
+      DateTime startTime =
+          DateTime.parse('${event["horarios"][0]["periodo"]["fechaInicial"]} ${event["horarios"][0]["horaInicial"]}');
+      DateTime endTime =
+          DateTime.parse('${event["horarios"][0]["periodo"]["fechaInicial"]} ${event["horarios"][0]["horaFinal"]}');
+      var day = event["horarios"][0]['dia']['id'];
+      String? dayOfWeek;
+      if (day == 1) {
+        dayOfWeek = 'BYDAY=MO';
+      } else if (day == 2) {
+        dayOfWeek = 'BYDAY=TU';
+      } else if (day == 3) {
+        dayOfWeek = 'BYDAY=WE';
+      } else if (day == 4) {
+        dayOfWeek = 'BYDAY=TH';
+      } else if (day == 5) {
+        dayOfWeek = 'BYDAY=FR';
+      } else if (day == 6) {
+        dayOfWeek = 'BYDAY=SA';
+      } else if (day == 7) {
+        dayOfWeek = 'BYDAY=SU';
+      }
+
       appointments.add(Appointment(
         startTime: startTime,
         endTime: endTime,
-        subject: '${event["materia"]["materia"]["nombreMateria"]}',
-        color: _getEventColor(event["estado"]),
+        subject: '${event['horarios'][0]['materia']['materia']['nombreMateria']}',
+        color: _getEventColor(event['horarios'][0]["estado"]),
         id: event["id"].toString(),
+        recurrenceRule:
+            'RRULE:FREQ=WEEKLY;$dayOfWeek;WKST=MO;UNTIL=$fechaFormateada',
       ));
     }
-
     return _DataSource(appointments);
   }
 
@@ -100,21 +75,24 @@ class _CalendarState extends State<Calendar> {
     switch (estado) {
       case "SIN ASIGNAR":
         return Colors.grey;
+      case "PENDIENTE":
+        return const Color.fromARGB(255, 252, 0, 0);
       default:
         return Colors.blue;
     }
   }
 
-  void _onTap(CalendarTapDetails details) {
+  void _onTap(BuildContext context, CalendarTapDetails details,
+      List<Map<String, dynamic>> hourlyEvents) {
     if (details.targetElement == CalendarElement.appointment) {
       final selectedEventId = details.appointments!.first.id;
-      final selectedEvent = _hourlyEvents
+      final selectedEvent = hourlyEvents
           .firstWhere((event) => event["id"].toString() == selectedEventId);
-      _showEventDetails(selectedEvent);
+      _showEventDetails(context, selectedEvent);
     }
   }
 
-  void _showEventDetails(Map<String, dynamic> event) {
+  void _showEventDetails(BuildContext context, Map<String, dynamic> event) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -123,15 +101,15 @@ class _CalendarState extends State<Calendar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Materia: ${event["materia"]["materia"]["nombreMateria"]}'),
-            Text('Sede: ${event["infraestructura"]["sede"]["nombreSede"]}'),
-            Text('Hora Inicial: ${event["horaInicial"]}'),
-            Text('Hora Final: ${event["horaFinal"]}'),
+            Text('Materia: ${event['horarios'][0]["materia"]["materia"]["nombreMateria"]}'),
+            Text('Sede: ${event['horarios'][0]["infraestructura"]["sede"]["nombreSede"]}'),
+            Text('Hora Inicial: ${event['horarios'][0]["horaInicial"]}'),
+            Text('Hora Final: ${event['horarios'][0]["horaFinal"]}'),
           ],
         ),
         actions: [
           ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Get.back(),
             child: const Text('Cerrar'),
           ),
         ],
@@ -145,4 +123,3 @@ class _DataSource extends CalendarDataSource<Object?> {
     this.appointments = appointments;
   }
 }
-*/

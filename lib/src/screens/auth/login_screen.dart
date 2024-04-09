@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/auth/login_controller.dart';
 

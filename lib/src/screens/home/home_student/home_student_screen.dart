@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/screens/calendar/calendar_screen3.dart';
+import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 import 'package:vtschool/src/widgets/custom_alert.dart';
 

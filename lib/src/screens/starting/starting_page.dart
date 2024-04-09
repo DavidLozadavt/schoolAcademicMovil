@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/config/fonts_styles.dart';
+
 import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class StartingScreen extends StatelessWidget {

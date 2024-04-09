@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
-import 'package:vtschool/src/screens/notas/Student_notas.dart';
-import 'package:vtschool/src/screens/notas/task_student_screen.dart';
+import 'package:vtschool/src/screens/ratings/ratings_student.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeStudent extends StatelessWidget {
-    HomeStudent({super.key});
+    const HomeStudent({super.key});
 
   @override
   Widget build(BuildContext context) {

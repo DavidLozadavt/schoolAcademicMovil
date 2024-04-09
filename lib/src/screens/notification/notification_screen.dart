@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -107,6 +105,7 @@ class NotificationScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: GestureDetector(
+                          
                           onTap: () {
                             showNotificationDetails(
                                 _notificationsController.activities[index]);

@@ -8,7 +8,7 @@ import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
-import 'package:vtschool/src/screens/notas/task_student_screen.dart';
+import 'package:vtschool/src/screens/activity/task_student_screen.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
@@ -61,16 +61,14 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/starting_init_screen', page: () => StartingInitScreen()),
         GetPage(name: '/starting', page: () => const StartingScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(name: '/home_student', page: () => HomeStudent()),
+        GetPage(name: '/home_student', page: () => const HomeStudent()),
         GetPage(name: '/home_teacher', page: () => const HomeTeacher()),
         GetPage(name: '/home_admin', page: () => const HomeAdmin()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
-        //GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
         GetPage(name: '/banner', page: () => const PagosPage()),
         GetPage(name: '/creditCart', page: () => const MySample()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/task_student', page: () => TaskStudentScreen()),
-        //GetPage(name: '/prueba', page: () => const Prueba()),
       ],
      
     );

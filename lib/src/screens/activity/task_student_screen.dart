@@ -2,16 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_media_downloader/flutter_media_downloader.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/screens/notas/task_student_controller.dart';
+import 'package:vtschool/src/screens/activity/task_student_controller.dart';
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 

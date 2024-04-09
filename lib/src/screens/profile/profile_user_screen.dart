@@ -2,9 +2,9 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/config/fonts_styles.dart';
+
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/screens/profile/logout_screen.dart';
+import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 
