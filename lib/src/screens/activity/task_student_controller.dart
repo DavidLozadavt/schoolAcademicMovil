@@ -16,15 +16,25 @@ class TaskStudentController extends GetxController {
   var activities = <Map<String, dynamic>>[].obs;
   var filteredActivities = <Map<String, dynamic>>[].obs;
   var activitiesById = <Map<String, dynamic>>[].obs;
-  var activityQuestionnaire = <Map<String, dynamic>>[].obs;
+  var activityQuestionnaire = {}.obs;
   var typeActivitiesById = {}.obs;
   RxString selectedFilePath = ''.obs;
   Rx<File> filePath = Rx<File>(File(''));
+  var isChecked = false.obs;
+  List<RxBool> isCheckedList = [];
+  Map<int, bool?> groupValues = {};
+  Map<int, RxBool> selectedValues = {};
 
   @override
   void onInit() {
     super.onInit();
     getNotifications();
+  }
+  
+  void initializeQuestions(List<Map<String, dynamic>> preguntas) {
+    for (var pregunta in preguntas) {
+      selectedValues[pregunta['id']] = false.obs;
+    }
   }
 
   Future<void> getNotifications() async {
@@ -54,8 +64,8 @@ class TaskStudentController extends GetxController {
 
   Future<void> getActivityQuestionnaire(String id) async {
     try {
-      await _activityProvider.getActivityQuestionnaire(id);
-      activityQuestionnaire.assignAll(_activityProvider.questionnaireActivity);
+      final questionnaireActivity = await _activityProvider.getActivityQuestionnaire(id);
+      activityQuestionnaire(questionnaireActivity);
     } finally {}
   }
 
@@ -135,4 +145,5 @@ class TaskStudentController extends GetxController {
   void setFilePath(File path) {
     filePath.value = path;
   }
+
 }

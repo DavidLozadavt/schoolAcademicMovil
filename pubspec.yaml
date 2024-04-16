@@ -73,6 +73,7 @@ dependencies:
   path_provider: ^2.1.2
   dio: ^4.0.6
   flutter_media_downloader: ^1.0.4
+  emoji_picker_flutter: ^2.1.1
 
   
 

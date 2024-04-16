@@ -127,9 +127,9 @@ class TaskStudentScreen extends StatelessWidget {
                           String initialDate = decodedData['fechaInicial'];
                           String finalDate = decodedData['fechaFinal'];
                           String subject = decodedData['nombreMateria'];
-                          DateTime dateToday = DateTime.now();
-                          DateTime final_date = DateTime.parse(finalDate);
-                          int comparacion = final_date.compareTo(dateToday);
+                          //DateTime dateToday = DateTime.now();
+                          /// DateTime final_date = DateTime.parse(finalDate);
+                          //int comparacion = final_date.compareTo(dateToday);
 
                           if (_taskStudentController.filteredActivities[index]
                                   ['idTipoNotificacion'] !=
@@ -137,29 +137,23 @@ class TaskStudentScreen extends StatelessWidget {
                             return Center(
                               child: GestureDetector(
                                 onTap: () async {
-                                  if (comparacion > 0) {
+                                  await _taskStudentController
+                                      .getTypeActivity('$idActividad');
+                                  if (_taskStudentController.typeActivitiesById[
+                                          'tipoActividad'] ==
+                                      'Normal') {
                                     await _taskStudentController
-                                        .getTypeActivity('$idActividad');
-                                    if (_taskStudentController
-                                                .typeActivitiesById[
-                                            'tipoActividad'] ==
-                                        'Normal') {
-                                      await _taskStudentController
-                                          .getActivityById('$idActividad');
-                                      showNormalActivity(
-                                          context,
-                                          _taskStudentController
-                                              .activitiesById);
-                                    } else {
-                                      /*await _taskStudentController
-                                          .getActivityQuestionnaire(
-                                              '$idActividad');
-                                      showQuestionnaireActivity(
-                                          _taskStudentController
-                                              .activityQuestionnaire);*/
-                                    }
+                                        .getActivityById('$idActividad');
+                                    showNormalActivity(context,
+                                        _taskStudentController.activitiesById);
                                   } else {
-                                    showDialogPay(context);
+                                    await _taskStudentController
+                                        .getActivityQuestionnaire(
+                                            '$idActividad');
+                                    showQuestionnaireActivity(
+                                        context,
+                                        _taskStudentController
+                                            .activityQuestionnaire);
                                   }
                                 },
                                 child: CardTaskStudent(
@@ -190,24 +184,6 @@ class TaskStudentScreen extends StatelessWidget {
     );
   }
 
-  void showDialogPay(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Alerta"),
-          content: const Text("La fecha de la actividad ya paso"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text("Salir"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void showNormalActivity(BuildContext context, normalActivityData) {
     Get.bottomSheet(
       showNormalActivityModal(context, normalActivityData),
@@ -221,17 +197,399 @@ class TaskStudentScreen extends StatelessWidget {
     });
   }
 
-  /*void showQuestionnaireActivity(questionnaireActivityData) {
+  void showQuestionnaireActivity(
+      BuildContext context, questionnaireActivityData) {
     Get.bottomSheet(
-      showNormalActivityModal(questionnaireActivityData),
+      showQuestionnaireActivityModal(context, questionnaireActivityData),
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
     );
-  }*/
+  }
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
+    if (activityData[0]['estado']['estado'] == 'ACTIVO') {
+      return Container(
+        height: 700,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[13],
+              listColor[11],
+            ],
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const ContSup(),
+                const SizedBox(height: 20),
+                const Text(
+                  'Actividad',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(1.5),
+                    1: FlexColumnWidth(3),
+                  },
+                  children: [
+                    _buildTableRow('Título:',
+                        '${activityData[0]['tituloActividad']}', 16, 12),
+                    _buildTableRow('Descripción:',
+                        '${activityData[0]['descripcionActividad']}', 16, 12),
+                    _buildTableRow(
+                        'Asignatura:',
+                        '${activityData[0]['materia']['nombreMateria']}',
+                        16,
+                        12),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Documento',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _flutterMediaDownloaderPlugin.downloadMedia(
+                            context, 'https://www.orimi.com/pdf-test.pdf');
+                      },
+                      icon: Icon(
+                        Icons.downloading,
+                        color: listColor[12],
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 410,
+                  margin: const EdgeInsets.only(right: 8.0, left: 8.0),
+                  padding: const EdgeInsets.all(7.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.white),
+                  ),
+                  child: SfPdfViewer.network(
+                    enableTextSelection: true,
+                    enableDoubleTapZooming: true,
+                    enableDocumentLinkAnnotation: true,
+                    enableHyperlinkNavigation: true,
+                    canShowScrollStatus: true,
+                    'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Responder actividad',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+                        if (result != null) {
+                          File file = File(result.files.single.path!);
+                          String filePath = result.files.single.path!;
+                          _taskStudentController.setSelectedFilePath(filePath);
+                          _taskStudentController.setFilePath(file);
+                        }
+                      },
+                      child: const Text('Seleccionar archivo'),
+                    ),
+                    const SizedBox(width: 5),
+                    Obx(() {
+                      if (_taskStudentController
+                          .selectedFilePath.value.isNotEmpty) {
+                        String fileName = path.basename(
+                            _taskStudentController.selectedFilePath.value);
+                        return Flexible(
+                          child: ElevatedButton(
+                            onPressed: null,
+                            child: Text(fileName),
+                          ),
+                        );
+                      } else {
+                        return const ElevatedButton(
+                          onPressed: null,
+                          child: Text('Archivo'),
+                        );
+                      }
+                    }),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 5, left: 18.0, right: 18.0),
+                  child: TextField(
+                    controller: _taskStudentController.commentController,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: listColor[11],
+                      labelText: "Respuesta escrita",
+                      hintText: "Respuesta escrita",
+                      hintStyle: const TextStyle(color: Colors.white),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      prefixIcon: const Icon(
+                        Icons.question_answer_outlined,
+                        color: Colors.white,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 1.0),
+                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {
+                    String idActividad = activityData[0]
+                            ['calificacionActividad']['id']
+                        .toString();
+                    _taskStudentController.replyActivityP(idActividad);
+                  },
+                  child: const Text('Enviar evidencia'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return showModalPastActivity('Su actividad');
+    }
+  }
+
+  Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
+    final List<Map<String, dynamic>> preguntas = (activityData['preguntas'] as List).cast<Map<String, dynamic>>();
+_taskStudentController.initializeQuestions(preguntas);
+
+    if (activityData['idEstado'] == 1) {
+      return Container(
+        height: 700,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[13],
+              listColor[11],
+            ],
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const ContSup(),
+                const SizedBox(height: 20),
+                const Text(
+                  'Cuestionario',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(1.5),
+                    1: FlexColumnWidth(3),
+                  },
+                  children: [
+                    _buildTableRow('Título:',
+                        '${activityData['tituloActividad']}', 16, 12),
+                    _buildTableRow('Descripción:',
+                        '${activityData['descripcionActividad']}', 16, 12),
+                    _buildTableRow('Asignatura:',
+                        '${activityData['materia']['nombreMateria']}', 16, 12),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: activityData['preguntas'].map<Widget>((pregunta) {
+                    if (pregunta['idTipoPregunta'] == 3) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            pregunta['descripcion'],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Column(
+                            children:
+                                pregunta['respuestas'].map<Widget>((respuesta) {
+                              int preguntaId = pregunta['id'];
+                              int respuestaId = respuesta['id'];
+                              return Row(
+                                children: [
+                                  Obx(() => CupertinoRadio(
+                                        value: respuestaId,
+                                        groupValue: _taskStudentController
+                                                .selectedValues[preguntaId]!
+                                                .value
+                                            ? respuestaId
+                                            : null,
+                                        activeColor: const Color(0xff00C535),
+                                        onChanged: (int? value) {
+                                          print(value);
+                                          _taskStudentController
+                                              .selectedValues[preguntaId]!
+                                              .value = value == respuestaId;
+                                        },
+                                      )),
+                                  Text(
+                                    respuesta['descripcionRespuesta'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Text(
+                            pregunta['descripcion'],
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5, left: 18.0, right: 18.0),
+                            child: TextField(
+                              controller:
+                                  _taskStudentController.commentController,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: listColor[11],
+                                labelText: "Respuesta escrita",
+                                hintText: "Respuesta escrita",
+                                hintStyle: const TextStyle(color: Colors.white),
+                                labelStyle:
+                                    const TextStyle(color: Colors.white),
+                                prefixIcon: const Icon(
+                                  Icons.question_answer_outlined,
+                                  color: Colors.white,
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 1.0),
+                              ),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }).toList(),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {},
+                  child: const Text('Enviar cuestionario'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return showModalPastActivity('El cuestionario');
+    }
+  }
+
+  Widget showModalPastActivity(String name) {
     return Container(
-      height: 700,
+      padding: const EdgeInsets.symmetric(horizontal: 28.0),
+      height: 400,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -246,173 +604,62 @@ class TaskStudentScreen extends StatelessWidget {
           topRight: Radius.circular(32),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const ContSup(),
-              const SizedBox(height: 20),
-              const Text(
-                'Actividad',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const ContSup(),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              'Información',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
-              const SizedBox(height: 20),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(1.5),
-                  1: FlexColumnWidth(3),
-                },
-                children: [
-                  _buildTableRow('Título:',
-                      '${activityData[0]['tituloActividad']}', 16, 12),
-                  _buildTableRow('Descripción:',
-                      '${activityData[0]['descripcionActividad']}', 16, 12),
-                  _buildTableRow('Asignatura:',
-                      '${activityData[0]['materia']['nombreMateria']}', 16, 12),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Documento',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _flutterMediaDownloaderPlugin.downloadMedia(
-                          context, 'https://www.orimi.com/pdf-test.pdf');
-                    },
-                    icon: Icon(
-                      Icons.downloading,
-                      color: listColor[12],
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                height: 410,
-                margin: const EdgeInsets.only(right: 8.0, left: 8.0),
-                padding: const EdgeInsets.all(7.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.white),
-                ),
-                child: SfPdfViewer.network(
-                  enableTextSelection: true,
-                  enableDoubleTapZooming: true,
-                  enableDocumentLinkAnnotation: true,
-                  enableHyperlinkNavigation: true,
-                  canShowScrollStatus: true,
-                  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
-                ),
-              ),
-              const SizedBox(height: 15),
-              const Text(
-                'Responder actividad',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      FilePickerResult? result =
-                          await FilePicker.platform.pickFiles();
-                      if (result != null) {
-                        File file = File(result.files.single.path!);
-                        String filePath = result.files.single.path!;
-                        _taskStudentController.setSelectedFilePath(filePath);
-                        _taskStudentController.setFilePath(file);
-                      }
-                    },
-                    child: const Text('Seleccionar archivo'),
-                  ),
-                  const SizedBox(width: 5),
-                  Obx(() {
-                    if (_taskStudentController
-                        .selectedFilePath.value.isNotEmpty) {
-                      String fileName = path.basename(
-                          _taskStudentController.selectedFilePath.value);
-                      return Flexible(
-                        child: ElevatedButton(
-                          onPressed: null,
-                          child: Text(fileName),
-                        ),
-                      );
-                    } else {
-                      return const ElevatedButton(
-                        onPressed: null,
-                        child: Text('Archivo'),
-                      );
-                    }
-                  }),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, left: 18.0, right: 18.0),
-                child: TextField(
-                  controller: _taskStudentController.commentController,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: listColor[11],
-                    labelText: "Respuesta escrita",
-                    hintText: "Respuesta escrita",
-                    hintStyle: const TextStyle(color: Colors.white),
-                    labelStyle: const TextStyle(color: Colors.white),
-                    prefixIcon: const Icon(
-                      Icons.question_answer_outlined,
-                      color: Colors.white,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 1.0),
-                  ),
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  disabledBackgroundColor: Colors.blue,
-                ),
-                onPressed: () {
-                  String idActividad =
-                      activityData[0]['calificacionActividad']['id'].toString();
-                  _taskStudentController.replyActivityP(idActividad);
-                },
-                child: const Text('Enviar evidencia'),
-              ),
-            ],
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              '$name ya paso la fecha de presentación',
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        textStyle: const TextStyle(fontSize: 12),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text(
+                        'Ok',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

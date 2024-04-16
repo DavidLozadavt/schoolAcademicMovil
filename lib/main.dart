@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
+import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/activity/task_student_screen.dart';
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/creditCart', page: () => const MySample()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/task_student', page: () => TaskStudentScreen()),
+        GetPage(name: '/chat', page: () => Chat()),
       ],
      
     );

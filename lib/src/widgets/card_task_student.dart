@@ -23,16 +23,16 @@ class CardTaskStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateToday = DateTime.now();
-    DateTime final_date = DateTime.parse(finalDate);
-    int comparacion = final_date.compareTo(dateToday);
+    //DateTime dateToday = DateTime.now();
+    //DateTime final_date = DateTime.parse(finalDate);
+    //int comparacion = final_date.compareTo(dateToday);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         width: 350,
         decoration: BoxDecoration(
-          color: comparacion > 0 ? listColor[10] : listColor[25],
+          color: listColor[10],
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: Colors.grey[400]!,
@@ -89,14 +89,6 @@ class CardTaskStudent extends StatelessWidget {
                           'Fecha final: $finalDate',
                           style: const TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          comparacion > 0 ? '' : 'Actividad no contestada',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color.fromARGB(255, 255, 255, 255),
                             fontWeight: FontWeight.bold,
                           ),
                         ),

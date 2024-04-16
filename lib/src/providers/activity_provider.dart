@@ -53,7 +53,7 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  Future<void> getActivityQuestionnaire(String? id) async {
+  Future<Map<String, dynamic>> getActivityQuestionnaire(String? id) async {
     String token = await authService.getToken();
     Response response = await get(
       '$getActivityQuestionnaireUrl$id',
@@ -64,8 +64,7 @@ class ActivityProvider extends GetConnect {
     );
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        questionnaireActivity
-            .assignAll(response.body.cast<Map<String, dynamic>>());
+        return response.body;
       } else {
         throw Failure('La respuesta del servidor está vacía.');
       }

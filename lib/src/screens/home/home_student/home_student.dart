@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vtschool/src/screens/chat/chats_screen.dart';
 
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 import 'package:vtschool/src/screens/ratings/ratings_student.dart';
@@ -24,7 +25,6 @@ class HomeStudent extends StatelessWidget {
                 icon: ItemNavigationButton(
                   fileIcon: 'assets/images/home.png',
                   title: 'Home',
-                  
                 ),
                 activeIcon: ItemNavigationButton(
                   fileIcon: 'assets/images/home.png',
@@ -32,17 +32,19 @@ class HomeStudent extends StatelessWidget {
                   isActive: true,
                 ),
               ),
-              /*BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: ItemNavigationButton(
-                  fileIcon: 'assets/images/task.png',
-                  title: 'Mis tareas',
+                  fileIcon: 'assets/images/comentario.png',
+                  title: 'Chats',
+                  messageCount: 50,
                 ),
                 activeIcon: ItemNavigationButton(
-                  fileIcon: 'assets/images/task.png',
-                  title: 'Mis tareas',
+                  fileIcon: 'assets/images/comentario.png',
+                  title: 'Chats',
                   isActive: true,
+                  messageCount: 50,
                 ),
-              ),*/
+              ),
               BottomNavigationBarItem(
                 icon: ItemNavigationButton(
                   fileIcon: 'assets/images/note.png',
@@ -86,17 +88,17 @@ class HomeStudent extends StatelessWidget {
                 );
               case 1:
                 return CupertinoTabView(
-                  builder: (BuildContext context) =>  const StudentPage(),
+                  builder: (BuildContext context) => Chats(),
                 );
-              /*case 2:
+              case 2:
                 return CupertinoTabView(
                   builder: (context) =>  const StudentPage(),
-                );*/
-              case 2:
+                );
+              case 3:
                 return CupertinoTabView(
                   builder: (BuildContext context) => const PagosPage(),
                 );
-              case 3:
+              case 4:
                 return CupertinoTabView(
                   builder: (BuildContext context) => ProfileUserScreen(),
                 );
