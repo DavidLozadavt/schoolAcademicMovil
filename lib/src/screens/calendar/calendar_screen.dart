@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -14,7 +14,7 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
             if (controller.isLoading.value) {
-              return const Center(child: CupertinoActivityIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else {
               return SfCalendar(
                 firstDayOfWeek: 1,
@@ -31,16 +31,18 @@ class Calendar extends StatelessWidget {
       List<Map<String, dynamic>> hourlyEvents) {
     List<Appointment> appointments = [];
     for (var event in hourlyEvents) {
-      var endTimeData = event["horarios"][0]["periodo"]["fechaFinal"];
+      
+      var endTimeData = event["periodo"]["fechaFinal"];
+     
       DateTime fecha = DateTime.parse(endTimeData);
       fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
       String fechaFormateada =
           '${DateFormat('yyyyMMddTHHmmss').format(fecha)}Z';
       DateTime startTime =
-          DateTime.parse('${event["horarios"][0]["periodo"]["fechaInicial"]} ${event["horarios"][0]["horaInicial"]}');
+          DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaInicial"]}');
       DateTime endTime =
-          DateTime.parse('${event["horarios"][0]["periodo"]["fechaInicial"]} ${event["horarios"][0]["horaFinal"]}');
-      var day = event["horarios"][0]['dia']['id'];
+          DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
+      var day = event['idDia'];
       String? dayOfWeek;
       if (day == 1) {
         dayOfWeek = 'BYDAY=MO';
@@ -61,8 +63,8 @@ class Calendar extends StatelessWidget {
       appointments.add(Appointment(
         startTime: startTime,
         endTime: endTime,
-        subject: '${event['horarios'][0]['materia']['materia']['nombreMateria']}',
-        color: _getEventColor(event['horarios'][0]["estado"]),
+        subject: '${event['materia']['materia']['nombreMateria']}',
+        color: _getEventColor(event["estado"]),
         id: event["id"].toString(),
         recurrenceRule:
             'RRULE:FREQ=WEEKLY;$dayOfWeek;WKST=MO;UNTIL=$fechaFormateada',
@@ -101,10 +103,10 @@ class Calendar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Materia: ${event['horarios'][0]["materia"]["materia"]["nombreMateria"]}'),
-            Text('Sede: ${event['horarios'][0]["infraestructura"]["sede"]["nombreSede"]}'),
-            Text('Hora Inicial: ${event['horarios'][0]["horaInicial"]}'),
-            Text('Hora Final: ${event['horarios'][0]["horaFinal"]}'),
+            Text('Materia: ${event["materia"]["materia"]["nombreMateria"]}'),
+            Text('Sede: ${event["infraestructura"]["sede"]["nombreSede"]}'),
+            Text('Hora Inicial: ${event["horaInicial"]}'),
+            Text('Hora Final: ${event["horaFinal"]}'),
           ],
         ),
         actions: [

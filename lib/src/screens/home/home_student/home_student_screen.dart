@@ -1,5 +1,4 @@
 // ignore_for_file: file_names
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -32,7 +31,7 @@ class HomeStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CupertinoActivityIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else {
         return Scaffold(
           body: Container(
@@ -60,7 +59,7 @@ class HomeStudentScreen extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: Image.network(
-                              '${controller.userProfile['persona']['rutaFoto']}',
+                              '${controller.userProfile['persona']?['rutaFoto']}',
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
@@ -90,7 +89,7 @@ class HomeStudentScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
+                                '${controller.userProfile['persona']?['nombre1']} ${controller.userProfile['persona']?['apellido1']}',
                                 style: TextStyle(
                                   color: listColor[12],
                                   fontFamily: 'CM Sans Serif',

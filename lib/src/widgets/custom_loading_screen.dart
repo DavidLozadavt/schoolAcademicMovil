@@ -1,8 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-
-import '../config/fonts_styles.dart';
+import 'package:vtschool/src/config/fonts_styles.dart';
 
 class CustomLoadingScreen extends StatefulWidget {
   final Color backgroundColor; 

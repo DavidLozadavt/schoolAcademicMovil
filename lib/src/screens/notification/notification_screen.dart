@@ -56,7 +56,18 @@ class NotificationScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
+                child:_notificationsController.activities.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No tienes notificaciones',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    :  ListView.builder(
                   itemCount: _notificationsController.activities.length,
                   itemBuilder: ((context, index) {
                     return Dismissible(

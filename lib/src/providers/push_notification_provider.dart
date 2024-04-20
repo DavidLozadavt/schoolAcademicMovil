@@ -29,7 +29,8 @@ class PushNotificationProvider {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     await _firebaseMessaging.requestPermission();
-    final fCMToken = await _firebaseMessaging.getToken();
+    final fCMToken =  await _firebaseMessaging.getToken();
+    print('tokenAppDevice $fCMToken');
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token_device', fCMToken.toString());
     initPushNotications();

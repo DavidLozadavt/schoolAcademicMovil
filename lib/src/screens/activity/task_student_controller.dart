@@ -20,21 +20,14 @@ class TaskStudentController extends GetxController {
   var typeActivitiesById = {}.obs;
   RxString selectedFilePath = ''.obs;
   Rx<File> filePath = Rx<File>(File(''));
-  var isChecked = false.obs;
-  List<RxBool> isCheckedList = [];
-  Map<int, bool?> groupValues = {};
-  Map<int, RxBool> selectedValues = {};
+
+  RxInt selectedOption = RxInt(-1);
+  RxList<int> selectedOptions = RxList<int>([]);
 
   @override
   void onInit() {
     super.onInit();
     getNotifications();
-  }
-  
-  void initializeQuestions(List<Map<String, dynamic>> preguntas) {
-    for (var pregunta in preguntas) {
-      selectedValues[pregunta['id']] = false.obs;
-    }
   }
 
   Future<void> getNotifications() async {
@@ -64,13 +57,13 @@ class TaskStudentController extends GetxController {
 
   Future<void> getActivityQuestionnaire(String id) async {
     try {
-      final questionnaireActivity = await _activityProvider.getActivityQuestionnaire(id);
+      final questionnaireActivity =
+          await _activityProvider.getActivityQuestionnaire(id);
       activityQuestionnaire(questionnaireActivity);
     } finally {}
   }
 
   Future<void> replyActivity(String id, String? comentario, File? file) async {
-    print('desde el controller: $filePath');
     try {
       await _activityProvider.replyActivity(id, comentario, file);
     } catch (e) {
@@ -85,7 +78,6 @@ class TaskStudentController extends GetxController {
           '¡Error!',
           'Debes escribir una respuesta o subir un archivo',
         );
-        print('11111111111111111111111111111');
       } else {
         if (commentController.text.isNotEmpty &&
             filePath.value.path.isNotEmpty) {
@@ -93,18 +85,18 @@ class TaskStudentController extends GetxController {
               id, commentController.text, filePath.value);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-           print('222222222222222');
+          print('222222222222222');
         } else if (filePath.value.path.isEmpty) {
           await _activityProvider.replyActivity(
               id, commentController.text, null);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-           print('3333333333333');
+          print('3333333333333');
         } else if (commentController.text.isEmpty) {
           await _activityProvider.replyActivity(id, null, filePath.value);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-           print('444444444444444');
+          print('444444444444444');
         }
       }
     } on Failure catch (e) {
@@ -146,4 +138,15 @@ class TaskStudentController extends GetxController {
     filePath.value = path;
   }
 
+  void setSelectedOption(int value) {
+    selectedOption.value = value;
+  }
+
+  void toggleSelectedOption(int index) {
+    if (selectedOptions.contains(index)) {
+      selectedOptions.remove(index);
+    } else {
+      selectedOptions.add(index);
+    }
+  }
 }

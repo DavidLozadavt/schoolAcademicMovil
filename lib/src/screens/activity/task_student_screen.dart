@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/activity/task_student_controller.dart';
+import 'package:vtschool/src/widgets/card_questions.dart';
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 
@@ -26,7 +27,7 @@ class TaskStudentScreen extends StatelessWidget {
     return Obx(
       () => _taskStudentController.isLoading.value
           ? const Center(
-              child: CupertinoActivityIndicator(),
+              child: CircularProgressIndicator(),
             )
           : Scaffold(
               body: Container(
@@ -116,66 +117,79 @@ class TaskStudentScreen extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount:
-                            _taskStudentController.filteredActivities.length,
-                        itemBuilder: ((context, index) {
-                          Map<String, dynamic> decodedData = jsonDecode(
-                              _taskStudentController.filteredActivities[index]
-                                  ['metadataInfo']);
-                          int idActividad = decodedData['idActividad'];
-                          String initialDate = decodedData['fechaInicial'];
-                          String finalDate = decodedData['fechaFinal'];
-                          String subject = decodedData['nombreMateria'];
-                          //DateTime dateToday = DateTime.now();
-                          /// DateTime final_date = DateTime.parse(finalDate);
-                          //int comparacion = final_date.compareTo(dateToday);
-
-                          if (_taskStudentController.filteredActivities[index]
-                                  ['idTipoNotificacion'] !=
-                              4) {
-                            return Center(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  await _taskStudentController
-                                      .getTypeActivity('$idActividad');
-                                  if (_taskStudentController.typeActivitiesById[
-                                          'tipoActividad'] ==
-                                      'Normal') {
-                                    await _taskStudentController
-                                        .getActivityById('$idActividad');
-                                    showNormalActivity(context,
-                                        _taskStudentController.activitiesById);
-                                  } else {
-                                    await _taskStudentController
-                                        .getActivityQuestionnaire(
-                                            '$idActividad');
-                                    showQuestionnaireActivity(
-                                        context,
-                                        _taskStudentController
-                                            .activityQuestionnaire);
-                                  }
-                                },
-                                child: CardTaskStudent(
-                                  idActivity:
-                                      '${_taskStudentController.filteredActivities[index]['id']}',
-                                  affair:
-                                      '${_taskStudentController.filteredActivities[index]['asunto']}',
-                                  urlPhotoSender:
-                                      '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
-                                  nameOfsender:
-                                      '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
-                                  initialDate: initialDate,
-                                  finalDate: finalDate,
-                                  subject: subject,
+                      child: _taskStudentController.filteredActivities.isEmpty
+                          ? const Center(
+                              child: Text(
+                                'No tienes actividades',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        }),
-                      ),
+                            )
+                          : ListView.builder(
+                              itemCount: _taskStudentController
+                                  .filteredActivities.length,
+                              itemBuilder: ((context, index) {
+                                Map<String, dynamic> decodedData = jsonDecode(
+                                    _taskStudentController
+                                            .filteredActivities[index]
+                                        ['metadataInfo']);
+                                int idActividad = decodedData['idActividad'];
+                                String initialDate =
+                                    decodedData['fechaInicial'];
+                                String finalDate = decodedData['fechaFinal'];
+                                String subject = decodedData['nombreMateria'];
+                                if (_taskStudentController
+                                            .filteredActivities[index]
+                                        ['idTipoNotificacion'] !=
+                                    4) {
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await _taskStudentController
+                                            .getTypeActivity('$idActividad');
+                                        if (_taskStudentController
+                                                    .typeActivitiesById[
+                                                'tipoActividad'] ==
+                                            'Normal') {
+                                          await _taskStudentController
+                                              .getActivityById('$idActividad');
+                                          showNormalActivity(
+                                              context,
+                                              _taskStudentController
+                                                  .activitiesById);
+                                        } else {
+                                          await _taskStudentController
+                                              .getActivityQuestionnaire(
+                                                  '$idActividad');
+                                          showQuestionnaireActivity(
+                                              context,
+                                              _taskStudentController
+                                                  .activityQuestionnaire);
+                                        }
+                                      },
+                                      child: CardTaskStudent(
+                                        idActivity:
+                                            '${_taskStudentController.filteredActivities[index]['id']}',
+                                        affair:
+                                            '${_taskStudentController.filteredActivities[index]['asunto']}',
+                                        urlPhotoSender:
+                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
+                                        nameOfsender:
+                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
+                                        initialDate: initialDate,
+                                        finalDate: finalDate,
+                                        subject: subject,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }),
+                            ),
                     ),
                   ],
                 ),
@@ -203,7 +217,10 @@ class TaskStudentScreen extends StatelessWidget {
       showQuestionnaireActivityModal(context, questionnaireActivityData),
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-    );
+    ).then((value) {
+      _taskStudentController.selectedOption.value = -1;
+      _taskStudentController.selectedOptions.clear();
+    });
   }
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
@@ -404,9 +421,6 @@ class TaskStudentScreen extends StatelessWidget {
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
-    final List<Map<String, dynamic>> preguntas = (activityData['preguntas'] as List).cast<Map<String, dynamic>>();
-_taskStudentController.initializeQuestions(preguntas);
-
     if (activityData['idEstado'] == 1) {
       return Container(
         height: 700,
@@ -457,116 +471,341 @@ _taskStudentController.initializeQuestions(preguntas);
                 ),
                 const SizedBox(height: 20),
                 Column(
-                  children: activityData['preguntas'].map<Widget>((pregunta) {
-                    if (pregunta['idTipoPregunta'] == 3) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            pregunta['descripcion'],
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                  children: List.generate(
+                    activityData['preguntas'].length,
+                    (index) {
+                      var question = activityData['preguntas'][index];
+                      List<dynamic> options = [];
+                      for (var respuesta in question['respuestas']) {
+                        options.add(respuesta);
+                      }
+                      print('coentrao ${question['respuestas']}');
+                      if (question['idTipoPregunta'] == 4) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 255, 255, 255),
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                          Column(
-                            children:
-                                pregunta['respuestas'].map<Widget>((respuesta) {
-                              int preguntaId = pregunta['id'];
-                              int respuestaId = respuesta['id'];
-                              return Row(
-                                children: [
-                                  Obx(() => CupertinoRadio(
-                                        value: respuestaId,
-                                        groupValue: _taskStudentController
-                                                .selectedValues[preguntaId]!
-                                                .value
-                                            ? respuestaId
-                                            : null,
-                                        activeColor: const Color(0xff00C535),
-                                        onChanged: (int? value) {
-                                          print(value);
-                                          _taskStudentController
-                                              .selectedValues[preguntaId]!
-                                              .value = value == respuestaId;
-                                        },
-                                      )),
-                                  Text(
-                                    respuesta['descripcionRespuesta'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Column(
-                        children: [
-                          Text(
-                            pregunta['descripcion'],
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 5, left: 18.0, right: 18.0),
-                            child: TextField(
-                              controller:
-                                  _taskStudentController.commentController,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: listColor[11],
-                                labelText: "Respuesta escrita",
-                                hintText: "Respuesta escrita",
-                                hintStyle: const TextStyle(color: Colors.white),
-                                labelStyle:
-                                    const TextStyle(color: Colors.white),
-                                prefixIcon: const Icon(
-                                  Icons.question_answer_outlined,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question['descripcion'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                   color: Colors.white,
                                 ),
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0),
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0),
-                                  ),
-                                ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
                               ),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 12),
+                              const SizedBox(height: 5),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  options.length,
+                                  (index) => Obx(
+                                    () => CheckboxListTile(
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return const Color(0xff00C535);
+                                          }
+                                          return Colors.white;
+                                        },
+                                      ),
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      title: Text(
+                                        options[index]['descripcionRespuesta'],
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      value: _taskStudentController
+                                          .selectedOptions
+                                          .contains(index),
+                                      onChanged: (bool? value) {
+                                        if (value != null) {
+                                          _taskStudentController
+                                              .toggleSelectedOption(index);
+                                          var selectedResponseId =
+                                              options[index]['id'];
+                                          print(selectedResponseId);
+                                          print(_taskStudentController
+                                              .selectedOptions);
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (question['idTipoPregunta'] == 3) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
-                        ],
-                      );
-                    }
-                  }).toList(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question['descripcion'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  question['respuestas'].length,
+                                  (index) => Obx(
+                                    () => RadioListTile<int>(
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return const Color(0xff00C535);
+                                          }
+                                          return Colors.white;
+                                        },
+                                      ),
+                                      title: Text(
+                                        question['respuestas'][index]['descripcionRespuesta'],
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      value: question['respuestas'][index]['id'],
+                                      groupValue: _taskStudentController
+                                          .selectedOption.value,
+                                      onChanged: (value) {
+                                       _taskStudentController
+                                            .setSelectedOption(value!);
+                                        var selectedResponseId =
+                                            question['respuestas'][index]['id'];
+                                        print(
+                                            'ID de respuesta seleccionada: $selectedResponseId');
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question['descripcion'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Escribe tu respuesta aquí',
+                                  hintStyle:
+                                      const TextStyle(color: Colors.white70),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                style: const TextStyle(color: Colors.white),
+                                cursorColor: Colors.white,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                onChanged: (value) {},
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {},
+                  child: const Text('Enviar cuestionario'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return showModalPastActivity('El cuestionario');
+    }
+  }
+
+  Widget showQuestionnaireActivityModal1(BuildContext context, activityData) {
+    if (activityData['idEstado'] == 1) {
+      return Container(
+        height: 700,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[13],
+              listColor[11],
+            ],
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const ContSup(),
+                const SizedBox(height: 20),
+                const Text(
+                  'Cuestionario',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(1.5),
+                    1: FlexColumnWidth(3),
+                  },
+                  children: [
+                    _buildTableRow('Título:',
+                        '${activityData['tituloActividad']}', 16, 12),
+                    _buildTableRow('Descripción:',
+                        '${activityData['descripcionActividad']}', 16, 12),
+                    _buildTableRow('Asignatura:',
+                        '${activityData['materia']['nombreMateria']}', 16, 12),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: List.generate(
+                    activityData['preguntas'].length,
+                    (index) {
+                      var question = activityData['preguntas'][index];
+                      List<String> options = [];
+
+                      for (var respuesta in question['respuestas']) {
+                        options.add(respuesta['descripcionRespuesta']);
+                      }
+                      if (question['idTipoPregunta'] == 3 ||
+                          question['idTipoPregunta'] == 4) {
+                        return CardQuestions(
+                          idTypeQuestion: '${question['idTipoPregunta']}',
+                          question: question['descripcion'],
+                          options: options,
+                          onChanged: (value) {
+                            print(options);
+                          },
+                        );
+                      } else {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question['descripcion'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Escribe tu respuesta aquí',
+                                  hintStyle:
+                                      const TextStyle(color: Colors.white70),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                style: const TextStyle(color: Colors.white),
+                                cursorColor: Colors.white,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                onChanged: (value) {},
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

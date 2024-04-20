@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/widgets/card_chats.dart';
@@ -155,7 +154,7 @@ class Chats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 35),
+      padding: const EdgeInsets.only(bottom: 80),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

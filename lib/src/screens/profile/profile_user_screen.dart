@@ -1,5 +1,4 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +16,7 @@ class ProfileUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CupertinoActivityIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else {
         return Scaffold(
           body: Container(
@@ -99,7 +98,7 @@ class ProfileUserScreen extends StatelessWidget {
                     children: [
                       ClipOval(
                         child: Image.network(
-                          '${controller.userProfile['persona']['rutaFoto']}',
+                          '${controller.userProfile['persona']?['rutaFoto']}',
                           width: 110,
                           height: 110,
                           fit: BoxFit.cover,
@@ -119,14 +118,14 @@ class ProfileUserScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                              '${controller.userProfile['persona']['nombre1']} ${controller.userProfile['persona']['apellido1']}',
+                              '${controller.userProfile['persona']?['nombre1']} ${controller.userProfile['persona']?['apellido1']}',
                               style: TextStyle(
                                 color: listColor[10],
                                 fontFamily: 'CM Sans Serif',
                                 fontSize: 24.0,
                               )),
                           Text(
-                            '${controller.userProfile['persona']['email']}',
+                            '${controller.userProfile['persona']?['email']}',
                             style: TextStyle(
                                 color: listColor[10],
                                 fontFamily: 'Averta_Light',
@@ -168,25 +167,25 @@ class ProfileUserScreen extends StatelessWidget {
                       buildTextFieldWithIcon(
                         "Telefono",
                         Icons.phone,
-                        '${controller.userProfile['persona']['celular']}',
+                        '${controller.userProfile['persona']?['celular']}',
                       ),
                       const SizedBox(height: 10),
                       buildTextFieldWithIcon(
                         "Documento",
                         Icons.badge_outlined,
-                        '${controller.userProfile['persona']['identificacion']}',
+                        '${controller.userProfile['persona']?['identificacion']}',
                       ),
                       const SizedBox(height: 10),
                       buildTextFieldWithIcon(
                         "Ciudad de nacimiento",
                         Icons.badge_outlined,
-                        '${controller.userProfile['persona']['ciudad_nac']['descripcion']}',
+                        '${controller.userProfile['persona']?['ciudad_nac']['descripcion']}',
                       ),
                       const SizedBox(height: 10),
                       buildTextFieldWithIcon(
                         "Ciudad actual",
                         Icons.location_city,
-                        '${controller.userProfile['persona']['ciudad_ubicacion']['descripcion']}',
+                        '${controller.userProfile['persona']?['ciudad_ubicacion']['descripcion']}',
                       ),
                     ],
                   ),
