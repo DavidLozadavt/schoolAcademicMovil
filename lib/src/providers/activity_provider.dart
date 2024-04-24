@@ -105,6 +105,8 @@ class ActivityProvider extends GetConnect {
 
   Future<void> replyQuestionnaire(
       String idQualification, dynamic answers) async {
+
+    dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
     try {
       Response response = await post(
@@ -114,10 +116,8 @@ class ActivityProvider extends GetConnect {
           'accept': 'application/json',
         },
         contentType: 'application/json',
-        answers,
+        answersJson,
       );
-      print('es una prueba ${response.body}');
-      print('es una prueba2 $answers');
       if (response.statusCode == 401) {
         throw Failure('Correo o contraseña incorrectos');
       }

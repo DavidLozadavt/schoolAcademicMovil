@@ -152,24 +152,24 @@ class TaskStudentController extends GetxController {
   }*/
 
   void saveAnswers(
-      int idPregunta, String respuestaId, String respuestaDescripcion) {
-    var existingIndex = selectedAnswer
-        .indexWhere((respuesta) => respuesta.idPregunta == idPregunta);
+    int idPregunta, String respuestaId, String respuestaDescripcion) {
+  var existingIndex = selectedAnswer
+      .indexWhere((respuesta) => respuesta['idPregunta'] == idPregunta);
 
-    if (existingIndex != -1) {
-      selectedAnswer[existingIndex] = QuestionnaireAnswer(
-        idPregunta: idPregunta,
-        respuestaId: respuestaId,
-        respuestas: respuestaDescripcion,
-      );
-    } else {
-      selectedAnswer.add(QuestionnaireAnswer(
-        idPregunta: idPregunta,
-        respuestaId: respuestaId,
-        respuestas: respuestaDescripcion,
-      ));
-    }
+  if (existingIndex != -1) {
+    selectedAnswer[existingIndex] = {
+      'idPregunta': idPregunta,
+      'respuesta': respuestaId,
+      'respuestas': respuestaDescripcion,
+    };
+  } else {
+    selectedAnswer.add({
+      'idPregunta': idPregunta,
+      'respuesta': respuestaId,
+      'respuestas': respuestaDescripcion,
+    });
   }
+}
 
   void imprimirRespuestas() {
     print(selectedAnswer);
