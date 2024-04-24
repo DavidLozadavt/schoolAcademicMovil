@@ -218,8 +218,8 @@ class TaskStudentScreen extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
     ).then((value) {
-      _taskStudentController.selectedOption.value = -1;
       _taskStudentController.selectedOptions.clear();
+      _taskStudentController.selectedAnswer.clear();
     });
   }
 
@@ -421,6 +421,8 @@ class TaskStudentScreen extends StatelessWidget {
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
+    String idQualification = activityData['calificacionActividad']['id'].toString();
+    print('200000 ${activityData['calificacionActividad']['id']}');
     if (activityData['idEstado'] == 1) {
       return Container(
         height: 700,
@@ -475,12 +477,98 @@ class TaskStudentScreen extends StatelessWidget {
                     activityData['preguntas'].length,
                     (index) {
                       var question = activityData['preguntas'][index];
+                     
+
+                      final List<int> selectedValues =
+                          List.filled(activityData['preguntas'].length, -1).obs;
+
                       List<dynamic> options = [];
                       for (var respuesta in question['respuestas']) {
                         options.add(respuesta);
                       }
-                      print('coentrao ${question['respuestas']}');
-                      if (question['idTipoPregunta'] == 4) {
+                      print('coentrao $question');
+                      if (question['idTipoPregunta'] == 3) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question['descripcion'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  options.length,
+                                  (index) => Obx(
+                                    () => RadioListTile<int>(
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return const Color(0xff00C535);
+                                          }
+                                          return Colors.white;
+                                        },
+                                      ),
+                                      title: Text(
+                                        options[index]['descripcionRespuesta'],
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      value: options[index]['id'],
+                                      groupValue: selectedValues[index],
+                                      onChanged: (value) {
+                                        selectedValues[index] = value!;
+                                        for (int i = 0;
+                                            i < options.length;
+                                            i++) {
+                                          if (i != index) {
+                                            selectedValues[i] = -1;
+                                          }
+                                        }
+                                        var selectedResponseId = options[index][
+                                            'id']; // ID de la respuesta seleccionada
+                                        var selectedQuestionId =
+                                            question['id']; // ID de la pregunta
+                                        var selectedResponseDescription = options[
+                                                index][
+                                            'descripcionRespuesta']; // Descripción de la respuesta seleccionada
+                                        print(
+                                            'ID de pregunta seleccionada: $selectedQuestionId');
+                                        print(
+                                            'ID de respuesta seleccionada: $selectedResponseId');
+                                        print(
+                                            'Descripción de respuesta seleccionada: $selectedResponseDescription');
+                                        _taskStudentController.saveAnswers(
+                                          selectedQuestionId,
+                                          selectedResponseId.toString(),
+                                          selectedResponseDescription.toString(),
+                                        );
+                                       _taskStudentController.imprimirRespuestas();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (question['idTipoPregunta'] == 4) {
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
@@ -538,67 +626,6 @@ class TaskStudentScreen extends StatelessWidget {
                                           print(_taskStudentController
                                               .selectedOptions);
                                         }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (question['idTipoPregunta'] == 3) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10.0),
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                question['descripcion'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                  question['respuestas'].length,
-                                  (index) => Obx(
-                                    () => RadioListTile<int>(
-                                      fillColor: MaterialStateProperty
-                                          .resolveWith<Color>(
-                                        (Set<MaterialState> states) {
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return const Color(0xff00C535);
-                                          }
-                                          return Colors.white;
-                                        },
-                                      ),
-                                      title: Text(
-                                        question['respuestas'][index]['descripcionRespuesta'],
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                      value: question['respuestas'][index]['id'],
-                                      groupValue: _taskStudentController
-                                          .selectedOption.value,
-                                      onChanged: (value) {
-                                       _taskStudentController
-                                            .setSelectedOption(value!);
-                                        var selectedResponseId =
-                                            question['respuestas'][index]['id'];
-                                        print(
-                                            'ID de respuesta seleccionada: $selectedResponseId');
                                       },
                                     ),
                                   ),
@@ -668,7 +695,11 @@ class TaskStudentScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     disabledBackgroundColor: Colors.blue,
                   ),
-                  onPressed: () {},
+                  onPressed: () async{
+                    await _taskStudentController.replyQuestionnaire(idQualification);
+                    _taskStudentController.reiniciarRespuestas();
+
+                  },
                   child: const Text('Enviar cuestionario'),
                 ),
               ],
@@ -737,9 +768,10 @@ class TaskStudentScreen extends StatelessWidget {
                     (index) {
                       var question = activityData['preguntas'][index];
                       List<String> options = [];
-
+                      List<int> options2 = [];
                       for (var respuesta in question['respuestas']) {
                         options.add(respuesta['descripcionRespuesta']);
+                        options2.add(respuesta['id']);
                       }
                       if (question['idTipoPregunta'] == 3 ||
                           question['idTipoPregunta'] == 4) {
@@ -747,8 +779,9 @@ class TaskStudentScreen extends StatelessWidget {
                           idTypeQuestion: '${question['idTipoPregunta']}',
                           question: question['descripcion'],
                           options: options,
+                          options2: options2,
                           onChanged: (value) {
-                            print(options);
+                            print(value);
                           },
                         );
                       } else {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CardQuestions extends StatefulWidget {
   final String question;
   final List<String>? options;
+  final List<int>? options2;
   final Function(int)? onChanged;
   final String idTypeQuestion;
 
@@ -10,6 +11,7 @@ class CardQuestions extends StatefulWidget {
     Key? key,
     required this.question,
     this.options,
+    this.options2,
     this.onChanged,
     required this.idTypeQuestion,
   }) : super(key: key);
@@ -49,7 +51,7 @@ class _CardQuestionsState extends State<CardQuestions> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
-                widget.options!.length,
+                widget.options2!.length,
                 (index) => RadioListTile<int>(
                   fillColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
@@ -63,13 +65,14 @@ class _CardQuestionsState extends State<CardQuestions> {
                     widget.options![index],
                     style: const TextStyle(color: Colors.white),
                   ),
-                  value: index,
+                  value: widget.options2![index],
                   groupValue: _selectedOption,
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
                     });
-                    widget.onChanged!(value!);
+                    print(value);
+                    //widget.onChanged!(value!);
                   },
                 ),
               ),
@@ -126,7 +129,6 @@ class _CardQuestionsState extends State<CardQuestions> {
                         _selectedOptions.remove(index);
                       }
                     });
-                  
                   },
                 ),
               ),

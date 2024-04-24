@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -73,19 +74,18 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  Future<void> replyActivity(
-      String id, String? comment, File? file) async {
+  Future<void> replyActivity(String id, String? comment, File? file) async {
     String token = await authService.getToken();
     try {
       var request =
-          http.MultipartRequest('POST', Uri.parse('$replyActivityUrl$id'));
+          http.MultipartRequest('POST', Uri.parse('$postReplyActivityUrl$id'));
       request.headers['Authorization'] = 'Bearer $token';
       if (comment != null) {
         request.fields['ComentarioEstudiante'] = comment;
       }
       if (file != null) {
-        request.files.add(http.MultipartFile('archivoFile',
-            file.readAsBytes().asStream(), file.lengthSync(),
+        request.files.add(http.MultipartFile(
+            'archivoFile', file.readAsBytes().asStream(), file.lengthSync(),
             filename: file.path.split('/').last));
       }
 
@@ -100,6 +100,38 @@ class ActivityProvider extends GetConnect {
       }
     } catch (e) {
       throw Exception('Error al enviar la respuesta: $e');
+    }
+  }
+
+  Future<void> replyQuestionnaire(
+      String idQualification, dynamic answers) async {
+    String token = await authService.getToken();
+    try {
+      Response response = await post(
+        '$postReplyQuestionnaireUrl$idQualification',
+        headers: {
+          'Authorization': 'Bearer $token',
+          'accept': 'application/json',
+        },
+        contentType: 'application/json',
+        answers,
+      );
+      print('es una prueba ${response.body}');
+      print('es una prueba2 $answers');
+      if (response.statusCode == 401) {
+        throw Failure('Correo o contraseña incorrectos');
+      }
+
+      if (response.statusCode != 200) {
+        throw Failure('Algo salió mal, vuelve a intentarlo');
+      }
+
+      if (response.statusCode == 200) {
+        Get.back();
+        Get.snackbar('¡OK!', 'Respondiste tu cuestionario');
+      }
+    } catch (e) {
+      throw Failure('$e');
     }
   }
 }

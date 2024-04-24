@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/errors/failure.dart';
+import 'package:vtschool/src/models/questionnaire_answer_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/notifications_provider.dart';
 
@@ -21,8 +22,10 @@ class TaskStudentController extends GetxController {
   RxString selectedFilePath = ''.obs;
   Rx<File> filePath = Rx<File>(File(''));
 
-  RxInt selectedOption = RxInt(-1);
+  //RxInt selectedOption = RxInt(-1);
   RxList<int> selectedOptions = RxList<int>([]);
+
+  final List<dynamic> selectedAnswer = <dynamic>[].obs;
 
   @override
   void onInit() {
@@ -85,18 +88,15 @@ class TaskStudentController extends GetxController {
               id, commentController.text, filePath.value);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-          print('222222222222222');
         } else if (filePath.value.path.isEmpty) {
           await _activityProvider.replyActivity(
               id, commentController.text, null);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-          print('3333333333333');
         } else if (commentController.text.isEmpty) {
           await _activityProvider.replyActivity(id, null, filePath.value);
           Get.back();
           Get.snackbar('¡OK!', 'Actividad contestada');
-          print('444444444444444');
         }
       }
     } on Failure catch (e) {
@@ -104,6 +104,15 @@ class TaskStudentController extends GetxController {
         '¡Error!',
         '${e.message}!',
       );
+    }
+  }
+
+  Future<void> replyQuestionnaire(String idQualification) async {
+    
+    try {
+      await _activityProvider.replyQuestionnaire(idQualification, selectedAnswer);
+    } catch (e) {
+      print('Error al enviar la evidencia: $e');
     }
   }
 
@@ -138,8 +147,36 @@ class TaskStudentController extends GetxController {
     filePath.value = path;
   }
 
-  void setSelectedOption(int value) {
+  /* void setSelectedOption(int value) {
     selectedOption.value = value;
+  }*/
+
+  void saveAnswers(
+      int idPregunta, String respuestaId, String respuestaDescripcion) {
+    var existingIndex = selectedAnswer
+        .indexWhere((respuesta) => respuesta.idPregunta == idPregunta);
+
+    if (existingIndex != -1) {
+      selectedAnswer[existingIndex] = QuestionnaireAnswer(
+        idPregunta: idPregunta,
+        respuestaId: respuestaId,
+        respuestas: respuestaDescripcion,
+      );
+    } else {
+      selectedAnswer.add(QuestionnaireAnswer(
+        idPregunta: idPregunta,
+        respuestaId: respuestaId,
+        respuestas: respuestaDescripcion,
+      ));
+    }
+  }
+
+  void imprimirRespuestas() {
+    print(selectedAnswer);
+  }
+
+  void reiniciarRespuestas() {
+    selectedAnswer.clear();
   }
 
   void toggleSelectedOption(int index) {
