@@ -489,9 +489,11 @@ class TaskStudentScreen extends StatelessWidget {
                       print('coentrao $question');
                       if (question['idTipoPregunta'] == 3) {
                         return Container(
+
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 255, 255, 255),
@@ -542,18 +544,12 @@ class TaskStudentScreen extends StatelessWidget {
                                           }
                                         }
                                         var selectedResponseId = options[index][
-                                            'id']; // ID de la respuesta seleccionada
+                                            'id'];
                                         var selectedQuestionId =
-                                            question['id']; // ID de la pregunta
+                                            question['id']; 
                                         var selectedResponseDescription = options[
                                                 index][
-                                            'descripcionRespuesta']; // Descripción de la respuesta seleccionada
-                                        print(
-                                            'ID de pregunta seleccionada: $selectedQuestionId');
-                                        print(
-                                            'ID de respuesta seleccionada: $selectedResponseId');
-                                        print(
-                                            'Descripción de respuesta seleccionada: $selectedResponseDescription');
+                                            'descripcionRespuesta'];
                                         _taskStudentController.saveAnswers(
                                           selectedQuestionId,
                                           selectedResponseId.toString(),
@@ -573,6 +569,7 @@ class TaskStudentScreen extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 255, 255, 255),
@@ -639,6 +636,7 @@ class TaskStudentScreen extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
+                             color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 255, 255, 255),

@@ -13,6 +13,7 @@ const getActivityByIdUrl = '${baseURL}actividadesByid?id=';
 const getActivityQuestionnaireUrl = '${baseURL}cuestionario/actividad_cuestionario/';
 const postReplyActivityUrl = '${baseURL}responder_actividad/';
 const postReplyQuestionnaireUrl = '${baseURL}cuestionario/responder_cuestionario/';
+const postReplyQuestionnaire1Url = '${baseURL}cuestionario/responder_cuestionario1/';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

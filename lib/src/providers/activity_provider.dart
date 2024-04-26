@@ -119,7 +119,39 @@ class ActivityProvider extends GetConnect {
         answersJson,
       );
       if (response.statusCode == 401) {
-        throw Failure('Correo o contraseña incorrectos');
+        throw Failure('Otro');
+      }
+
+      if (response.statusCode != 200) {
+        throw Failure('Algo salió mal, vuelve a intentarlo');
+      }
+
+      if (response.statusCode == 200) {
+        Get.back();
+        Get.snackbar('¡OK!', 'Respondiste tu cuestionario');
+      }
+    } catch (e) {
+      throw Failure('$e');
+    }
+  }
+
+  Future<void> replyQuestionnaire1(
+      String idQualification, dynamic answers) async {
+
+    dynamic answersJson = jsonEncode(answers);
+    String token = await authService.getToken();
+    try {
+      Response response = await post(
+        '$postReplyQuestionnaire1Url$idQualification',
+        headers: {
+          'Authorization': 'Bearer $token',
+          'accept': 'application/json',
+        },
+        contentType: 'application/json',
+        answersJson,
+      );
+      if (response.statusCode == 401) {
+        throw Failure('Otro');
       }
 
       if (response.statusCode != 200) {
