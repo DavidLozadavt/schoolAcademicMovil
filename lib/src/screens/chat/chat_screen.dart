@@ -1,18 +1,21 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
 
 class Chat extends StatelessWidget {
   Chat({super.key});
   final TextEditingController _searchController = TextEditingController();
- 
+  final mensajes = false;
+
   final ChatController chatController = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: listColor[12],
         title: const Row(
           children: [
             CircleAvatar(
@@ -21,25 +24,128 @@ class Chat extends StatelessWidget {
             ),
             SizedBox(width: 10),
             Column(
-              
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Cristiano Ronaldo'),
-                Text('Futbolista', style: TextStyle(
-                    fontSize: 12
-                ),),
+                Text(
+                  'Futbolista',
+                  style: TextStyle(fontSize: 12),
+                ),
               ],
             ),
             Spacer(),
-            Icon(Icons.more_vert), 
+            Icon(Icons.more_vert),
           ],
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(color: listColor[11].withOpacity(0.1)),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: NetworkImage(
+              'https://media.istockphoto.com/id/1218737747/es/vector/aprender-en-l%C3%ADnea-chat-de-videollamadas-de-e-learning-con-clase-educaci%C3%B3n-a-distancia.jpg?s=2048x2048&w=is&k=20&c=mkHKSpauHrMUfDUxOwOv0VlEPHpOcqvmiYeOfjGAULE='),
+          fit: BoxFit.cover,
+        )),
         child: Column(
           children: <Widget>[
-            Expanded(child: Container()),
+            Container(
+              alignment:
+                  mensajes ? Alignment.centerLeft : Alignment.centerRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  
+                  Card(
+                    elevation: 1,
+                    color: listColor[12],
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Hooola compaÑero', style: kTlightpromin),
+                          //const SizedBox(height: 8),
+                          Text('02-05-2024', style: kTlightpromin2),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                  Card(
+                    elevation: 1,
+                    color: listColor[12],
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Como estas?', style: kTlightpromin),
+                          //const SizedBox(height: 8),
+                          Text('02-05-2024', style: kTlightpromin2),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+               
+              child: Container(
+                alignment:
+                    mensajes ? Alignment.centerRight : Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+                    Card(
+                      elevation: 1,
+                      color: listColor[11].withOpacity(0.5),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Hola', style: kTlightpromin),
+                            //const SizedBox(height: 8),
+                            Text('02-05-2024', style: kTlightpromin2),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      elevation: 1,
+                      color: listColor[12],
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Muy bien', style: kTlightpromin),
+                            //const SizedBox(height: 8),
+                            Text('02-05-2024', style: kTlightpromin2),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      elevation: 1,
+                      color: listColor[12],
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('y tu?', style: kTlightpromin),
+                            //const SizedBox(height: 8),
+                            Text('02-05-2024', style: kTlightpromin2),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -49,8 +155,7 @@ class Chat extends StatelessWidget {
                       focusNode: chatController.textFieldFocus,
                       controller: chatController.textFieldController,
                       onChanged: (value) {},
-                      keyboardType: TextInputType
-                          .multiline,
+                      keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
                         filled: true,
@@ -63,22 +168,18 @@ class Chat extends StatelessWidget {
 
                             chatController.toggleEmojiShowing();
                           },
-                          icon: Icon(Icons.emoji_emotions_outlined),
+                          icon: const Icon(Icons.emoji_emotions_outlined),
                         ),
                         suffixIcon: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.ads_click),
-                              onPressed: () {
-                               
-                              },
+                              icon: const Icon(Icons.ads_click),
+                              onPressed: () {},
                             ),
                             IconButton(
-                              icon: Icon(Icons.camera_alt_outlined),
-                              onPressed: () {
-                              
-                              },
+                              icon: const Icon(Icons.camera_alt_outlined),
+                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -108,7 +209,7 @@ class Chat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.send))
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.send))
                 ],
               ),
             ),

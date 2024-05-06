@@ -103,9 +103,8 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  Future<void> replyQuestionnaire(
+  Future<Map<String, dynamic>> replyQuestionnaire(
       String idQualification, dynamic answers) async {
-
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
     try {
@@ -118,26 +117,30 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
+      print('288888 ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }
-
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');
       }
-
       if (response.statusCode == 200) {
         Get.back();
         Get.snackbar('¡OK!', 'Respondiste tu cuestionario');
+        if (response.body.isNotEmpty) {
+          return response.body;
+        } else {
+          throw Failure('La respuesta del servidor está vacía.');
+        }
       }
     } catch (e) {
       throw Failure('$e');
     }
+    throw Exception('Error: La función no devolvió un valor');
   }
 
   Future<void> replyQuestionnaire1(
       String idQualification, dynamic answers) async {
-
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
     try {
@@ -153,11 +156,9 @@ class ActivityProvider extends GetConnect {
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }
-
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');
       }
-
       if (response.statusCode == 200) {
         Get.back();
         Get.snackbar('¡OK!', 'Respondiste tu cuestionario');

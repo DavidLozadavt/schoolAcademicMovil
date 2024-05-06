@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:file_picker/file_picker.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/activity/task_student_controller.dart';
-import 'package:vtschool/src/widgets/card_questions.dart';
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 
@@ -220,6 +220,7 @@ class TaskStudentScreen extends StatelessWidget {
     ).then((value) {
       _taskStudentController.selectedOptions.clear();
       _taskStudentController.selectedAnswer.clear();
+      _taskStudentController.valuesInputQuestionnaire.clear();
     });
   }
 
@@ -421,8 +422,8 @@ class TaskStudentScreen extends StatelessWidget {
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
-    String idQualification = activityData['calificacionActividad']['id'].toString();
-    print('200000 ${activityData['calificacionActividad']['id']}');
+    String idQualification =
+        activityData['calificacionActividad']['id'].toString();
     if (activityData['idEstado'] == 1) {
       return Container(
         height: 700,
@@ -477,7 +478,6 @@ class TaskStudentScreen extends StatelessWidget {
                     activityData['preguntas'].length,
                     (index) {
                       var question = activityData['preguntas'][index];
-                     
 
                       final List<int> selectedValues =
                           List.filled(activityData['preguntas'].length, -1).obs;
@@ -486,10 +486,8 @@ class TaskStudentScreen extends StatelessWidget {
                       for (var respuesta in question['respuestas']) {
                         options.add(respuesta);
                       }
-                      print('coentrao $question');
                       if (question['idTipoPregunta'] == 3) {
                         return Container(
-
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
@@ -543,19 +541,21 @@ class TaskStudentScreen extends StatelessWidget {
                                             selectedValues[i] = -1;
                                           }
                                         }
-                                        var selectedResponseId = options[index][
-                                            'id'];
-                                        var selectedQuestionId =
-                                            question['id']; 
-                                        var selectedResponseDescription = options[
-                                                index][
-                                            'descripcionRespuesta'];
+                                        var selectedResponseId =
+                                            options[index]['id'];
+                                        var selectedQuestionId = question['id'];
+                                        var selectedResponseDescription =
+                                            options[index]
+                                                ['descripcionRespuesta'];
                                         _taskStudentController.saveAnswers(
                                           selectedQuestionId,
                                           selectedResponseId.toString(),
-                                          selectedResponseDescription.toString(),
+                                          selectedResponseDescription
+                                              .toString(),
+                                          3,
                                         );
-                                       _taskStudentController.imprimirRespuestas();
+                                        print(_taskStudentController
+                                            .selectedAnswer);
                                       },
                                     ),
                                   ),
@@ -619,9 +619,22 @@ class TaskStudentScreen extends StatelessWidget {
                                               .toggleSelectedOption(index);
                                           var selectedResponseId =
                                               options[index]['id'];
+                                          var selectedQuestionId =
+                                              question['id'];
+                                          var selectedResponseDescription =
+                                              options[index]
+                                                  ['descripcionRespuesta'];
                                           print(selectedResponseId);
-                                          print(_taskStudentController
-                                              .selectedOptions);
+                                          print(selectedQuestionId);
+                                          print(selectedResponseDescription);
+
+                                          _taskStudentController.saveAnswers(
+                                              selectedQuestionId,
+                                              selectedResponseId.toString(),
+                                              selectedResponseDescription
+                                                  .toString(),
+                                              4,
+                                              value: value);
                                         }
                                       },
                                     ),
@@ -632,11 +645,12 @@ class TaskStudentScreen extends StatelessWidget {
                           ),
                         );
                       } else {
+                        var _idQuestion = question['id'].toString();
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                             color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 255, 255, 255),
@@ -679,7 +693,10 @@ class TaskStudentScreen extends StatelessWidget {
                                 cursorColor: Colors.white,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  _taskStudentController.addValue(
+                                      value, _idQuestion);
+                                },
                               ),
                             ],
                           ),
@@ -693,157 +710,45 @@ class TaskStudentScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     disabledBackgroundColor: Colors.blue,
                   ),
-                  onPressed: () async{
-                    await _taskStudentController.replyQuestionnaire(idQualification);
-                    _taskStudentController.reiniciarRespuestas();
-
-                  },
-                  child: const Text('Enviar cuestionario'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return showModalPastActivity('El cuestionario');
-    }
-  }
-
-  Widget showQuestionnaireActivityModal1(BuildContext context, activityData) {
-    if (activityData['idEstado'] == 1) {
-      return Container(
-        height: 700,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[13],
-              listColor[11],
-            ],
-          ),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(32),
-            topRight: Radius.circular(32),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const ContSup(),
-                const SizedBox(height: 20),
-                const Text(
-                  'Cuestionario',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(1.5),
-                    1: FlexColumnWidth(3),
-                  },
-                  children: [
-                    _buildTableRow('Título:',
-                        '${activityData['tituloActividad']}', 16, 12),
-                    _buildTableRow('Descripción:',
-                        '${activityData['descripcionActividad']}', 16, 12),
-                    _buildTableRow('Asignatura:',
-                        '${activityData['materia']['nombreMateria']}', 16, 12),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Column(
-                  children: List.generate(
-                    activityData['preguntas'].length,
-                    (index) {
-                      var question = activityData['preguntas'][index];
-                      List<String> options = [];
-                      List<int> options2 = [];
-                      for (var respuesta in question['respuestas']) {
-                        options.add(respuesta['descripcionRespuesta']);
-                        options2.add(respuesta['id']);
-                      }
-                      if (question['idTipoPregunta'] == 3 ||
-                          question['idTipoPregunta'] == 4) {
-                        return CardQuestions(
-                          idTypeQuestion: '${question['idTipoPregunta']}',
-                          question: question['descripcion'],
-                          options: options,
-                          options2: options2,
-                          onChanged: (value) {
-                            print(value);
-                          },
-                        );
+                  onPressed: () async {
+                    List<int> idTypeQuestion = [];
+                    var questions = activityData['preguntas'];
+                    for (var question in questions) {
+                      idTypeQuestion.add(question["idTipoPregunta"]);
+                    }
+                    if (idTypeQuestion.contains(1) ||
+                        idTypeQuestion.contains(3) &&
+                            idTypeQuestion.contains(4)) {
+                      if (_taskStudentController.valuesInputQuestionnaire.isNotEmpty || _taskStudentController.selectedAnswer.isNotEmpty) {
+                        await _taskStudentController.replyQuestionnaire1(
+                            idQualification, showModalInfoAnswer());
+                        await _taskStudentController
+                            .replyQuestionnaire(idQualification);
                       } else {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10.0),
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                question['descripcion'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Escribe tu respuesta aquí',
-                                  hintStyle:
-                                      const TextStyle(color: Colors.white70),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                  ),
-                                ),
-                                style: const TextStyle(color: Colors.white),
-                                cursorColor: Colors.white,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                onChanged: (value) {},
-                              ),
-                            ],
-                          ),
+                        Get.defaultDialog(
+                          title: '¡Información!',
+                          middleText: 'Debes responder por al menos una pregunta',
+                          textConfirm: 'OK',
+                          onConfirm: () => Get.back(),
                         );
                       }
-                    },
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    disabledBackgroundColor: Colors.blue,
-                  ),
-                  onPressed: () {},
+                    } else {
+                      if (_taskStudentController
+                          .selectedAnswer.isNotEmpty) {
+                        await _taskStudentController.replyQuestionnaire(
+                            idQualification,
+                            alert: showModalQualification());
+                      } else {
+                         Get.defaultDialog(
+                          title: '¡Información!',
+                          middleText: 'Debes responder por al menos una pregunta',
+                          textConfirm: 'OK',
+                          onConfirm: () => Get.back(),
+                        );
+                      }
+                    }
+                    _taskStudentController.reiniciarRespuestas();
+                  },
                   child: const Text('Enviar cuestionario'),
                 ),
               ],
@@ -932,6 +837,215 @@ class TaskStudentScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget showModalInfoAnswer() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 28.0),
+      height: 400,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            listColor[13],
+            listColor[11],
+          ],
+        ),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const ContSup(),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              'Información',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              '¡Debes estar pendiente, el \n profesor enviará la nota final!',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        textStyle: const TextStyle(fontSize: 12),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text(
+                        'Ok',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget showModalQualification() {
+    return Obx(() {
+      List<dynamic> respuestas =
+          _taskStudentController.answerRating['respuestas'];
+      int allQuestion =
+          _taskStudentController.activityQuestionnaire['preguntas'].length;
+      int successes = _taskStudentController.answerRating['cantidad_aciertos'];
+      String qualification =
+          _taskStudentController.answerRating['puntaje_total'];
+      double percentage = (successes * 100 / allQuestion);
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+        height: 600,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              listColor[13],
+              listColor[11],
+            ],
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const ContSup(),
+            const SizedBox(height: 20),
+            const Text(
+              'Respuestas',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: respuestas.length,
+                itemBuilder: (context, index) {
+                  final respuesta = respuestas[index];
+                  final dynamic incorrecta = respuesta['incorrectas'];
+                  return Card(
+                    color: listColor[10],
+                    child: ListTile(
+                      title: Text(
+                        'Pregunta: ${respuesta['enunciado']}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: incorrecta == null
+                              ? Colors.greenAccent[700]
+                              : Colors.red[700],
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (incorrecta != null)
+                            Text(
+                              'Su respuesta: ${respuesta['proporcionada']}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          Text(
+                            'Respuesta correcta: ${respuesta['correcta']}',
+                            style: TextStyle(
+                              color: incorrecta == null
+                                  ? Colors.black
+                                  : Colors.red[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Calificacion final: $qualification',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        textStyle: const TextStyle(fontSize: 12),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text(
+                        'Ok',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  'Cantidad de aciertos: $successes de $allQuestion ($percentage%)',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      );
+    });
   }
 
   TableRow _buildTableRow(String title, String content, double titleFontSize,

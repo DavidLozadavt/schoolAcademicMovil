@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/errors/failure.dart';
-import 'package:vtschool/src/models/questionnaire_answer_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/notifications_provider.dart';
 
@@ -21,11 +20,10 @@ class TaskStudentController extends GetxController {
   var typeActivitiesById = {}.obs;
   RxString selectedFilePath = ''.obs;
   Rx<File> filePath = Rx<File>(File(''));
-
-  //RxInt selectedOption = RxInt(-1);
-  RxList<int> selectedOptions = RxList<int>([]);
-
   final List<dynamic> selectedAnswer = <dynamic>[].obs;
+  var valuesInputQuestionnaire = [].obs;
+  RxList<int> selectedOptions = RxList<int>([]);
+  var answerRating = {}.obs;
 
   @override
   void onInit() {
@@ -66,9 +64,9 @@ class TaskStudentController extends GetxController {
     } finally {}
   }
 
-  Future<void> replyActivity(String id, String? comentario, File? file) async {
+  Future<void> replyActivity(String id, String? comment, File? file) async {
     try {
-      await _activityProvider.replyActivity(id, comentario, file);
+      await _activityProvider.replyActivity(id, comment, file);
     } catch (e) {
       print('Error al enviar la evidencia: $e');
     }
@@ -107,10 +105,34 @@ class TaskStudentController extends GetxController {
     }
   }
 
-  Future<void> replyQuestionnaire(String idQualification) async {
-    
+  Future<void> replyQuestionnaire(String idQualification,
+      {Widget? alert}) async {
     try {
-      await _activityProvider.replyQuestionnaire(idQualification, selectedAnswer);
+      final response = await _activityProvider.replyQuestionnaire(
+          idQualification, selectedAnswer);
+
+      answerRating.value = response;
+      print('4444444444444 $answerRating');
+      await Get.bottomSheet(
+        alert!,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+      );
+    } catch (e) {
+      print('Error al enviar la evidencia: $e');
+    }
+  }
+
+  Future<void> replyQuestionnaire1(String idQualification, Widget alert) async {
+    try {
+      await _activityProvider.replyQuestionnaire1(
+          idQualification, valuesInputQuestionnaire);
+
+      await Get.bottomSheet(
+        alert,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+      );
     } catch (e) {
       print('Error al enviar la evidencia: $e');
     }
@@ -122,7 +144,7 @@ class TaskStudentController extends GetxController {
     } else {
       filteredActivities.assignAll(activities.where((activity) {
         Map<String, dynamic> decodedData = jsonDecode(activity['metadataInfo']);
-        final String asunto = activity['asunto'].toString().toLowerCase();
+        final String affair = activity['asunto'].toString().toLowerCase();
         final String id = activity['id'].toString().toLowerCase();
         final String nameTeacher =
             activity['personaRemitente']['nombre1'].toString().toLowerCase();
@@ -130,7 +152,7 @@ class TaskStudentController extends GetxController {
             activity['personaRemitente']['apellido1'].toString().toLowerCase();
         final String subject =
             decodedData['nombreMateria'].toString().toLowerCase();
-        return asunto.contains(query.toLowerCase()) ||
+        return affair.contains(query.toLowerCase()) ||
             id.contains(query.toLowerCase()) ||
             nameTeacher.contains(query.toLowerCase()) ||
             lastNameTeacher.contains(query.toLowerCase()) ||
@@ -147,36 +169,55 @@ class TaskStudentController extends GetxController {
     filePath.value = path;
   }
 
-  /* void setSelectedOption(int value) {
-    selectedOption.value = value;
-  }*/
-
   void saveAnswers(
-    int idPregunta, String respuestaId, String respuestaDescripcion) {
-  var existingIndex = selectedAnswer
-      .indexWhere((respuesta) => respuesta['idPregunta'] == idPregunta);
-
-  if (existingIndex != -1) {
-    selectedAnswer[existingIndex] = {
-      'idPregunta': idPregunta,
-      'respuesta': respuestaId,
-      'respuestas': respuestaDescripcion,
-    };
-  } else {
-    selectedAnswer.add({
-      'idPregunta': idPregunta,
-      'respuesta': respuestaId,
-      'respuestas': respuestaDescripcion,
-    });
-  }
-}
-
-  void imprimirRespuestas() {
-    print(selectedAnswer);
+      int idQuestion, String idAnswer, String description, int idTypeQuestion,
+      {bool? value}) {
+    var existingIndex = selectedAnswer
+        .indexWhere((answer) => answer['idPregunta'] == idQuestion);
+    if (idTypeQuestion == 3) {
+      if (existingIndex != -1) {
+        selectedAnswer[existingIndex] = {
+          'idPregunta': idQuestion,
+          'respuesta': idAnswer,
+          'respuestas': description,
+        };
+      } else {
+        selectedAnswer.add({
+          'idPregunta': idQuestion,
+          'respuesta': idAnswer,
+          'respuestas': description,
+        });
+      }
+    } else {
+      if (value == true) {
+        selectedAnswer.add({
+          'idPregunta': idQuestion,
+          'respuesta': idAnswer,
+          'respuestas': description,
+        });
+      } else {
+        selectedAnswer.removeAt(existingIndex);
+      }
+    }
   }
 
   void reiniciarRespuestas() {
     selectedAnswer.clear();
+    valuesInputQuestionnaire.clear();
+  }
+
+  void addValue(String value, String idQuestion) {
+    var existingIndex = valuesInputQuestionnaire
+        .indexWhere((answers) => answers['idPregunta'] == idQuestion);
+    if (existingIndex != -1) {
+      valuesInputQuestionnaire[existingIndex] = {
+        'idPregunta': idQuestion,
+        'respuesta': value
+      };
+    } else {
+      valuesInputQuestionnaire
+          .add({'idPregunta': idQuestion, 'respuesta': value});
+    }
   }
 
   void toggleSelectedOption(int index) {
