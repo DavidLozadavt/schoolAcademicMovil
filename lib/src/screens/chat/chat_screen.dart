@@ -53,7 +53,6 @@ class Chat extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  
                   Card(
                     elevation: 1,
                     color: listColor[12],
@@ -69,7 +68,7 @@ class Chat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   Card(
                     elevation: 1,
                     color: listColor[12],

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CardChats extends StatelessWidget {
-  final String idActivity;
+  //final String idActivity;
   final String urlPhotoSender;
   final String name;
+  final String lastName;
   final String endMessage;
 
   const CardChats({
-    required this.idActivity,
+    //required this.idActivity,
     required this.urlPhotoSender,
     required this.name,
     required this.endMessage,
+    required this.lastName,
     Key? key,
   }) : super(key: key);
 
@@ -45,7 +47,7 @@ class CardChats extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          '$name $lastName',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

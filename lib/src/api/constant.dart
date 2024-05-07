@@ -14,7 +14,8 @@ const getActivityQuestionnaireUrl = '${baseURL}cuestionario/actividad_cuestionar
 const postReplyActivityUrl = '${baseURL}responder_actividad/';
 const postReplyQuestionnaireUrl = '${baseURL}cuestionario/responder_cuestionario/';
 const postReplyQuestionnaire1Url = '${baseURL}cuestionario/responder_cuestionario1/';
-const getStudentByIdSubject = '${baseURL}get_student_by_id_materia/';
+const getStudentByIdSubjectUrl = '${baseURL}get_student_by_id_materia/';
+const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';
