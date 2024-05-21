@@ -24,7 +24,7 @@ class StudentPage extends StatefulWidget {
 }
 
 class _StudentPageState extends State<StudentPage> {
-  Student selectedStudent = Student('Edwin', [
+  Student selectedStudent = Student('JOSE', [
     Grade('Matematicas', 5.0),
     Grade('Ingles', 4.0),
     Grade('Historia', 3.0),

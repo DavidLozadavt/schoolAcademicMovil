@@ -1,60 +1,28 @@
-import 'package:flutter/material.dart';
+/*import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vtschool/src/screens/chat/chat_controller.dart';
 
 class PusherController extends GetxController {
   final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  final ChatController chatController = ChatController();
   final log = ''.obs;
-  final apiKey = TextEditingController();
-  final cluster = TextEditingController();
-  final channelName = TextEditingController();
-  final eventName = TextEditingController();
-  final channelFormKey = GlobalKey<FormState>();
-  final eventFormKey = GlobalKey<FormState>();
-  final listViewController = ScrollController();
-  final data = TextEditingController();
 
   void logMessage(String text) {
     print("LOG: $text");
     log.value += text + "\n";
-    Future.delayed(
-      Duration(milliseconds: 100),
-      () => listViewController.jumpTo(listViewController.position.maxScrollExtent),
-    );
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    initPlatformState();
-  }
-
-  void initPlatformState() async {
-    if (!GetPlatform.isAndroid) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      apiKey.text = prefs.getString("apiKey") ?? '';
-      cluster.text = prefs.getString("cluster") ?? 'eu';
-      channelName.text = prefs.getString("channelName") ?? 'my-channel';
-      eventName.text = prefs.getString("eventName") ?? 'client-event';
-      data.text = prefs.getString("data") ?? 'test';
-    }
-  }
-
-  void onConnectPressed() async {
-    if (!channelFormKey.currentState!.validate()) {
-      return;
-    }
-    FocusScope.of(Get.context!).requestFocus(FocusNode());
+  void onConnectPressed(String idUserSelected) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("apiKey", apiKey.text);
-    prefs.setString("cluster", cluster.text);
-    prefs.setString("channelName", channelName.text);
-
+    String myIdUser = prefs.getString('idUser') ?? '';
     try {
       await pusher.init(
-        apiKey: apiKey.text,
-        cluster: cluster.text,
+        apiKey: '850de022339c4d609a8f',
+        cluster: 'us2',
+        authEndpoint: 'http://192.168.1.101:8000/api/auth/pusher',
         onConnectionStateChange: onConnectionStateChange,
         onError: onError,
         onSubscriptionSucceeded: onSubscriptionSucceeded,
@@ -64,11 +32,16 @@ class PusherController extends GetxController {
         onMemberAdded: onMemberAdded,
         onMemberRemoved: onMemberRemoved,
         onSubscriptionCount: onSubscriptionCount,
+        onAuthorizer: onAuthorizer,
       );
-      await pusher.subscribe(channelName: channelName.text);
       await pusher.connect();
+      final intMyIdUser = int.parse(myIdUser.toString());
+      final intIdUserSelected = int.parse(idUserSelected.toString());
+      final chatChannelName =
+          'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
+      await pusher.subscribe(channelName: chatChannelName);
     } catch (e) {
-      logMessage("ERROR: $e");
+      print('9999999999 $e');
     }
   }
 
@@ -82,6 +55,7 @@ class PusherController extends GetxController {
 
   void onEvent(PusherEvent event) {
     logMessage("onEvent: $event");
+    chatController.messages.add(event.data);
   }
 
   void onSubscriptionSucceeded(String channelName, dynamic data) {
@@ -107,29 +81,41 @@ class PusherController extends GetxController {
   }
 
   void onSubscriptionCount(String channelName, int subscriptionCount) {
-    logMessage("onSubscriptionCount: $channelName subscriptionCount: $subscriptionCount");
+    logMessage(
+        "onSubscriptionCount: $channelName subscriptionCount: $subscriptionCount");
   }
 
-  dynamic onAuthorizer(String channelName, String socketId, dynamic options) {
+  String generateHmacSHA256(String data, String key) {
+    final hmacSha256 = Hmac(sha256, utf8.encode(key));
+    final digest = hmacSha256.convert(utf8.encode(data));
+    return digest.toString();
+  }
+
+  dynamic onAuthorizer(
+      String channelName, String socketId, dynamic options) async {
+    const secret = "b7ec85147f0fb7b9846c";
+    final stringToSign = "$socketId:$channelName";
+    final signature = generateHmacSHA256(stringToSign, secret);
     return {
-      "auth": "foo:bar",
-      "channel_data": '{"user_id": 1}',
-      "shared_secret": "foobar"
+      "auth": "850de022339c4d609a8f:$signature",
     };
   }
 
-  void onTriggerEventPressed() async {
-    var eventFormValidated = eventFormKey.currentState!.validate();
-
-    if (!eventFormValidated) {
-      return;
-    }
+  void onTriggerEventPressed(String idUserSelected) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("eventName", eventName.text);
-    prefs.setString("data", data.text);
+    String myIdUser = prefs.getString('idUser') ?? '';
+    final intMyIdUser = int.parse(myIdUser.toString());
+    final intIdUserSelected = int.parse(idUserSelected.toString());
+    final chatChannelName =
+        'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
     pusher.trigger(PusherEvent(
-        channelName: channelName.text,
-        eventName: eventName.text,
-        data: data.text));
+        channelName: chatChannelName,
+        eventName: 'client-chat',
+        data: 'Prueba'));
+  }
+
+  void disconnected() async {
+    await pusher.disconnect();
   }
 }
+*/

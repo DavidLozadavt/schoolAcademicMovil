@@ -64,13 +64,13 @@ class TaskStudentController extends GetxController {
     } finally {}
   }
 
-  Future<void> replyActivity(String id, String? comment, File? file) async {
+  /*Future<void> replyActivity(String id, String? comment, File? file) async {
     try {
       await _activityProvider.replyActivity(id, comment, file);
     } catch (e) {
       print('Error al enviar la evidencia: $e');
     }
-  }
+  }*/
 
   replyActivityP(String id) async {
     try {

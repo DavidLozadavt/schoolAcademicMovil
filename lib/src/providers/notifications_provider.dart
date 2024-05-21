@@ -49,5 +49,8 @@ class NotificationsProvider extends GetConnect {
       throw Failure('Error al cargar los eventos');
     }
   }
+
+
+  
   
 }

@@ -16,6 +16,9 @@ const postReplyQuestionnaireUrl = '${baseURL}cuestionario/responder_cuestionario
 const postReplyQuestionnaire1Url = '${baseURL}cuestionario/responder_cuestionario1/';
 const getStudentByIdSubjectUrl = '${baseURL}get_student_by_id_materia/';
 const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
+const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';
+const postMessagesUserUrl = '${baseURL}send_message_between_two_users/';
+const pusherUrl = '${baseURL}auth/pusher';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

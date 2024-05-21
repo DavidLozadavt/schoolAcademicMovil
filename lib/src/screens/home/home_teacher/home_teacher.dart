@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
-import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/ratings/ratings_student.dart';

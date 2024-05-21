@@ -162,7 +162,7 @@ packages:
     source: hosted
     version: "0.3.4+1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
@@ -677,14 +677,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  mocktail:
-    dependency: transitive
-    description:
-      name: mocktail
-      sha256: c4b5007d91ca4f67256e720cb1b6d704e79a510183a12fa551021f652577dce6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   nested:
     dependency: transitive
     description:
@@ -709,6 +701,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      sha256: a5a32d44acb7c899987d0999e1e3cbb0a0f1adebbf41ac813ec6d2d8faa0af20
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.2"
   path:
     dependency: transitive
     description:
@@ -1298,14 +1298,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.3"
-  wompi_payment_colombia:
-    dependency: "direct main"
-    description:
-      name: wompi_payment_colombia
-      sha256: bd4c2166c5894cb8c33795650d8cec20a6c64be92fb9054d5a383434b1268622
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.5"
   xdg_directories:
     dependency: transitive
     description:

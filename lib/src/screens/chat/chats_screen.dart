@@ -9,7 +9,7 @@ class Chats extends StatelessWidget {
   Chats({super.key});
   final TextEditingController _searchController = TextEditingController();
   final ChatController _chatController = Get.put(ChatController());
-  
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -104,17 +104,26 @@ class Chats extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final users = _chatController.filteredUsers[index];
                           return GestureDetector(
-                            onTap: () {
-                              Get.toNamed('/chat', arguments: users);
+                            onTap: () async {
+                              _chatController.onConnectPressed(
+                                  '${users['matricula']!['persona']['id']}');
+                               _chatController.getMessage(
+                                  '${users['matricula']!['persona']['id']}');
+                              _chatController.setSelectedUser(users);
+                            
+                              Get.toNamed('/chat');
                             },
                             onLongPress: () {
                               showOptionsModal();
                             },
                             child: CardChats(
-                              urlPhotoSender: users['matricula']!['persona']['rutaFoto'],
+                              urlPhotoSender: users['matricula']!['persona']
+                                  ['rutaFoto'],
                               name: users['matricula']!['persona']['nombre1'],
-                              lastName: users['matricula']!['persona']['apellido1'],
-                              endMessage: users['matricula']!['persona']['email'],
+                              lastName: users['matricula']!['persona']
+                                  ['apellido1'],
+                              endMessage: users['matricula']!['persona']
+                                  ['email'],
                             ),
                           );
                         },

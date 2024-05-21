@@ -117,7 +117,6 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
-      print('288888 ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }

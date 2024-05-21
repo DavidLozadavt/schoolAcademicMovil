@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionScreen extends StatefulWidget {
+  const TransactionScreen({super.key});
+
   @override
   _TransactionScreenState createState() => _TransactionScreenState();
 }
