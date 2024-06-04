@@ -17,7 +17,7 @@ class Calendar extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else {
               return SfCalendar(
-                firstDayOfWeek: 1,
+                firstDayOfWeek: 7,
                 view: CalendarView.week,
                 dataSource: _getDataSource(controller.events),
                 onTap: (details) => _onTap(context, details, controller.events),
@@ -28,12 +28,10 @@ class Calendar extends StatelessWidget {
   }
 
   CalendarDataSource<Object?> _getDataSource(
-      List<Map<String, dynamic>> hourlyEvents) {
+    List<Map<String, dynamic>> hourlyEvents) {
     List<Appointment> appointments = [];
     for (var event in hourlyEvents) {
-      
       var endTimeData = event["periodo"]["fechaFinal"];
-     
       DateTime fecha = DateTime.parse(endTimeData);
       fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
       String fechaFormateada =
@@ -44,19 +42,19 @@ class Calendar extends StatelessWidget {
           DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
       var day = event['idDia'];
       String? dayOfWeek;
-      if (day == 1) {
+      if (day == '1') {
         dayOfWeek = 'BYDAY=MO';
-      } else if (day == 2) {
+      } else if (day == '2') {
         dayOfWeek = 'BYDAY=TU';
-      } else if (day == 3) {
+      } else if (day == '3') {
         dayOfWeek = 'BYDAY=WE';
-      } else if (day == 4) {
+      } else if (day == '4') {
         dayOfWeek = 'BYDAY=TH';
-      } else if (day == 5) {
+      } else if (day == '5') {
         dayOfWeek = 'BYDAY=FR';
-      } else if (day == 6) {
+      } else if (day == '6') {
         dayOfWeek = 'BYDAY=SA';
-      } else if (day == 7) {
+      } else if (day == '7') {
         dayOfWeek = 'BYDAY=SU';
       }
 

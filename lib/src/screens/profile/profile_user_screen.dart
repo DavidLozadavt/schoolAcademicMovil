@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 
 class ProfileUserScreen extends StatelessWidget {
   ProfileUserScreen({super.key});
@@ -72,8 +71,8 @@ class ProfileUserScreen extends StatelessWidget {
                           padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                         ),
                         items: [
-                          _itemPopUpMenu(context, 'Editar perfil', true, 1,
-                              () => Get.to(() => const PagosPage())),
+                         /* _itemPopUpMenu(context, 'Editar perfil', true, 1,
+                              () => Get.to(() => const PagosPage())),*/
                           /*_itemPopUpMenu(context, 'Términos y condiciones', true,
                               3, () => Get.to(const PagosPage())),*/
                           _itemPopUpMenu(context, 'Cerrar sesión', true, 4,

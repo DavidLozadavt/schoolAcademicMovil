@@ -4,6 +4,7 @@ import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/widgets/card_chats.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
+import 'package:vtschool/src/widgets/loading.dart';
 
 class Chats extends StatelessWidget {
   Chats({super.key});
@@ -14,7 +15,7 @@ class Chats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (_chatController.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const LoadingScreen();
       } else {
         return Container(
             padding: const EdgeInsets.only(bottom: 80),

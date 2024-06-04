@@ -36,7 +36,7 @@ Future<void> logoutApp(BuildContext context) async {
     },
   );
 
-  await Future.delayed(const Duration(seconds: 1));
+  //await Future.delayed(const Duration(seconds: 1));
   SharedPreferences pref = await SharedPreferences.getInstance();
   await pref.remove('token');
   await pref.remove('rolUser');

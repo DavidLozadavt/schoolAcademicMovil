@@ -11,21 +11,23 @@ import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/activity/task_student_screen.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
+import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
+import 'package:vtschool/src/screens/payments/payments_screen.dart';
+import 'package:vtschool/src/screens/payments/pruebawompi.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
-import 'package:vtschool/src/screens/wompi/card_credit.dart';
-import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
+import 'package:vtschool/src/screens/payments/pay_screen1.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
-
 
 PushNotificationProvider pushNotificationProvider = PushNotificationProvider();
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
-void main() async{
+
+void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -44,7 +46,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -57,22 +58,26 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme(selectedColor: 11).getTheme(),
       debugShowCheckedModeBanner: false,
       locale: Get.deviceLocale,
-       initialRoute: '/starting_init_screen',
+      initialRoute: '/starting_init_screen',
       getPages: [
-        GetPage(name: '/starting_init_screen', page: () => StartingInitScreen()),
+        GetPage(
+            name: '/starting_init_screen', page: () => StartingInitScreen()),
         GetPage(name: '/starting', page: () => const StartingScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home_student', page: () => HomeStudent()),
         GetPage(name: '/home_teacher', page: () => HomeTeacher()),
         GetPage(name: '/home_admin', page: () => HomeAdmin()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
-        GetPage(name: '/banner', page: () => const PagosPage()),
-        GetPage(name: '/creditCart', page: () => const MySample()),
+        //GetPage(name: '/banner', page: () => const PagosPage()),
+        //    GetPage(name: '/creditCart', page: () => const MySample()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/task_student', page: () => TaskStudentScreen()),
         GetPage(name: '/chat', page: () => Chat()),
+        GetPage(name: '/payments', page: () => const PaymentsScreen()),
+        GetPage(name: '/pay', page: () => PayScreen()),
+        GetPage(name: '/pruebawompi', page: () => PruebaWompi()),
+        GetPage(name: '/form_payments', page: () => FormPaymentsScreen()),
       ],
-     
     );
   }
 }

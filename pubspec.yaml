@@ -74,6 +74,7 @@ dependencies:
   pusher_channels_flutter: ^2.2.1
   crypto: ^3.0.3
   open_file: ^3.3.2
+  webview_flutter: ^4.8.0
   
 
 dev_dependencies:

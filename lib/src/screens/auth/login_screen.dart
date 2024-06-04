@@ -53,8 +53,10 @@ class LoginScreen extends StatelessWidget {
         ),
         const Text("Ingrese sus credenciales", style: kTlight),*/
         const SizedBox(height: 20),
-        Image.asset('assets/images/logo_school.png',
-        width: 200,)
+        Image.asset(
+          'assets/images/logo_school.png',
+          width: 200,
+        )
       ],
     );
   }
@@ -78,9 +80,9 @@ class LoginScreen extends StatelessWidget {
               fillColor: listColor[10],
               filled: true,
               prefixIcon: Icon(
-              Icons.person,
-               color: listColor[13],
-                ),
+                Icons.person,
+                color: listColor[13],
+              ),
             ),
           ),
         ),
@@ -99,12 +101,12 @@ class LoginScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 borderSide: BorderSide.none,
               ),
-             fillColor: listColor[10],
+              fillColor: listColor[10],
               filled: true,
               prefixIcon: Icon(
                 Icons.password_rounded,
                 color: listColor[13],
-                ),
+              ),
               suffixIcon: GestureDetector(
                 onTap: () {
                   _loginController.togglePasswordVisibility();
@@ -173,7 +175,10 @@ class LoginScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 110.0),
       child: ElevatedButton(
-        onPressed: _loginController.login,
+        onPressed: () {
+          FocusScope.of(context).requestFocus();
+           _loginController.login();
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: listColor[13],
           shape: RoundedRectangleBorder(
@@ -191,4 +196,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  
 }

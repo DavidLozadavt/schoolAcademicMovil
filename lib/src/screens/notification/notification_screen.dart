@@ -6,6 +6,7 @@ import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/notification/notification_controller.dart';
 import 'package:vtschool/src/widgets/card_notifications.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
+import 'package:vtschool/src/widgets/loading.dart';
 
 class NotificationScreen extends StatelessWidget {
   final NotificationsController _notificationsController =
@@ -15,135 +16,140 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                listColor[14],
-                listColor[11],
-              ],
-            ),
-          ),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 40),
-                height: 80,
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: listColor[10],
-                      ),
-                      onPressed: () {
-                        Get.back();
-                      },
-                    ),
-                    Text(
-                      'Notificaciones',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: listColor[10],
-                      ),
-                    ),
+    return Obx(() => _notificationsController.isLoading.value
+        ? const LoadingScreen()
+        : Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    listColor[14],
+                    listColor[11],
                   ],
                 ),
               ),
-              Expanded(
-                child:_notificationsController.activities.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No tienes notificaciones',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 40),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: listColor[10],
                           ),
-                        ),
-                      )
-                    :  ListView.builder(
-                  itemCount: _notificationsController.activities.length,
-                  itemBuilder: ((context, index) {
-                    return Dismissible(
-                      key: Key(_notificationsController.activities[index]['id']
-                          .toString()),
-                      direction: DismissDirection.endToStart,
-                      confirmDismiss: (direction) async {
-                        if (direction == DismissDirection.endToStart) {
-                          return await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Confirmación"),
-                                content: const Text(
-                                    "¿Está seguro que deseas eliminar esta notificación?"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () => Get.back(),
-                                    child: const Text("Cancelar"),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Get.back();
-                                      _notificationsController.activities
-                                          .removeAt(index);
-                                    },
-                                    child: const Text("Eliminar"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          return false;
-                        }
-                      },
-                      background: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 243, 57, 57),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        alignment: Alignment.centerRight,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 22.0, vertical: 3),
-                        child: const Icon(Icons.delete_rounded),
-                      ),
-                      child: Center(
-                        child: GestureDetector(
-                          
-                          onTap: () {
-                            showNotificationDetails(
-                                _notificationsController.activities[index]);
+                          onPressed: () {
+                            Get.back();
                           },
-                          child: CardNotifications(
-                            idActivity:
-                                '${_notificationsController.activities[index]['id']}',
-                            affair:
-                                '${_notificationsController.activities[index]['asunto']}',
-                            date:
-                                '${_notificationsController.activities[index]['fecha']}',
-                            hour:
-                                '${_notificationsController.activities[index]['hora']}',
-                            status:
-                                '${_notificationsController.activities[index]['estado']['estado']}',
+                        ),
+                        Text(
+                          'Notificaciones',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: listColor[10],
                           ),
                         ),
-                      ),
-                    );
-                  }),
-                ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: _notificationsController.activities.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No tienes notificaciones',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount:
+                                _notificationsController.activities.length,
+                            itemBuilder: ((context, index) {
+                              return Dismissible(
+                                key: Key(_notificationsController
+                                    .activities[index]['id']
+                                    .toString()),
+                                direction: DismissDirection.endToStart,
+                                confirmDismiss: (direction) async {
+                                  if (direction ==
+                                      DismissDirection.endToStart) {
+                                    return await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Confirmación"),
+                                          content: const Text(
+                                              "¿Está seguro que deseas eliminar esta notificación?"),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () => Get.back(),
+                                              child: const Text("Cancelar"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                _notificationsController
+                                                    .activities
+                                                    .removeAt(index);
+                                              },
+                                              child: const Text("Eliminar"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return false;
+                                  }
+                                },
+                                background: Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 243, 57, 57),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  alignment: Alignment.centerRight,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 22.0, vertical: 3),
+                                  child: const Icon(Icons.delete_outlined),
+                                ),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showNotificationDetails(
+                                          _notificationsController
+                                              .activities[index]);
+                                    },
+                                    child: CardNotifications(
+                                      idActivity:
+                                          '${_notificationsController.activities[index]['id']}',
+                                      affair:
+                                          '${_notificationsController.activities[index]['asunto']}',
+                                      date:
+                                          '${_notificationsController.activities[index]['fecha']}',
+                                      hour:
+                                          '${_notificationsController.activities[index]['hora']}',
+                                      status:
+                                          '${_notificationsController.activities[index]['estado']['estado']}',
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          ));
   }
 
   void showNotificationDetails(Map<String, dynamic> notificationData) {

@@ -7,7 +7,6 @@ import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/ratings/ratings_student.dart';
-import 'package:vtschool/src/screens/wompi/wompi_servise.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeTeacher extends StatelessWidget {
@@ -97,7 +96,7 @@ class HomeTeacher extends StatelessWidget {
                 const HomeTeacherScreen(),
                 Chats(),
                 const StudentPage(),
-                const PagosPage(),
+                const StudentPage(),
                 ProfileUserScreen(),
                 
               ],

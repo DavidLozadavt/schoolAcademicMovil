@@ -17,18 +17,11 @@ const listColor = <Color>[
   Color(0xFFDFEBFF),
   Color(0xFF041447),
   Color(0xFF313E68),
-  //rojo
-  Color(0xFFFC0000),
-  Color(0xFFFF6961),
-  Color(0xFFDC143C),
-  Color(0xFF8B0000),
-  Color(0xFFF08080),
-  Color(0xFFFF6347),
-  Color(0xFF800000),
-  Color(0xFFFA8072),
-  Color(0xFF990012),
-  Color(0xFFE34234),
-  Color(0xFFDE3163),
+  Color(0xFFFF6706),
+  Color(0xFFC63B07),
+  Color( 0xFFF8F8FF),
+
+
 ];
 
 class AppTheme {

@@ -40,7 +40,7 @@ class Payload {
     String jti;
     String sub;
     String prv;
-    int idCompany; // <- cambio de pre a local string a int
+    String idCompany; // <- cambio de pre a local string a int
     List<String> roles;
     List<String> permissions;
     //Company company;

@@ -1,4 +1,4 @@
-class Answers {
+/*class Answers {
     List<Respuesta> respuestas;
     int cantidadAciertos;
 
@@ -27,3 +27,4 @@ class Respuesta {
     });
 
 }
+*/

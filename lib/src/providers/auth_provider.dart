@@ -18,7 +18,7 @@ class AuthProvider extends GetConnect {
         headers: {'Accept': 'application/json'},
         {'email': email, 'password': contrasena, 'device_token': tokenDevice},
       );
-      print('es una prueba ${response.statusCode}');
+      print('es una prueba ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Correo o contraseña incorrectos');
       }
@@ -59,7 +59,6 @@ class AuthProvider extends GetConnect {
   }
 
   Future logout() async {
-    
     String token = await getToken();
     try {
       await post(logoutUrl, {}, headers: {'Authorization': 'Bearer $token'});

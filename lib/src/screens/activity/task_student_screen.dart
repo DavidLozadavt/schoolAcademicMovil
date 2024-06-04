@@ -13,6 +13,7 @@ import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/activity/task_student_controller.dart';
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
+import 'package:vtschool/src/widgets/loading.dart';
 
 class TaskStudentScreen extends StatelessWidget {
   final TaskStudentController _taskStudentController =
@@ -26,9 +27,7 @@ class TaskStudentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => _taskStudentController.isLoading.value
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const LoadingScreen()
           : Scaffold(
               body: Container(
                 decoration: BoxDecoration(
