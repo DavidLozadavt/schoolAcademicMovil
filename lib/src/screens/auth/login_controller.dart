@@ -19,6 +19,7 @@ class LoginController extends GetxController {
 
   goToHomePageStudent() {
     Get.find<ProfileUserController>().fetchEvents();
+
     Get.offAllNamed('/home_student');
   }
 
@@ -42,22 +43,33 @@ class LoginController extends GetxController {
         return;
       }
       final UserData responseApiLogin = await authProvider.login(
-        emailController.text,
-        passwordController.text,
-        tokenDevice
-      );
+          emailController.text, passwordController.text, tokenDevice);
 
-      await pref.setString('token', responseApiLogin.accessToken);
-      await pref.setString('email', emailController.text);
-      await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
-      await pref.setString('idUser', responseApiLogin.user.id.toString());
-
+      debugPrint(responseApiLogin.payload.company.rutaLogoUrl);
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
-        goToHomePageAdmin();
+        Get.snackbar(
+          '¡Hola!',
+          '¡Estamos trabajando para mejorar, pronto tendremos acceso para el administrador!',
+        );
+        //goToHomePageAdmin();
       } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
-        goToHomePageStudent();
+        await pref.setString('token', responseApiLogin.accessToken);
+        await pref.setString('email', emailController.text);
+        await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
+        await pref.setString('idUser', responseApiLogin.user.id.toString());
+        await pref.setString(
+            'urlLogoCompany', responseApiLogin.payload.company.rutaLogoUrl);
+        Future.delayed(const Duration(seconds: 1), () {
+          goToHomePageStudent();
+          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+        });
+    
       } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
-        goToHomePageTeacher();
+        Get.snackbar(
+          '¡Hola!',
+          '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',
+        );
+        //goToHomePageTeacher();
       }
     } on Failure catch (e) {
       Get.snackbar(

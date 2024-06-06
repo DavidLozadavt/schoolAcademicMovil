@@ -52,7 +52,8 @@ class ChatController extends GetxController {
       users.assignAll(_chatProvider.users);
       filteredUsers.assignAll(users);
     } catch (error) {
-      print('Error: $error');
+      //print('Error: $error');
+      debugPrint('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -63,7 +64,8 @@ class ChatController extends GetxController {
       await _chatProvider.getMessage(idUserSelected);
       messages.assignAll(_chatProvider.messages);
     } catch (error) {
-      print('Error: $error');
+     // print('Error: $error');
+       debugPrint('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -103,8 +105,9 @@ class ChatController extends GetxController {
   }
 
   void logMessage(String text) {
-    print("LOG: $text");
-    log.value += text + "\n";
+    debugPrint("LOG: $text");
+    //print("LOG: $text");
+    log.value += "$text\n";
   }
 
   void onConnectPressed(String idUserSelected) async {
@@ -133,7 +136,8 @@ class ChatController extends GetxController {
           'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
       await pusher.subscribe(channelName: chatChannelName);
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 
@@ -200,7 +204,7 @@ class ChatController extends GetxController {
     final intIdUserSelected = int.parse(idUserSelected.toString());
     final chatChannelName =
         'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
-    print(data);
+   // print(data);
     pusher.trigger(PusherEvent(
         channelName: chatChannelName,
         eventName: 'client-chat-one-to-one',
@@ -224,7 +228,8 @@ class ChatController extends GetxController {
       jumpToEnd();
     }*/
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
+       debugPrint('Error: $e');
     }
   }
 

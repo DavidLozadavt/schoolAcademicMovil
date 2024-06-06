@@ -112,14 +112,15 @@ class TaskStudentController extends GetxController {
           idQualification, selectedAnswer);
 
       answerRating.value = response;
-      print('4444444444444 $answerRating');
+      //print('4444444444444 $answerRating');
       await Get.bottomSheet(
         alert!,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      print('Error al enviar la evidencia: $e');
+      //print('Error al enviar la evidencia: $e');
+      debugPrint('Error al enviar la evidencia: $e');
     }
   }
 
@@ -134,7 +135,7 @@ class TaskStudentController extends GetxController {
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      print('Error al enviar la evidencia: $e');
+      //print('Error al enviar la evidencia: $e');
     }
   }
 
@@ -143,6 +144,7 @@ class TaskStudentController extends GetxController {
       filteredActivities.assignAll(activities);
     } else {
       filteredActivities.assignAll(activities.where((activity) {
+        if(activity['metadataInfo'] != null){
         Map<String, dynamic> decodedData = jsonDecode(activity['metadataInfo']);
         final String affair = activity['asunto'].toString().toLowerCase();
         final String id = activity['id'].toString().toLowerCase();
@@ -157,6 +159,9 @@ class TaskStudentController extends GetxController {
             nameTeacher.contains(query.toLowerCase()) ||
             lastNameTeacher.contains(query.toLowerCase()) ||
             subject.contains(query.toLowerCase());
+        }else{
+          return false;
+        }    
       }));
     }
   }

@@ -1,4 +1,4 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ContadorScreen extends StatefulWidget {
@@ -46,3 +46,4 @@ class _ContadorScreenState extends State<ContadorScreen> {
     );
   }
 }
+*/

@@ -14,18 +14,8 @@ class PayScreen extends StatelessWidget {
         ? const LoadingScreen()
         : Scaffold(
             body: SafeArea(
-              child: Container(
+              child: Padding(
                 padding: const EdgeInsets.only(bottom: 80),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      listColor[14],
-                      listColor[11],
-                    ],
-                  ),
-                ),
                 child: Column(
                   children: [
                     Container(
@@ -34,20 +24,20 @@ class PayScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_back,
-                              color: listColor[10],
+                              color: Colors.black,
                             ),
                             onPressed: () {
                               Get.back();
                             },
                           ),
-                          Text(
+                          const Text(
                             'Pago matricula',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: listColor[10],
+                              color: Colors.black,
                             ),
                           ),
                         ],
@@ -103,10 +93,9 @@ class PayScreen extends StatelessWidget {
                                                 ListTileControlAffinity.leading,
                                             title: Container(
                                               padding: const EdgeInsets.all(10),
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(
-                                                    255, 171, 217, 255),
-                                                borderRadius: BorderRadius.only(
+                                              decoration:  BoxDecoration(
+                                                color: listColor[10].withOpacity(0.8),
+                                                borderRadius: const BorderRadius.only(
                                                   topLeft: Radius.circular(30),
                                                   topRight: Radius.circular(30),
                                                   bottomRight:
@@ -224,7 +213,7 @@ class PayScreen extends StatelessWidget {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: listColor[13],
+                              backgroundColor: Colors.black54,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),

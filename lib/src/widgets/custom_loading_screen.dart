@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
-class CustomLoadingScreen extends StatefulWidget {
-  final Color backgroundColor; 
+class CustomLoadingScreen extends StatelessWidget {
+  final Color backgroundColor;
   const CustomLoadingScreen({Key? key, this.backgroundColor = Colors.white})
       : super(key: key);
 
   @override
-  _CustomLoadingScreenState createState() => _CustomLoadingScreenState();
-}
-
-class _CustomLoadingScreenState extends State<CustomLoadingScreen> {
-  @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: widget.backgroundColor,
+      color: backgroundColor,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +24,6 @@ class _CustomLoadingScreenState extends State<CustomLoadingScreen> {
             const SizedBox(height: 16),
             const Text('Cargando',
             style: kTlightpro), 
-         
           ],
         ),
       ),

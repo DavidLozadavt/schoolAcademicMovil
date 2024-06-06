@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,7 @@ class AuthProvider extends GetConnect {
         headers: {'Accept': 'application/json'},
         {'email': email, 'password': contrasena, 'device_token': tokenDevice},
       );
-      print('es una prueba ${response.body}');
+      //print('es una prueba ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Correo o contraseña incorrectos');
       }
@@ -28,7 +29,7 @@ class AuthProvider extends GetConnect {
       }
 
       if (response.statusCode == 200) {
-        Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+        //Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
         apiResponse = UserData.fromJson(response.body);
         return apiResponse;
       }
@@ -44,7 +45,7 @@ class AuthProvider extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      print('profle ${response.body}');
+      debugPrint('profle ${response.body}');
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');
       }
@@ -83,4 +84,5 @@ class AuthProvider extends GetConnect {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString('rolUser') ?? '';
   }
+
 }

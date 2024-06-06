@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class Student {
   final String name;
@@ -20,6 +19,7 @@ class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _StudentPageState createState() => _StudentPageState();
 }
 
@@ -37,88 +37,76 @@ class _StudentPageState extends State<StudentPage> {
     double averageScore = _calculateAverageScore(selectedStudent);
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[14],
-              listColor[11],
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 250,
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                      color: Colors.grey), 
-                      
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 3,
-                      offset:
-                          const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: DropdownButtonHideUnderline(
-                  
-                  child: DropdownButton<String>(
-                    borderRadius: BorderRadius.circular(30.0),
-                  
-                    icon: const Icon(Icons.arrow_drop_down_sharp,
-                        color: Colors.grey),
-                    value: selectedSubject,
-                    hint: const Text('Selecciona una materia'),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedSubject = newValue;
-                        _showSubjectDetails(newValue);
-                      });
-                    },
-                    items: selectedStudent.grades.map((Grade grade) {
-                      return DropdownMenuItem<String>(
-                        value: grade.subject,
-                        child: Text(grade.subject),
-                      );
-                    }).toList(),
-                    style: const TextStyle(
-                        color: Colors.black), // Especifica el estilo del texto
-                    dropdownColor:
-                        Colors.white, // Color de fondo del menú desplegable
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 250,
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                    color: Colors.grey), 
+                    
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset:
+                        const Offset(0, 2),
                   ),
+                ],
+              ),
+              child: DropdownButtonHideUnderline(
+                
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(30.0),
+                
+                  icon: const Icon(Icons.arrow_drop_down_sharp,
+                      color: Colors.grey),
+                  value: selectedSubject,
+                  hint: const Text('Selecciona una materia'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSubject = newValue;
+                      _showSubjectDetails(newValue);
+                    });
+                  },
+                  items: selectedStudent.grades.map((Grade grade) {
+                    return DropdownMenuItem<String>(
+                      value: grade.subject,
+                      child: Text(grade.subject),
+                    );
+                  }).toList(),
+                  style: const TextStyle(
+                      color: Colors.black), // Especifica el estilo del texto
+                  dropdownColor:
+                      Colors.white, // Color de fondo del menú desplegable
                 ),
               ),
-              const SizedBox(
-                height: 3,
-              ),
-              const Text('Mi promedio'),
-              SizedBox(
-                height: 300,
-                width: 300,
-                child: _buildPieChart(selectedStudent),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Promedio de ${selectedStudent.name}: $averageScore',
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              const Text('Estas en el puesto 01/25'),
-              const SizedBox(height: 20),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            const Text('Mi promedio'),
+            SizedBox(
+              height: 300,
+              width: 300,
+              child: _buildPieChart(selectedStudent),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Promedio de ${selectedStudent.name}: $averageScore',
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            const Text('Estas en el puesto 01/25'),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
@@ -182,7 +170,7 @@ class _StudentPageState extends State<StudentPage> {
           dataLabelMapper: (_ChartData data, _) => data.subject,
           enableTooltip: true,
           dataLabelSettings: const DataLabelSettings(
-            isVisible: true, // Asegura que las etiquetas de datos sean visibles
+            isVisible: true,
           ),
         ),
       ],

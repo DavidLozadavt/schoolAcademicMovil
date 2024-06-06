@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/providers/license_plates_provider.dart';
@@ -54,12 +52,12 @@ class PaymentsController extends GetxController {
           List<Map<String, dynamic>>.from(institutions['data']);
       financialInstitutions.assignAll(fetchedInstitutions);
     } catch (error) {
-      print(error);
+      //print(error);
     }
   }
 
   void setSelectedInstitutionCode(String code) {
-    print(code);
+   // print(code);
     selectedInstitutionCode.value = code;
   }
 
@@ -70,7 +68,7 @@ class PaymentsController extends GetxController {
 
   void setselectedPersonTypesIndex(int index) {
     selectedPersonTypesIndex.value = index;
-    print(index);
+    //print(index);
   }
 
   var identificationTypes = [
@@ -81,7 +79,8 @@ class PaymentsController extends GetxController {
 
   void setSelectedIdentificationIndex(int index) {
     selectedIdentificationIndex.value = index;
-    print(index);
+    //print(index);
+    debugPrint('$index');
   }
 
   void toggleCheckbox() {
@@ -100,7 +99,7 @@ class PaymentsController extends GetxController {
   }
 
   Future<void> sendTransactionPse() async {
-    print('prueba url: ${asyncPaymentUrl.value}');
+    //print('prueba url: ${asyncPaymentUrl.value}');
     try {
       var data = {
         "codigoInstitucion": selectedInstitutionCode.value.toString(),
@@ -135,7 +134,8 @@ class PaymentsController extends GetxController {
           final responseGetFind = await _wompiProvider
               .getFindTransactionById(responsePse['data']['id'].toString());
           responseFindTransactionById(responseGetFind);
-          print(responseFindTransactionById);
+          //print(responseFindTransactionById);
+          debugPrint('$responseFindTransactionById');
           setAsyncPaymentUrl(responseFindTransactionById['payment_method']
               ['extra']['async_payment_url']);
         });
@@ -143,11 +143,14 @@ class PaymentsController extends GetxController {
           Get.back();
           Get.toNamed('/pruebawompi');
           clearData();
-          print(asyncPaymentUrl.value);
+          //print(asyncPaymentUrl.value);
+           
+           debugPrint(asyncPaymentUrl.value);
         });
       }
     } catch (e) {
-      print('Error al enviar los datos: $e');
+      //print('Error al enviar los datos: $e');
+      debugPrint('Error al enviar los datos: $e');
     }
   }
 

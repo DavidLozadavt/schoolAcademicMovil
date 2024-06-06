@@ -13,51 +13,51 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     _loginController.loadEmailFromPrefs();
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[14],
-              listColor[11],
-            ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/fondo.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const SizedBox(
-              height: 15,
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _header(context),
+                    const SizedBox(
+                      height: 75,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(24),
+                      child: _inputField(context),
+                    ),
+                    const SizedBox(
+                      height: 75,
+                    ),
+                    _loginButton(context),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    _forgotPassword(context),
+                  ],
+                ),
+              ),
             ),
-            _header(context),
-            Container(
-              margin: const EdgeInsets.all(24),
-              child: _inputField(context),
-            ),
-            _loginButton(context),
-            _forgotPassword(context),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   _header(context) {
-    return Column(
-      children: [
-        /*const Text(
-          "SCHOOL",
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-        ),
-        const Text("Ingrese sus credenciales", style: kTlight),*/
-        const SizedBox(height: 20),
-        Image.asset(
-          'assets/images/logo_school.png',
-          width: 200,
-        )
-      ],
+    return Image.asset(
+      'assets/images/logo_school.png',
+      width: 200,
     );
   }
 
@@ -65,10 +65,19 @@ class LoginScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
           height: 50,
+          decoration: BoxDecoration(
+            color: listColor[10],
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: listColor[15].withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
           child: TextField(
             controller: _loginController.emailController,
             decoration: InputDecoration(
@@ -81,47 +90,56 @@ class LoginScreen extends StatelessWidget {
               filled: true,
               prefixIcon: Icon(
                 Icons.person,
-                color: listColor[13],
+                color: listColor[15],
               ),
             ),
           ),
         ),
         const SizedBox(height: 10),
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
           height: 50,
-          child: TextField(
-            controller: _loginController.passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(
-              hintText: "Contraseña",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none,
+          decoration: BoxDecoration(
+            color: listColor[10],
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: listColor[15].withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(0, 2),
               ),
-              fillColor: listColor[10],
-              filled: true,
-              prefixIcon: Icon(
-                Icons.password_rounded,
-                color: listColor[13],
-              ),
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  _loginController.togglePasswordVisibility();
-                  Get.forceAppUpdate();
-                },
-                child: Obx(() => Icon(
+            ],
+          ),
+          child: Obx(() {
+            return TextField(
+              controller: _loginController.passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              decoration: InputDecoration(
+                hintText: "Contraseña",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none,
+                ),
+                fillColor: listColor[10],
+                filled: true,
+                prefixIcon: Icon(
+                  Icons.password_rounded,
+                  color: listColor[15],
+                ),
+                suffixIcon: Obx(() => IconButton(
+                    onPressed: _loginController.togglePasswordVisibility,
+                    icon: Icon(
                       _loginController.passwordVisible.value
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: Colors.grey,
-                    )),
+                      color: _loginController.passwordVisible.value
+                          ? listColor[16]
+                          : listColor[15],
+                    ))),
               ),
-            ),
-            obscureText: !_loginController.passwordVisible.value,
-          ),
+              obscureText: !_loginController.passwordVisible.value,
+            );
+          }),
         ),
         const SizedBox(height: 10),
       ],
@@ -177,10 +195,10 @@ class LoginScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           FocusScope.of(context).requestFocus();
-           _loginController.login();
+          _loginController.login();
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: listColor[13],
+          backgroundColor: listColor[16],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
@@ -196,6 +214,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-  
 }

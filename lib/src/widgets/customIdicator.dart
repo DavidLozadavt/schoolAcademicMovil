@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+
+// ignore_for_file: file_names
+
+/*import 'package:flutter/material.dart';
 
 class CustomTabIndicator extends Decoration {
   final double indicatorSize;
@@ -33,3 +36,4 @@ class _CustomPainter extends BoxPainter {
     canvas.drawRect(indicatorRect, paint);
   }
 }
+*/

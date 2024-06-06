@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
@@ -19,71 +18,72 @@ class HomeStudent extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Obx(() => BottomNavigationBar(
+              elevation: 0,
               currentIndex: controller.currentIndex.value,
               onTap: controller.changePage,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  // backgroundColor: Colors.white,
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
                     title: 'Home',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
                     title: 'Home',
                     isActive: true,
                   ),
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  //backgroundColor: Colors.white,
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
-                    messageCount: 50,
+                    //messageCount: 50,
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
                     isActive: true,
-                    messageCount: 50,
+                    //messageCount: 50,
                   ),
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                 // backgroundColor: Colors.white,
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/note.png',
                     title: 'Mis notas',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/note.png',
                     title: 'Mis notas',
                     isActive: true,
                   ),
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  //backgroundColor: Colors.white,
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/payment.png',
                     title: 'Pagos',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/payment.png',
                     title: 'Pagos',
                     isActive: true,
                   ),
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                 // backgroundColor: Colors.white,
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
                     title: 'Profile',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
                     title: 'Profile',
                     isActive: true,

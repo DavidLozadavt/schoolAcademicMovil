@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
+import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 import 'package:vtschool/src/widgets/card_chats.dart';
-import 'package:vtschool/src/widgets/cont_sup.dart';
 import 'package:vtschool/src/widgets/loading.dart';
 
 class Chats extends StatelessWidget {
   Chats({super.key});
   final TextEditingController _searchController = TextEditingController();
   final ChatController _chatController = Get.put(ChatController());
+  final ProfileUserController profileUserController =
+      Get.put(ProfileUserController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,28 +19,19 @@ class Chats extends StatelessWidget {
       if (_chatController.isLoading.value) {
         return const LoadingScreen();
       } else {
-        return Container(
+        return Padding(
             padding: const EdgeInsets.only(bottom: 80),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  listColor[14],
-                  listColor[11],
-                ],
-              ),
-            ),
+           
             child: Column(children: [
               const SizedBox(
                 height: 25,
               ),
-              Text(
+              const Text(
                 'Chats',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: listColor[10],
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(
@@ -53,28 +46,28 @@ class Chats extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: listColor[11],
+                    fillColor: const Color.fromARGB(255, 238, 238, 238),
                     hintText: "Buscar",
-                    hintStyle: TextStyle(color: listColor[14]),
+                    hintStyle: const TextStyle(color: Colors.black54),
                     prefixIcon: Icon(
                       Icons.search,
                       color: _searchController.text.isNotEmpty
-                          ? Colors.white
-                          : listColor[14],
+                          ? Colors.black54
+                              : Colors.black38,
                     ),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: listColor[14],
+                        color: Colors.black54,
                       ),
-                      borderRadius: const BorderRadius.all(
+                      borderRadius: BorderRadius.all(
                         Radius.circular(25.0),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: _searchController.text.isNotEmpty
-                            ? Colors.white
-                            : listColor[14],
+                            ? Colors.black54
+                              : Colors.black38,
                       ),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(25.0),
@@ -82,8 +75,8 @@ class Chats extends StatelessWidget {
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 7.0),
                   ),
-                  style: TextStyle(
-                    color: listColor[10],
+                  style: const TextStyle(
+                    color: Colors.black54,
                   ),
                 ),
               ),
@@ -95,7 +88,7 @@ class Chats extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       )
@@ -104,7 +97,8 @@ class Chats extends StatelessWidget {
                         itemCount: _chatController.filteredUsers.length,
                         itemBuilder: (BuildContext context, int index) {
                           final users = _chatController.filteredUsers[index];
-                          return GestureDetector(
+                          if(profileUserController.userProfile['persona']['id'] != users['matricula']!['persona']['id']){
+                            return GestureDetector(
                             onTap: () async {
                               _chatController.onConnectPressed(
                                   '${users['matricula']!['persona']['id']}');
@@ -114,9 +108,9 @@ class Chats extends StatelessWidget {
                             
                               Get.toNamed('/chat');
                             },
-                            onLongPress: () {
+                            /*onLongPress: () {
                               showOptionsModal();
-                            },
+                            },*/
                             child: CardChats(
                               urlPhotoSender: users['matricula']!['persona']
                                   ['rutaFoto'],
@@ -127,6 +121,10 @@ class Chats extends StatelessWidget {
                                   ['email'],
                             ),
                           );
+                          }else{
+                            return const Spacer();
+                          }
+                          
                         },
                       ),
               ),
@@ -135,7 +133,7 @@ class Chats extends StatelessWidget {
     });
   }
 
-  void showOptionsModal() {
+ /* void showOptionsModal() {
     Get.bottomSheet(
       optionsModal(),
       isScrollControlled: true,
@@ -254,5 +252,5 @@ class Chats extends StatelessWidget {
         ],
       ),
     );
-  }
+  }*/
 }

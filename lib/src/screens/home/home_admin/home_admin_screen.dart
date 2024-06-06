@@ -3,11 +3,9 @@ import 'package:vtschool/src/screens/logout/logout_screen.dart';
 
 class HomeAdminScreen extends StatelessWidget {
   const HomeAdminScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF282C34), // Deep, calming blue background
       appBar: AppBar(
         title: const Text(
           'Bienvenido, Admin!',
@@ -43,7 +41,7 @@ class HomeAdminScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 48.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white, // White text
+                  color: Colors.black, // White text
                 ),
               ),
               const SizedBox(height: 16.0), // Add some space
@@ -52,7 +50,7 @@ class HomeAdminScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   color:
-                      Colors.white70, // Lighter white text for subtle guidance
+                      Colors.black, // Lighter white text for subtle guidance
                 ),
               ),
               const SizedBox(height: 32.0), // More space for clarity
@@ -82,9 +80,9 @@ class HomeAdminScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.dashboard,
                               size: 36.0,
@@ -125,9 +123,9 @@ class HomeAdminScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.settings,
                               size: 36.0,
@@ -168,9 +166,9 @@ class HomeAdminScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.supervised_user_circle,
                               size: 36.0,

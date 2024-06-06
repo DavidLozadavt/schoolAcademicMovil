@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: AppTheme(selectedColor: 11).getTheme(),
+      theme: AppTheme().getTheme(),
       debugShowCheckedModeBanner: false,
       locale: Get.deviceLocale,
       initialRoute: '/starting_init_screen',
@@ -68,8 +68,6 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/home_teacher', page: () => HomeTeacher()),
         GetPage(name: '/home_admin', page: () => HomeAdmin()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
-        //GetPage(name: '/banner', page: () => const PagosPage()),
-        //    GetPage(name: '/creditCart', page: () => const MySample()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/task_student', page: () => TaskStudentScreen()),
         GetPage(name: '/chat', page: () => Chat()),

@@ -22,7 +22,7 @@ class LicensePlatesProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2025fff ${response.body}');
+    //print('2025fff ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {

@@ -22,7 +22,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2024 ${response.body}');
+    //print('2024 ${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         activitiesById.assignAll(response.body.cast<Map<String, dynamic>>());
@@ -92,8 +92,8 @@ class ActivityProvider extends GetConnect {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Response status: ${response.statusCode}');
+      //print('Response body: ${response.body}');
 
       if (response.statusCode != 200) {
         throw Exception('Error al enviar la respuesta: ${response.body}');

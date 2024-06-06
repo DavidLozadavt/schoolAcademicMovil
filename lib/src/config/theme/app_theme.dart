@@ -19,9 +19,10 @@ const listColor = <Color>[
   Color(0xFF313E68),
   Color(0xFFFF6706),
   Color(0xFFC63B07),
-  Color( 0xFFF8F8FF),
-
-
+  Color(0xFFF8F8FF),
+  Color(0xFFFFC402),
+  Color(0XFF5D6B89),
+  Color(0XFF1E293B)
 ];
 
 class AppTheme {
@@ -34,7 +35,13 @@ class AppTheme {
             'Selected color must be less than or equal than ${listColor.length - 1}');
 
   ThemeData getTheme() => ThemeData(
-      useMaterial3: true,
-      colorSchemeSeed: listColor[selectedColor],
-      brightness: isDarkMode ? Brightness.dark : Brightness.light);
+        useMaterial3: true,
+        colorSchemeSeed: listColor[selectedColor],
+        brightness: Brightness.light,
+        // colorScheme: const ColorScheme.dark(
+        //   background: Colors.black,
+        //   primary: Colors.grey,
+        //   secondary: Colors.grey,
+        // ),
+      );
 }

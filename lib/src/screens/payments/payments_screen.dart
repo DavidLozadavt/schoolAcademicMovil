@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 
@@ -10,54 +8,60 @@ class PaymentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Padding(
         padding: const EdgeInsets.only(bottom: 80),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[14],
-              listColor[11],
-            ],
-          ),
-        ),
         child: Column(
           children: [
             const SizedBox(
               height: 25,
             ),
-            Text(
+            const Text(
               'Pagos',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: listColor[10],
+                color: Colors.black,
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 80,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
+            Image.asset(
+              'assets/images/31.png',
+              width: 250,
+            ),
+            const SizedBox(
+              height: 90,
+            ),
+            SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+              child: GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 3,
+                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 5.0,
+                children: [
+                  InkWell(
                     onTap: () {},
-                    child: cardPay(Icons.payment, 'Pago inscripcion')),
-                InkWell(
+                    child: cardPay(Icons.payment, 'Pago inscripcion'),
+                  ),
+                  InkWell(
                     onTap: () {
                       Get.toNamed('/pay');
                     },
-                    child: cardPay(Icons.event_note_rounded, 'Pago matricula')),
-                InkWell(
+                    child: cardPay(Icons.event_note_rounded, 'Pago matricula'),
+                  ),
+                  InkWell(
                     onTap: () {},
-                    child: cardPay(Icons.library_add_sharp, 'Pago pension')),
-                InkWell(
+                    child: cardPay(Icons.library_add_sharp, 'Pago pension'),
+                  ),
+                  InkWell(
                     onTap: () {},
-                    child: cardPay(Icons.paypal_rounded, 'Otros pagos')),
-              ],
+                    child: cardPay(Icons.paypal_rounded, 'Otros pagos'),
+                  ),
+                ],
+              ),
             ),
-          
           ],
         ),
       ),
@@ -65,34 +69,41 @@ class PaymentsScreen extends StatelessWidget {
   }
 
   Widget cardPay(IconData icon, String title) {
-    return Container(
-     // padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.transparent,
-      ),
-      child: Column(
-        children: [
-          Card(
+    return Column(
+      children: [
+        Card(
+          elevation: 0,
+          color: Colors.black12,
+          //margin: EdgeInsets.all(8.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Card(
             elevation: 8.0,
+            color: listColor[18],
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(50.0),
             ),
-            child: Icon(
-              icon,
-              size: 80.0,
-              color: Colors.black87,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(
+                icon,
+                size: 40.0,
+                color: Colors.white,
+              ),
             ),
           ),
-          Text(
+        ),
+        Expanded(
+          child: Text(
             title,
             style: const TextStyle(
                 //fontWeight: FontWeight.w200,
                 fontSize: 12,
-                color: Colors.white),
-          )
-        ],
-      ),
+                color: Colors.black),
+          ),
+        )
+      ],
     );
   }
 }

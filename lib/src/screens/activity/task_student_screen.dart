@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:file_picker/file_picker.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 
@@ -29,169 +29,167 @@ class TaskStudentScreen extends StatelessWidget {
       () => _taskStudentController.isLoading.value
           ? const LoadingScreen()
           : Scaffold(
-              body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      listColor[14],
-                      listColor[11],
-                    ],
+              body: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 40),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                        const Text(
+                          'Mis tareas',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 40),
-                      height: 80,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: listColor[10],
-                            ),
-                            onPressed: () {
-                              Get.back();
-                            },
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 18.0, right: 18.0),
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) {
+                        _taskStudentController.filterActivities(value);
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 238, 238, 238),
+                        hintText: "Buscar",
+                        hintStyle: const TextStyle(color: Colors.black54),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: _searchController.text.isNotEmpty
+                              ? Colors.black54
+                              : Colors.black38,
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black54
                           ),
-                          Text(
-                            'Mis tareas',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: listColor[10],
-                            ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25.0),
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 5, left: 18.0, right: 18.0),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          _taskStudentController.filterActivities(value);
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: listColor[11],
-                          hintText: "Buscar",
-                          hintStyle: TextStyle(color: listColor[14]),
-                          prefixIcon: Icon(
-                            Icons.search,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
                             color: _searchController.text.isNotEmpty
-                                ? Colors.white
-                                : listColor[14],
+                                ? Colors.black54
+                              : Colors.black38,
                           ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: listColor[14],
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(25.0),
-                            ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(25.0),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: _searchController.text.isNotEmpty
-                                  ? Colors.white
-                                  : listColor[14],
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(25.0),
-                            ),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 7.0),
                         ),
-                        style: TextStyle(
-                          color: listColor[10],
-                        ),
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 7.0),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.black54,
                       ),
                     ),
-                    Expanded(
-                      child: _taskStudentController.filteredActivities.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'No tienes actividades',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                  ),
+                  Expanded(
+                    child: _taskStudentController.filteredActivities.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No tienes actividades',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black45,
                               ),
-                            )
-                          : ListView.builder(
-                              itemCount: _taskStudentController
-                                  .filteredActivities.length,
-                              itemBuilder: ((context, index) {
-                                Map<String, dynamic> decodedData = jsonDecode(
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: _taskStudentController
+                                .filteredActivities.length,
+                            itemBuilder: ((context, index) {
+                             if( _taskStudentController
+                                            .filteredActivities[index]
+                                        ['metadataInfo'] != null){
+                              Map<String, dynamic> decodedData = jsonDecode(
                                     _taskStudentController
                                             .filteredActivities[index]
                                         ['metadataInfo']);
-                                int idActividad = decodedData['idActividad'];
-                                String initialDate =
-                                    decodedData['fechaInicial'];
-                                String finalDate = decodedData['fechaFinal'];
-                                String subject = decodedData['nombreMateria'];
-                                if (_taskStudentController
-                                            .filteredActivities[index]
-                                        ['idTipoNotificacion'] !=
-                                    4) {
-                                  return Center(
-                                    child: GestureDetector(
-                                      onTap: () async {
+                              int idActividad = decodedData['idActividad'];
+                              String initialDate =
+                                  decodedData['fechaInicial'];
+                              String finalDate = decodedData['fechaFinal'];
+                              String subject = decodedData['nombreMateria'];
+                              if (_taskStudentController
+                                          .filteredActivities[index]
+                                      ['idTipoNotificacion'] !=
+                                  1 && _taskStudentController
+                                          .filteredActivities[index]
+                                      ['idTipoNotificacion'] !=
+                                  2) {
+                                return Center(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      await _taskStudentController
+                                          .getTypeActivity('$idActividad');
+                                      if (_taskStudentController
+                                                  .typeActivitiesById[
+                                              'tipoActividad'] ==
+                                          'GESTION') {
                                         await _taskStudentController
-                                            .getTypeActivity('$idActividad');
-                                        if (_taskStudentController
-                                                    .typeActivitiesById[
-                                                'tipoActividad'] ==
-                                            'Normal') {
-                                          await _taskStudentController
-                                              .getActivityById('$idActividad');
-                                          showNormalActivity(
-                                              context,
-                                              _taskStudentController
-                                                  .activitiesById);
-                                        } else {
-                                          await _taskStudentController
-                                              .getActivityQuestionnaire(
-                                                  '$idActividad');
-                                          showQuestionnaireActivity(
-                                              context,
-                                              _taskStudentController
-                                                  .activityQuestionnaire);
-                                        }
-                                      },
-                                      child: CardTaskStudent(
-                                        idActivity:
-                                            '${_taskStudentController.filteredActivities[index]['id']}',
-                                        affair:
-                                            '${_taskStudentController.filteredActivities[index]['asunto']}',
-                                        urlPhotoSender:
-                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
-                                        nameOfsender:
-                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
-                                        initialDate: initialDate,
-                                        finalDate: finalDate,
-                                        subject: subject,
-                                      ),
+                                            .getActivityById('$idActividad');
+                                        showNormalActivity(
+                                            context,
+                                            _taskStudentController
+                                                .activitiesById);
+                                      } else {
+                                        await _taskStudentController
+                                            .getActivityQuestionnaire(
+                                                '$idActividad');
+                                        showQuestionnaireActivity(
+                                            context,
+                                            _taskStudentController
+                                                .activityQuestionnaire);
+                                                
+                                      }
+                                    },
+                                    child: CardTaskStudent(
+                                      idActivity:
+                                          '${_taskStudentController.filteredActivities[index]['id']}',
+                                      affair:
+                                          '${_taskStudentController.filteredActivities[index]['asunto']}',
+                                      urlPhotoSender:
+                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
+                                      nameOfsender:
+                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
+                                      initialDate: initialDate,
+                                      finalDate: finalDate,
+                                      subject: subject,
                                     ),
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              }),
-                            ),
-                    ),
-                  ],
-                ),
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                             }
+                             return null;
+                      
+                            }),
+                          ),
+                  ),
+                ],
               ),
             ),
     );
@@ -224,18 +222,12 @@ class TaskStudentScreen extends StatelessWidget {
   }
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
+        Color themeColor = Theme.of(context).dialogBackgroundColor;
     if (activityData[0]['estado']['estado'] == 'ACTIVO') {
       return Container(
         height: 700,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[13],
-              listColor[11],
-            ],
-          ),
+         color: themeColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
@@ -416,25 +408,19 @@ class TaskStudentScreen extends StatelessWidget {
         ),
       );
     } else {
-      return showModalPastActivity('Su actividad');
+      return showModalPastActivity(context, 'Su actividad');
     }
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
     String idQualification =
         activityData['calificacionActividad']['id'].toString();
+         Color themeColor = Theme.of(context).dialogBackgroundColor;
     if (activityData['idEstado'] == 1) {
       return Container(
         height: 700,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[13],
-              listColor[11],
-            ],
-          ),
+          color: themeColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
@@ -553,8 +539,10 @@ class TaskStudentScreen extends StatelessWidget {
                                               .toString(),
                                           3,
                                         );
-                                        print(_taskStudentController
-                                            .selectedAnswer);
+                                        // print(_taskStudentController
+                                        //     .selectedAnswer);
+                                        debugPrint('${_taskStudentController
+                                            .selectedAnswer}');
                                       },
                                     ),
                                   ),
@@ -623,9 +611,9 @@ class TaskStudentScreen extends StatelessWidget {
                                           var selectedResponseDescription =
                                               options[index]
                                                   ['descripcionRespuesta'];
-                                          print(selectedResponseId);
-                                          print(selectedQuestionId);
-                                          print(selectedResponseDescription);
+                                          // print(selectedResponseId);
+                                          // print(selectedQuestionId);
+                                          // print(selectedResponseDescription);
 
                                           _taskStudentController.saveAnswers(
                                               selectedQuestionId,
@@ -644,7 +632,7 @@ class TaskStudentScreen extends StatelessWidget {
                           ),
                         );
                       } else {
-                        var _idQuestion = question['id'].toString();
+                        var idQuestion = question['id'].toString();
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
@@ -694,7 +682,7 @@ class TaskStudentScreen extends StatelessWidget {
                                 maxLines: null,
                                 onChanged: (value) {
                                   _taskStudentController.addValue(
-                                      value, _idQuestion);
+                                      value, idQuestion);
                                 },
                               ),
                             ],
@@ -720,7 +708,7 @@ class TaskStudentScreen extends StatelessWidget {
                             idTypeQuestion.contains(4)) {
                       if (_taskStudentController.valuesInputQuestionnaire.isNotEmpty || _taskStudentController.selectedAnswer.isNotEmpty) {
                         await _taskStudentController.replyQuestionnaire1(
-                            idQualification, showModalInfoAnswer());
+                            idQualification, showModalInfoAnswer(context));
                         await _taskStudentController
                             .replyQuestionnaire(idQualification);
                       } else {
@@ -736,7 +724,7 @@ class TaskStudentScreen extends StatelessWidget {
                           .selectedAnswer.isNotEmpty) {
                         await _taskStudentController.replyQuestionnaire(
                             idQualification,
-                            alert: showModalQualification());
+                            alert: showModalQualification(context));
                       } else {
                          Get.defaultDialog(
                           title: '¡Información!',
@@ -756,23 +744,17 @@ class TaskStudentScreen extends StatelessWidget {
         ),
       );
     } else {
-      return showModalPastActivity('El cuestionario');
+      return showModalPastActivity(context, 'El cuestionario');
     }
   }
 
-  Widget showModalPastActivity(String name) {
+  Widget showModalPastActivity(BuildContext context, String name) {
+     Color themeColor = Theme.of(context).dialogBackgroundColor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       height: 400,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            listColor[13],
-            listColor[11],
-          ],
-        ),
+        color: themeColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
@@ -789,7 +771,7 @@ class TaskStudentScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
               textAlign: TextAlign.center,
             ),
@@ -801,7 +783,7 @@ class TaskStudentScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
               textAlign: TextAlign.center,
             ),
@@ -838,19 +820,13 @@ class TaskStudentScreen extends StatelessWidget {
     );
   }
 
-  Widget showModalInfoAnswer() {
+  Widget showModalInfoAnswer(BuildContext context) {
+         Color themeColor = Theme.of(context).dialogBackgroundColor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       height: 400,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            listColor[13],
-            listColor[11],
-          ],
-        ),
+       color: themeColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
@@ -916,7 +892,7 @@ class TaskStudentScreen extends StatelessWidget {
     );
   }
 
-  Widget showModalQualification() {
+  Widget showModalQualification(BuildContext context) {
     return Obx(() {
       List<dynamic> respuestas =
           _taskStudentController.answerRating['respuestas'];
@@ -926,18 +902,12 @@ class TaskStudentScreen extends StatelessWidget {
       String qualification =
           _taskStudentController.answerRating['puntaje_total'];
       double percentage = (successes * 100 / allQuestion);
+           Color themeColor = Theme.of(context).dialogBackgroundColor;
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 28.0),
         height: 600,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[13],
-              listColor[11],
-            ],
-          ),
+         color: themeColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
@@ -1057,7 +1027,7 @@ class TaskStudentScreen extends StatelessWidget {
             title,
             style: TextStyle(
                 fontSize: titleFontSize,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -1065,7 +1035,7 @@ class TaskStudentScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8.0, top: 3.5),
           child: Text(
             content,
-            style: TextStyle(fontSize: contentFontSize, color: Colors.white),
+            style: TextStyle(fontSize: contentFontSize, color: Colors.black),
           ),
         ),
       ],

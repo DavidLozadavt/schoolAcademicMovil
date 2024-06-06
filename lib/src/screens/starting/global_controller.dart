@@ -15,15 +15,15 @@ class GlobalController extends GetxController {
         Get.offNamed('/starting');
       } else {
         String token = await authProvider.getToken();
-        String rol_user = await authProvider.getRolUser();
+        String rolUser = await authProvider.getRolUser();
         if (token == '') {
           Get.offAllNamed('/login');
         } else {
-          if (rol_user == 'ADMIN') {
+          if (rolUser == 'ADMIN') {
             Get.offAllNamed('/home_admin');
-          } else if (rol_user == 'ESTUDIANTE') {
+          } else if (rolUser == 'ESTUDIANTE') {
             Get.offAllNamed('/home_student');
-          } else if (rol_user == 'DOCENTE') {
+          } else if (rolUser == 'DOCENTE') {
             Get.offAllNamed('/home_teacher');
           } else {
             Get.offAllNamed('/login');

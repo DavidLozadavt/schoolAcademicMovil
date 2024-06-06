@@ -17,7 +17,7 @@ class Calendar extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else {
               return SfCalendar(
-                firstDayOfWeek: 7,
+                firstDayOfWeek: 1,
                 view: CalendarView.week,
                 dataSource: _getDataSource(controller.events),
                 onTap: (details) => _onTap(context, details, controller.events),
@@ -102,7 +102,7 @@ class Calendar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Materia: ${event["materia"]["materia"]["nombreMateria"]}'),
-            Text('Sede: ${event["infraestructura"]["sede"]["nombreSede"]}'),
+            Text('Sede: ${event["infraestructura"]?["sede"]["nombreSede"] ?? 'No hay una sede asignada'}' ),
             Text('Hora Inicial: ${event["horaInicial"]}'),
             Text('Hora Final: ${event["horaFinal"]}'),
           ],

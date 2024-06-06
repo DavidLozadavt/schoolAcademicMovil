@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class ItemNavigationButton extends StatelessWidget {
   const ItemNavigationButton({
@@ -26,7 +25,7 @@ class ItemNavigationButton extends StatelessWidget {
             ImageIcon(
               AssetImage(fileIcon),
               size: 30,
-              color: isActive ? listColor[13] : listColor[12].withOpacity(0.7),
+              color: isActive ? Colors.black87 : Colors.black26,
             ),
             if (messageCount > 0)
               Container(
@@ -44,7 +43,7 @@ class ItemNavigationButton extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: isActive ? listColor[13] : listColor[12].withOpacity(0.5),
+            color: isActive ? Colors.black87 : Colors.black26,
             fontSize: isActive ? 13 : 12,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),

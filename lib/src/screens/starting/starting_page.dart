@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
@@ -10,17 +9,7 @@ class StartingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              listColor[14],
-              listColor[11],
-            ],
-          ),
-        ),
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -51,16 +40,16 @@ class StartingScreen extends StatelessWidget {
                         TextSpan(
                           text: '¡Bienvenido ',
                           style: TextStyle(
-                            color: listColor[10],
+                            color: listColor[15],
                             fontFamily: 'CM Sans Serif',
                             fontSize: 24.0,
                             height: 1.5,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: 'a School, tú nuevo \n  compañero escolar',
                           style: TextStyle(
-                            color: listColor[13].withOpacity(0.8),
+                            color: Colors.black38,
                             fontFamily: 'CM Sans Serif',
                             fontSize: 26.0,
                             height: 1.5,
@@ -69,7 +58,7 @@ class StartingScreen extends StatelessWidget {
                         TextSpan(
                           text: '! 📚',
                           style: TextStyle(
-                            color: listColor[10],
+                            color: listColor[15],
                             fontFamily: 'CM Sans Serif',
                             fontSize: 24.0,
                             height: 1.5,
@@ -83,7 +72,7 @@ class StartingScreen extends StatelessWidget {
                     '¡Has tú educación mas divertida! ',
                     style: TextStyle(
                         decoration: TextDecoration.none,
-                        color: listColor[10],
+                        color: listColor[15],
                         fontFamily: 'Averta_Light',
                         fontSize: 14.0,
                         height: 1.5,
@@ -98,12 +87,12 @@ class StartingScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      backgroundColor: listColor[13],
+                      backgroundColor: listColor[15],
                       padding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 120.0),
                     ),
                     child:
-                        Text('Vamos', style: TextStyle(color: listColor[12])),
+                        Text('Vamos', style: TextStyle(color: listColor[17])),
                   ),
                 ],
               ),

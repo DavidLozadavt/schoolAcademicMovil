@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
 import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
@@ -70,6 +68,7 @@ class Chat extends StatelessWidget {
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
                     '${selectedUser['matricula']!['persona']['rutaFoto']}'),
+                    backgroundColor: Colors.transparent
               ),
             ),
             const SizedBox(width: 10),
@@ -113,7 +112,8 @@ class Chat extends StatelessWidget {
                           DateFormat('dd MMMM yyyy', 'es').format(dateTime);
                       bool isOwnMessage = messages[index]
                               ['idActivationCompanyUser'] !=
-                          selectedUser['matricula']['persona']['id'];
+                          selectedUser['matricula']['persona']['id'].toString();
+                      debugPrint('$messages');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -124,10 +124,12 @@ class Chat extends StatelessWidget {
                               : MainAxisAlignment.start,
                           children: [
                             if (messages[index]['idActivationCompanyUser'] ==
-                                selectedUser['matricula']['persona']['id'])
+                                selectedUser['matricula']['persona']['id'].toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
-                                    '${selectedUser['matricula']!['persona']['rutaFoto']}'),
+                                    '${selectedUser['matricula']!['persona']['rutaFoto']}',
+                                    ),
+                                    backgroundColor: Colors.transparent
                               ),
                             const SizedBox(width: 8.0),
                             Flexible(
@@ -235,7 +237,7 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: Text("No"),
+                                                          child: const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -244,7 +246,7 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: Text("Si"),
+                                                          child: const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -285,7 +287,7 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: Text("No"),
+                                                          child: const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -294,7 +296,7 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: Text("Si"),
+                                                          child: const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -332,7 +334,7 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: Text("No"),
+                                                          child: const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -341,7 +343,7 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: Text("Si"),
+                                                          child: const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -379,10 +381,11 @@ class Chat extends StatelessWidget {
                               ),
                             ),
                             if (messages[index]['idActivationCompanyUser'] !=
-                                selectedUser['matricula']['persona']['id'])
+                                selectedUser['matricula']['persona']['id'].toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),
+                                backgroundColor: Colors.transparent,
                               ),
                           ],
                         ),
@@ -585,7 +588,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  print('No se seleccionó ninguna imagen');
+                                  debugPrint('No se selecciono nunguna imagen');
+                                  //print('No se seleccionó ninguna imagen');
                                 }
                               },
                               icon: const Icon(Icons.camera_alt_outlined)),
@@ -600,7 +604,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  print('No se seleccionó ninguna imagen');
+                                  //print('No se seleccionó ninguna imagen');
+                                  debugPrint('No se seleccionó ninguna imagen');
                                 }
                               },
                               icon: const Icon(Icons.photo_library_outlined)),
@@ -614,7 +619,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  print('No se seleccionó ningun archivo');
+                                  //print('No se seleccionó ningun archivo');
+                                  debugPrint('No se seleccionó ningun archivo');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

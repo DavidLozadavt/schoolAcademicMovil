@@ -32,7 +32,7 @@ class PruebaWompi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pago PSE'),
+        title: const Text('Pago PSE'),
       ),
       body: Obx(() {
         if (_paymentsController.asyncPaymentUrl.value.isNotEmpty) {

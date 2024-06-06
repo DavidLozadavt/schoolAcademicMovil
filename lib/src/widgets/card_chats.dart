@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CardChats extends StatelessWidget {
-  //final String idActivity;
   final String urlPhotoSender;
   final String name;
   final String lastName;
   final String endMessage;
 
   const CardChats({
-    //required this.idActivity,
     required this.urlPhotoSender,
     required this.name,
     required this.endMessage,
@@ -18,17 +16,9 @@ class CardChats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1.0),
-      child: Container(
+    return Container(
+        padding: const EdgeInsets.symmetric(vertical: 1.0),
         width: 350,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Colors.transparent,
-          ),
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,6 +30,7 @@ class CardChats extends StatelessWidget {
                   CircleAvatar(
                     backgroundImage: NetworkImage(urlPhotoSender),
                     radius: 28,
+                    backgroundColor: Colors.transparent,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
@@ -67,7 +58,6 @@ class CardChats extends StatelessWidget {
               ),
             ),
           ],
-        ),
       ),
     );
   }

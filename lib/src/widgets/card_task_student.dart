@@ -23,16 +23,12 @@ class CardTaskStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //DateTime dateToday = DateTime.now();
-    //DateTime final_date = DateTime.parse(finalDate);
-    //int comparacion = final_date.compareTo(dateToday);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         width: 350,
         decoration: BoxDecoration(
-          color: listColor[10],
+          color: listColor[12].withOpacity(0.4),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: Colors.grey[400]!,
@@ -58,6 +54,7 @@ class CardTaskStudent extends StatelessWidget {
                   CircleAvatar(
                     backgroundImage: NetworkImage(urlPhotoSender),
                     radius: 25,
+                    backgroundColor: Colors.transparent,
                   ),
                   const SizedBox(width: 10),
                   Expanded(

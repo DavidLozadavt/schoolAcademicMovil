@@ -38,10 +38,11 @@ Future<void> logoutApp(BuildContext context) async {
 
   //await Future.delayed(const Duration(seconds: 1));
   SharedPreferences pref = await SharedPreferences.getInstance();
+  Get.offAllNamed('/login');
   await pref.remove('token');
   await pref.remove('rolUser');
   await pref.remove('idUser');
-  Get.offAllNamed('/login');
+  await pref.remove('urlLogoCompany');
   Get.find<ProfileUserController>().clearUserData();
   
 }

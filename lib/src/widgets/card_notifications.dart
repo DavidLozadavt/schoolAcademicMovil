@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class CardNotifications extends StatelessWidget {
-  final String idActivity;
   final String affair;
   final String date;
   final String hour;
   final String status;
 
   const CardNotifications({
-    required this.idActivity,
     required this.affair,
     required this.date,
     required this.hour,

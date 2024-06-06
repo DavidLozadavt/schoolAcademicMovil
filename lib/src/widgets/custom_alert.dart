@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 
@@ -8,7 +8,8 @@ class CustomAlert extends StatelessWidget {
   final String imagePath;
   final Color color;
 
-  CustomAlert({
+  const CustomAlert({
+    super.key,
     required this.title,
     required this.subtitle,
     required this.imagePath,
@@ -26,7 +27,7 @@ class CustomAlert extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -41,24 +42,24 @@ class CustomAlert extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: kTlightproMax,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
                 style: kTlight,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Image.asset(
                 imagePath,
                 width: 100,
                 height: 70,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   Get.toNamed('/banner');
                 },
-                child: Text(
+                child: const Text(
                   'Ir a pagar',
                   style: kTlight,
                 ),
@@ -66,7 +67,8 @@ class CustomAlert extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
               ),
             ],
@@ -76,3 +78,4 @@ class CustomAlert extends StatelessWidget {
     );
   }
 }
+*/

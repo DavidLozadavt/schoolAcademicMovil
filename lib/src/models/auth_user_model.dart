@@ -43,7 +43,7 @@ class Payload {
     String idCompany; // <- cambio de pre a local string a int
     List<String> roles;
     List<String> permissions;
-    //Company company;
+    Company company;
     Payload({
         required this.iss,
         required this.iat,
@@ -55,7 +55,7 @@ class Payload {
         required this.idCompany,
         required this.roles,
         required this.permissions,
-        //required this.company,
+        required this.company,
     });
 
     factory Payload.fromJson(Map<String, dynamic> json) => Payload(
@@ -69,7 +69,7 @@ class Payload {
         idCompany: json["idCompany"],
         roles: List<String>.from(json["roles"].map((x) => x)),
         permissions: List<String>.from(json["permissions"].map((x) => x)),
-        //company: Company.fromJson(json["company"]),
+        company: Company.fromJson(json["company"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -83,7 +83,7 @@ class Payload {
         "idCompany": idCompany,
         "roles": List<dynamic>.from(roles.map((x) => x)),
         "permissions": List<dynamic>.from(permissions.map((x) => x)),
-        //"company": company.toJson(),
+        "company": company.toJson(),
     };
 }
 
