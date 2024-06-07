@@ -14,7 +14,7 @@ class StartingInitScreen extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Image.asset(
-            'assets/images/logo.png',
+            'assets/images/intento.gif',
             scale: 1.5,
             width: 50,
           ),

@@ -20,6 +20,7 @@ class BannerInfo extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
+              //cambiar imagen
               child: Image.asset(
                 'assets/images/banner-tambo.jpg',
                 fit: BoxFit.cover,
