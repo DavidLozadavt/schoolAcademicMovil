@@ -1,6 +1,8 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
+import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
 
 class PaymentsScreen extends StatelessWidget {
   const PaymentsScreen({super.key});
@@ -42,7 +44,47 @@ class PaymentsScreen extends StatelessWidget {
                 crossAxisSpacing: 5.0,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      DropdownButton2(
+                        underline: Container(),
+                        isExpanded: true,
+                        customButton: const Icon(
+                          Icons.more_vert,
+                          size: 34,
+                          color: Colors.black,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          width: 165,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          offset: const Offset(-20, 0),
+                          scrollbarTheme: ScrollbarThemeData(
+                            radius: const Radius.circular(40),
+                            thickness: MaterialStateProperty.all<double>(6),
+                            thumbVisibility:
+                                MaterialStateProperty.all<bool>(true),
+                          ),
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          height: 40,
+                          padding: EdgeInsets.only(left: 14, right: 14, top: 5),
+                        ),
+                        items: [
+                          customDropdownMenuItem(
+                            text: 'Términos y condiciones',
+                            enabled: true,
+                            value: 3,
+                            onTap: () {},
+                          ),
+                          /* _itemPopUpMenu(context, 'Editar perfil', true, 1,
+                            () => Get.to(() => const PagosPage())),*/
+                          /*_itemPopUpMenu(context, 'Términos y condiciones', true,
+                            3, () => Get.to(const PagosPage())),*/
+                        ],
+                        onChanged: (value) {},
+                      );
+                    },
                     child: cardPay(Icons.payment, 'Pago inscripcion'),
                   ),
                   InkWell(

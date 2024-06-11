@@ -57,8 +57,8 @@ class LoginController extends GetxController {
         await pref.setString('email', emailController.text);
         await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
         await pref.setString('idUser', responseApiLogin.user.id.toString());
-        await pref.setString(
-            'urlLogoCompany', responseApiLogin.payload.company.rutaLogoUrl);
+        // await pref.setString(
+        //     'urlLogoCompany', responseApiLogin.payload.company.rutaLogoUrl);
         Future.delayed(const Duration(seconds: 1), () {
           goToHomePageStudent();
           Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');

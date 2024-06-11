@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
+import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
 
 class ProfileUserScreen extends StatelessWidget {
   ProfileUserScreen({super.key});
@@ -55,8 +56,8 @@ class ProfileUserScreen extends StatelessWidget {
                             () => Get.to(() => const PagosPage())),*/
                         /*_itemPopUpMenu(context, 'Términos y condiciones', true,
                             3, () => Get.to(const PagosPage())),*/
-                        _itemPopUpMenu(context, 'Cerrar sesión', true, 4,
-                            () => logoutApp(context)),
+                        customDropdownMenuItem(text: 'Cerrar sesión', enabled: true, value: 1,
+                            onTap: () => logoutApp(context)),
                       ],
                       onChanged: (value) {},
                     ),
@@ -76,36 +77,20 @@ class ProfileUserScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Stack(
-                        children: [
-                          ClipOval(
-                            child: Image.network(
-                              '${controller.userProfile['persona']?['rutaFoto']}',
-                              width: 110,
-                              height: 110,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.0,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: ClipOval(
-                              child: Obx(() => Image.network(
-                                    controller.urlLogoCompany.value,
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                  )),
-                            ),
-                          ),
-                        ],
+                      ClipOval(
+                        child: Image.network(
+                          '${controller.userProfile['persona']?['rutaFoto']}',
+                          width: 110,
+                          height: 110,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Column(

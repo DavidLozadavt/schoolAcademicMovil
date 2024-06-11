@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ProfileUserController extends GetxController {
@@ -8,7 +7,7 @@ class ProfileUserController extends GetxController {
   var userProfile = {}.obs;
   
   var notificationCount = 0.obs;
-  var urlLogoCompany = ''.obs;
+ // var urlLogoCompany = ''.obs;
 
   void incrementNotificationCount() {
     notificationCount.value++;
@@ -23,7 +22,7 @@ class ProfileUserController extends GetxController {
   void onInit() {
     super.onInit();
     fetchEvents();
-    urlPhotoCompany();
+    //urlPhotoCompany();
   }
 
 
@@ -44,11 +43,11 @@ class ProfileUserController extends GetxController {
     //isLoading.value = false;
   }
 
-  void urlPhotoCompany() async {   
-    final prefs = await SharedPreferences.getInstance();
-    final url = prefs.getString('urlLogoCompany');
-    if (url != null) {
-      urlLogoCompany.value = url;
-    }
-  }
+  // void urlPhotoCompany() async {   
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final url = prefs.getString('urlLogoCompany');
+  //   if (url != null) {
+  //     urlLogoCompany.value = url;
+  //   }
+  // }
 }

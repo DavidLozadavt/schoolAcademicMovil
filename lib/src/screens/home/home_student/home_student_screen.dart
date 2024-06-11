@@ -43,37 +43,20 @@ class HomeStudentScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       children: [
-                        Stack(
-                          children: [
-                            ClipOval(
-                              child: Image.network(
-                                '${controller.userProfile['persona']?['rutaFoto']}',
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2.0,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: ClipOval(
-                                child: Obx(() => Image.network(
-                                      controller.urlLogoCompany.value,
-                                      width: 30,
-                                      height: 30,
-                                      fit: BoxFit.cover,
-                                    
-                                    )),
-                              ),
-                            ),
-                          ],
+                        ClipOval(
+                          child: Image.network(
+                            '${controller.userProfile['persona']?['rutaFoto']}',
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.0,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
