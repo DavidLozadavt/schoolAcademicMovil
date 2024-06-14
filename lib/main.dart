@@ -12,15 +12,19 @@ import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/activity/task_student_screen.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
+import 'package:vtschool/src/screens/payments/tuition_payments/physical_tuition_payments_screen.dart';
+import 'package:vtschool/src/screens/payments/registration_payment/payment_transaction_registration_screen.dart';
 import 'package:vtschool/src/screens/payments/payments_screen.dart';
-import 'package:vtschool/src/screens/payments/pruebawompi.dart';
+import 'package:vtschool/src/screens/payments/registration_payment/physical_registration_payment_screen.dart';
+import 'package:vtschool/src/screens/payments/pse_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
-import 'package:vtschool/src/screens/payments/pay_screen1.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
+
+import 'src/screens/payments/tuition_payments/tuition_payments _transaction_screen.dart';
 
 PushNotificationProvider pushNotificationProvider = PushNotificationProvider();
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -70,10 +74,13 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/task_student', page: () => TaskStudentScreen()),
         GetPage(name: '/chat', page: () => Chat()),
-        GetPage(name: '/payments', page: () => const PaymentsScreen()),
-        GetPage(name: '/pay', page: () => PayScreen()),
-        GetPage(name: '/pruebawompi', page: () => PruebaWompi()),
-        GetPage(name: '/form_payments', page: () => FormPaymentsScreen()),
+        GetPage(name: '/payments', page: () => PaymentsScreen()),
+        GetPage(name: '/physical_registration_payment', page: () => PhysicalRegistrationPaymentScreen()),
+        GetPage(name: '/payment_transaction_registration', page: () => PaymentTransactionRegistrationScreen()),
+        GetPage(name: '/tuition_payments_transaction', page: () => TuitionPaymentsTransactionScreen()),
+        GetPage(name: '/physical_tuition_payments', page: () => PhysicalTuitionPaymentsScreen()),
+        GetPage(name: '/pse', page: () => PseScreen()),
+        GetPage(name: '/form_payments_transaction', page: () => FormPaymentsScreen()),
       ],
     );
   }

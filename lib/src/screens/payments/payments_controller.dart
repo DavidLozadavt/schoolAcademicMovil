@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/providers/license_plates_provider.dart';
+import 'package:vtschool/src/providers/tuitions_provider.dart';
 import 'package:vtschool/src/providers/payments_provider.dart';
 
 class PaymentsController extends GetxController {
-  final LicensePlatesProvider _licensePlatesProvider = LicensePlatesProvider();
+  final TuitionsProvider _tuitionsProvider = TuitionsProvider();
   final WompiProvider _wompiProvider = WompiProvider();
+
   var isLoading = true.obs;
+  var isLoading1 = true.obs;
   var tuitionPayments = <Map<String, dynamic>>[].obs;
+  var inscriptionPayments = <Map<String, dynamic>>[].obs;
 
   var selectedPayments = <int>[].obs;
   var totalValue = 0.obs;
@@ -28,19 +33,27 @@ class PaymentsController extends GetxController {
   var asyncPaymentUrl = ''.obs;
   var responseFindTransactionById = {}.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    getTuitionPayments();
-  }
+  RxString selectedFilePath = ''.obs;
+  Rx<File> filePath = Rx<File>(File(''));
+  var selectedFiles = <int, File>{}.obs;
 
   Future<void> getTuitionPayments() async {
-    isLoading(true);
     try {
-      await _licensePlatesProvider.getTuitionPayments();
-      tuitionPayments.assignAll(_licensePlatesProvider.tuitionPayments);
+      await _tuitionsProvider.getTuitionPayments();
+      tuitionPayments.assignAll(_tuitionsProvider.tuitionPayments);
+      isLoading(true);
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> getRegistrationPayment() async {
+    try {
+      await _tuitionsProvider.getInscriptionPayments();
+      inscriptionPayments.assignAll(_tuitionsProvider.inscriptionPayments);
+      isLoading1(true);
+    } finally {
+      isLoading1(false);
     }
   }
 
@@ -57,7 +70,7 @@ class PaymentsController extends GetxController {
   }
 
   void setSelectedInstitutionCode(String code) {
-   // print(code);
+    // print(code);
     selectedInstitutionCode.value = code;
   }
 
@@ -134,18 +147,17 @@ class PaymentsController extends GetxController {
           final responseGetFind = await _wompiProvider
               .getFindTransactionById(responsePse['data']['id'].toString());
           responseFindTransactionById(responseGetFind);
-          //print(responseFindTransactionById);
           debugPrint('$responseFindTransactionById');
           setAsyncPaymentUrl(responseFindTransactionById['payment_method']
               ['extra']['async_payment_url']);
         });
         Future.delayed(const Duration(seconds: 5), () {
           Get.back();
-          Get.toNamed('/pruebawompi');
+          Get.toNamed('/pse');
           clearData();
           //print(asyncPaymentUrl.value);
-           
-           debugPrint(asyncPaymentUrl.value);
+
+          debugPrint(asyncPaymentUrl.value);
         });
       }
     } catch (e) {
@@ -168,5 +180,30 @@ class PaymentsController extends GetxController {
     emailController.clear();
     phoneController.clear();
     descriptionController.clear();
+    totalValue.value = 0;
+  }
+
+  void setSelectedFilePath(String path) {
+    selectedFilePath.value = path;
+  }
+
+  void setFilePath(File path) {
+    filePath.value = path;
+  }
+
+  void addFile(int paymentId, File file) {
+    selectedFiles[paymentId] = file;
+  }
+
+
+  void clearDataPhysicalPayments() {
+    selectedFilePath.value = '';
+    filePath.value = File('');
+    selectedFiles.clear();
+  }
+
+   void resetTotalValue() {
+    totalValue.value = 0;
+    selectedPayments.clear();
   }
 }

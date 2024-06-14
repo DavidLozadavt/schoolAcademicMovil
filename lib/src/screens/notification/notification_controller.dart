@@ -13,10 +13,10 @@ class NotificationsController extends GetxController {
   }
   
   Future<void> getNotifications() async {
-    isLoading(true);
     try {
       await _notificationsProvider.getNotifications();
       activities.assignAll(_notificationsProvider.activities);
+      isLoading(true);
     } finally {
       isLoading(false);
     }

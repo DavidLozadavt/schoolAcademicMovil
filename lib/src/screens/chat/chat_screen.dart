@@ -619,7 +619,6 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  //print('No se seleccionó ningun archivo');
                                   debugPrint('No se seleccionó ningun archivo');
                                 }
                               },

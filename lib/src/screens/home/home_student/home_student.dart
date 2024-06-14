@@ -97,7 +97,7 @@ class HomeStudent extends StatelessWidget {
                 HomeStudentScreen(),
                 Chats(),
                 const StudentPage(),
-                const PaymentsScreen(),
+                PaymentsScreen(),
                 ProfileUserScreen(),
                 
               ],

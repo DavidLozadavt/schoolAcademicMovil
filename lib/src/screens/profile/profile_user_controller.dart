@@ -31,8 +31,6 @@ class ProfileUserController extends GetxController {
     try {
       final userData = await authProvider.getProfile();
       userProfile(userData);
-    } catch (error) {
-       //Get.snackbar('Error!', 'Se ha producido un error');
     } finally {
       isLoading(false);
     }

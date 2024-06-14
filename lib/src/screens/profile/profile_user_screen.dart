@@ -26,9 +26,9 @@ class ProfileUserScreen extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(right: 20),
-                    child: DropdownButton2(
-                      underline: Container(),
-                      isExpanded: true,
+                      child: DropdownButton2(
+                        underline: Container(),
+                        isExpanded: true,
                       customButton: const Icon(
                         Icons.more_vert,
                         size: 34,

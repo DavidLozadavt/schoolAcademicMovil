@@ -15,7 +15,6 @@ import 'package:vtschool/src/providers/chat_provider.dart';
 class ChatController extends GetxController {
   final ChatProvider _chatProvider = ChatProvider();
   var keyboard = false.obs;
-  var t = false.obs;
   var messageController = TextEditingController();
   var isLoading = true.obs;
   var users = <Map<String, dynamic>>[].obs;
@@ -46,11 +45,11 @@ class ChatController extends GetxController {
   }*/
 
   Future<void> getUsers() async {
-    isLoading(true);
     try {
       await _chatProvider.getUsersByUser();
       users.assignAll(_chatProvider.users);
       filteredUsers.assignAll(users);
+      isLoading(true);
     } catch (error) {
       //print('Error: $error');
       debugPrint('Error: $error');
@@ -217,7 +216,7 @@ class ChatController extends GetxController {
 
   Future<void> sendMessage(String idUserSelected) async {
     try {
-      final responseMessage = await _chatProvider.sendMessage2(
+      final responseMessage = await _chatProvider.sendMessage(
           idUserSelected, messageController.text, [filePath.value]);
       var jsonString = json.encode(responseMessage);
       var jsonMessage = json.decode(jsonString);

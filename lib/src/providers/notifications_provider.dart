@@ -19,7 +19,7 @@ class NotificationsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-
+  //print('20000000000000000 ${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
        activities.assignAll(response.body.cast<Map<String, dynamic>>());

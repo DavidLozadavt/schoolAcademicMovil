@@ -32,11 +32,12 @@ class TaskStudentController extends GetxController {
   }
 
   Future<void> getNotifications() async {
-    isLoading(true);
+    
     try {
       await _notificationsProvider.getNotifications();
       activities.assignAll(_notificationsProvider.activities);
       filteredActivities.assignAll(activities);
+      isLoading(true);
     } finally {
       isLoading(false);
     }

@@ -4,46 +4,52 @@ import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/payments/payments_controller.dart';
 import 'package:vtschool/src/widgets/loading.dart';
 
-class PayScreen extends StatelessWidget {
+class TuitionPaymentsTransactionScreen extends StatelessWidget {
   final PaymentsController _paymentsController = Get.put(PaymentsController());
-  PayScreen({super.key});
+  TuitionPaymentsTransactionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _paymentsController.isLoading.value
-        ? const LoadingScreen()
-        : Scaffold(
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 80),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 80,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              Get.back();
-                            },
-                          ),
-                          const Text(
-                            'Pago matricula',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
+    return Scaffold(
+        body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 80),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              height: 80,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
                     ),
-                    Expanded(
+                    onPressed: () {
+                      Get.back();
+                      _paymentsController.resetTotalValue();
+                    },
+                  ),
+                  const Text(
+                    'Pago matricula',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Obx(
+              () => _paymentsController.isLoading.value
+                  ? const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Expanded(
                       child: _paymentsController.tuitionPayments.isEmpty
                           ? const Center(
                               child: Text(
@@ -93,9 +99,11 @@ class PayScreen extends StatelessWidget {
                                                 ListTileControlAffinity.leading,
                                             title: Container(
                                               padding: const EdgeInsets.all(10),
-                                              decoration:  BoxDecoration(
-                                                color: listColor[10].withOpacity(0.8),
-                                                borderRadius: const BorderRadius.only(
+                                              decoration: BoxDecoration(
+                                                color: listColor[10]
+                                                    .withOpacity(0.8),
+                                                borderRadius:
+                                                    const BorderRadius.only(
                                                   topLeft: Radius.circular(30),
                                                   topRight: Radius.circular(30),
                                                   bottomRight:
@@ -174,66 +182,64 @@ class PayScreen extends StatelessWidget {
                               ],
                             ),
                     ),
-                    Column(
-                      children: [
-                        Obx(
-                          () => Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              'Total: \$${_paymentsController.totalValue.value}',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 110.0),
-                          child: ElevatedButton(
-                            onPressed: () async{
-                              if (_paymentsController.totalValue.value != 0) {
-                                await _paymentsController.getFinancialInstitutions();
-                                Get.toNamed('/form_payments');
-                              } else {
-                                Get.defaultDialog(
-                                  title: "¡Error!",
-                                  content:
-                                      const Text("Debe seleccionar un pago"),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      child: const Text("OK"),
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black54,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                            ),
-                            child: Text(
-                              'Pagar',
-                              style: TextStyle(
-                                color: listColor[10],
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
             ),
-          ));
+            Column(
+              children: [
+                Obx(
+                  () => Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Total: \$${_paymentsController.totalValue.value}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 110.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_paymentsController.totalValue.value != 0) {
+                        await _paymentsController.getFinancialInstitutions();
+                        Get.toNamed('/form_payments_transaction');
+                      } else {
+                        Get.defaultDialog(
+                          title: "¡Error!",
+                          content: const Text("Debe seleccionar un pago"),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text("OK"),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black54,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    child: Text(
+                      'Pagar',
+                      style: TextStyle(
+                        color: listColor[10],
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    ));
   }
 }

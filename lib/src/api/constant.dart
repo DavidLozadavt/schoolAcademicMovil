@@ -20,6 +20,7 @@ const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';
 const postMessagesUserUrl = '${baseURL}send_message_between_two_users/';
 const pusherUrl = '${baseURL}auth/pusher';
 const getTuitionPaymentAllowanceUrl = '${baseURL}procesos/asignaciones_matricula_pagos';
+const getInscriptionPaymentUrl = '${baseURL}procesos/get_inscription';
 const getFinancialInstitutionsUrl = '${baseURL}get_financial_institutions';
 const postTransactionPseUrl = '${baseURL}transaction_pse';
 const getFindTransactionByIdUrl = '${baseURL}find_transaction_by_id/';

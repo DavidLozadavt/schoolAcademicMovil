@@ -74,5 +74,4 @@ class WompiProvider extends GetConnect {
       throw Failure('Error al cargar la informacion de la transaccion');
     }
   }
-
 }

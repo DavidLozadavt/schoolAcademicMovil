@@ -1,11 +1,12 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
+import 'package:vtschool/src/screens/payments/payments_controller.dart';
+import 'package:vtschool/src/widgets/custom_get_dialog.dart';
 
 class PaymentsScreen extends StatelessWidget {
-  const PaymentsScreen({super.key});
+  final PaymentsController _paymentsController = Get.put(PaymentsController());
+  PaymentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,61 +45,45 @@ class PaymentsScreen extends StatelessWidget {
                 crossAxisSpacing: 5.0,
                 children: [
                   InkWell(
-                    onTap: () {
-                      DropdownButton2(
-                        underline: Container(),
-                        isExpanded: true,
-                        customButton: const Icon(
-                          Icons.more_vert,
-                          size: 34,
-                          color: Colors.black,
-                        ),
-                        dropdownStyleData: DropdownStyleData(
-                          width: 165,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          offset: const Offset(-20, 0),
-                          scrollbarTheme: ScrollbarThemeData(
-                            radius: const Radius.circular(40),
-                            thickness: MaterialStateProperty.all<double>(6),
-                            thumbVisibility:
-                                MaterialStateProperty.all<bool>(true),
-                          ),
-                        ),
-                        menuItemStyleData: const MenuItemStyleData(
-                          height: 40,
-                          padding: EdgeInsets.only(left: 14, right: 14, top: 5),
-                        ),
-                        items: [
-                          customDropdownMenuItem(
-                            text: 'Términos y condiciones',
-                            enabled: true,
-                            value: 3,
-                            onTap: () {},
-                          ),
-                          /* _itemPopUpMenu(context, 'Editar perfil', true, 1,
-                            () => Get.to(() => const PagosPage())),*/
-                          /*_itemPopUpMenu(context, 'Términos y condiciones', true,
-                            3, () => Get.to(const PagosPage())),*/
-                        ],
-                        onChanged: (value) {},
-                      );
+                    onTap: () async {
+                      await _paymentsController.getRegistrationPayment();
+                      CustomDialogWidget(
+                        tittle: 'Pago inscripción',
+                        paymentRoute: '/physical_registration_payment',
+                        transactionRoute: '/payment_transaction_registration',
+                      ).showDialog();
                     },
-                    child: cardPay(Icons.payment, 'Pago inscripcion'),
+                    child: cardPay(Icons.payment, 'Pago inscripción'),
                   ),
                   InkWell(
                     onTap: () {
-                      Get.toNamed('/pay');
+                      _paymentsController.getTuitionPayments();
+                      CustomDialogWidget(
+                        tittle: 'Pagos matricula',
+                        paymentRoute: '/physical_tuition_payments',
+                        transactionRoute: '/tuition_payments_transaction',
+                      ).showDialog();
                     },
-                    child: cardPay(Icons.event_note_rounded, 'Pago matricula'),
+                    child: cardPay(Icons.event_note_rounded, 'Pagos matricula'),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      //  CustomDialogWidget(
+                      //   tittle: 'Pago pension',
+                      //   paymentRoute: '/payment',
+                      //   transactionRoute: '/pay',
+                      // ).showDialog();
+                    },
                     child: cardPay(Icons.library_add_sharp, 'Pago pension'),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      //  CustomDialogWidget(
+                      //   tittle: 'Otros pagos',
+                      //   paymentRoute: '/payment',
+                      //   transactionRoute: '/pay',
+                      // ).showDialog();
+                    },
                     child: cardPay(Icons.paypal_rounded, 'Otros pagos'),
                   ),
                 ],

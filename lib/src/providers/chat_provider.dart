@@ -58,7 +58,7 @@ class ChatProvider extends GetConnect {
     }
   }
 
-  Future<Map<String, dynamic>> sendMessage2(
+  Future<Map<String, dynamic>> sendMessage(
       String idUserSelected, String message, List<File>? archivos) async {
     String token = await authService.getToken();
 
@@ -72,8 +72,6 @@ class ChatProvider extends GetConnect {
 
       request.fields['body'] = message;
       request.fields['origen'] = 'MOBILE';
-
-     
 
       if (archivos![0].path.isNotEmpty) {
         for (var i = 0; i < archivos.length; i++) {
@@ -90,7 +88,7 @@ class ChatProvider extends GetConnect {
       if (response.statusCode == 201) {
         if (response.body.isNotEmpty) {
           return jsonDecode(response.body);
-        }else{
+        } else {
           return {};
         }
       } else {
