@@ -27,10 +27,10 @@ class ProfileUserController extends GetxController {
 
 
   Future<void> fetchEvents() async {
-    isLoading(true);
     try {
       final userData = await authProvider.getProfile();
       userProfile(userData);
+      isLoading(true);
     } finally {
       isLoading(false);
     }

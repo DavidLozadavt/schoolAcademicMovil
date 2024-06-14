@@ -15,7 +15,8 @@ class ProfileUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const Scaffold(
+            body: Expanded(child: Center(child: CircularProgressIndicator())));
       } else {
         return Scaffold(
           body: Column(
@@ -26,9 +27,9 @@ class ProfileUserScreen extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(right: 20),
-                      child: DropdownButton2(
-                        underline: Container(),
-                        isExpanded: true,
+                    child: DropdownButton2(
+                      underline: Container(),
+                      isExpanded: true,
                       customButton: const Icon(
                         Icons.more_vert,
                         size: 34,
@@ -56,7 +57,10 @@ class ProfileUserScreen extends StatelessWidget {
                             () => Get.to(() => const PagosPage())),*/
                         /*_itemPopUpMenu(context, 'Términos y condiciones', true,
                             3, () => Get.to(const PagosPage())),*/
-                        customDropdownMenuItem(text: 'Cerrar sesión', enabled: true, value: 1,
+                        customDropdownMenuItem(
+                            text: 'Cerrar sesión',
+                            enabled: true,
+                            value: 1,
                             onTap: () => logoutApp(context)),
                       ],
                       onChanged: (value) {},
