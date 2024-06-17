@@ -8,6 +8,8 @@ import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class LoginController extends GetxController {
+   final ProfileUserController _profileController =
+      Get.put(ProfileUserController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AuthProvider authProvider = AuthProvider();
@@ -18,8 +20,8 @@ class LoginController extends GetxController {
   }
 
   goToHomePageStudent() {
-    Get.find<ProfileUserController>().fetchEvents();
-
+    //Get.find<ProfileUserController>().fetchEvents();
+    // _profileController.fetchEvents();
     Get.offAllNamed('/home_student');
   }
 

@@ -4,11 +4,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
+import 'package:vtschool/src/providers/push_notification_controller.dart';
 
 
 class PushNotificationProvider {
-  final ProfileUserController profileController = Get.put(ProfileUserController());
+  final PushNotificationController _pushNotificationController = Get.put(PushNotificationController());
   
   final AuthProvider authProvider = AuthProvider();
    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -55,7 +55,7 @@ class PushNotificationProvider {
    void showFlutterNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    profileController.incrementNotificationCount();
+    _pushNotificationController.incrementNotificationCount();
     if (notification != null && android != null && !kIsWeb) {
      flutterLocalNotificationsPlugin.show(
         notification.hashCode,

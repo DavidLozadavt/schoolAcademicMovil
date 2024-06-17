@@ -34,5 +34,4 @@ class NotificationsController extends GetxController {
   }
 
 
-
 }

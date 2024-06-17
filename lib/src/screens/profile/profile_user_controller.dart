@@ -5,18 +5,7 @@ class ProfileUserController extends GetxController {
   final AuthProvider authProvider = AuthProvider();
   var isLoading = true.obs;
   var userProfile = {}.obs;
-  
-  var notificationCount = 0.obs;
- // var urlLogoCompany = ''.obs;
-
-  void incrementNotificationCount() {
-    notificationCount.value++;
-  }
-
-  void clearNotificationCount() {
-    notificationCount.value = 0;
-  }
-
+  // var urlLogoCompany = ''.obs;
 
   @override
   void onInit() {
@@ -25,23 +14,22 @@ class ProfileUserController extends GetxController {
     //urlPhotoCompany();
   }
 
-
   Future<void> fetchEvents() async {
-    isLoading(true);
     try {
       final userData = await authProvider.getProfile();
       userProfile(userData);
+      isLoading(true);
     } finally {
       isLoading(false);
     }
   }
 
- void clearUserData() {
+  void clearUserData() {
     userProfile.value = {};
     //isLoading.value = false;
   }
 
-  // void urlPhotoCompany() async {   
+  // void urlPhotoCompany() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   final url = prefs.getString('urlLogoCompany');
   //   if (url != null) {

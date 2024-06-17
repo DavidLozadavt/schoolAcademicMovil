@@ -82,8 +82,6 @@ class Chat extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox.shrink(),
-            const Icon(Icons.more_vert),
           ],
         ),
       ),

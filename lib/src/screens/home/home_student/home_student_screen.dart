@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/providers/push_notification_controller.dart';
 
 import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
@@ -8,7 +9,11 @@ import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 class HomeStudentScreen extends StatelessWidget {
   HomeStudentScreen({super.key});
 
-  final ProfileUserController controller = Get.put(ProfileUserController());
+  final PushNotificationController _pushNotificationController =
+      Get.put(PushNotificationController());
+  final ProfileUserController _profileController =
+      Get.put(ProfileUserController());
+  //  final ProfileUserController _profileController = Get.find<ProfileUserController>();
 
   /*void showDialogPay(BuildContext context) {
     showDialog(
@@ -27,7 +32,7 @@ class HomeStudentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.isLoading.value) {
+      if (_profileController.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       } else {
         return Scaffold(
@@ -45,7 +50,7 @@ class HomeStudentScreen extends StatelessWidget {
                       children: [
                         ClipOval(
                           child: Image.network(
-                            '${controller.userProfile['persona']?['rutaFoto']}',
+                            '${_profileController.userProfile['persona']?['rutaFoto']}',
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
@@ -74,7 +79,7 @@ class HomeStudentScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${controller.userProfile['persona']?['nombre1']} ${controller.userProfile['persona']?['apellido1']}',
+                              '${_profileController.userProfile['persona']?['nombre1']} ${_profileController.userProfile['persona']?['apellido1']}',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'CM Sans Serif',
@@ -97,14 +102,16 @@ class HomeStudentScreen extends StatelessWidget {
                             size: 28,
                             color: Colors.black,
                           ),
-                          if (controller.notificationCount.value > 0)
+                          if (_pushNotificationController
+                                  .notificationCount.value >
+                              0)
                             Positioned(
                               right: 0,
                               child: CircleAvatar(
                                 radius: 6,
                                 backgroundColor: Colors.red,
                                 child: Text(
-                                  '${controller.notificationCount.value}',
+                                  '${_pushNotificationController.notificationCount.value}',
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 10),
                                 ),
@@ -114,7 +121,7 @@ class HomeStudentScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         Get.toNamed('/notification');
-                        controller.clearNotificationCount();
+                        _pushNotificationController.clearNotificationCount();
                       },
                     ),
                   ),

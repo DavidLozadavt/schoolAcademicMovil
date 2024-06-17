@@ -29,7 +29,6 @@ class AuthProvider extends GetConnect {
       }
 
       if (response.statusCode == 200) {
-        //Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
         apiResponse = UserData.fromJson(response.body);
         return apiResponse;
       }
@@ -45,13 +44,13 @@ class AuthProvider extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      debugPrint('profle ${response.body}');
-      if (response.statusCode != 200) {
-        throw Failure('Algo salió mal, vuelve a intentarlo');
-      }
+      debugPrint('profle ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return response.body['userData'];
+      }
+      if (response.statusCode == 401) {
+        return {};
       }
     } catch (e) {
       throw Failure('$e');
@@ -64,10 +63,8 @@ class AuthProvider extends GetConnect {
     try {
       await post(logoutUrl, {}, headers: {'Authorization': 'Bearer $token'});
     } catch (e) {
-     throw Failure('$e');
+      throw Failure('$e');
     }
-
-
   }
 
   Future<String> getToken() async {
@@ -84,5 +81,4 @@ class AuthProvider extends GetConnect {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString('rolUser') ?? '';
   }
-
 }
