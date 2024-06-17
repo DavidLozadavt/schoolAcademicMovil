@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
@@ -43,170 +44,173 @@ class FormPaymentsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: 40, right: 40),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Obx(() {
-                        return DropdownButton<String>(
-                          isExpanded: true,
-                          value: _paymentsController
-                                  .selectedInstitutionCode.isNotEmpty
-                              ? _paymentsController
-                                  .selectedInstitutionCode.value
-                              : null,
+              child: SingleChildScrollView(
+                child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        decoration: BoxDecoration(
+                          color: listColor[10],
                           borderRadius: BorderRadius.circular(10.0),
-                          dropdownColor: listColor[10],
-                          hint: Text('Selecciona el banco',
-                              style: TextStyle(color: listColor[13])),
-                          icon: Icon(Icons.arrow_drop_down_circle_outlined,
-                              color: listColor[13]),
-                          items: _paymentsController.financialInstitutions
-                              .map((institution) {
-                            return DropdownMenuItem<String>(
-                              value: institution['financial_institution_code'],
-                              child: Text(
-                                  institution['financial_institution_name'],
-                                  style: TextStyle(color: listColor[13])),
-                            );
-                          }).toList(),
-                          onChanged: (code) {
-                            if (code != null) {
-                              _paymentsController
-                                  .setSelectedInstitutionCode(code);
-                            }
-                          },
-                        );
-                      }),
-                    ),
-                    Container(
-                      width: 350,
-                      padding: const EdgeInsets.only(left: 20.0),
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Obx(() {
+                          return DropdownButton<String>(
+                            isExpanded: true,
+                            value: _paymentsController
+                                    .selectedInstitutionCode.isNotEmpty
+                                ? _paymentsController
+                                    .selectedInstitutionCode.value
+                                : null,
+                            borderRadius: BorderRadius.circular(10.0),
+                            dropdownColor: listColor[10],
+                            hint: Text('Selecciona el banco',
+                                style: TextStyle(color: listColor[13])),
+                            icon: Icon(Icons.arrow_drop_down_circle_outlined,
+                                color: listColor[13]),
+                            items: _paymentsController.financialInstitutions
+                                .map((institution) {
+                              return DropdownMenuItem<String>(
+                                value: institution['financial_institution_code'],
+                                child: Text(
+                                    institution['financial_institution_name'],
+                                    style: TextStyle(color: listColor[13])),
+                              );
+                            }).toList(),
+                            onChanged: (code) {
+                              if (code != null) {
+                                _paymentsController
+                                    .setSelectedInstitutionCode(code);
+                              }
+                            },
+                          );
+                        }),
                       ),
-                      child: Obx(() {
-                        return DropdownButton<int>(
-                          isExpanded: true,
-                          value: _paymentsController
-                                      .selectedPersonTypesIndex.value ==
-                                  -1
-                              ? null
-                              : _paymentsController
-                                  .selectedPersonTypesIndex.value,
+                      const SizedBox(height: 25), 
+                      Container(
+                        width: 350,
+                        padding: const EdgeInsets.only(left: 20.0),
+                        decoration: BoxDecoration(
+                          color: listColor[10],
                           borderRadius: BorderRadius.circular(10.0),
-                          dropdownColor: listColor[10],
-                          hint: Text('Seleccionar el tipo de persona',
-                              style: TextStyle(color: listColor[13])),
-                          icon: Icon(Icons.arrow_drop_down_circle_outlined,
-                              color: listColor[13]),
-                          items: List.generate(
-                              _paymentsController.personTypes.length, (index) {
-                            return DropdownMenuItem<int>(
-                              value: index,
-                              child: Text(
-                                _paymentsController.personTypes[index],
-                                style: TextStyle(color: listColor[13]),
-                              ),
-                            );
-                          }),
-                          onChanged: (int? newIndex) {
-                            if (newIndex != null) {
-                              _paymentsController
-                                  .setselectedPersonTypesIndex(newIndex);
-                            }
-                          },
-                        );
-                      }),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Obx(() {
+                          return DropdownButton<int>(
+                            isExpanded: true,
+                            value: _paymentsController
+                                        .selectedPersonTypesIndex.value ==
+                                    -1
+                                ? null
+                                : _paymentsController
+                                    .selectedPersonTypesIndex.value,
+                            borderRadius: BorderRadius.circular(10.0),
+                            dropdownColor: listColor[10],
+                            hint: Text('Seleccionar el tipo de persona',
+                                style: TextStyle(color: listColor[13])),
+                            icon: Icon(Icons.arrow_drop_down_circle_outlined,
+                                color: listColor[13]),
+                            items: List.generate(
+                                _paymentsController.personTypes.length, (index) {
+                              return DropdownMenuItem<int>(
+                                value: index,
+                                child: Text(
+                                  _paymentsController.personTypes[index],
+                                  style: TextStyle(color: listColor[13]),
+                                ),
+                              );
+                            }),
+                            onChanged: (int? newIndex) {
+                              if (newIndex != null) {
+                                _paymentsController
+                                    .setselectedPersonTypesIndex(newIndex);
+                              }
+                            },
+                          );
+                        }),
                       ),
-                      child: Obx(() {
-                        return DropdownButton<int>(
-                          isExpanded: true,
-                          value: _paymentsController
-                                      .selectedIdentificationIndex.value ==
-                                  -1
-                              ? null
-                              : _paymentsController
-                                  .selectedIdentificationIndex.value,
+                      const SizedBox(height: 25), 
+                      Container(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        decoration: BoxDecoration(
+                          color: listColor[10],
                           borderRadius: BorderRadius.circular(10.0),
-                          dropdownColor: listColor[10],
-                          hint: Text('Selecciona el tipo de identificación',
-                              style: TextStyle(color: listColor[13])),
-                          icon: Icon(Icons.arrow_drop_down_circle_outlined,
-                              color: listColor[13]),
-                          items: List.generate(
-                              _paymentsController.identificationTypes.length,
-                              (index) {
-                            return DropdownMenuItem<int>(
-                              value: index,
-                              child: Text(
-                                _paymentsController.identificationTypes[index],
-                                style: TextStyle(color: listColor[13]),
-                              ),
-                            );
-                          }),
-                          onChanged: (int? newIndex) {
-                            if (newIndex != null) {
-                              _paymentsController
-                                  .setSelectedIdentificationIndex(newIndex);
-                            }
-                          },
-                        );
-                      }),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Obx(() {
+                          return DropdownButton<int>(
+                            isExpanded: true,
+                            value: _paymentsController
+                                        .selectedIdentificationIndex.value ==
+                                    -1
+                                ? null
+                                : _paymentsController
+                                    .selectedIdentificationIndex.value,
+                            borderRadius: BorderRadius.circular(10.0),
+                            dropdownColor: listColor[10],
+                            hint: Text('Selecciona el tipo de identificación',
+                                style: TextStyle(color: listColor[13])),
+                            icon: Icon(Icons.arrow_drop_down_circle_outlined,
+                                color: listColor[13]),
+                            items: List.generate(
+                                _paymentsController.identificationTypes.length,
+                                (index) {
+                              return DropdownMenuItem<int>(
+                                value: index,
+                                child: Text(
+                                  _paymentsController.identificationTypes[index],
+                                  style: TextStyle(color: listColor[13]),
+                                ),
+                              );
+                            }),
+                            onChanged: (int? newIndex) {
+                              if (newIndex != null) {
+                                _paymentsController
+                                    .setSelectedIdentificationIndex(newIndex);
+                              }
+                            },
+                          );
+                        }),
                       ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TextField(
                           controller:
                               _paymentsController.identificationController,
@@ -247,21 +251,20 @@ class FormPaymentsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TextField(
                           controller: _paymentsController.nameController,
                           textCapitalization: TextCapitalization.words,
@@ -302,21 +305,20 @@ class FormPaymentsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TextField(
                           controller: _paymentsController.emailController,
                           onChanged: (value) {},
@@ -356,21 +358,20 @@ class FormPaymentsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TextField(
                           controller: _paymentsController.phoneController,
                           textCapitalization: TextCapitalization.sentences,
@@ -413,21 +414,20 @@ class FormPaymentsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: TextField(
                           controller: _paymentsController.descriptionController,
                           textCapitalization: TextCapitalization.sentences,
@@ -467,22 +467,21 @@ class FormPaymentsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      decoration: BoxDecoration(
-                        color: listColor[10],
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: listColor[13].withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Expanded(
+                      const SizedBox(height: 25), 
+                      Container(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        decoration: BoxDecoration(
+                          color: listColor[10],
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listColor[13].withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: Obx(() => CheckboxListTile(
                               title: GestureDetector(
                                 onTap: () {
@@ -500,59 +499,27 @@ class FormPaymentsScreen extends StatelessWidget {
                               },
                             )),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Obx(() => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: listColor[13],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                      const SizedBox(height: 20),
+                      Obx(() => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: listColor[13],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
                             ),
-                          ),
-                          onPressed: _paymentsController.isChecked.value
-                              ? () async {
-                                  await _paymentsController
-                                      .sendTransactionPse();
-                                  /*Get.toNamed('/pruebawompi');
-                                  if (_paymentsController.identificationController
-                                          .text.isNotEmpty ||
-                                      _paymentsController
-                                          .nameController.text.isNotEmpty ||
-                                      _paymentsController
-                                          .emailController.text.isNotEmpty ||
-                                      _paymentsController
-                                          .phoneController.text.isNotEmpty ||
-                                      _paymentsController.descriptionController
-                                          .text.isNotEmpty) {
-                                    Get.defaultDialog(
-                                      title: 'Espera',
-                                      content: const Text(
-                                          'Estamos trabajando en la transaccíon'),
-                                    );
+                            onPressed: _paymentsController.isChecked.value
+                                ? () async {
                                     await _paymentsController
                                         .sendTransactionPse();
-                    
-                                    Future.delayed(const Duration(seconds: 5), () {
-                                      Get.back();
-                                      Get.toNamed('/pruebawompi');
-                                      _paymentsController.clearData();
-                                      print(_paymentsController
-                                          .asyncPaymentUrl.value);
-                                    });
-                                  } else {
-                                    Get.snackbar(
-                                      '¡Error!',
-                                      '¡Por favor completa todos los campos!',
-                                    );
-                                  }*/
-                                }
-                              : null,
-                          child: Text(
-                            'Continuar',
-                            style: TextStyle(color: listColor[10]),
-                          ),
-                        )),
-                  ],
+                                  }
+                                : null,
+                            child: Text(
+                              'Continuar',
+                              style: TextStyle(color: listColor[10]),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ),

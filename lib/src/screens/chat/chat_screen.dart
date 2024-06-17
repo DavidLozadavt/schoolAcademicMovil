@@ -66,10 +66,9 @@ class Chat extends StatelessWidget {
                 );
               },
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    '${selectedUser['matricula']!['persona']['rutaFoto']}'),
-                    backgroundColor: Colors.transparent
-              ),
+                  backgroundImage: NetworkImage(
+                      '${selectedUser['matricula']!['persona']['rutaFoto']}'),
+                  backgroundColor: Colors.transparent),
             ),
             const SizedBox(width: 10),
             Column(
@@ -83,7 +82,7 @@ class Chat extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox.shrink(),
             const Icon(Icons.more_vert),
           ],
         ),
@@ -124,13 +123,13 @@ class Chat extends StatelessWidget {
                               : MainAxisAlignment.start,
                           children: [
                             if (messages[index]['idActivationCompanyUser'] ==
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['matricula']['persona']['id']
+                                    .toString())
                               CircleAvatar(
-                                backgroundImage: NetworkImage(
+                                  backgroundImage: NetworkImage(
                                     '${selectedUser['matricula']!['persona']['rutaFoto']}',
-                                    ),
-                                    backgroundColor: Colors.transparent
-                              ),
+                                  ),
+                                  backgroundColor: Colors.transparent),
                             const SizedBox(width: 8.0),
                             Flexible(
                               child: Card(
@@ -237,7 +236,8 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: const Text("No"),
+                                                          child:
+                                                              const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -246,7 +246,8 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: const Text("Si"),
+                                                          child:
+                                                              const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -287,7 +288,8 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: const Text("No"),
+                                                          child:
+                                                              const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -296,7 +298,8 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: const Text("Si"),
+                                                          child:
+                                                              const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -334,7 +337,8 @@ class Chat extends StatelessWidget {
                                                           onPressed: () {
                                                             Get.back();
                                                           },
-                                                          child: const Text("No"),
+                                                          child:
+                                                              const Text("No"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -343,7 +347,8 @@ class Chat extends StatelessWidget {
                                                                     archivoUrl);
                                                             Get.back();
                                                           },
-                                                          child: const Text("Si"),
+                                                          child:
+                                                              const Text("Si"),
                                                         ),
                                                       ],
                                                     );
@@ -381,7 +386,8 @@ class Chat extends StatelessWidget {
                               ),
                             ),
                             if (messages[index]['idActivationCompanyUser'] !=
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['matricula']['persona']['id']
+                                    .toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),
@@ -483,7 +489,7 @@ class Chat extends StatelessWidget {
                         );
                       }
                     } else {
-                      return Container();
+                      return const SizedBox.shrink();
                     }
                   }),
                   Padding(
@@ -505,7 +511,7 @@ class Chat extends StatelessWidget {
                               fillColor: listColor[10],
                               hintText: "Mensaje",
                               hintStyle: TextStyle(color: listColor[14]),
-                              prefixIcon: const Spacer(),
+                              prefixIcon: const SizedBox.shrink(),
                               suffixIcon: IconButton(
                                 icon: Icon(_chatController.keyboard.value
                                     ? Icons.keyboard
