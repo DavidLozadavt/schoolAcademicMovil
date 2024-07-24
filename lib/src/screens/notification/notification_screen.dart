@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/providers/push_notification_controller.dart';
 
 import 'package:vtschool/src/screens/notification/notification_controller.dart';
 import 'package:vtschool/src/widgets/card_notifications.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 
 class NotificationScreen extends StatelessWidget {
+   final PushNotificationController _pushNotificationController =
+      Get.put(PushNotificationController());
   final NotificationsController _notificationsController =
       Get.put(NotificationsController());
 
@@ -29,6 +32,7 @@ class NotificationScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Get.back();
+                    _pushNotificationController.clearNotificationCount();
                   },
                 ),
                 const Text(

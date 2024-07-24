@@ -6,7 +6,6 @@ import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
-import 'package:vtschool/src/screens/ratings/ratings_student.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeTeacher extends StatelessWidget {
@@ -40,41 +39,39 @@ class HomeTeacher extends StatelessWidget {
                   icon: const ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
-                    messageCount: 50,
                   ),
                   activeIcon: const ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
                     isActive: true,
-                    messageCount: 50,
                   ),
                 ),
-                BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
-                  label: '',
-                  icon: const ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
-                  ),
-                  activeIcon: const ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
-                    isActive: true,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
-                  label: '',
-                  icon: const ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
-                  ),
-                  activeIcon: const ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
-                    isActive: true,
-                  ),
-                ),
+                // BottomNavigationBarItem(
+                //   backgroundColor: listColor[11].withOpacity(0.5),
+                //   label: '',
+                //   icon: const ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Mis notas',
+                //   ),
+                //   activeIcon: const ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Mis notas',
+                //     isActive: true,
+                //   ),
+                // ),
+                // BottomNavigationBarItem(
+                //   backgroundColor: listColor[11].withOpacity(0.5),
+                //   label: '',
+                //   icon: const ItemNavigationButton(
+                //     fileIcon: 'assets/images/payment.png',
+                //     title: 'Pagos',
+                //   ),
+                //   activeIcon: const ItemNavigationButton(
+                //     fileIcon: 'assets/images/payment.png',
+                //     title: 'Pagos',
+                //     isActive: true,
+                //   ),
+                // ),
                 BottomNavigationBarItem(
                   backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
@@ -93,12 +90,9 @@ class HomeTeacher extends StatelessWidget {
         body: Obx(() => IndexedStack(
               index: controller.currentIndex.value,
               children: [
-                const HomeTeacherScreen(),
+                HomeTeacherScreen(),
                 Chats(),
-                const StudentPage(),
-                const StudentPage(),
                 ProfileUserScreen(),
-                
               ],
             )),
         extendBody: true,

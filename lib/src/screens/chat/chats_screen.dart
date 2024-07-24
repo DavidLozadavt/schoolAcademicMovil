@@ -108,7 +108,6 @@ class Chats extends StatelessWidget {
                                     _chatController.getMessage(
                                         '${users['matricula']!['persona']['id']}');
                                     _chatController.setSelectedUser(users);
-
                                     Get.toNamed('/chat');
                                   },
                                   child: CardChats(

@@ -80,6 +80,7 @@ class LoginScreen extends StatelessWidget {
           ),
           child: TextField(
             controller: _loginController.emailController,
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: "Correo",
               border: OutlineInputBorder(

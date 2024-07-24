@@ -22,13 +22,13 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2024 ${response.body}');
     if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
-        activitiesById.assignAll(response.body.cast<Map<String, dynamic>>());
-      } else {
+      Map<String, dynamic> responseBody = response.body;
+      /*if (responseBody.isNotEmpty) {*/
+        activitiesById.assignAll([responseBody]);
+    /*  } else {
         throw Failure('La respuesta del servidor está vacía.');
-      }
+      }*/
     } else {
       throw Failure('Error al cargar las actividades');
     }

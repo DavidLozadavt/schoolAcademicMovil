@@ -16,6 +16,7 @@ class GlobalController extends GetxController {
       } else {
         String token = await authProvider.getToken();
         String rolUser = await authProvider.getRolUser();
+        print('$token       and     $rolUser');
         if (token == '') {
           Get.offAllNamed('/login');
         } else {

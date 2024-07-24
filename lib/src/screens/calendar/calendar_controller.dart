@@ -27,7 +27,6 @@ class CalendarController1 extends GetxController {
       } else if (rolUser == 'ADMIN'){
         await _calendarProvider.fetchEventsTeacher(idUser);
       }
-
       events.assignAll(_calendarProvider.events);
     } catch (error) {
       //print('Error fetching events: $error');

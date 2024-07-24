@@ -32,11 +32,11 @@ class TaskStudentController extends GetxController {
   }
 
   Future<void> getNotifications() async {
-    
     try {
       await _notificationsProvider.getNotifications();
       activities.assignAll(_notificationsProvider.activities);
       filteredActivities.assignAll(activities);
+
       isLoading(true);
     } finally {
       isLoading(false);
@@ -47,6 +47,7 @@ class TaskStudentController extends GetxController {
     try {
       await _activityProvider.getActivityById(id);
       activitiesById.assignAll(_activityProvider.activitiesById);
+      print(activitiesById);
     } finally {}
   }
 
@@ -145,24 +146,27 @@ class TaskStudentController extends GetxController {
       filteredActivities.assignAll(activities);
     } else {
       filteredActivities.assignAll(activities.where((activity) {
-        if(activity['metadataInfo'] != null){
-        Map<String, dynamic> decodedData = jsonDecode(activity['metadataInfo']);
-        final String affair = activity['asunto'].toString().toLowerCase();
-        final String id = activity['id'].toString().toLowerCase();
-        final String nameTeacher =
-            activity['personaRemitente']['nombre1'].toString().toLowerCase();
-        final String lastNameTeacher =
-            activity['personaRemitente']['apellido1'].toString().toLowerCase();
-        final String subject =
-            decodedData['nombreMateria'].toString().toLowerCase();
-        return affair.contains(query.toLowerCase()) ||
-            id.contains(query.toLowerCase()) ||
-            nameTeacher.contains(query.toLowerCase()) ||
-            lastNameTeacher.contains(query.toLowerCase()) ||
-            subject.contains(query.toLowerCase());
-        }else{
+        if (activity['metadataInfo'] != null) {
+          Map<String, dynamic> decodedData =
+              jsonDecode(activity['metadataInfo']);
+          final String affair = activity['asunto'].toString().toLowerCase();
+          final String id = activity['id'].toString().toLowerCase();
+          final String nameTeacher =
+              activity['personaRemitente']['nombre1'].toString().toLowerCase();
+          final String lastNameTeacher = activity['personaRemitente']
+                  ['apellido1']
+              .toString()
+              .toLowerCase();
+          final String subject =
+              decodedData['nombreMateria'].toString().toLowerCase();
+          return affair.contains(query.toLowerCase()) ||
+              id.contains(query.toLowerCase()) ||
+              nameTeacher.contains(query.toLowerCase()) ||
+              lastNameTeacher.contains(query.toLowerCase()) ||
+              subject.contains(query.toLowerCase());
+        } else {
           return false;
-        }    
+        }
       }));
     }
   }

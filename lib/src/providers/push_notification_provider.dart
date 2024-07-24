@@ -30,7 +30,7 @@ class PushNotificationProvider {
         ?.createNotificationChannel(channel);
     await _firebaseMessaging.requestPermission();
     final fCMToken =  await _firebaseMessaging.getToken();
-   // print('tokenAppDevice $fCMToken');
+   print('tokenAppDevice $fCMToken');
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token_device', fCMToken.toString());
     initPushNotifications();

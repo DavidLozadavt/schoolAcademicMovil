@@ -5,11 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/models/auth_user_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/errors/failure.dart';
-import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
+//import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class LoginController extends GetxController {
-   final ProfileUserController _profileController =
-      Get.put(ProfileUserController());
+  //  final ProfileUserController _profileController =
+  //     Get.put(ProfileUserController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AuthProvider authProvider = AuthProvider();
@@ -47,7 +47,7 @@ class LoginController extends GetxController {
       final UserData responseApiLogin = await authProvider.login(
           emailController.text, passwordController.text, tokenDevice);
 
-      debugPrint(responseApiLogin.payload.company.rutaLogoUrl);
+      debugPrint(responseApiLogin.payload.roles[0]);
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
         Get.snackbar(
           '¡Hola!',
@@ -67,11 +67,18 @@ class LoginController extends GetxController {
         });
     
       } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
-        Get.snackbar(
-          '¡Hola!',
-          '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',
-        );
-        //goToHomePageTeacher();
+        await pref.setString('token', responseApiLogin.accessToken);
+        await pref.setString('email', emailController.text);
+        await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
+        await pref.setString('idUser', responseApiLogin.user.id.toString());
+        // Get.snackbar(
+        //   '¡Hola!',
+        //   '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',
+        // );
+       Future.delayed(const Duration(seconds: 1), () {
+          goToHomePageTeacher();
+          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+        });
       }
     } on Failure catch (e) {
       Get.snackbar(

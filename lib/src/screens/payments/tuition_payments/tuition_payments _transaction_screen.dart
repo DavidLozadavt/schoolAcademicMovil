@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/payments/payments_controller.dart';
-import 'package:vtschool/src/widgets/loading.dart';
+//import 'package:vtschool/src/widgets/loading.dart';
 
 class TuitionPaymentsTransactionScreen extends StatelessWidget {
   final PaymentsController _paymentsController = Get.put(PaymentsController());
