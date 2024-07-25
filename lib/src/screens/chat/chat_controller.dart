@@ -52,7 +52,7 @@ class ChatController extends GetxController {
       isLoading(true);
     } catch (error) {
       //print('Error: $error');
-      debugPrint('Error: $error');
+      print('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -64,7 +64,7 @@ class ChatController extends GetxController {
       messages.assignAll(_chatProvider.messages);
     } catch (error) {
      // print('Error: $error');
-       debugPrint('Error: $error');
+       print('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -104,7 +104,7 @@ class ChatController extends GetxController {
   }
 
   void logMessage(String text) {
-    debugPrint("LOG: $text");
+    print("LOG: $text");
     //print("LOG: $text");
     log.value += "$text\n";
   }
@@ -136,7 +136,7 @@ class ChatController extends GetxController {
       await pusher.subscribe(channelName: chatChannelName);
     } catch (e) {
       //print('Error: $e');
-      debugPrint('Error: $e');
+      print('Error: $e');
     }
   }
 
@@ -228,7 +228,7 @@ class ChatController extends GetxController {
     }*/
     } catch (e) {
       //print('Error: $e');
-       debugPrint('Error: $e');
+       print('Error: $e');
     }
   }
 

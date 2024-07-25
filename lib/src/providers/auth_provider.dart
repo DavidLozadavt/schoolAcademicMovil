@@ -44,7 +44,7 @@ class AuthProvider extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      debugPrint('profle ${response.statusCode}');
+      print('profle ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return response.body['userData'];

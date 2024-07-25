@@ -12,23 +12,27 @@ class UserData {
     String accessToken;
     Payload payload;
     User user;
+    int expiresIn;
 
     UserData({
         required this.accessToken,
         required this.payload,
         required this.user,
+        required this.expiresIn
     });
 
     factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         accessToken: json["access_token"],
         payload: Payload.fromJson(json["payload"]),
         user: User.fromJson(json["user"]),
+        expiresIn: json["expires_in"]
     );
 
     Map<String, dynamic> toJson() => {
         "access_token": accessToken,
         "payload": payload.toJson(),
         "user": user.toJson(),
+        "expires_in": expiresIn
     };
 }
 
@@ -40,7 +44,7 @@ class Payload {
     String jti;
     String sub;
     String prv;
-    String idCompany; // <- cambio de pre a local string a int
+    int idCompany; // <- cambio de pre a local string a int
     List<String> roles;
     List<String> permissions;
     Company company;
@@ -94,7 +98,7 @@ class Company {
     String nit;
     String rutaLogo;
     String representanteLegal;
-    String digitoVerificacion;
+    int digitoVerificacion; //hacer cambio cuando se cambie a pre
     DateTime createdAt;
     DateTime updatedAt;
     String rutaLogoUrl;

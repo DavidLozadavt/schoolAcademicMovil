@@ -24,7 +24,7 @@ class _BannerScreenState extends State<BannerScreen> {
       context: context,
       images: images,
       onClick: (index) {
-        debugPrint("CLICKED $index");
+        print("CLICKED $index");
       },
     ).show();
   }
@@ -35,7 +35,7 @@ class _BannerScreenState extends State<BannerScreen> {
       images: images,
       useDots: false,
       onClick: (index) {
-        debugPrint("CLICKED $index");
+        print("CLICKED $index");
       },
     ).show();
   }
@@ -48,7 +48,7 @@ class _BannerScreenState extends State<BannerScreen> {
       dotsColorActive: Colors.blue,
       dotsColorInactive: Colors.grey.withOpacity(0.5),
       onClick: (index) {
-        debugPrint("CLICKED $index");
+        print("CLICKED $index");
       },
     ).show();
   }
@@ -71,7 +71,7 @@ class _BannerScreenState extends State<BannerScreen> {
         ),
       ),
       onClick: (index) {
-        debugPrint("CLICKED $index");
+        print("CLICKED $index");
       },
     ).show();
   }

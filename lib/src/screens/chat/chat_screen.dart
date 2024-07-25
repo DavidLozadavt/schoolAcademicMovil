@@ -110,7 +110,7 @@ class Chat extends StatelessWidget {
                       bool isOwnMessage = messages[index]
                               ['idActivationCompanyUser'] !=
                           selectedUser['matricula']['persona']['id'].toString();
-                      debugPrint('$messages');
+                      print('$messages');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -592,7 +592,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  debugPrint('No se selecciono nunguna imagen');
+                                  print('No se selecciono nunguna imagen');
                                   //print('No se seleccionó ninguna imagen');
                                 }
                               },
@@ -609,7 +609,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setFilePath(file);
                                 } else {
                                   //print('No se seleccionó ninguna imagen');
-                                  debugPrint('No se seleccionó ninguna imagen');
+                                  print('No se seleccionó ninguna imagen');
                                 }
                               },
                               icon: const Icon(Icons.photo_library_outlined)),
@@ -623,7 +623,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  debugPrint('No se seleccionó ningun archivo');
+                                  print('No se seleccionó ningun archivo');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

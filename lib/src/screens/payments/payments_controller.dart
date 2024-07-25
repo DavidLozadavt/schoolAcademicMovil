@@ -93,7 +93,7 @@ class PaymentsController extends GetxController {
   void setSelectedIdentificationIndex(int index) {
     selectedIdentificationIndex.value = index;
     //print(index);
-    debugPrint('$index');
+    print('$index');
   }
 
   void toggleCheckbox() {
@@ -147,7 +147,7 @@ class PaymentsController extends GetxController {
           final responseGetFind = await _wompiProvider
               .getFindTransactionById(responsePse['data']['id'].toString());
           responseFindTransactionById(responseGetFind);
-          debugPrint('$responseFindTransactionById');
+          print('$responseFindTransactionById');
           setAsyncPaymentUrl(responseFindTransactionById['payment_method']
               ['extra']['async_payment_url']);
         });
@@ -157,12 +157,12 @@ class PaymentsController extends GetxController {
           clearData();
           //print(asyncPaymentUrl.value);
 
-          debugPrint(asyncPaymentUrl.value);
+          print(asyncPaymentUrl.value);
         });
       }
     } catch (e) {
       //print('Error al enviar los datos: $e');
-      debugPrint('Error al enviar los datos: $e');
+      print('Error al enviar los datos: $e');
     }
   }
 

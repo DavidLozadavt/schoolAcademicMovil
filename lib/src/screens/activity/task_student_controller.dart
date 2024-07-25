@@ -122,7 +122,7 @@ class TaskStudentController extends GetxController {
       );
     } catch (e) {
       //print('Error al enviar la evidencia: $e');
-      debugPrint('Error al enviar la evidencia: $e');
+      print('Error al enviar la evidencia: $e');
     }
   }
 

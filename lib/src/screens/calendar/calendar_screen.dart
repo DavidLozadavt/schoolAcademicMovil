@@ -42,20 +42,21 @@ class Calendar extends StatelessWidget {
           DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
       var day = event['idDia'];
       String? dayOfWeek;
-      if (day == '1') {
-        dayOfWeek = 'BYDAY=MO';
-      } else if (day == '2') {
-        dayOfWeek = 'BYDAY=TU';
-      } else if (day == '3') {
-        dayOfWeek = 'BYDAY=WE';
-      } else if (day == '4') {
-        dayOfWeek = 'BYDAY=TH';
-      } else if (day == '5') {
-        dayOfWeek = 'BYDAY=FR';
-      } else if (day == '6') {
-        dayOfWeek = 'BYDAY=SA';
-      } else if (day == '7') {
-        dayOfWeek = 'BYDAY=SU';
+      //en pre cambiar la validacion por un string 1 a'1'
+      if (day == 1) {
+        dayOfWeek = 'MO';
+      } else if (day == 2) {
+        dayOfWeek = 'TU';
+      } else if (day == 3) {
+        dayOfWeek = 'WE';
+      } else if (day == 4) {
+        dayOfWeek = 'TH';
+      } else if (day == 5) {
+        dayOfWeek = 'FR';
+      } else if (day == 6) {
+        dayOfWeek = 'SA';
+      } else if (day == 7) {
+        dayOfWeek = 'SU';
       }
 
       appointments.add(Appointment(
@@ -65,7 +66,7 @@ class Calendar extends StatelessWidget {
         color: _getEventColor(event["estado"]),
         id: event["id"].toString(),
         recurrenceRule:
-            'RRULE:FREQ=WEEKLY;$dayOfWeek;WKST=MO;UNTIL=$fechaFormateada',
+            'RRULE:FREQ=WEEKLY;BYDAY=$dayOfWeek;WKST=MO;UNTIL=$fechaFormateada',
       ));
     }
     return _DataSource(appointments);

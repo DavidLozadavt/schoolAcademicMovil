@@ -21,11 +21,11 @@ class NotificationsProvider extends GetConnect {
     );
     print('20000000000000000 ${response.body}');
     if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
+     // if (response.body.isNotEmpty) {
        activities.assignAll(response.body.cast<Map<String, dynamic>>());
-      } else {
+     /* } else {
         throw Failure('La respuesta del servidor está vacía.');
-      }
+      }*/
     } else {
       throw Failure('Error al cargar los eventos');
     }

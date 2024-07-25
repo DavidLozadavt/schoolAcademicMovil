@@ -534,7 +534,7 @@ class TaskStudentScreen extends StatelessWidget {
                                         );
                                         // print(_taskStudentController
                                         //     .selectedAnswer);
-                                        debugPrint(
+                                        print(
                                             '${_taskStudentController.selectedAnswer}');
                                       },
                                     ),

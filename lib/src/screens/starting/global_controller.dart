@@ -5,6 +5,7 @@ import 'package:vtschool/src/providers/auth_provider.dart';
 
 class GlobalController extends GetxController {
   final AuthProvider authProvider = AuthProvider();
+
   Future<void> initialRoute() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,9 +37,23 @@ class GlobalController extends GetxController {
     }
   }
 
+  void startTokenExpirationTimer() async {
+    final prefs = await SharedPreferences.getInstance();
+    int tokenExpiresIn = await getIntValue() ?? 0;
+    Future.delayed(Duration(minutes: tokenExpiresIn), () async {
+      await prefs.remove('token');
+    });
+  }
+
+  Future<int?> getIntValue() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('tokenExpiresIn');
+  }
+
   @override
   void onReady() {
     super.onReady();
     initialRoute();
+    startTokenExpirationTimer();
   }
 }

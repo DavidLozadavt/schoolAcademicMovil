@@ -62,7 +62,7 @@ class WompiProvider extends GetConnect {
       },
     );
     //print('getFindTransactionById ${response.body}');
-    debugPrint('getFindTransactionById ${response.body}');
+    print('getFindTransactionById ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
