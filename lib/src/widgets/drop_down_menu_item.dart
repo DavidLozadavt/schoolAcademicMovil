@@ -5,6 +5,8 @@ DropdownMenuItem<int> customDropdownMenuItem({
   required bool enabled,
   required int value,
   required Function onTap,
+  IconData? icon,
+
   Color color = const Color(0xFFE8E8E8),
   Color colorText = Colors.black54,
   Color colorBorder = Colors.black26,
@@ -25,15 +27,26 @@ DropdownMenuItem<int> customDropdownMenuItem({
               color: color,
             )
           : null,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: enabled ? colorText : Colors.grey[300],
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          overflow: TextOverflow.visible,
-        ),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(
+              icon,
+              size: 18,
+            ),
+          ),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: enabled ? colorText : Colors.grey[300],
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        ],
       ),
     ),
   );

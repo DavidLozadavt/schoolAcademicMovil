@@ -46,7 +46,7 @@ class LoginController extends GetxController {
       }
       final UserData responseApiLogin = await authProvider.login(
           emailController.text, passwordController.text, tokenDevice);
-
+      print(responseApiLogin);
       print(responseApiLogin.payload.roles[0]);
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
         Get.snackbar(
@@ -73,6 +73,7 @@ class LoginController extends GetxController {
         await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
         await pref.setString('idUser', responseApiLogin.user.id.toString());
         await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+        await pref.setString('idContrato', responseApiLogin.user.persona.contrato!.id.toString());
         // Get.snackbar(
         //   '¡Hola!',
         //   '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',

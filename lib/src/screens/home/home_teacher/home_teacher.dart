@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeTeacher extends StatelessWidget {
@@ -17,48 +17,49 @@ class HomeTeacher extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Obx(() => BottomNavigationBar(
+              elevation: 0,
               currentIndex: controller.currentIndex.value,
               onTap: controller.changePage,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  // backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
                     title: 'Home',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
                     title: 'Home',
                     isActive: true,
                   ),
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
                     title: 'Chats',
                     isActive: true,
                   ),
                 ),
-                // BottomNavigationBarItem(
-                //   backgroundColor: listColor[11].withOpacity(0.5),
-                //   label: '',
-                //   icon: const ItemNavigationButton(
-                //     fileIcon: 'assets/images/note.png',
-                //     title: 'Mis notas',
-                //   ),
-                //   activeIcon: const ItemNavigationButton(
-                //     fileIcon: 'assets/images/note.png',
-                //     title: 'Mis notas',
-                //     isActive: true,
-                //   ),
-                // ),
+                BottomNavigationBarItem(
+                  //backgroundColor: listColor[11].withOpacity(0.5),
+                  label: '',
+                  icon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'Mis notas',
+                  ),
+                  activeIcon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'Mis notas',
+                    isActive: true,
+                  ),
+                ),
                 // BottomNavigationBarItem(
                 //   backgroundColor: listColor[11].withOpacity(0.5),
                 //   label: '',
@@ -73,13 +74,13 @@ class HomeTeacher extends StatelessWidget {
                 //   ),
                 // ),
                 BottomNavigationBarItem(
-                  backgroundColor: listColor[11].withOpacity(0.5),
+                  //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
-                  icon: const ItemNavigationButton(
+                  icon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
                     title: 'Profile',
                   ),
-                  activeIcon: const ItemNavigationButton(
+                  activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
                     title: 'Profile',
                     isActive: true,
@@ -92,6 +93,7 @@ class HomeTeacher extends StatelessWidget {
               children: [
                 HomeTeacherScreen(),
                 Chats(),
+                SubjectsTeacherScreen(),
                 ProfileUserScreen(),
               ],
             )),

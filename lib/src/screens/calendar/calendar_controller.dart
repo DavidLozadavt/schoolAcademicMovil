@@ -18,10 +18,11 @@ class CalendarController1 extends GetxController {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? rolUser = pref.getString('rolUser');
     String? idUser = pref.getString('idUser');
+     String? idContrato = pref.getString('idContrato');
 
     try {
       if (rolUser == 'DOCENTE') {
-        await _calendarProvider.fetchEventsTeacher(idUser);
+        await _calendarProvider.fetchEventsTeacher(idContrato);
       } else if (rolUser == 'ESTUDIANTE') {
         await _calendarProvider.fetchEventsStudent(idUser);
       } else if (rolUser == 'ADMIN'){

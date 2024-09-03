@@ -166,4 +166,5 @@ class ActivityProvider extends GetConnect {
       throw Failure('$e');
     }
   }
+   
 }

@@ -31,31 +31,32 @@ class Calendar extends StatelessWidget {
     List<Map<String, dynamic>> hourlyEvents) {
     List<Appointment> appointments = [];
     for (var event in hourlyEvents) {
-      var endTimeData = event["periodo"]["fechaFinal"];
+      print(event);
+      var endTimeData = event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaFinal"];
       DateTime fecha = DateTime.parse(endTimeData);
       fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
       String fechaFormateada =
           '${DateFormat('yyyyMMddTHHmmss').format(fecha)}Z';
       DateTime startTime =
-          DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaInicial"]}');
+          DateTime.parse('${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaInicial"]}');
       DateTime endTime =
-          DateTime.parse('${event["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
+          DateTime.parse('${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
       var day = event['idDia'];
       String? dayOfWeek;
       //en pre cambiar la validacion por un string 1 a'1'
-      if (day == 1) {
+      if (day == '1') {
         dayOfWeek = 'MO';
-      } else if (day == 2) {
+      } else if (day == '2') {
         dayOfWeek = 'TU';
-      } else if (day == 3) {
+      } else if (day == '3') {
         dayOfWeek = 'WE';
-      } else if (day == 4) {
+      } else if (day == '4') {
         dayOfWeek = 'TH';
-      } else if (day == 5) {
+      } else if (day == '5') {
         dayOfWeek = 'FR';
-      } else if (day == 6) {
+      } else if (day == '6') {
         dayOfWeek = 'SA';
-      } else if (day == 7) {
+      } else if (day == '7') {
         dayOfWeek = 'SU';
       }
 

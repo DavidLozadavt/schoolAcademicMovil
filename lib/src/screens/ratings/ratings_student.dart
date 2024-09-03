@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+//import 'package:syncfusion_flutter_charts/charts.dart';
+class StudentPage extends StatelessWidget {
+  const StudentPage({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+/*
 class Student {
   final String name;
   final List<Grade> grades;
@@ -185,3 +193,4 @@ class _ChartData {
 
   _ChartData(this.subject, this.score, this.color);
 }
+*/

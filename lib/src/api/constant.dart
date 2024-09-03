@@ -1,6 +1,8 @@
-const baseURL = 'http://192.168.1.101:8000/api/';
+//const baseURL = 'http://192.168.1.101:8000/api/';
 //const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
-//const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
+// produccion
+//const baseURL = 'https://school-vt.virtualt.org/api/';
+const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
@@ -25,6 +27,8 @@ const getInscriptionPaymentUrl = '${baseURL}procesos/get_inscription';
 const getFinancialInstitutionsUrl = '${baseURL}get_financial_institutions';
 const postTransactionPseUrl = '${baseURL}transaction_pse';
 const getFindTransactionByIdUrl = '${baseURL}find_transaction_by_id/';
+const getStudentByIdMateriaUrl = '${baseURL}get_student_by_id_materia_mobile?data_encoded=';
+const getQualificationsStudent = '${baseURL}get_court_by_matricula_academica_qualifications/';
 
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';

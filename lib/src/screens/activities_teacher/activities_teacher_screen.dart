@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/screens/chat/chat_controller.dart';
-import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-import 'package:vtschool/src/widgets/card_chats.dart';  
+import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 
-class Chats extends StatelessWidget {
-  Chats({super.key});
+class ActivitiesTeacherScreen extends StatelessWidget {
+  final ActivitiesTeacherController _activitiesTeacherController =
+      Get.put(ActivitiesTeacherController());
   final TextEditingController _searchController = TextEditingController();
-  final ChatController _chatController = Get.put(ChatController());
-  final ProfileUserController profileUserController =
-      Get.put(ProfileUserController());
+  ActivitiesTeacherScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class Chats extends StatelessWidget {
               height: 25,
             ),
             const Text(
-              'Chats',
+              'Actividades creadas',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -36,7 +33,7 @@ class Chats extends StatelessWidget {
               child: TextField(
                 controller: _searchController,
                 onChanged: (value) {
-                  _chatController.filterUsers(value);
+                  _activitiesTeacherController.filterActivities(value);
                 },
                 decoration: InputDecoration(
                   filled: true,
@@ -75,17 +72,18 @@ class Chats extends StatelessWidget {
               ),
             ),
             Obx(
-              () => _chatController.isLoading.value
+              () => _activitiesTeacherController.isLoading.value
                   ? const Expanded(
-                    child: Center(
+                      child: Center(
                         child: CircularProgressIndicator(),
                       ),
-                  )
+                    )
                   : Expanded(
-                      child: _chatController.filteredUsers.isEmpty
+                      child: _activitiesTeacherController
+                              .filteredActivities.isEmpty
                           ? const Center(
                               child: Text(
-                                'No tienes chats',
+                                'No tienes actividades',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -93,41 +91,7 @@ class Chats extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(25),
-                              itemCount: _chatController.filteredUsers.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final users =
-                                    _chatController.filteredUsers[index];
-                                if (profileUserController.userProfile['persona']
-                                        ['id'] !=
-                                    users['matricula']!['persona']['id']) {
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      _chatController.onConnectPressed(
-                                          '${users['matricula']!['persona']['id']}');
-                                      _chatController.getMessage(
-                                          '${users['matricula']!['persona']['id']}');
-                                      _chatController.setSelectedUser(users);
-                                      Get.toNamed('/chat');
-                                    },
-                                    child: CardChats(
-                                      urlPhotoSender:
-                                          users['matricula']!['persona']
-                                              ['rutaFoto'],
-                                      name: users['matricula']!['persona']
-                                          ['nombre1'],
-                                      lastName: users['matricula']!['persona']
-                                          ['apellido1'],
-                                      endMessage: users['matricula']!['persona']
-                                          ['email'],
-                                    ),
-                                  );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
-                            ),
+                          : Container(),
                     ),
             ),
           ])),

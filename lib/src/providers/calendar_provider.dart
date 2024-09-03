@@ -71,7 +71,7 @@ class CalendarProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-
+    print('2025 ${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         events.assignAll(response.body.cast<Map<String, dynamic>>());
