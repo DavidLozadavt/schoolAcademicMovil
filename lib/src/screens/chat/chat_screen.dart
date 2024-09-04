@@ -110,7 +110,7 @@ class Chat extends StatelessWidget {
                       bool isOwnMessage = messages[index]
                               ['idActivationCompanyUser'] !=
                           selectedUser['matricula']['persona']['id'].toString();
-                      print('$messages');
+                      print('$isOwnMessage');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
                         margin: const EdgeInsets.symmetric(

@@ -1,8 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
-import 'package:vtschool/src/screens/calendar/calendar_controller.dart';
+import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
 import 'package:vtschool/src/widgets/card_student.dart';
 import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
@@ -13,6 +12,8 @@ class SubjectTeacherScreen extends StatelessWidget {
   final TextEditingController _searchController = TextEditingController();
   final SubjectsTeacherController _subjectsTeacherController =
       Get.put(SubjectsTeacherController());
+  final ActivitiesTeacherController _activitiesTeacherController =
+      Get.put(ActivitiesTeacherController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,6 @@ class SubjectTeacherScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   child: DropdownButton2(
-                    underline: Container(),
                     isExpanded: true,
                     customButton: const Icon(
                       Icons.menu_rounded,
@@ -49,20 +49,28 @@ class SubjectTeacherScreen extends StatelessWidget {
                     ),
                     items: [
                       customDropdownMenuItem(
-                          text: 'Gestión de actividades',
-                          enabled: true,
-                          value: 1,
-                          onTap: () => Get.to(() => ActivitiesTeacherScreen()),
-                          icon: Icons.my_library_books),
+                          context,
+                          'Gestión de actividades',
+                          true,
+                          1,
+                          () async{
+                            _activitiesTeacherController.getActivitiesById('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
+                                 ["materia"]['id']}');
+                            await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/activities_teacher');
+                            });
+                          } 
+                        ),
                       customDropdownMenuItem(
-                          text: 'Salir',
-                          enabled: true,
-                          value: 2,
-                          onTap: () {
-                            Get.back();
+                          context,
+                          'Salir',
+                          true,
+                          2,
+                          () {
                             _subjectsTeacherController.subject.value = [];
+                             Get.back();
                           },
-                          icon: Icons.arrow_back_ios_rounded),
+                         ),
                     ],
                     onChanged: (value) {},
                   ),
@@ -194,10 +202,10 @@ class SubjectTeacherScreen extends StatelessWidget {
                 }),
               ],
             ),
-            TextButton(
-              child: const Text("Start"),
-              onPressed: () => _subjectsTeacherController.startTimer(),
-            ),
+            // TextButton(
+            //   child: const Text("Start"),
+            //   onPressed: () => _subjectsTeacherController.startTimer(),
+            // ),
             Column(
               children: [
                 Padding(

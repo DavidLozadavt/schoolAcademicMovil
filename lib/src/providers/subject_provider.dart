@@ -29,7 +29,7 @@ class SubjectProvider extends GetConnect {
     };
 
     String jsonData = jsonEncode(data);
-    print('a12346 $jsonData');
+   // print('a12346 $jsonData');
     Response response = await get(
       '$getStudentByIdMateriaUrl$jsonData',
       headers: {
@@ -37,7 +37,7 @@ class SubjectProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('20000000000000000 ${response.body}');
+   // print('20000000000000000 ${response.body}');
     if (response.statusCode == 200) {
      if (response.body is List) {
         // Si la respuesta es una lista

@@ -111,7 +111,7 @@ class SubjectsTeacherScreen extends StatelessWidget {
                                 mainAxisSpacing: 10.0,
                                 crossAxisSpacing: 10.0,
                                 childAspectRatio: 0.8,
-                              ),  
+                              ), 
                               itemCount: _calendarController.events.length,
                               itemBuilder: (context, index) {
                                 return CardSubjectTeacher(

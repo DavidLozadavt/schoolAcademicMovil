@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
@@ -92,7 +93,7 @@ class HomeTeacher extends StatelessWidget {
               index: controller.currentIndex.value,
               children: [
                 HomeTeacherScreen(),
-                Chats(),
+                ActivitiesTeacherScreen(),
                 SubjectsTeacherScreen(),
                 ProfileUserScreen(),
               ],

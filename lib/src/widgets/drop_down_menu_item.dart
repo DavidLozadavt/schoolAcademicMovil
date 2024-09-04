@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-DropdownMenuItem<int> customDropdownMenuItem({
-  required String text,
-  required bool enabled,
-  required int value,
-  required Function onTap,
-  IconData? icon,
-
+DropdownMenuItem<int> customDropdownMenuItem(
+  BuildContext context, String text,
+      bool enabled, int value, Function onTap,
+  {
   Color color = const Color(0xFFE8E8E8),
   Color colorText = Colors.black54,
   Color colorBorder = Colors.black26,
@@ -27,15 +24,17 @@ DropdownMenuItem<int> customDropdownMenuItem({
               color: color,
             )
           : null,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Icon(
-              icon,
-              size: 18,
-            ),
-          ),
+      
+      child:
+      // Row(
+      //   children: [
+          // Padding(
+          //   padding: const EdgeInsets.all(6.0),
+          //   child: Icon(
+          //     icon,
+          //     size: 18,
+          //   ),
+          // ),
           Text(
             text,
             textAlign: TextAlign.center,
@@ -46,8 +45,8 @@ DropdownMenuItem<int> customDropdownMenuItem({
               overflow: TextOverflow.visible,
             ),
           ),
-        ],
-      ),
+      //  ],
+    //  ),
     ),
   );
 }

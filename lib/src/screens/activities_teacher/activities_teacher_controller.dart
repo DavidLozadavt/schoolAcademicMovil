@@ -1,9 +1,40 @@
 import 'package:get/get.dart';
+import 'package:vtschool/src/models/api_response_all_activities_model.dart';
+import 'package:vtschool/src/providers/activity_provider.dart';
 
 class ActivitiesTeacherController extends GetxController {
   var isLoading = true.obs;
   var filteredActivities = <Map<String, dynamic>>[].obs;
   var activities = <Map<String, dynamic>>[].obs;
+    final ActivityProvider _activityProvider = ActivityProvider();
+
+
+
+  // Future<void> getActivitiesById(String id) async {
+  //   try {
+  //     print('aaaaaaaaaaaa');
+  //     await _activityProvider.getActivitiesById(id);
+  //     activities.assignAll(_activityProvider.allActivitiesById);
+  //       isLoading(true);
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+
+
+ var activities1 = <Actividad>[].obs;
+
+  void getActivitiesById(String id) async {
+    isLoading(true);
+    try {
+      activities1.value = await _activityProvider.getActivitiesById(id);
+    } catch (e) {
+      
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+
   
   
   void filterActivities(String query) {

@@ -30,16 +30,14 @@ class SubjectsTeacherController extends GetxController {
   }
 
   void startTimer() {
-    // Incrementa el tiempo cada segundo
     Future.delayed(Duration(seconds: 1), () {
       if (timeElapsed.value < totalTime) {
         timeElapsed.value++;
-        startTimer(); // Llama recursivamente hasta que el tiempo termine
+        startTimer();
       }
     });
   }
 
  double get progress => timeElapsed.value / totalTime;
-
 
 }

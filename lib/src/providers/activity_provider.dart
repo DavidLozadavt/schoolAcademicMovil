@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
+import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ActivityProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
   var activitiesById = <Map<String, dynamic>>[].obs;
+  var allActivitiesById = <Map<String, dynamic>>[].obs;
   var questionnaireActivity = <Map<String, dynamic>>[].obs;
   var getTypeActivitiesById = <Map<String, dynamic>>[].obs;
 
@@ -164,6 +166,48 @@ class ActivityProvider extends GetConnect {
       }
     } catch (e) {
       throw Failure('$e');
+    }
+  }
+
+  //Actividades por id de materia
+
+  Future<void> getActivitiesById1(String? id) async {
+    String token = await authService.getToken();
+    Response response = await get(
+      '$getActivitiesByIdUrl$id',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      /*if (responseBody.isNotEmpty) {*/
+        allActivitiesById.assignAll(response.body);
+    /*  } else {
+        throw Failure('La respuesta del servidor está vacía.');
+      }*/
+    } else {
+      throw Failure('Error al cargar las actividades');
+    }
+  }
+
+  Future<List<Actividad>> getActivitiesById(String? id) async {
+    String token = await authService.getToken();
+    final response = await get(
+      '$getActivitiesByIdUrl$id',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      return (response.body as List)
+          .map((activity) => Actividad.fromJson(activity))
+          .toList();
+    } else {
+      throw Failure('Error al cargar las actividades');
     }
   }
    

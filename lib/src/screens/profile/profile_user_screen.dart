@@ -24,7 +24,6 @@ class ProfileUserScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(right: 20),
                 child: DropdownButton2(
-                  underline: Container(),
                   isExpanded: true,
                   customButton: const Icon(
                     Icons.more_vert,
@@ -52,11 +51,8 @@ class ProfileUserScreen extends StatelessWidget {
                             () => Get.to(() => const PagosPage())),*/
                     /*_itemPopUpMenu(context, 'Términos y condiciones', true,
                             3, () => Get.to(const PagosPage())),*/
-                    customDropdownMenuItem(
-                        text: 'Cerrar sesión',
-                        enabled: true,
-                        value: 1,
-                        onTap: () => logoutApp(context)),
+                    customDropdownMenuItem(context, 'Cerrar sesión', true, 1,
+                        () => logoutApp(context)),
                   ],
                   onChanged: (value) {},
                 ),

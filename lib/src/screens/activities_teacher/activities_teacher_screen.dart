@@ -14,10 +14,21 @@ class ActivitiesTeacherScreen extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.only(bottom: 80),
           child: Column(children: [
-            const SizedBox(
-              height: 25,
-            ),
-            const Text(
+             Container(
+            margin: const EdgeInsets.only(top: 40),
+            height: 80,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                 const Text(
               'Actividades creadas',
               style: TextStyle(
                 fontSize: 20,
@@ -25,6 +36,9 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+              ],
+            ),
+          ),
             const SizedBox(
               height: 15,
             ),
@@ -71,7 +85,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(
+            /*Obx(
               () => _activitiesTeacherController.isLoading.value
                   ? const Expanded(
                       child: Center(
@@ -80,7 +94,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                     )
                   : Expanded(
                       child: _activitiesTeacherController
-                              .filteredActivities.isEmpty
+                              .activities1.isEmpty
                           ? const Center(
                               child: Text(
                                 'No tienes actividades',
@@ -91,9 +105,44 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : Container(),
-                    ),
-            ),
+                          : ListView.builder(
+          itemCount: _activitiesTeacherController.activities1.length,
+          itemBuilder: (context, index) {
+            var activity = _activitiesTeacherController.activities1[index];
+            return Card(
+              child: ListTile(
+               // leading: Image.network(activity.docUrl),
+                title: Text(activity.tituloActividad),
+                subtitle: Text(activity.descripcionActividad),
+              ),
+            );
+          },
+        )
+      ),
+    
+
+            ),*/
+             Obx(() {
+        if (_activitiesTeacherController.activities1.isEmpty) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        return Expanded(
+          child: ListView.builder(
+            itemCount: _activitiesTeacherController.activities1.length,
+            itemBuilder: (context, index) {
+              var activity = _activitiesTeacherController.activities1[index];
+              return Card(
+                child: ListTile(
+                 // leading: Image.network(activity.docUrl),
+                  title: Text(activity.tituloActividad),
+                  subtitle: Text(activity.descripcionActividad),
+                ),
+              );
+            },
+          ),
+        );
+      }),
           ])),
     );
   }

@@ -28,8 +28,8 @@ const getFinancialInstitutionsUrl = '${baseURL}get_financial_institutions';
 const postTransactionPseUrl = '${baseURL}transaction_pse';
 const getFindTransactionByIdUrl = '${baseURL}find_transaction_by_id/';
 const getStudentByIdMateriaUrl = '${baseURL}get_student_by_id_materia_mobile?data_encoded=';
-const getQualificationsStudent = '${baseURL}get_court_by_matricula_academica_qualifications/';
-
+const getQualificationsStudentUrl = '${baseURL}get_court_by_matricula_academica_qualifications/';
+const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';
