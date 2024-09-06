@@ -14,31 +14,31 @@ class ActivitiesTeacherScreen extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.only(bottom: 80),
           child: Column(children: [
-             Container(
-            margin: const EdgeInsets.only(top: 40),
-            height: 80,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
+            Container(
+              margin: const EdgeInsets.only(top: 40),
+              height: 80,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
                   ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                 const Text(
-              'Actividades creadas',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+                  const Text(
+                    'Actividades creadas',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
-              ],
-            ),
-          ),
             const SizedBox(
               height: 15,
             ),
@@ -85,65 +85,66 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                 ),
               ),
             ),
-            /*Obx(
-              () => _activitiesTeacherController.isLoading.value
-                  ? const Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
+            Obx(() {
+              if (_activitiesTeacherController.activities1.isEmpty) {
+                return const Center(child: Text('No hay actividades'));
+              }
+              return Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(20.0),
+                  itemCount: _activitiesTeacherController.activities1.length,
+                  itemBuilder: (context, index) {
+                    var activity =
+                        _activitiesTeacherController.activities1[index];
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 172, 172, 172),
+                          width: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    )
-                  : Expanded(
-                      child: _activitiesTeacherController
-                              .activities1.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'No tienes actividades',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            )
-                          : ListView.builder(
-          itemCount: _activitiesTeacherController.activities1.length,
-          itemBuilder: (context, index) {
-            var activity = _activitiesTeacherController.activities1[index];
-            return Card(
-              child: ListTile(
-               // leading: Image.network(activity.docUrl),
-                title: Text(activity.tituloActividad),
-                subtitle: Text(activity.descripcionActividad),
-              ),
-            );
-          },
-        )
-      ),
-    
-
-            ),*/
-             Obx(() {
-        if (_activitiesTeacherController.activities1.isEmpty) {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        return Expanded(
-          child: ListView.builder(
-            itemCount: _activitiesTeacherController.activities1.length,
-            itemBuilder: (context, index) {
-              var activity = _activitiesTeacherController.activities1[index];
-              return Card(
-                child: ListTile(
-                 // leading: Image.network(activity.docUrl),
-                  title: Text(activity.tituloActividad),
-                  subtitle: Text(activity.descripcionActividad),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              // leading: Image.network(activity.docUrl),
+                              title: Text(activity.tituloActividad),
+                              subtitle: Text(activity.descripcionActividad),
+                            ),
+                          ),
+                          const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.delete_forever_rounded),
+                              Icon(Icons.book_outlined),
+                              Icon(Icons.add),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               );
-            },
-          ),
-        );
-      }),
+            }),
           ])),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            bottom: 16,
+            right: 1,
+            child: FloatingActionButton(
+              onPressed: ()=> Get.toNamed('/new_activity_teacher'),
+              heroTag: 'btn2',
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

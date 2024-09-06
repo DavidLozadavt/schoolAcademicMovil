@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
@@ -59,4 +61,17 @@ class ActivitiesTeacherController extends GetxController {
       }));
     }
   }
+
+  ///crear actividad
+  ///
+  RxString selectedFilePath = ''.obs;
+  Rx<File> filePath = Rx<File>(File(''));
+    void setSelectedFilePath(String path) {
+    selectedFilePath.value = path;
+  }
+
+  void setFilePath(File path) {
+    filePath.value = path;
+  }
+
 }

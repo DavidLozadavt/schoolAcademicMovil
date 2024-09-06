@@ -1,8 +1,11 @@
-//const baseURL = 'http://192.168.1.101:8000/api/';
-//const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
+// local
+const baseURL = 'http://192.168.1.101:8000/api/';
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
-const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
+// preproduccion
+//const baseURL = 'https://school-vt.virtualt.org/api/';
+//const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
+//const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
 
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';

@@ -126,12 +126,12 @@ class SubjectsTeacherScreen extends StatelessWidget {
                                     await _subjectsTeacherController.getSubject(
                                         _calendarController.events[index][
                                                 "asignacionPeriodoProgramaJornada"]
-                                            ["idJornada"],
+                                            ["idJornada"].toString(),
                                         _calendarController.events[index][
-                                                "materia"]["idMateria"],
+                                                "materia"]["idMateria"].toString(),
                                         _calendarController.events[index][
                                                 "asignacionPeriodoProgramaJornada"]
-                                            ["asignacion_periodo_programa"]["idPrograma"],
+                                            ["asignacion_periodo_programa"]["idPrograma"].toString(),
                                           _calendarController.events[index][
                                                 "horaInicial"],
                                         _calendarController.events[index][
