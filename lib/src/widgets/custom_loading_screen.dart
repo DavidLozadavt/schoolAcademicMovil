@@ -3,8 +3,7 @@ import 'package:vtschool/src/config/fonts_styles.dart';
 
 class CustomLoadingScreen extends StatelessWidget {
   final Color backgroundColor;
-  const CustomLoadingScreen({Key? key, this.backgroundColor = Colors.white})
-      : super(key: key);
+  const CustomLoadingScreen({super.key, this.backgroundColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {

@@ -135,9 +135,9 @@ InputDecoration kInputDecorations(String label) {
 TextButton kTextButton(String label, Function onPressed) {
   return TextButton(
     style: ButtonStyle(
-        backgroundColor: MaterialStateColor.resolveWith(
+        backgroundColor: WidgetStateColor.resolveWith(
             (states) => const Color.fromARGB(255, 226, 153, 17)),
-        padding: MaterialStateProperty.resolveWith(
+        padding: WidgetStateProperty.resolveWith(
             (states) => const EdgeInsets.symmetric(vertical: 10))),
     onPressed: () => onPressed(),
     child: Text(

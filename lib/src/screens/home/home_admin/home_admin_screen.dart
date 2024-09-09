@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 
 class HomeAdminScreen extends StatelessWidget {
-  const HomeAdminScreen({Key? key}) : super(key: key);
+  const HomeAdminScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -15,8 +15,8 @@ class CardSubjectTeacher extends StatelessWidget {
     required this.color,
     required this.onTap,
     required this.onTapCalendar,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

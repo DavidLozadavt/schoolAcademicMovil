@@ -11,8 +11,8 @@ class CardChats extends StatelessWidget {
     required this.name,
     required this.endMessage,
     required this.lastName,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

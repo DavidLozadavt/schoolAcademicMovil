@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 
-import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ItemNavigationButton extends StatelessWidget {
   const ItemNavigationButton({
-    Key? key,
+    super.key,
     required this.fileIcon,
     required this.title,
     this.isActive = false,  
     this.messageCount = 0,
-  }) : super(key: key);
+  });
 
   final String fileIcon;
   final String title;

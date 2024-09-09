@@ -13,8 +13,8 @@ class CardStudent extends StatelessWidget {
     required this.urlPhotoStudent,
     required this.attendant,
     required this.qualification,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class CardStudent extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20.0,
                   ),
                   Text(

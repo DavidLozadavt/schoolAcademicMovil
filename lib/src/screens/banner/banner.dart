@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:popup_banner/popup_banner.dart';
 
 class BannerScreen extends StatefulWidget {
-  const BannerScreen({Key? key}) : super(key: key);
+  const BannerScreen({super.key});
 
   @override
   State<BannerScreen> createState() => _BannerScreenState();

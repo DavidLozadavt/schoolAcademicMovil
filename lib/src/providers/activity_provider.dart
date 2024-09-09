@@ -3,17 +3,21 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-
 class ActivityProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
   var activitiesById = <Map<String, dynamic>>[].obs;
   var allActivitiesById = <Map<String, dynamic>>[].obs;
   var questionnaireActivity = <Map<String, dynamic>>[].obs;
   var getTypeActivitiesById = <Map<String, dynamic>>[].obs;
+
+  var tituloActividad = ''.obs;
+  var descripcionActividad = ''.obs;
+  var archivo = Rxn<File>();
 
   Future<void> getActivityById(String? id) async {
     String token = await authService.getToken();
@@ -27,14 +31,53 @@ class ActivityProvider extends GetConnect {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
-        activitiesById.assignAll([responseBody]);
-    /*  } else {
-        throw Failure('La respuesta del servidor está vacía.');
-      }*/
+      activitiesById.assignAll([responseBody]);
+      /*  } else {
+          throw Failure('La respuesta del servidor está vacía.');
+        }*/
     } else {
       throw Failure('Error al cargar las actividades');
     }
   }
+
+   Future<void> createActivityProvider(
+    String id, 
+    String titulo,
+    String descripcion,
+    File? archivo,
+  ) async {
+    try {
+      String token = await authService.getToken();
+      String url = '$createActivities$id';
+      var uri = Uri.parse(url);
+      var request = http.MultipartRequest('POST', uri);
+      request.fields['tituloActividad'] = titulo;
+      request.fields['descripcionActividad'] = descripcion;
+      request.headers['Authorization'] = 'Bearer $token';
+
+      if (archivo != null) {
+        String fileName = basename(archivo.path);
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'pathDocumentoActividadFile',
+            archivo.path,
+            filename: fileName,
+          ),
+        );
+      }
+
+      var response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      } else {
+        String responseBody = await response.stream.bytesToString();
+        throw Exception('No se pudo crear la actividad: $responseBody');
+      }
+    } catch (e) {
+      throw Exception('Ocurrió un error: $e');
+    }
+  }
+
 
   Future<Map<String, dynamic>> getTypeActivity(String? id) async {
     String token = await authService.getToken();
@@ -183,10 +226,10 @@ class ActivityProvider extends GetConnect {
     print(response.body);
     if (response.statusCode == 200) {
       /*if (responseBody.isNotEmpty) {*/
-        allActivitiesById.assignAll(response.body);
-    /*  } else {
-        throw Failure('La respuesta del servidor está vacía.');
-      }*/
+      allActivitiesById.assignAll(response.body);
+      /*  } else {
+          throw Failure('La respuesta del servidor está vacía.');
+        }*/
     } else {
       throw Failure('Error al cargar las actividades');
     }
@@ -210,5 +253,6 @@ class ActivityProvider extends GetConnect {
       throw Failure('Error al cargar las actividades');
     }
   }
-   
+
+ 
 }

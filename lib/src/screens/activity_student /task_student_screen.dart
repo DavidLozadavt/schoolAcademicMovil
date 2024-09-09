@@ -146,7 +146,7 @@ class TaskStudentScreen extends StatelessWidget {
                                                 'tipoActividad'] ==
                                             'Normal') {
                                           await _taskStudentController
-                                              .getActivityById('$idActividad');
+                                              .getActivityById(idActividad);
                                           showNormalActivity(
                                               context,
                                               _taskStudentController
@@ -154,7 +154,7 @@ class TaskStudentScreen extends StatelessWidget {
                                         } else {
                                           await _taskStudentController
                                               .getActivityQuestionnaire(
-                                                  '$idActividad');
+                                                  idActividad);
                                           showQuestionnaireActivity(
                                               context,
                                               _taskStudentController
@@ -493,11 +493,11 @@ class TaskStudentScreen extends StatelessWidget {
                                   options.length,
                                   (index) => Obx(
                                     () => RadioListTile<int>(
-                                      fillColor: MaterialStateProperty
+                                      fillColor: WidgetStateProperty
                                           .resolveWith<Color>(
-                                        (Set<MaterialState> states) {
+                                        (Set<WidgetState> states) {
                                           if (states.contains(
-                                              MaterialState.selected)) {
+                                              WidgetState.selected)) {
                                             return const Color(0xff00C535);
                                           }
                                           return Colors.white;
@@ -573,11 +573,11 @@ class TaskStudentScreen extends StatelessWidget {
                                   options.length,
                                   (index) => Obx(
                                     () => CheckboxListTile(
-                                      fillColor: MaterialStateProperty
+                                      fillColor: WidgetStateProperty
                                           .resolveWith<Color>(
-                                        (Set<MaterialState> states) {
+                                        (Set<WidgetState> states) {
                                           if (states.contains(
-                                              MaterialState.selected)) {
+                                              WidgetState.selected)) {
                                             return const Color(0xff00C535);
                                           }
                                           return Colors.white;

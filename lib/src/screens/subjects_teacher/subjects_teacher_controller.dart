@@ -23,14 +23,9 @@ class SubjectsTeacherController extends GetxController {
   var timeElapsed = 0.obs; 
   var totalTime = 20; 
 
-  @override
-  void onInit() {
-    super.onInit();
-    //startTimer();
-  }
 
   void startTimer() {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (timeElapsed.value < totalTime) {
         timeElapsed.value++;
         startTimer();

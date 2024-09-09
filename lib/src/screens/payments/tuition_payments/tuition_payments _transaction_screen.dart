@@ -84,11 +84,11 @@ class TuitionPaymentsTransactionScreen extends StatelessWidget {
                                                   payment['id'],
                                                   config['valor']);
                                             },
-                                            fillColor: MaterialStateProperty
+                                            fillColor: WidgetStateProperty
                                                 .resolveWith<Color>(
-                                              (Set<MaterialState> states) {
+                                              (Set<WidgetState> states) {
                                                 if (states.contains(
-                                                    MaterialState.selected)) {
+                                                    WidgetState.selected)) {
                                                   return const Color(
                                                       0xff00C535);
                                                 }

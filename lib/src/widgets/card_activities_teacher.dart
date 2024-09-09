@@ -18,8 +18,8 @@ class CardActivitiesTeacher extends StatelessWidget {
     required this.initialDate,
     required this.finalDate,
     required this.subject,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

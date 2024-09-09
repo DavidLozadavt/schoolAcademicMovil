@@ -57,6 +57,7 @@ dependencies:
   circular_countdown_timer: ^0.2.3
   
 
+  path: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

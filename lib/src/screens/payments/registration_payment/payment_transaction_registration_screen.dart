@@ -61,9 +61,9 @@ class PaymentTransactionRegistrationScreen extends StatelessWidget {
                                 _paymentsController.togglePayment(
                                     payment['id'], config['valor']);
                               },
-                              fillColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.selected)) {
+                              fillColor: WidgetStateProperty.resolveWith<Color>(
+                                (Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.selected)) {
                                     return const Color(0xff00C535);
                                   }
                                   return Colors.white;
