@@ -1,6 +1,7 @@
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';  
 
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
@@ -10,7 +11,9 @@ class CreateNewActivityScreen extends StatelessWidget {
       Get.put(ActivitiesTeacherController());
   final SubjectsTeacherController _subjectsTeacherController =
       Get.put(SubjectsTeacherController());
+
   CreateNewActivityScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class CreateNewActivityScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) {
-                 _createActivitiescontroller.tituloActividad.value = value;
+                  _createActivitiescontroller.tituloActividad.value = value;
                 },
               ),
               const SizedBox(height: 16),
@@ -39,49 +42,141 @@ class CreateNewActivityScreen extends StatelessWidget {
                 ),
                 maxLines: 3,
                 onChanged: (value) {
-                 _createActivitiescontroller.descripcionActividad.value = value;
+                  _createActivitiescontroller.descripcionActividad.value =
+                      value;
                 },
               ),
               const SizedBox(height: 16),
-              Obx(() => Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                     _createActivitiescontroller.archivo.value != null
-                          ? 'Archivo seleccionado: ${_createActivitiescontroller.archivo.value!.path.split('/').last}'
-                          : 'No hay archivo seleccionado',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  )),
-              const SizedBox(height: 8),
-              ElevatedButton.icon(
+              Obx(
+                () => _createActivitiescontroller.archivo.value != null
+                    ? _buildFilePreview(
+                        _createActivitiescontroller.archivo.value!)
+                    : const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'No hay archivo seleccionado',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
                 onPressed: () {
                   _createActivitiescontroller.seleccionarArchivo();
                 },
-                icon: const Icon(Icons.attach_file),
-                label: const Text('Seleccionar Archivo'),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 14,
+                    horizontal: 24,
+                  ),
+                  backgroundColor: Colors.grey.shade200,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                child: const Text(
+                  'Seleccionar Archivo',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_createActivitiescontroller.tituloActividad.value.isEmpty ||
-                        _createActivitiescontroller.descripcionActividad.value.isEmpty) {
-                      Get.snackbar(
-                          'Error', 'Por favor, completa todos los campos',
-                          snackPosition: SnackPosition.TOP);
-                      return;
-                    }
-                    _createActivitiescontroller.createActivity(
-                        '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
-                  },
-                  child: const Text('Crear Actividad'),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_createActivitiescontroller
+                                .tituloActividad.value.isEmpty ||
+                            _createActivitiescontroller
+                                .descripcionActividad.value.isEmpty) {
+                          Get.snackbar(
+                              'Error', 'Por favor, completa todos los campos',
+                              snackPosition: SnackPosition.TOP);
+                          return;
+                        }
+                        _createActivitiescontroller.createActivity(
+                            '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                      },
+                      child: const Text('Crear Actividad'),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.back(); // Acciones para cancelar la creación
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent),
+                      child: const Text('Cancelar'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildFilePreview(File file) {
+    String fileExtension = file.path.split('.').last.toLowerCase();
+
+    if (fileExtension == 'jpg' || fileExtension == 'jpeg' || fileExtension == 'png') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Vista previa del archivo:',
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 8),
+          Image.file(
+            file,
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 8),
+        ],
+      );
+    } else if (fileExtension == 'pdf') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Vista previa del archivo PDF:',
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            height: 300,
+            child: PDFView(
+              filePath: file.path,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Archivo seleccionado:',
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            file.path.split('/').last,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      );
+    }
   }
 }
