@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
+import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 class ActivityProvider extends GetConnect {
@@ -48,7 +49,7 @@ class ActivityProvider extends GetConnect {
   ) async {
     try {
       String token = await authService.getToken();
-      String url = '$createActivities$id';
+      String url = '$createActivitiesUrl$id';
       var uri = Uri.parse(url);
       var request = http.MultipartRequest('POST', uri);
       request.fields['tituloActividad'] = titulo;
@@ -248,6 +249,26 @@ class ActivityProvider extends GetConnect {
     if (response.statusCode == 200) {
       return (response.body as List)
           .map((activity) => Actividad.fromJson(activity))
+          .toList();
+    } else {
+      throw Failure('Error al cargar las actividades');
+    }
+  }
+
+
+Future<List<AssignedActivities>> getActivitiesByTeacher(String? id) async {
+    String token = await authService.getToken();
+    final response = await get(
+      '$assignedActivitiesUrl$id',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      return (response.body as List)
+          .map((activity) => AssignedActivities.fromJson(activity))
           .toList();
     } else {
       throw Failure('Error al cargar las actividades');

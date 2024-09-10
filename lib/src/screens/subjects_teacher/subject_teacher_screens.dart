@@ -61,7 +61,21 @@ class SubjectTeacherScreen extends StatelessWidget {
                             });
                           } 
                         ),
-                      customDropdownMenuItem(
+
+                         customDropdownMenuItem(
+                          context,
+                          'Actividades asignadas',
+                          true,
+                          2,
+                          () async{
+                            _activitiesTeacherController.getActivitiesByTeacher('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
+                                 ["materia"]['id']}');
+                            await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/assigned_activities');
+                            });
+                          } 
+                        ),
+                        customDropdownMenuItem(
                           context,
                           'Salir',
                           true,
@@ -71,6 +85,7 @@ class SubjectTeacherScreen extends StatelessWidget {
                              Get.back();
                           },
                          ),
+                       
                     ],
                     onChanged: (value) {},
                   ),

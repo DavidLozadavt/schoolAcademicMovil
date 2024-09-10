@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
@@ -28,6 +29,7 @@ class ActivitiesTeacherController extends GetxController {
   // }
 
   var activities1 = <Actividad>[].obs;
+  var assignedActivities = <AssignedActivities>[].obs;
 
   void getActivitiesById(String id) async {
     isLoading(true);
@@ -36,6 +38,16 @@ class ActivitiesTeacherController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
+  }
+
+  void getActivitiesByTeacher(String id) async {
+      isLoading(true);
+    try {
+      assignedActivities.value = await _activityProvider.getActivitiesByTeacher(id);
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
+    
   }
 
   void filterActivities(String query) {
@@ -79,7 +91,6 @@ class ActivitiesTeacherController extends GetxController {
       Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.TOP);
     }
   }
-
 
   Future<void> seleccionarArchivo() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
