@@ -42,6 +42,7 @@ const getQualificationsStudentUrl =
 const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 const createActivitiesUrl = '${baseURL}actividades/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
+const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';

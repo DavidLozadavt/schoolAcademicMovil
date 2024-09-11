@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teacher_screnn.dart';

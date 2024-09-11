@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/models/api_assigned_activities.dart';
+import 'package:vtschool/src/models/api_response_activities_registrations_model.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
@@ -16,6 +17,8 @@ class ActivitiesTeacherController extends GetxController {
   var tituloActividad = ''.obs;
   var descripcionActividad = ''.obs;
   var archivo = Rxn<File>();
+  RxList persons = [].obs;
+  var activitiesRegistration = <Registrationsactivity>[].obs;
 
   // Future<void> getActivitiesById(String id) async {
   //   try {
@@ -41,13 +44,25 @@ class ActivitiesTeacherController extends GetxController {
   }
 
   void getActivitiesByTeacher(String id) async {
-      isLoading(true);
+    isLoading(true);
     try {
-      assignedActivities.value = await _activityProvider.getActivitiesByTeacher(id);
+      assignedActivities.value =
+          await _activityProvider.getActivitiesByTeacher(id);
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
-    
+  }
+
+  Future<void> fetchActivitiesRegistration(int activityId) async {
+    isLoading(true);
+    try {
+      activitiesRegistration.value =
+          await _activityProvider.fetchActivitiesRegistrations(activityId);
+    } catch (e) {
+      Get.snackbar("Error", "No se pudieron obtener las actividades: $e");
+    } finally {
+      isLoading(false);
+    }
   }
 
   void filterActivities(String query) {
@@ -108,4 +123,6 @@ class ActivitiesTeacherController extends GetxController {
   // void setFilePath(File path) {
   //   filePath.value = path;
   // }
+
+  //obtener las peronas asignadas a una actividad
 }

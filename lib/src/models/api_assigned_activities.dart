@@ -2,7 +2,6 @@
 //
 //     final assignedActivities = assignedActivitiesFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<AssignedActivities> assignedActivitiesFromJson(String str) => List<AssignedActivities>.from(json.decode(str).map((x) => AssignedActivities.fromJson(x)));

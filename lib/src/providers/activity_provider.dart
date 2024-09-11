@@ -7,8 +7,10 @@ import 'package:path/path.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/models/api_assigned_activities.dart';
+import 'package:vtschool/src/models/api_response_activities_registrations_model.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
+
 class ActivityProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
   var activitiesById = <Map<String, dynamic>>[].obs;
@@ -41,8 +43,8 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-   Future<void> createActivityProvider(
-    String id, 
+  Future<void> createActivityProvider(
+    String id,
     String titulo,
     String descripcion,
     File? archivo,
@@ -78,7 +80,6 @@ class ActivityProvider extends GetConnect {
       throw Exception('Ocurrió un error: $e');
     }
   }
-
 
   Future<Map<String, dynamic>> getTypeActivity(String? id) async {
     String token = await authService.getToken();
@@ -255,8 +256,7 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-
-Future<List<AssignedActivities>> getActivitiesByTeacher(String? id) async {
+  Future<List<AssignedActivities>> getActivitiesByTeacher(String? id) async {
     String token = await authService.getToken();
     final response = await get(
       '$assignedActivitiesUrl$id',
@@ -275,5 +275,50 @@ Future<List<AssignedActivities>> getActivitiesByTeacher(String? id) async {
     }
   }
 
- 
+  // Future<List<Map<String, dynamic>>> fetchPersons(int activityId) async {
+  //   String token = await authService.getToken();
+
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('$activityByregistrationUrl$activityId'),
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'accept': 'application/json',
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       var data = json.decode(response.body);
+  //       List<Map<String, dynamic>> persons = List<Map<String, dynamic>>.from(
+  //         data.map((activity) => Map<String, dynamic>.from(activity['matriculaAcademica']['matricula']['persona'])),
+  //       );
+
+  //       return persons;
+  //     } else {
+  //       throw Exception('Error en la solicitud: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //     throw Exception('Error al obtener personas: $e');
+  //   }
+  // }
+
+  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId) async {
+  final response = await http.get(
+    Uri.parse('$activityByregistrationUrl$activityId'),
+    headers: {
+      'Authorization': 'Bearer ${await authService.getToken()}',
+      'accept': 'application/json',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    List<Registrationsactivity> activities = registrationsactivityFromJson(json.encode(data));
+    return activities;
+  } else {
+    throw Exception('Error en la solicitud: ${response.statusCode}');
+  }
+}
+
 }
