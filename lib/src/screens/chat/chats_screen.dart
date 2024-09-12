@@ -97,17 +97,19 @@ class Chats extends StatelessWidget {
                               padding: const EdgeInsets.all(25),
                               itemCount: _chatController.filteredUsers.length,
                               itemBuilder: (BuildContext context, int index) {
+                                
                                 final users =
                                     _chatController.filteredUsers[index];
+                            
                                 if (profileUserController.userProfile['persona']
                                         ['id'] !=
                                     users['matricula']!['persona']['id']) {
                                   return GestureDetector(
                                     onTap: () async {
                                       _chatController.onConnectPressed(
-                                          '${users['matricula']!['persona']['id']}');
+                                          '${users['matricula']!['idPersona']}');
                                       _chatController.getMessage(
-                                          '${users['matricula']!['persona']['id']}');
+                                          '${users['matricula']!['idPersona']}');
                                       _chatController.setSelectedUser(users);
                                       Get.toNamed('/chat');
                                     },

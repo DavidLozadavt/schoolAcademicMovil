@@ -37,17 +37,24 @@ class ChatProvider extends GetConnect {
 
   Future<void> getMessage(String idUserSelected) async {
     String token = await authService.getToken();
-    final data = {
-      "relations": ["activeCompanyUser.user.persona", "asignaciones"]
-    };
+    Map<String, dynamic> data = {
+    "relations": [
+      "activeCompanyUser.user.persona",
+      "asignaciones"
+    ]
+  };
+  String jsonString = jsonEncode(data);
+  //  print('88888 $jsonString');
+    //   print('9999 $idUserSelected');
     Response response = await get(
-      '$getMessagesUserUrl$idUserSelected?data=$data',
+      '$getMessagesUserUrl$idUserSelected?data=$jsonString',
       headers: {
         'Authorization': 'Bearer $token',
         'accept': 'application/json',
       },
     );
-
+    //print('77777 ${response.body}');
+    //print('11111 ${response.statusCode}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         messages.assignAll(response.body.cast<Map<String, dynamic>>());

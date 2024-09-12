@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
+import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
 import 'package:vtschool/src/widgets/card_student.dart';
 import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
@@ -14,6 +15,7 @@ class SubjectTeacherScreen extends StatelessWidget {
       Get.put(SubjectsTeacherController());
   final ActivitiesTeacherController _activitiesTeacherController =
       Get.put(ActivitiesTeacherController());
+  final ChatController _chatController = Get.put(ChatController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +51,23 @@ class SubjectTeacherScreen extends StatelessWidget {
                     ),
                     items: [
                       customDropdownMenuItem(
-                          context,
-                          'Gestión de actividades',
-                          true,
-                          1,
-                          () async{
-                            _activitiesTeacherController.getActivitiesById('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]['id']}');
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/activities_teacher');
-                            });
-                          } 
-                        ),
+                          context, 'Gestión de actividades', true, 1, () async {
+                        _activitiesTeacherController.getActivitiesById(
+                            '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                        await Future.delayed(const Duration(seconds: 1), () {
+                          Get.toNamed('/activities_teacher');
+                        });
+                      }),
                       customDropdownMenuItem(
-                          context,
-                          'Salir',
-                          true,
-                          2,
-                          () {
-                            _subjectsTeacherController.subject.value = [];
-                             Get.back();
-                          },
-                         ),
+                        context,
+                        'Salir',
+                        true,
+                        2,
+                        () {
+                          _subjectsTeacherController.subject.value = [];
+                          Get.back();
+                        },
+                      ),
                     ],
                     onChanged: (value) {},
                   ),
@@ -223,8 +220,8 @@ class SubjectTeacherScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(
-                              _subjectsTeacherController.subject[0]['horario'][0]["contrato"]
-                                  ["persona"]["rutaFoto"],
+                              _subjectsTeacherController.subject[0]['horario']
+                                  [0]["contrato"]["persona"]["rutaFoto"],
                             ),
                           ),
                           const SizedBox(width: 12.0),
@@ -238,8 +235,9 @@ class SubjectTeacherScreen extends StatelessWidget {
                                       fontSize: 18, color: Colors.white),
                                 ),
                                 Text(
-                                  _subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]["nombreMateria"],
+                                  _subjectsTeacherController.subject[0]
+                                          ['horario'][0]["materia"]["materia"]
+                                      ["nombreMateria"],
                                   style: const TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
@@ -284,23 +282,31 @@ class SubjectTeacherScreen extends StatelessWidget {
                       )
                     : ListView.builder(
                         padding: const EdgeInsets.all(25),
-                        itemCount: _subjectsTeacherController.subject[0]['matriculas'].length,
+                        itemCount: _subjectsTeacherController
+                            .subject[0]['matriculas'].length,
                         itemBuilder: (BuildContext context, int index) {
-                          // print('111111111111111 ${_subjectsTeacherController.subject[0]}');
-                          //  print('22222222222 ${_subjectsTeacherController.subject[0]['matriculas'][0]}');
-                          //   print('233333333 ${_subjectsTeacherController.subject[0]['horario'][0]}');
-                          final student =
-                              _subjectsTeacherController.subject[0]['matriculas'][index];
+                          final student = _subjectsTeacherController.subject[0]
+                              ['matriculas'][index];
                           final person = student['matricula']['persona'];
+                          final users = _subjectsTeacherController.subject[0]
+                              ['matriculas'][index];
                           return CardStudent(
                             name: '${person["nombre1"]} ${person["apellido1"]}',
                             urlPhotoStudent: person["rutaFoto"],
-                            qualification: student
-                                ["notaFinal"],
-                             subject: _subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]["nombreMateria"],
+                            qualification: student["notaFinal"],
+                            subject: _subjectsTeacherController.subject[0]
+                                    ['horario'][0]["materia"]["materia"]
+                                ["nombreMateria"],
                             attendant:
                                 '${student['acudiente']?['nombre1'] ?? 'Sin'} ${student['acudiente']?['apellido1'] ?? 'acudiente'}',
+                            onTapChat: () async {
+                              _chatController.onConnectPressed(
+                                  '${student['matricula']!['idPersona']}');
+                              _chatController.getMessage(
+                                  '${student['matricula']!['idPersona']}');
+                              _chatController.setSelectedUser(users);
+                              Get.toNamed('/chat');
+                            },
                           );
                         })),
           ])),
