@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 
@@ -81,18 +82,20 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 15),
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
+                            blurRadius: 6,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
                       child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
                         title: Text(
                           activity.actividad.descripcionActividad,
                           style: const TextStyle(
@@ -100,14 +103,26 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        subtitle: Text(
-                          activity.esGrupal
-                              ? "Actividad Grupal"
-                              : "Actividad Individual",
-                          style: const TextStyle(color: Colors.grey),
+                        subtitle: Row(
+                          children: [
+                            Icon(
+                              activity.esGrupal ? Icons.group : Icons.person,
+                              color: activity.esGrupal
+                                  ? Colors.blue
+                                  : Colors.orange,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              activity.esGrupal
+                                  ? "Actividad Grupal"
+                                  : "Actividad Individual",
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                          ],
                         ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.person_outline),
+                          icon: const Icon(Icons.person_outline,
+                              color: Colors.blue),
                           onPressed: () {
                             _showUsersModal(
                                 context,
@@ -135,7 +150,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
         return const AlertDialog(
           content: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               CircularProgressIndicator(),
               SizedBox(width: 20),
               Text('Cargando...'),
@@ -163,17 +178,19 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Line at the top
-              Container(
-                height: 5,
-                width: 50,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
+              // Barra decorativa en la parte superior, centrada
+              Center(
+                child: Container(
+                  height: 5,
+                  width: 50,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-              // Title
+              // Título
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -197,7 +214,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 }
 
                 return SizedBox(
-                  height: 600, // Adjust the height here
+                  height: 600, // Ajusta la altura aquí
                   child: ListView.builder(
                     padding: const EdgeInsets.all(15.0),
                     itemCount: _activitiesTeacherController
@@ -208,10 +225,23 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                       var persona =
                           activity.matriculaAcademica!.matricula!.persona;
 
+                      // Define el color de fondo basado en el estado
+                      Color backgroundColor;
+                      if (activity.idEstado == 17) {
+                        backgroundColor = Colors.green[100]!; // Verde claro
+                      } else {
+                        backgroundColor = Colors.white;
+                      }
+
+                      // Verifica si la ruta de la foto es nula o la URL predeterminada
+                      bool isDefaultPhoto = persona?.rutaFoto == null ||
+                          persona!.rutaFoto ==
+                              'http://192.168.101.12:8001/default/user.svg';
+
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: backgroundColor,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -225,26 +255,26 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
-                          leading: persona?.rutaFoto != null
+                          leading: isDefaultPhoto
                               ? Container(
                                   width: 60.0,
                                   height: 60.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: NetworkImage(persona!.rutaFoto),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  width: 80.0,
-                                  height: 80.0,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       image: AssetImage(
                                           'assets/images/default_avatar.png'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage(persona!.rutaFoto!),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -273,8 +303,14 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                                 onPressed: () {},
                               ),
                               IconButton(
-                                icon: Icon(Icons.edit, color: Colors.amber),
-                                onPressed: () {},
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.amber),
+                                onPressed: () {
+                                  _showViewFormModal(
+                                    context,
+                                    activity,
+                                  ); // Muestra los datos de la actividad
+                                },
                               ),
                             ],
                           ),
@@ -288,6 +324,137 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showViewFormModal(BuildContext context, var activity) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    height: 5,
+                    width: 50,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                // Título
+                const Center(
+                  child: Text(
+                    'Detalles de la Actividad',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Comentario del Docente
+
+                // Comentario del Estudiante
+                _buildFormField(
+                  label: 'Comentario del Estudiante:',
+                  initialValue: activity.comentarioEstudiante ?? '',
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 20),
+
+                _buildFormField(
+                  label: 'Comentario del Docente:',
+                  initialValue: activity.comentarioDocente ?? '',
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 20),
+
+                // Calificación Numérica
+                _buildFormField(
+                  label: 'Calificación Numérica:',
+                  initialValue: activity.calificacionNumerica?.toString() ?? '',
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 20),
+
+                const Text(
+                  'Documento Respuesta:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                activity.docRespuesta != null
+                    ? Container(
+                        height: 300,
+                        child: PDFView(
+                          filePath: activity.docRespuesta!.toString(),
+                          enableSwipe: true,
+                          swipeHorizontal: true,
+                          autoSpacing: false,
+                          pageFling: true,
+                          pageSnap: true,
+                        ),
+                      )
+                    : const Text('Sin documento adjunto'),
+                const SizedBox(height: 20),
+
+                // Botón de Guardar
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Guardar'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFormField({
+    required String label,
+    required String initialValue,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 5),
+        TextFormField(
+          initialValue: initialValue,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            contentPadding: const EdgeInsets.all(10),
+          ),
+        ),
+      ],
     );
   }
 }

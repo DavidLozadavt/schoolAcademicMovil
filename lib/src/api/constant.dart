@@ -9,7 +9,7 @@ const baseURL = 'http://192.168.101.12:8001/api/';
 
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
-//const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
+//const getHorarioMateriaURL = '${baseURL}materias/horario_materia';  
 const getDiaryTeacherUrl =
     '${baseURL}get_matriculas_academicas_by_id_persona_docente/';
 const getDiaryStudentUrl = '${baseURL}get_matriculas_academicas_by_id_persona/';
