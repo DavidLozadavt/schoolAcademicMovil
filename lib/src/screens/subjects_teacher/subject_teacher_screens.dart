@@ -51,23 +51,43 @@ class SubjectTeacherScreen extends StatelessWidget {
                     ),
                     items: [
                       customDropdownMenuItem(
-                          context, 'Gestión de actividades', true, 1, () async {
-                        _activitiesTeacherController.getActivitiesById(
-                            '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
-                        await Future.delayed(const Duration(seconds: 1), () {
-                          Get.toNamed('/activities_teacher');
-                        });
-                      }),
-                      customDropdownMenuItem(
-                        context,
-                        'Salir',
-                        true,
-                        2,
-                        () {
-                          _subjectsTeacherController.subject.value = [];
-                          Get.back();
-                        },
-                      ),
+                          context,
+                          'Gestión de actividades',
+                          true,
+                          1,
+                          () async{
+                            _activitiesTeacherController.getActivitiesById('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
+                                 ["materia"]['id']}');
+                            await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/activities_teacher');
+                            });
+                          } 
+                        ),
+
+                         customDropdownMenuItem(
+                          context,
+                          'Actividades asignadas',
+                          true,
+                          2,
+                          () async{
+                            _activitiesTeacherController.getActivitiesByTeacher('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
+                                 ["materia"]['id']}');
+                            await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/assigned_activities');
+                            });
+                          } 
+                        ),
+                        customDropdownMenuItem(
+                          context,
+                          'Salir',
+                          true,
+                          2,
+                          () {
+                            _subjectsTeacherController.subject.value = [];
+                             Get.back();
+                          },
+                         ),
+                       
                     ],
                     onChanged: (value) {},
                   ),

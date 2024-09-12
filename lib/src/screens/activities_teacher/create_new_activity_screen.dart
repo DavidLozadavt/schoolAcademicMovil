@@ -154,7 +154,7 @@ class CreateNewActivityScreen extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 8),
-          Container(
+          SizedBox(
             height: 300,
             child: PDFView(
               filePath: file.path,

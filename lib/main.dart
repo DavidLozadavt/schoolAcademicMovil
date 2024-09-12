@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
+import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teacher_screnn.dart';
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
@@ -86,7 +87,10 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/form_payments_transaction', page: () => FormPaymentsScreen()),
         GetPage(name: '/subject_teacher', page: ()=> SubjectTeacherScreen()),
         GetPage(name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
-        GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen())
+        GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen()),
+        GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen())
+
+
       ],
     );
   }
