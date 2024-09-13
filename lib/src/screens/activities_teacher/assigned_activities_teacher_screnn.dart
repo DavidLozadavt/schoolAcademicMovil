@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
+import 'package:vtschool/src/widgets/build_form.dart';
 
 class AssignedActivitiesTeacherScreen extends StatelessWidget {
   final ActivitiesTeacherController _activitiesTeacherController =
       Get.put(ActivitiesTeacherController());
   final TextEditingController _searchController = TextEditingController();
   AssignedActivitiesTeacherScreen({super.key});
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,37 +32,48 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            // Barra de búsqueda minimalista
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              height: 55,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.search, color: Colors.grey),
-                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _searchController,
                       onChanged: (value) {
-                        _activitiesTeacherController.filterActivities(value);
+                        _activitiesTeacherController
+                            .filterActivitiesAssigned(value);
                       },
                       decoration: const InputDecoration(
                         hintText: "Buscar actividades...",
                         hintStyle: TextStyle(color: Colors.grey),
                         border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
                       ),
+                      style: const TextStyle(fontSize: 14),
                     ),
+                  ),
+                  const Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                    size: 28,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            // Lista de actividades
             Obx(() {
-              if (_activitiesTeacherController.assignedActivities.isEmpty) {
+              if (_activitiesTeacherController
+                  .filteredActivitiesAssigned.isEmpty) {
                 return const Center(
                   child: Text(
                     'No hay actividades',
@@ -73,11 +83,11 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
               }
               return Expanded(
                 child: ListView.builder(
-                  itemCount:
-                      _activitiesTeacherController.assignedActivities.length,
+                  itemCount: _activitiesTeacherController
+                      .filteredActivitiesAssigned.length,
                   itemBuilder: (context, index) {
-                    var activity =
-                        _activitiesTeacherController.assignedActivities[index];
+                    var activity = _activitiesTeacherController
+                        .filteredActivitiesAssigned[index];
                     return Container(
                       margin: const EdgeInsets.only(bottom: 15),
                       padding: const EdgeInsets.all(15),
@@ -103,31 +113,51 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        subtitle: Row(
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              activity.esGrupal ? Icons.group : Icons.person,
-                              color: activity.esGrupal
-                                  ? Colors.blue
-                                  : Colors.orange,
+                            Row(
+                              children: [
+                                Icon(
+                                  activity.esGrupal
+                                      ? Icons.group
+                                      : Icons.person,
+                                  color: activity.esGrupal
+                                      ? Colors.blue
+                                      : Colors.orange,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  activity.esGrupal
+                                      ? "Actividad Grupal"
+                                      : "Actividad Individual",
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 5),
-                            Text(
-                              activity.esGrupal
-                                  ? "Actividad Grupal"
-                                  : "Actividad Individual",
-                              style: const TextStyle(color: Colors.grey),
-                            ),
+                            if (activity.esGrupal &&
+                                activity.grupo != null) ...[
+                              const SizedBox(
+                                  height: 5), // Espacio entre las líneas
+                              Text(
+                                'Nombre Grupo: ${activity.grupo!.nombreGrupo}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                            ],
                           ],
                         ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.person_outline,
-                              color: Colors.blue),
+                          icon: Image.asset(
+                            'assets/images/trabajo-en-equipo.png',
+                            width: 40,
+                            height: 80,
+                          ),
                           onPressed: () {
                             _showUsersModal(
-                                context,
-                                activity
-                                    .idActividad); // Pasa el ID de la actividad
+                              context,
+                              activityId: activity.idActividad,
+                              groupId: activity.idGrupo,
+                            );
                           },
                         ),
                       ),
@@ -142,7 +172,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
     );
   }
 
-  void _showUsersModal(BuildContext context, int activityId) async {
+  void _showUsersModal(BuildContext context,
+      {required int activityId, int? groupId}) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -160,7 +191,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
       },
     );
 
-    await _activitiesTeacherController.fetchActivitiesRegistration(activityId);
+    await _activitiesTeacherController.fetchActivitiesRegistration(activityId,
+        idGrupo: groupId);
 
     Navigator.of(context).pop();
 
@@ -178,7 +210,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Barra decorativa en la parte superior, centrada
               Center(
                 child: Container(
                   height: 5,
@@ -214,7 +245,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 }
 
                 return SizedBox(
-                  height: 600, // Ajusta la altura aquí
+                  height: 600,
                   child: ListView.builder(
                     padding: const EdgeInsets.all(15.0),
                     itemCount: _activitiesTeacherController
@@ -225,7 +256,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                       var persona =
                           activity.matriculaAcademica!.matricula!.persona;
 
-                      // Define el color de fondo basado en el estado
                       Color backgroundColor;
                       if (activity.idEstado == 17) {
                         backgroundColor = Colors.green[100]!; // Verde claro
@@ -233,7 +263,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                         backgroundColor = Colors.white;
                       }
 
-                      // Verifica si la ruta de la foto es nula o la URL predeterminada
                       bool isDefaultPhoto = persona?.rutaFoto == null ||
                           persona!.rutaFoto ==
                               'http://192.168.101.12:8001/default/user.svg';
@@ -309,7 +338,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                                   _showViewFormModal(
                                     context,
                                     activity,
-                                  ); // Muestra los datos de la actividad
+                                  );
                                 },
                               ),
                             ],
@@ -358,7 +387,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Título
                 const Center(
                   child: Text(
                     'Detalles de la Actividad',
@@ -370,17 +398,16 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // Comentario del Docente
-
                 // Comentario del Estudiante
-                _buildFormField(
+                FormFieldWidget(
                   label: 'Comentario del Estudiante:',
                   initialValue: activity.comentarioEstudiante ?? '',
                   onChanged: (value) {},
                 ),
                 const SizedBox(height: 20),
 
-                _buildFormField(
+                // Comentario del Docente
+                FormFieldWidget(
                   label: 'Comentario del Docente:',
                   initialValue: activity.comentarioDocente ?? '',
                   onChanged: (value) {},
@@ -388,7 +415,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // Calificación Numérica
-                _buildFormField(
+                FormFieldWidget(
                   label: 'Calificación Numérica:',
                   initialValue: activity.calificacionNumerica?.toString() ?? '',
                   onChanged: (value) {},
@@ -415,7 +442,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                     : const Text('Sin documento adjunto'),
                 const SizedBox(height: 20),
 
-                // Botón de Guardar
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
@@ -430,31 +456,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildFormField({
-    required String label,
-    required String initialValue,
-    required ValueChanged<String> onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 5),
-        TextFormField(
-          initialValue: initialValue,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            contentPadding: const EdgeInsets.all(10),
-          ),
-        ),
-      ],
     );
   }
 }

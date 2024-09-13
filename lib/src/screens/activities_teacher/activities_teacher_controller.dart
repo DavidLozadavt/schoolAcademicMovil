@@ -19,20 +19,10 @@ class ActivitiesTeacherController extends GetxController {
   var archivo = Rxn<File>();
   RxList persons = [].obs;
   var activitiesRegistration = <Registrationsactivity>[].obs;
-
-  // Future<void> getActivitiesById(String id) async {
-  //   try {
-  //     print('aaaaaaaaaaaa');
-  //     await _activityProvider.getActivitiesById(id);
-  //     activities.assignAll(_activityProvider.allActivitiesById);
-  //       isLoading(true);
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
-
   var activities1 = <Actividad>[].obs;
   var assignedActivities = <AssignedActivities>[].obs;
+  var filteredActivitiesAssigned =
+      <AssignedActivities>[].obs; // RxList<AssignedActivities>
 
   void getActivitiesById(String id) async {
     isLoading(true);
@@ -48,16 +38,39 @@ class ActivitiesTeacherController extends GetxController {
     try {
       assignedActivities.value =
           await _activityProvider.getActivitiesByTeacher(id);
+      filteredActivitiesAssigned.value = assignedActivities;
     } catch (e) {
       Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading(false);
     }
   }
 
-  Future<void> fetchActivitiesRegistration(int activityId) async {
+  void filterActivitiesAssigned(String query) {
+    if (query.isEmpty) {
+      filteredActivitiesAssigned.value = assignedActivities;
+    } else {
+      final lowerCaseQuery = query.toLowerCase();
+      filteredActivitiesAssigned.value = assignedActivities.where((activity) {
+        final descripcion =
+            activity.actividad.descripcionActividad.toLowerCase();
+        final title = activity.actividad.tituloActividad.toLowerCase();
+        final tipo = activity.esGrupal ? "grupal" : "individual";
+        final grupo = activity.grupo?.nombreGrupo?.toLowerCase() ?? "";
+
+        return descripcion.contains(lowerCaseQuery) ||
+            tipo.contains(lowerCaseQuery) ||
+            grupo.contains(lowerCaseQuery);
+      }).toList();
+    }
+  }
+
+  Future<void> fetchActivitiesRegistration(int activityId,
+      {int? idGrupo}) async {
     isLoading(true);
     try {
-      activitiesRegistration.value =
-          await _activityProvider.fetchActivitiesRegistrations(activityId);
+      activitiesRegistration.value = await _activityProvider
+          .fetchActivitiesRegistrations(activityId, groupId: idGrupo);
     } catch (e) {
       Get.snackbar("Error", "No se pudieron obtener las actividades: $e");
     } finally {
@@ -113,16 +126,4 @@ class ActivitiesTeacherController extends GetxController {
       archivo.value = File(result.files.single.path!);
     }
   }
-
-  // RxString selectedFilePath = ''.obs;
-  // Rx<File> filePath = Rx<File>(File(''));
-  // void setSelectedFilePath(String path) {
-  //   selectedFilePath.value = path;
-  // }
-
-  // void setFilePath(File path) {
-  //   filePath.value = path;
-  // }
-
-  //obtener las peronas asignadas a una actividad
 }

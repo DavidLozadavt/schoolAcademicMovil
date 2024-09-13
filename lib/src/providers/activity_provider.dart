@@ -303,11 +303,40 @@ class ActivityProvider extends GetConnect {
   //   }
   // }
 
-  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId) async {
+//   Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId) async {
+//   final response = await http.get(
+//     Uri.parse('$activityByregistrationUrl$activityId'),
+//     headers: {
+//       'Authorization': 'Bearer ${await authService.getToken()}',
+//       'accept': 'application/json',
+//     },
+//   );
+
+//   if (response.statusCode == 200) {
+//     var data = json.decode(response.body);
+//     List<Registrationsactivity> activities = registrationsactivityFromJson(json.encode(data));
+//     return activities;
+//   } else {
+//     throw Exception('Error en la solicitud: ${response.statusCode}');
+//   }
+// }
+
+Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId, {int? groupId}) async {
+  String token = await authService.getToken();
+
+  Map<String, String> queryParameters = {};
+  if (groupId != null) {
+    queryParameters['idGrupo'] = groupId.toString();
+  }
+
+  final url = Uri.parse('$activityByregistrationUrl$activityId').replace(
+    queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+  );
+
   final response = await http.get(
-    Uri.parse('$activityByregistrationUrl$activityId'),
+    url,
     headers: {
-      'Authorization': 'Bearer ${await authService.getToken()}',
+      'Authorization': 'Bearer $token',
       'accept': 'application/json',
     },
   );
@@ -320,5 +349,6 @@ class ActivityProvider extends GetConnect {
     throw Exception('Error en la solicitud: ${response.statusCode}');
   }
 }
+
 
 }
