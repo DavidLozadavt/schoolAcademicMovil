@@ -79,13 +79,24 @@ class SubjectTeacherScreen extends StatelessWidget {
                           context,
                           'Salir',
                           true,
-                          2,
+                          3,
                           () {
                             _subjectsTeacherController.subject.value = [];
                              Get.back();
                           },
                          ),
-                       
+                          customDropdownMenuItem(
+                          context,
+                          'Maquetado',
+                          true,
+                          4,
+                          () async{
+                        
+                            await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/rate_activities');
+                            });
+                          } 
+                        ),
                     ],
                     onChanged: (value) {},
                   ),
