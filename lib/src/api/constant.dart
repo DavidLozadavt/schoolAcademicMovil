@@ -9,7 +9,7 @@ const baseURL = 'http://192.168.101.12:8001/api/';
 
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
-//const getHorarioMateriaURL = '${baseURL}materias/horario_materia';  
+//const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
 const getDiaryTeacherUrl =
     '${baseURL}get_matriculas_academicas_by_id_persona_docente/';
 const getDiaryStudentUrl = '${baseURL}get_matriculas_academicas_by_id_persona/';
@@ -43,7 +43,7 @@ const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 const createActivitiesUrl = '${baseURL}actividades/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
-
+const rateActivityUrl = '${baseURL}respuesta-profesor/';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';
@@ -52,3 +52,5 @@ const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 //const serverError = 'Eror en la respuesta';
 //const unauthorized = 'Unauthorized';
 //const somethingWentWrong = 'Something went wrong, try again!';
+const noData = '${baseURL}default/imagenpordefecto.png';
+//se usa cuando el servidor no retonar archivo

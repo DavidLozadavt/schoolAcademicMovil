@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/models/api_response_activities_registrations_model.dart';
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
+import 'package:http/http.dart' as http;
 
 class ActivitiesTeacherController extends GetxController {
   var isLoading = true.obs;
@@ -21,8 +24,7 @@ class ActivitiesTeacherController extends GetxController {
   var activitiesRegistration = <Registrationsactivity>[].obs;
   var activities1 = <Actividad>[].obs;
   var assignedActivities = <AssignedActivities>[].obs;
-  var filteredActivitiesAssigned =
-      <AssignedActivities>[].obs; // RxList<AssignedActivities>
+  var filteredActivitiesAssigned = <AssignedActivities>[].obs;
 
   void getActivitiesById(String id) async {
     isLoading(true);
@@ -124,6 +126,28 @@ class ActivitiesTeacherController extends GetxController {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null && result.files.single.path != null) {
       archivo.value = File(result.files.single.path!);
+    }
+  }
+
+  //metodo directo para calificar actividades normales
+  var comentarioDocente = ''.obs;
+  var calificacionNumerica = ''.obs;
+  void rateActivity(int idCalificacion) async {
+    try {
+      await _activityProvider.rateActivity(
+        idCalificacion,
+        comentarioDocente.value,
+        calificacionNumerica.value,
+      );
+      Get.snackbar('Éxito', 'Actividad calificada correctamente',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar('Error', e.toString(),
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     }
   }
 }

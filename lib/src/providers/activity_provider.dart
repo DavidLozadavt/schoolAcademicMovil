@@ -321,34 +321,64 @@ class ActivityProvider extends GetConnect {
 //   }
 // }
 
-Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId, {int? groupId}) async {
-  String token = await authService.getToken();
+  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(
+      int activityId,
+      {int? groupId}) async {
+    String token = await authService.getToken();
 
-  Map<String, String> queryParameters = {};
-  if (groupId != null) {
-    queryParameters['idGrupo'] = groupId.toString();
+    Map<String, String> queryParameters = {};
+    if (groupId != null) {
+      queryParameters['idGrupo'] = groupId.toString();
+    }
+
+    final url = Uri.parse('$activityByregistrationUrl$activityId').replace(
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      List<Registrationsactivity> activities =
+          registrationsactivityFromJson(json.encode(data));
+      return activities;
+    } else {
+      throw Exception('Error en la solicitud: ${response.statusCode}');
+    }
   }
 
-  final url = Uri.parse('$activityByregistrationUrl$activityId').replace(
-    queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
-  );
+  Future<void> rateActivity(int idCalificacion, String comentarioDocente,
+      String calificacionNumerica) async {
+    final url = '$rateActivityUrl$idCalificacion';
+    String token = await authService.getToken();
 
-  final response = await http.get(
-    url,
-    headers: {
-      'Authorization': 'Bearer $token',
-      'accept': 'application/json',
-    },
-  );
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'ComentarioDocente': comentarioDocente,
+          'calificacionNumerica': calificacionNumerica,
+        }),
+      );
 
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    List<Registrationsactivity> activities = registrationsactivityFromJson(json.encode(data));
-    return activities;
-  } else {
-    throw Exception('Error en la solicitud: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        print('Datos enviados correctamente');
+      } else {
+        final responseBody = jsonDecode(response.body);
+        throw Exception(responseBody['message'] ?? 'Error desconocido');
+      }
+    } catch (e) {
+      throw e;
+    }
   }
-}
-
-
 }

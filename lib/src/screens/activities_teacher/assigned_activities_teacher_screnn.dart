@@ -3,6 +3,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 import 'package:vtschool/src/widgets/build_form.dart';
+import 'package:vtschool/src/widgets/custom_button.dart';
 
 class AssignedActivitiesTeacherScreen extends StatelessWidget {
   final ActivitiesTeacherController _activitiesTeacherController =
@@ -137,8 +138,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             ),
                             if (activity.esGrupal &&
                                 activity.grupo != null) ...[
-                              const SizedBox(
-                                  height: 5), // Espacio entre las líneas
+                              const SizedBox(height: 5),
                               Text(
                                 'Nombre Grupo: ${activity.grupo!.nombreGrupo}',
                                 style: const TextStyle(color: Colors.grey),
@@ -195,7 +195,6 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
         idGrupo: groupId);
 
     Navigator.of(context).pop();
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -258,7 +257,9 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                       Color backgroundColor;
                       if (activity.idEstado == 17) {
-                        backgroundColor = Colors.green[100]!; // Verde claro
+                        backgroundColor = Colors.green[100]!;
+                      } else if (activity.idEstado == 9) {
+                        backgroundColor = Colors.yellow[100]!;
                       } else {
                         backgroundColor = Colors.white;
                       }
@@ -335,12 +336,28 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                                 icon:
                                     const Icon(Icons.edit, color: Colors.amber),
                                 onPressed: () {
-                                  _showViewFormModal(
-                                    context,
-                                    activity,
-                                  );
+                                  if (activity.comentarioEstudiante != null &&
+                                      activity
+                                          .comentarioEstudiante!.isNotEmpty) {
+                                    _showViewFormModal(context, activity);
+                                  } else {
+                                    // Mostrar un SnackBar usando GetX
+                                    Get.snackbar(
+                                      'Información',
+                                      'El estudiante aún no ha respuesto la actividad.',
+                                      snackPosition: SnackPosition.TOP,
+                                      backgroundColor: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        226,
+                                        82,
+                                      ),
+                                      colorText: Colors.white,
+                                      duration: const Duration(seconds: 3),
+                                    );
+                                  }
                                 },
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -357,6 +374,11 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
   }
 
   void _showViewFormModal(BuildContext context, var activity) {
+    _activitiesTeacherController.comentarioDocente.value =
+        activity.comentarioDocente ?? '';
+    _activitiesTeacherController.calificacionNumerica.value =
+        activity.calificacionNumerica?.toString() ?? '';
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -372,86 +394,136 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    height: 5,
-                    width: 50,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(10),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      height: 5,
+                      width: 50,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
-                ),
-                const Center(
-                  child: Text(
-                    'Detalles de la Actividad',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  const Center(
+                    child: Text(
+                      'Detalles de la Actividad',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Comentario del Estudiante
-                FormFieldWidget(
-                  label: 'Comentario del Estudiante:',
-                  initialValue: activity.comentarioEstudiante ?? '',
-                  onChanged: (value) {},
-                ),
-                const SizedBox(height: 20),
+                  // Comentario del Estudiante
+                  FormFieldWidget(
+                    label: 'Comentario del Estudiante:',
+                    initialValue: activity.comentarioEstudiante ?? '',
+                    onChanged: (value) {},
+                    isReadOnly: true,
+                    maxLines: 5,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    textAlignVertical: TextAlignVertical.top,
+                  ),
 
-                // Comentario del Docente
-                FormFieldWidget(
-                  label: 'Comentario del Docente:',
-                  initialValue: activity.comentarioDocente ?? '',
-                  onChanged: (value) {},
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Calificación Numérica
-                FormFieldWidget(
-                  label: 'Calificación Numérica:',
-                  initialValue: activity.calificacionNumerica?.toString() ?? '',
-                  onChanged: (value) {},
-                ),
-                const SizedBox(height: 20),
+                  const Text(
+                    'Documento Respuesta:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
 
-                const Text(
-                  'Documento Respuesta:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                activity.docRespuesta != null
-                    ? Container(
-                        height: 300,
-                        child: PDFView(
-                          filePath: activity.docRespuesta!.toString(),
-                          enableSwipe: true,
-                          swipeHorizontal: true,
-                          autoSpacing: false,
-                          pageFling: true,
-                          pageSnap: true,
+                  activity.docRespuesta != null &&
+                          !activity.docRespuesta!.contains(
+                            'http://192.168.101.12:8001/default/imagenpordefecto.png',
+                          )
+                      ? Container(
+                          height: 300,
+                          child: PDFView(
+                            filePath: activity.docRespuesta!.toString(),
+                            enableSwipe: true,
+                            swipeHorizontal: true,
+                            autoSpacing: false,
+                            pageFling: true,
+                            pageSnap: true,
+                          ),
+                        )
+                      : Container(
+                          height: 300,
+                          width: double.infinity, // Ajusta el ancho aquí
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: const DecorationImage(
+                              image:
+                                  AssetImage('assets/images/sin-contenido.png'),
+                              // Ajusta el ajuste aquí
+                            ),
+                          ),
                         ),
-                      )
-                    : const Text('Sin documento adjunto'),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
+                  // Comentario del Docente
+                  FormFieldWidget(
+                    label: 'Comentario del Docente:',
+                    initialValue:
+                        _activitiesTeacherController.comentarioDocente.value,
+                    onChanged: (value) {
+                      _activitiesTeacherController.comentarioDocente.value =
+                          value;
                     },
-                    child: const Text('Guardar'),
+                    maxLines: 5,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    textAlignVertical: TextAlignVertical.top,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+
+                  FormFieldWidget(
+                    label: 'Calificación Numérica:',
+                    initialValue:
+                        _activitiesTeacherController.calificacionNumerica.value,
+                    onChanged: (value) {
+                      if (RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                        _activitiesTeacherController
+                            .calificacionNumerica.value = value;
+                      }
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La calificación numérica es obligatoria';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    maxLines: 1,
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: CustomButton(
+                      text: 'Calificar',
+                      backgroundColor:
+                          const Color.fromARGB(255, 234, 238, 240)!,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        _activitiesTeacherController.rateActivity(activity.id);
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icons.save,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
