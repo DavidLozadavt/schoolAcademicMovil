@@ -1,5 +1,5 @@
 // local
-const baseURL = 'http://192.168.101.12:8001/api/';
+const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 // preproduccion

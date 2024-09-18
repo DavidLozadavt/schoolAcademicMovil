@@ -266,7 +266,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                       bool isDefaultPhoto = persona?.rutaFoto == null ||
                           persona!.rutaFoto ==
-                              'http://192.168.101.12:8001/default/user.svg';
+                              'https://pre-school-vt-1.virtualt.org/default/user.svg';
 
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
@@ -443,7 +443,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                   activity.docRespuesta != null &&
                           !activity.docRespuesta!.contains(
-                            'http://192.168.101.12:8001/default/imagenpordefecto.png',
+                            'https://pre-school-vt-1.virtualt.org/default/imagenpordefecto.png',
                           )
                       ? Container(
                           height: 300,
