@@ -321,4 +321,24 @@ class ActivityProvider extends GetConnect {
   }
 }
 
+///asistencia
+ Future<void> attendance({dynamic data}) async {
+    String token = await authService.getToken();
+
+    Response response = await put(
+      putAttendanceUrl,
+      {data},
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      
+    } else {
+      throw Failure('Error al cargar los eventos');
+    }
+  }
+
 }

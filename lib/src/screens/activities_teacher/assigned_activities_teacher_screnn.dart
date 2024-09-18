@@ -270,7 +270,16 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             children: [
                               IconButton(
                                 icon: Icon(Icons.message, color: Colors.blue),
-                                onPressed: () {},
+                                onPressed: () async{
+                                  
+                                  // _chatController.onConnectPressed(
+                                  //                   '${student['matricula']!['idPersona']}');
+                                  //               _chatController.getMessage(
+                                  //                   '${student['matricula']!['idPersona']}');
+                                  //               _chatController
+                                  //                   .setSelectedUser(users);
+                                  //               Get.toNamed('/chat');
+                                },
                               ),
                               IconButton(
                                 icon: Icon(Icons.edit, color: Colors.amber),

@@ -1,5 +1,5 @@
 // local
-const baseURL = 'http://192.168.1.101:8000/api/';
+const baseURL = 'http://192.168.1.13:8000/api/';
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 // preproduccion
@@ -43,7 +43,7 @@ const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 const createActivitiesUrl = '${baseURL}actividades/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
-
+const putAttendanceUrl = '${baseURL}materias/update_assistance';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

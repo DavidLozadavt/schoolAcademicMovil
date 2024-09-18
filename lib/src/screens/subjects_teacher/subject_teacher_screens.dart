@@ -51,43 +51,31 @@ class SubjectTeacherScreen extends StatelessWidget {
                     ),
                     items: [
                       customDropdownMenuItem(
-                          context,
-                          'Gestión de actividades',
-                          true,
-                          1,
-                          () async{
-                            _activitiesTeacherController.getActivitiesById('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]['id']}');
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/activities_teacher');
-                            });
-                          } 
-                        ),
-
-                         customDropdownMenuItem(
-                          context,
-                          'Actividades asignadas',
-                          true,
-                          2,
-                          () async{
-                            _activitiesTeacherController.getActivitiesByTeacher('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]['id']}');
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/assigned_activities');
-                            });
-                          } 
-                        ),
-                        customDropdownMenuItem(
-                          context,
-                          'Salir',
-                          true,
-                          2,
-                          () {
-                            _subjectsTeacherController.subject.value = [];
-                             Get.back();
-                          },
-                         ),
-                       
+                          context, 'Gestión de actividades', true, 1, () async {
+                        _activitiesTeacherController.getActivitiesById(
+                            '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                        await Future.delayed(const Duration(seconds: 1), () {
+                          Get.toNamed('/activities_teacher');
+                        });
+                      }),
+                      customDropdownMenuItem(
+                          context, 'Actividades asignadas', true, 2, () async {
+                        _activitiesTeacherController.getActivitiesByTeacher(
+                            '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                        await Future.delayed(const Duration(seconds: 1), () {
+                          Get.toNamed('/assigned_activities');
+                        });
+                      }),
+                      customDropdownMenuItem(
+                        context,
+                        'Salir',
+                        true,
+                        2,
+                        () {
+                          _subjectsTeacherController.subject.value = [];
+                          Get.back();
+                        },
+                      ),
                     ],
                     onChanged: (value) {},
                   ),
@@ -310,23 +298,128 @@ class SubjectTeacherScreen extends StatelessWidget {
                           final person = student['matricula']['persona'];
                           final users = _subjectsTeacherController.subject[0]
                               ['matriculas'][index];
-                          return CardStudent(
-                            name: '${person["nombre1"]} ${person["apellido1"]}',
-                            urlPhotoStudent: person["rutaFoto"],
-                            qualification: student["notaFinal"],
-                            subject: _subjectsTeacherController.subject[0]
-                                    ['horario'][0]["materia"]["materia"]
-                                ["nombreMateria"],
-                            attendant:
-                                '${student['acudiente']?['nombre1'] ?? 'Sin'} ${student['acudiente']?['apellido1'] ?? 'acudiente'}',
-                            onTapChat: () async {
-                              _chatController.onConnectPressed(
-                                  '${student['matricula']!['idPersona']}');
-                              _chatController.getMessage(
-                                  '${student['matricula']!['idPersona']}');
-                              _chatController.setSelectedUser(users);
-                              Get.toNamed('/chat');
-                            },
+                          Color getRandomColor() {
+                            if (student["notaFinal"] >= 4.6) {
+                              return const Color(0xFF749E60);
+                            } else if (student["notaFinal"] >= 4.0 &&
+                                student["notaFinal"] < 4.6) {
+                              return const Color(0xFF7ECD57);
+                            } else if (student["notaFinal"] > 3.0 &&
+                                student["notaFinal"] < 4.0) {
+                              return const Color(0xFFF44E1A);
+                            } else {
+                              return const Color(0xFFD63A3A);
+                            }
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              width: 370,
+                              decoration: BoxDecoration(
+                                color: getRandomColor(),
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 2.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(person["rutaFoto"]),
+                                          radius: 25,
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 236, 199, 199),
+                                        ),
+                                        Flexible(
+                                          child: Container(
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 200),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${person["nombre1"]} ${person["apellido1"]}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]["nombreMateria"]}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Padre: ${student['acudiente']?['nombre1'] ?? 'Sin'} ${student['acudiente']?['apellido1'] ?? 'acudiente'}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${student["notaFinal"]}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 30,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            Obx(() => Checkbox(
+                                                  value:
+                                                      _subjectsTeacherController
+                                                          .checkboxes[index],
+                                                  onChanged: (bool? value) {
+                                                    _subjectsTeacherController
+                                                        .toggleCheckbox(
+                                                            index, value!);
+                                                  },
+                                                  activeColor: Colors.white,
+                                                  checkColor: Colors.black,
+                                                )),
+                                            IconButton(
+                                              onPressed: () async {
+                                                _chatController.onConnectPressed(
+                                                    '${student['matricula']!['idPersona']}');
+                                                _chatController.getMessage(
+                                                    '${student['matricula']!['idPersona']}');
+                                                _chatController
+                                                    .setSelectedUser(users);
+                                                Get.toNamed('/chat');
+                                              },
+                                              icon: const Icon(Icons.message),
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           );
                         })),
           ])),
