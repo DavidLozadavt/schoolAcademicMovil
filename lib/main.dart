@@ -21,6 +21,7 @@ import 'package:vtschool/src/screens/payments/registration_payment/payment_trans
 import 'package:vtschool/src/screens/payments/payments_screen.dart';
 import 'package:vtschool/src/screens/payments/registration_payment/physical_registration_payment_screen.dart';
 import 'package:vtschool/src/screens/payments/pse_screen.dart';
+import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
@@ -90,7 +91,10 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
         GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen()),
         GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen()),
-        GetPage(name: '/rate_activities', page: () => RateQuestionnaireScreen())
+        GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
+        GetPage(name: '/posts', page: () => PostsScreen()),
+
+
 
            
 

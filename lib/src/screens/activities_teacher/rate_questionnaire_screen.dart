@@ -3,19 +3,21 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/Controllers/rate_quiz_controller.dart';
 
 class RateQuestionnaireScreen extends StatelessWidget {
+  const RateQuestionnaireScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final QuizController controller = Get.put(QuizController());
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Calificar Cuestionario',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,12 +27,12 @@ class RateQuestionnaireScreen extends StatelessWidget {
             Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Progreso de la Calificación:',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     LinearProgressIndicator(
                       value: controller.totalPoints.value > 0
                           ? controller.currentPoints.value /
@@ -40,22 +42,22 @@ class RateQuestionnaireScreen extends StatelessWidget {
                       color: Colors.blueAccent,
                       minHeight: 10,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       'Puntuación: ${controller.currentPoints}/${controller.totalPoints}',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ],
                 )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Obx(() => ListView.builder(
                     itemCount: controller.questions.length,
                     itemBuilder: (context, index) {
                       var question = controller.questions[index];
                       return Card(
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -68,13 +70,13 @@ class RateQuestionnaireScreen extends StatelessWidget {
                               // Mostrar el texto de la pregunta
                               Row(
                                 children: [
-                                  Icon(Icons.question_mark,
+                                  const Icon(Icons.question_mark,
                                       color: Colors.blueAccent),
-                                  SizedBox(width: 8),
+                                  const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
                                       question['question'] as String,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black87),
@@ -90,9 +92,9 @@ class RateQuestionnaireScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children:  [
-                                      Icon(Icons.score,
+                                      const Icon(Icons.score,
                                           color: Colors.greenAccent),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Text(
                                         'Puntos: ${question['userPoints']}/${question['maxPoints']}',
                                         style: TextStyle(
@@ -118,18 +120,18 @@ class RateQuestionnaireScreen extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Finalizar Calificación"),
-                      content: Text(
+                      title: const Text("Finalizar Calificación"),
+                      content: const Text(
                           "¿Estás seguro de que deseas finalizar la calificación?"),
                       actions: <Widget>[
                         TextButton(
-                          child: Text("Cancelar"),
+                          child: const Text("Cancelar"),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         ElevatedButton(
-                          child: Text("Finalizar"),
+                          child: const Text("Finalizar"),
                           onPressed: () {
                             Get.snackbar(
                               'Finalizado',
@@ -147,13 +149,13 @@ class RateQuestionnaireScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                textStyle: TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                textStyle: const TextStyle(fontSize: 18),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Text('Finalizar Calificación'),
+              child: const Text('Finalizar Calificación'),
             ),
           ],
         ),
@@ -169,7 +171,7 @@ class RateQuestionnaireScreen extends StatelessWidget {
 
     return Row(
       children: [
-        Text('Calificar: '),
+        const Text('Calificar: '),
         SizedBox(
           width: 50, 
           child: TextField(

@@ -378,7 +378,7 @@ class ActivityProvider extends GetConnect {
         throw Exception(responseBody['message'] ?? 'Error desconocido');
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

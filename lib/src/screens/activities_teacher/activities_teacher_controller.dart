@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -9,7 +8,6 @@ import 'package:vtschool/src/models/api_response_activities_registrations_model.
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-import 'package:http/http.dart' as http;
 
 class ActivitiesTeacherController extends GetxController {
   var isLoading = true.obs;
@@ -55,10 +53,10 @@ class ActivitiesTeacherController extends GetxController {
       final lowerCaseQuery = query.toLowerCase();
       filteredActivitiesAssigned.value = assignedActivities.where((activity) {
         final descripcion =
-            activity.actividad.descripcionActividad.toLowerCase();
-        final title = activity.actividad.tituloActividad.toLowerCase();
+            activity.actividad!.descripcionActividad!.toLowerCase();
+        final title = activity.actividad!.tituloActividad?.toLowerCase();
         final tipo = activity.esGrupal ? "grupal" : "individual";
-        final grupo = activity.grupo?.nombreGrupo?.toLowerCase() ?? "";
+        final grupo = activity.grupo?.nombre?.toLowerCase() ?? "";
 
         return descripcion.contains(lowerCaseQuery) ||
             tipo.contains(lowerCaseQuery) ||

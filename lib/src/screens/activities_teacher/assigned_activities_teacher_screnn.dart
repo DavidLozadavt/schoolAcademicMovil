@@ -10,6 +10,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
       Get.put(ActivitiesTeacherController());
   final TextEditingController _searchController = TextEditingController();
   AssignedActivitiesTeacherScreen({super.key});
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -108,7 +109,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 15),
                         title: Text(
-                          activity.actividad.descripcionActividad,
+                          activity.actividad!.descripcionActividad as String,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -140,7 +141,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                                 activity.grupo != null) ...[
                               const SizedBox(height: 5),
                               Text(
-                                'Nombre Grupo: ${activity.grupo!.nombreGrupo}',
+                                'Nombre Grupo: ${activity.grupo!.nombre}',
                                 style: const TextStyle(color: Colors.grey),
                               ),
                             ],
@@ -266,7 +267,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                       bool isDefaultPhoto = persona?.rutaFoto == null ||
                           persona!.rutaFoto ==
-                              'https://pre-school-vt-1.virtualt.org/default/user.svg';
+                              'http://192.168.101.12:8001/default/user.svg';
 
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
@@ -278,7 +279,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                               color: Colors.black.withOpacity(0.1),
                               spreadRadius: 2,
                               blurRadius: 4,
-                              offset: Offset(0, 2),
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
@@ -304,7 +305,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: NetworkImage(persona!.rutaFoto!),
+                                      image: NetworkImage(persona.rutaFoto!),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -329,7 +330,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.message, color: Colors.blue),
+                                icon: const Icon(Icons.message, color: Colors.blue),
                                 onPressed: () {},
                               ),
                               IconButton(
@@ -443,9 +444,9 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                   activity.docRespuesta != null &&
                           !activity.docRespuesta!.contains(
-                            'https://pre-school-vt-1.virtualt.org/default/imagenpordefecto.png',
+                            'http://192.168.101.12:8001/default/imagenpordefecto.png',
                           )
-                      ? Container(
+                      ? SizedBox(
                           height: 300,
                           child: PDFView(
                             filePath: activity.docRespuesta!.toString(),
@@ -513,7 +514,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                     child: CustomButton(
                       text: 'Calificar',
                       backgroundColor:
-                          const Color.fromARGB(255, 234, 238, 240)!,
+                          const Color.fromARGB(255, 234, 238, 240),
                       textColor: Colors.white,
                       onPressed: () {
                         _activitiesTeacherController.rateActivity(activity.id);

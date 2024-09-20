@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizController extends GetxController {
@@ -25,8 +24,8 @@ class QuizController extends GetxController {
 
     questions[index]['userPoints'] = points;
 
-    questions.forEach((q) {
+    for (var q in questions) {
       currentPoints.value += (q['userPoints'] as num);
-    });
+    }
   }
 }
