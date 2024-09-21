@@ -44,6 +44,7 @@ const createActivitiesUrl = '${baseURL}actividades/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 const rateActivityUrl = '${baseURL}respuesta-profesor/';
+const getPublicationsUrl = '${baseURL}publications';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

@@ -3,16 +3,19 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
 class PostsScreen extends StatelessWidget {
-  final PublicacionesController publicacionesController = Get.put(PublicacionesController());
+  final PublicacionesController publicacionesController =
+      Get.put(PublicacionesController());
 
- PostsScreen({super.key});
+  PostsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('EduBook', style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold)),
+        title: Text('EduBook',
+            style: TextStyle(
+                color: Colors.grey[800], fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 1,
         foregroundColor: Colors.black,
@@ -40,11 +43,13 @@ class PostsScreen extends StatelessWidget {
               return ListView.builder(
                 itemCount: publicacionesController.publicaciones.length,
                 itemBuilder: (context, index) {
-                  var publicacion = publicacionesController.publicaciones[index];
+                  var publicacion =
+                      publicacionesController.publicaciones[index];
                   return Card(
                     color: Colors.white,
                     elevation: 4,
-                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -56,7 +61,8 @@ class PostsScreen extends StatelessWidget {
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundImage: AssetImage(publicacion.imagenPerfil),
+                                backgroundImage: NetworkImage(
+                                    publicacion.user.persona.rutaFoto),
                                 radius: 25,
                               ),
                               const SizedBox(width: 10),
@@ -64,7 +70,7 @@ class PostsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    publicacion.autor,
+                                    publicacion.user.persona.nombre1,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -72,8 +78,9 @@ class PostsScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${publicacion.fecha.day}/${publicacion.fecha.month}/${publicacion.fecha.year}',
-                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                    '${publicacion.fechaPublicacion.day}/${publicacion.fechaPublicacion.month}/${publicacion.fechaPublicacion.year}',
+                                    style: const TextStyle(
+                                        fontSize: 12, color: Colors.grey),
                                   ),
                                 ],
                               ),
@@ -81,51 +88,25 @@ class PostsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            publicacion.contenido,
-                            style: TextStyle(fontSize: 14, color: Colors.grey[800]),
+                            publicacion.description,
+                            style: TextStyle(
+                                fontSize: 14, color: Colors.grey[800]),
                           ),
-                          if (publicacion.imagenesPublicacion.isNotEmpty) ...[
+                          if (publicacion.urlImage.isNotEmpty) ...[
                             const SizedBox(height: 10),
                             SizedBox(
-                              height: 450, // Ajustado para que las imágenes no sean tan grandes
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: PageView.builder(
-                                      itemCount: publicacion.imagenesPublicacion.length,
-                                      onPageChanged: (int index) {
-                                        publicacionesController.indiceImagen.value = index; // Actualiza el índice
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset(
-                                            publicacion.imagenesPublicacion[index],
-                                            fit: BoxFit.cover,
-                                          ),
-                                        );
-                                      },
+                              height: 450,
+                              child: PageView.builder(
+                                itemCount: 1, // Cambia esto si tienes varias imágenes
+                                itemBuilder: (context, index) {
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      publicacion.urlImage,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                  Obx(() {
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: List.generate(publicacion.imagenesPublicacion.length, (i) {
-                                        return Container(
-                                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                                          height: 8,
-                                          width: 8,
-                                          decoration: BoxDecoration(
-                                            color: publicacionesController.indiceImagen.value == i
-                                                ? Colors.blueAccent
-                                                : Colors.grey[400],
-                                            shape: BoxShape.circle,
-                                          ),
-                                        );
-                                      }),
-                                    );
-                                  }),
-                                ],
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -156,7 +137,8 @@ class PostsScreen extends StatelessWidget {
           ),
           title: const Text(
             'Nueva Publicación',
-            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+            style:
+                TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -196,7 +178,8 @@ class PostsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancelar', style: TextStyle(color: Colors.black87)),
+              child: const Text('Cancelar',
+                  style: TextStyle(color: Colors.black87)),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -209,7 +192,8 @@ class PostsScreen extends StatelessWidget {
                 // Lógica para publicar la nueva publicación
                 Navigator.of(context).pop();
               },
-              child: const Text('Publicar', style: TextStyle(color: Colors.white)),
+              child:
+                  const Text('Publicar', style: TextStyle(color: Colors.white)),
             ),
           ],
         );
