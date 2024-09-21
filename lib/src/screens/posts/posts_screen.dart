@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
 import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 class PostsScreen extends StatelessWidget {
-  final PublicacionesController publicacionesController =
-      Get.put(PublicacionesController());
+  final PublicacionesController publicacionesController = Get.put(PublicacionesController());
 
   PostsScreen({super.key});
-
-  // Función para mostrar la imagen en pantalla completa
-  void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,118 +28,111 @@ class PostsScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         actions: [
           IconButton(
-            icon:
-                const Icon(Icons.add_circle_outline, color: Colors.blueAccent),
+            icon: const Icon(Icons.add_circle_outline, color: Colors.blueAccent),
             onPressed: () {
               _mostrarFormularioPublicacion(context);
             },
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Obx(() {
-              if (publicacionesController.publicaciones.isEmpty) {
-                return Center(
-                  child: Text(
-                    'Aún no hay publicaciones',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 16),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: HistoriasWidget(), // Usando el nuevo widget
+            ),
+          ];
+        },
+        body: Obx(() {
+          if (publicacionesController.publicaciones.isEmpty) {
+            return Center(
+              child: Text(
+                'Aún no hay publicaciones',
+                style: TextStyle(color: Colors.grey[600], fontSize: 16),  
+              ),
+            );
+          }
+          return RefreshIndicator(
+            onRefresh: () => publicacionesController.fetchPublicaciones(),
+            child: ListView.builder(
+              itemCount: publicacionesController.publicaciones.length,
+              itemBuilder: (context, index) {
+                var publicacion = publicacionesController.publicaciones[index];
+                return Card(
+                  color: Colors.white70,
+                  elevation: 0.2,
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                );
-              }
-              return RefreshIndicator(
-                onRefresh: () => publicacionesController.fetchPublicaciones(),
-                child: ListView.builder(
-                  itemCount: publicacionesController.publicaciones.length,
-                  itemBuilder: (context, index) {
-                    var publicacion =
-                        publicacionesController.publicaciones[index];
-                    return Card(
-                      color: Colors.white70,
-                      elevation: 0.2,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(13.5),
-                            child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(13.5),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(publicacion.user.persona.rutaFoto.toString()),
+                              radius: 25,
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    publicacion.user.persona.rutaFoto,
+                                Text(
+                                  publicacion.user.persona.nombre1.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.black87,
                                   ),
-                                  radius: 25,
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      publicacion.user.persona.nombre1,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '${publicacion.fechaPublicacion.day}/${publicacion.fechaPublicacion.month}/${publicacion.fechaPublicacion.year}',
-                                      style: const TextStyle(
-                                          fontSize: 12,
-                                          color:
-                                              Color.fromARGB(255, 10, 10, 10)),
-                                    ),
-                                  ],
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${publicacion.fechaPublicacion.day}/${publicacion.fechaPublicacion.month}/${publicacion.fechaPublicacion.year}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color.fromARGB(255, 10, 10, 10),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(11.0),
-                            child: _buildDescription(publicacion.description),
-                          ),
-                          if (publicacion.urlImage.isNotEmpty) ...[
-                            GestureDetector(
-                              onTap: () => _mostrarImagenFullScreen(
-                                  context, publicacion.urlImage),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(10),
-                                ),
-                                child: Image.network(
-                                  publicacion.urlImage,
-                                  width: double.infinity,
-                                  fit: BoxFit
-                                      .cover, // Ajusta la imagen para que ocupe el ancho completo
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Text(
-                                        'Error al cargar la imagen'); // Manejo de errores
-                                  },
-                                ),
-                              ),
-                            ),
                           ],
-                        ],
+                        ),
                       ),
-                    );
-                  },
-                ),
-              );
-            }),
-          ),
-        ],
+                      Padding(
+                        padding: const EdgeInsets.all(11.0),
+                        child: _buildDescription(publicacion.description),
+                      ),
+                      if (publicacion.urlImage.isNotEmpty) ...[
+                        GestureDetector(
+                          onTap: () => _mostrarImagenFullScreen(context, publicacion.urlImage),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                            child: Image.network(
+                              publicacion.urlImage,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Text('Error al cargar la imagen');
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }
+
+
 
   Widget _buildDescription(String description) {
     const int maxLength = 80;
@@ -223,6 +205,14 @@ class FullScreenImagePage extends StatelessWidget {
     );
   }
 }
+ void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
+      ),
+    );
+  }
 
 void _mostrarFormularioPublicacion(BuildContext context) {
   final autorController = TextEditingController();

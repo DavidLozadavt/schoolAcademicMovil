@@ -15,16 +15,24 @@ class PublicacionesController extends GetxController {
   }
 
   Future<void> fetchPublicaciones() async {
-    isLoading.value = true; 
-    errorMessage.value = ''; 
-    try {
-      publicaciones.value = await _publicationProvider.getPublications();
-    } catch (e) {
-      errorMessage.value = 'Error al obtener publicaciones: $e'; 
-    } finally {
-      isLoading.value = false; 
-    }
+  isLoading.value = true; 
+  errorMessage.value = ''; 
+  try {
+    publicaciones.value = await _publicationProvider.getPublications();
+  } catch (e) {
+    errorMessage.value = 'Error al obtener publicaciones: $e'; 
+    // Mostrar el error en un AlertDialog
+    Get.defaultDialog(
+      title: 'Error',
+      middleText: errorMessage.value,
+      onConfirm: () => Get.back(),
+      textConfirm: 'Aceptar',
+    );
+  } finally {
+    isLoading.value = false; 
   }
+}
+
 
     Future<void> _refreshPublicaciones() async {
     await fetchPublicaciones(); 

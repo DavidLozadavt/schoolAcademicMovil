@@ -122,60 +122,60 @@ class User {
 }
 
 class Persona {
-    final int id;
-    final String identificacion;
-    final String nombre1;
-    final String nombre2;
-    final String apellido1;
-    final String apellido2;
-    final DateTime fechaNac;
-    final String direccion;
-    final String email;
-    final String telefonoFijo;
-    final String celular;
-    final dynamic perfil;
-    final String sexo;
-    final String rh;
-    final String rutaFoto;
-    final int idTipoIdentificacion;
-    final int idCiudadNac;
-    final int idCiudadUbicacion;
-    final String tipoPersona;
-    final dynamic createdAt;
-    final DateTime updatedAt;
+  final int? id;
+  final String? identificacion;
+  final String? nombre1;
+  final String? nombre2;
+  final String? apellido1;
+  final String? apellido2;
+  final DateTime? fechaNac;
+  final String? direccion;
+  final String? email;
+  final String? telefonoFijo;
+  final String? celular;
+  final dynamic perfil;
+  final String? sexo;
+  final String? rh;
+  final String? rutaFoto;
+  final int? idTipoIdentificacion;
+  final int? idCiudadNac;
+  final int? idCiudadUbicacion;
+  final String? tipoPersona;
+  final dynamic createdAt;
+  final DateTime? updatedAt;
 
-    Persona({
-        required this.id,
-        required this.identificacion,
-        required this.nombre1,
-        required this.nombre2,
-        required this.apellido1,
-        required this.apellido2,
-        required this.fechaNac,
-        required this.direccion,
-        required this.email,
-        required this.telefonoFijo,
-        required this.celular,
-        required this.perfil,
-        required this.sexo,
-        required this.rh,
-        required this.rutaFoto,
-        required this.idTipoIdentificacion,
-        required this.idCiudadNac,
-        required this.idCiudadUbicacion,
-        required this.tipoPersona,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+  Persona({
+    this.id,
+    this.identificacion,
+    this.nombre1,
+    this.nombre2,
+    this.apellido1,
+    this.apellido2,
+    this.fechaNac,
+    this.direccion,
+    this.email,
+    this.telefonoFijo,
+    this.celular,
+    this.perfil,
+    this.sexo,
+    this.rh,
+    this.rutaFoto,
+    this.idTipoIdentificacion,
+    this.idCiudadNac,
+    this.idCiudadUbicacion,
+    this.tipoPersona,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-    factory Persona.fromJson(Map<String, dynamic> json) => Persona(
+  factory Persona.fromJson(Map<String, dynamic> json) => Persona(
         id: json["id"],
         identificacion: json["identificacion"],
         nombre1: json["nombre1"],
         nombre2: json["nombre2"],
         apellido1: json["apellido1"],
         apellido2: json["apellido2"],
-        fechaNac: DateTime.parse(json["fechaNac"]),
+        fechaNac: json["fechaNac"] != null ? DateTime.parse(json["fechaNac"]) : null,
         direccion: json["direccion"],
         email: json["email"],
         telefonoFijo: json["telefonoFijo"],
@@ -189,17 +189,17 @@ class Persona {
         idCiudadUbicacion: json["idCiudadUbicacion"],
         tipoPersona: json["tipoPersona"],
         createdAt: json["created_at"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-    );
+        updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "identificacion": identificacion,
         "nombre1": nombre1,
         "nombre2": nombre2,
         "apellido1": apellido1,
         "apellido2": apellido2,
-        "fechaNac": "${fechaNac.year.toString().padLeft(4, '0')}-${fechaNac.month.toString().padLeft(2, '0')}-${fechaNac.day.toString().padLeft(2, '0')}",
+        "fechaNac": fechaNac != null ? "${fechaNac?.year.toString().padLeft(4, '0')}-${fechaNac?.month.toString().padLeft(2, '0')}-${fechaNac?.day.toString().padLeft(2, '0')}" : null,
         "direccion": direccion,
         "email": email,
         "telefonoFijo": telefonoFijo,
@@ -213,6 +213,6 @@ class Persona {
         "idCiudadUbicacion": idCiudadUbicacion,
         "tipoPersona": tipoPersona,
         "created_at": createdAt,
-        "updated_at": updatedAt.toIso8601String(),
-    };
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
