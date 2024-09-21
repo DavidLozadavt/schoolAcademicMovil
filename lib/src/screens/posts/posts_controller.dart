@@ -26,5 +26,10 @@ class PublicacionesController extends GetxController {
     }
   }
 
+    Future<void> _refreshPublicaciones() async {
+    await fetchPublicaciones(); 
+  }
+
+
   
 }
