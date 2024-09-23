@@ -275,51 +275,6 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  // Future<List<Map<String, dynamic>>> fetchPersons(int activityId) async {
-  //   String token = await authService.getToken();
-
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse('$activityByregistrationUrl$activityId'),
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'accept': 'application/json',
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       var data = json.decode(response.body);
-  //       List<Map<String, dynamic>> persons = List<Map<String, dynamic>>.from(
-  //         data.map((activity) => Map<String, dynamic>.from(activity['matriculaAcademica']['matricula']['persona'])),
-  //       );
-
-  //       return persons;
-  //     } else {
-  //       throw Exception('Error en la solicitud: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error: $e');
-  //     throw Exception('Error al obtener personas: $e');
-  //   }
-  // }
-
-//   Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId) async {
-//   final response = await http.get(
-//     Uri.parse('$activityByregistrationUrl$activityId'),
-//     headers: {
-//       'Authorization': 'Bearer ${await authService.getToken()}',
-//       'accept': 'application/json',
-//     },
-//   );
-
-//   if (response.statusCode == 200) {
-//     var data = json.decode(response.body);
-//     List<Registrationsactivity> activities = registrationsactivityFromJson(json.encode(data));
-//     return activities;
-//   } else {
-//     throw Exception('Error en la solicitud: ${response.statusCode}');
-//   }
-// }
 
   Future<List<Registrationsactivity>> fetchActivitiesRegistrations(
       int activityId,
@@ -381,4 +336,25 @@ class ActivityProvider extends GetConnect {
       rethrow;
     }
   }
+
+
+  //eliminarActividades
+  Future<void> deleteActivityById(String id) async {
+  String token = await authService.getToken();
+  
+  final response = await delete(
+    '$deleteActivitiesUrl$id',
+    headers: {
+      'Authorization': 'Bearer $token',
+      'accept': 'application/json',
+    },
+  );
+
+  if (response.statusCode == 200 || response.statusCode == 204) {
+    print('Actividad eliminada correctamente');
+  } else {
+    throw Failure('No se puede eliminar una actividad asignada');
+  }
+}
+
 }

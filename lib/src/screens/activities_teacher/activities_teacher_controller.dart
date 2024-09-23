@@ -8,6 +8,7 @@ import 'package:vtschool/src/models/api_response_activities_registrations_model.
 import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
+import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
 
 class ActivitiesTeacherController extends GetxController {
   var isLoading = true.obs;
@@ -23,6 +24,8 @@ class ActivitiesTeacherController extends GetxController {
   var activities1 = <Actividad>[].obs;
   var assignedActivities = <AssignedActivities>[].obs;
   var filteredActivitiesAssigned = <AssignedActivities>[].obs;
+  final SubjectsTeacherController _subjectsTeacherController =
+      Get.put(SubjectsTeacherController());
 
   void getActivitiesById(String id) async {
     isLoading(true);
@@ -30,6 +33,32 @@ class ActivitiesTeacherController extends GetxController {
       activities1.value = await _activityProvider.getActivitiesById(id);
     } catch (e) {
       Get.snackbar('Error', e.toString());
+    }
+  }
+
+  Future<void> _refreshData() async {
+    String id =
+        '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}';
+    getActivitiesById(id);
+  }
+
+  Future<void> createActivity(String id) async {
+    try {
+      await _activityProvider.createActivityProvider(
+        id,
+        tituloActividad.value,
+        descripcionActividad.value,
+        archivo.value,
+      );
+      Get.snackbar('Éxito', 'Actividad creada correctamente',
+          snackPosition: SnackPosition.TOP);
+      tituloActividad.value = '';
+      descripcionActividad.value = '';
+      archivo.value = null;
+      await _refreshData();
+       Get.offNamed('/activities_teacher');
+    } catch (e) {
+      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.TOP);
     }
   }
 
@@ -101,25 +130,6 @@ class ActivitiesTeacherController extends GetxController {
     }
   }
 
-  Future<void> createActivity(String id) async {
-    try {
-      await _activityProvider.createActivityProvider(
-        id,
-        tituloActividad.value,
-        descripcionActividad.value,
-        archivo.value,
-      );
-      Get.snackbar('Éxito', 'Actividad creada correctamente',
-          snackPosition: SnackPosition.TOP);
-      tituloActividad.value = '';
-      descripcionActividad.value = '';
-      archivo.value = null;
-      Get.toNamed('/activities_teacher');
-    } catch (e) {
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.TOP);
-    }
-  }
-
   Future<void> seleccionarArchivo() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null && result.files.single.path != null) {
@@ -146,6 +156,18 @@ class ActivitiesTeacherController extends GetxController {
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
+    }
+  }
+//eliminar actividades
+  void deleteActivities(String id) async {
+    isLoading(true);
+    try {
+      await _activityProvider.deleteActivityById(id);
+      Get.snackbar('Éxito', 'Actividad eliminada correctamente');
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading(false);
     }
   }
 }

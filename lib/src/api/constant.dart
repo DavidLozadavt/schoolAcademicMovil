@@ -41,6 +41,7 @@ const getQualificationsStudentUrl =
     '${baseURL}get_court_by_matricula_academica_qualifications/';
 const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 const createActivitiesUrl = '${baseURL}actividades/';
+const deleteActivitiesUrl = '${baseURL}deleteActividad/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 const rateActivityUrl = '${baseURL}respuesta-profesor/';
