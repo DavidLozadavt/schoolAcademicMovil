@@ -6,7 +6,8 @@ import 'package:vtschool/src/screens/posts/posts_controller.dart';
 import 'package:photo_view/photo_view.dart';
 
 class PostsScreen extends StatelessWidget {
-  final PublicacionesController publicacionesController = Get.put(PublicacionesController());
+  final PublicacionesController publicacionesController =
+      Get.put(PublicacionesController());
 
   PostsScreen({super.key});
 
@@ -28,7 +29,8 @@ class PostsScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         actions: [
           IconButton(
-            icon: const Icon(Icons.add_circle_outline, color: Colors.blueAccent),
+            icon:
+                const Icon(Icons.add_circle_outline, color: Colors.blueAccent),
             onPressed: () {
               _mostrarFormularioPublicacion(context);
             },
@@ -39,7 +41,7 @@ class PostsScreen extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
-              child: HistoriasWidget(), // Usando el nuevo widget
+              // child: HistoriasWidget(), 
             ),
           ];
         },
@@ -48,7 +50,7 @@ class PostsScreen extends StatelessWidget {
             return Center(
               child: Text(
                 'Aún no hay publicaciones',
-                style: TextStyle(color: Colors.grey[600], fontSize: 16),  
+                style: TextStyle(color: Colors.grey[600], fontSize: 16),
               ),
             );
           }
@@ -59,9 +61,10 @@ class PostsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var publicacion = publicacionesController.publicaciones[index];
                 return Card(
-                  color: Colors.white70,
+                  color: Colors.white,
                   elevation: 0.2,
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 9, horizontal: 3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -72,9 +75,22 @@ class PostsScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(13.5),
                         child: Row(
                           children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(publicacion.user.persona.rutaFoto.toString()),
-                              radius: 25,
+                            GestureDetector(
+                              onTap: () {
+                                _mostrarPerfilInformativo(
+                                  context,
+                                  
+                                  publicacion.user.persona.nombre1.toString(),
+                                  publicacion.user.persona.apellido1.toString(),
+                                  publicacion.user.persona.rutaFoto.toString(),
+                                );
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(publicacion
+                                    .user.persona.rutaFoto
+                                    .toString()),
+                                radius: 25,
+                              ),
                             ),
                             const SizedBox(width: 10),
                             Column(
@@ -107,9 +123,11 @@ class PostsScreen extends StatelessWidget {
                       ),
                       if (publicacion.urlImage.isNotEmpty) ...[
                         GestureDetector(
-                          onTap: () => _mostrarImagenFullScreen(context, publicacion.urlImage),
+                          onTap: () => _mostrarImagenFullScreen(
+                              context, publicacion.urlImage),
                           child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(10)),
                             child: Image.network(
                               publicacion.urlImage,
                               width: double.infinity,
@@ -131,6 +149,57 @@ class PostsScreen extends StatelessWidget {
       ),
     );
   }
+
+
+ void _mostrarPerfilInformativo(BuildContext context, String nombre, String apellido, String rutaFoto) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Container( 
+            width: MediaQuery.of(context).size.width * 0.8, 
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center, 
+              children: [
+                ClipOval(
+                  child: Image.network(
+                    rutaFoto,
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Error al cargar la imagen');
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '${nombre} ${apellido}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'DOCENTE',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
 
 
 
@@ -178,7 +247,6 @@ class PostsScreen extends StatelessWidget {
   }
 }
 
-// Pantalla de imagen en pantalla completa
 class FullScreenImagePage extends StatelessWidget {
   final String imageUrl;
 
@@ -205,14 +273,15 @@ class FullScreenImagePage extends StatelessWidget {
     );
   }
 }
- void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
-      ),
-    );
-  }
+
+void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
+    ),
+  );
+}
 
 void _mostrarFormularioPublicacion(BuildContext context) {
   final autorController = TextEditingController();
