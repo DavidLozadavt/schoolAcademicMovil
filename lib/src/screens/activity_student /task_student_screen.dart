@@ -119,10 +119,19 @@ class TaskStudentScreen extends StatelessWidget {
                             itemCount: _taskStudentController
                                 .filteredActivities.length,
                             itemBuilder: ((context, index) {
-                              if (_taskStudentController
+                              Map<String, dynamic> decodedData = jsonDecode(
+                                  _taskStudentController
                                           .filteredActivities[index]
-                                      ['metadataInfo'] !=
-                                  null) {
+                                      ['metadataInfo']);
+                              if (decodedData['id'] != null &&
+                                      _taskStudentController
+                                                  .filteredActivities[index]
+                                              ['idTipoNotificacion'] ==
+                                          3 ||
+                                  _taskStudentController
+                                              .filteredActivities[index]
+                                          ['idTipoNotificacion'] ==
+                                      5) {
                                 Map<String, dynamic> decodedData = jsonDecode(
                                     _taskStudentController
                                             .filteredActivities[index]
@@ -133,50 +142,47 @@ class TaskStudentScreen extends StatelessWidget {
                                     decodedData['fechaInicial'];
                                 String finalDate = decodedData['fechaFinal'];
                                 String subject = decodedData['nombreMateria'];
-                              return Center(
-                                    child: GestureDetector(
-                                      onTap: () async {
+                                return Center(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      await _taskStudentController
+                                          .getTypeActivity(idActividad);
+
+                                      if (_taskStudentController
+                                                  .typeActivitiesById[
+                                              'tipoActividad'] ==
+                                          'GESTION') {
                                         await _taskStudentController
-                                            .getTypeActivity(idActividad);
-                                            print(_taskStudentController
-                                                    .typeActivitiesById[
-                                                'tipoActividad']);
-                                        if (_taskStudentController
-                                                    .typeActivitiesById[
-                                                'tipoActividad'] ==
-                                            'Normal') {
-                                          await _taskStudentController
-                                              .getActivityById(idActividad);
-                                          showNormalActivity(
-                                              context,
-                                              _taskStudentController
-                                                  .activitiesById);
-                                        } else {
-                                          await _taskStudentController
-                                              .getActivityQuestionnaire(
-                                                  idActividad);
-                                          showQuestionnaireActivity(
-                                              context,
-                                              _taskStudentController
-                                                  .activityQuestionnaire);
-                                        }
-                                      },
-                                      child: CardTaskStudent(
-                                        idActivity:
-                                            '${_taskStudentController.filteredActivities[index]['id']}',
-                                        affair:
-                                            '${_taskStudentController.filteredActivities[index]['asunto']}',
-                                        urlPhotoSender:
-                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
-                                        nameOfsender:
-                                            '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
-                                        initialDate: initialDate,
-                                        finalDate: finalDate,
-                                        subject: subject,
-                                      ),
+                                            .getActivityById(idActividad);
+                                        showNormalActivity(
+                                            context,
+                                            _taskStudentController
+                                                .activitiesById);
+                                      } else {
+                                        await _taskStudentController
+                                            .getActivityQuestionnaire(
+                                                idActividad);
+                                        showQuestionnaireActivity(
+                                            context,
+                                            _taskStudentController
+                                                .activityQuestionnaire);
+                                      }
+                                    },
+                                    child: CardTaskStudent(
+                                      idActivity:
+                                          '${_taskStudentController.filteredActivities[index]['id']}',
+                                      affair:
+                                          '${_taskStudentController.filteredActivities[index]['asunto']}',
+                                      urlPhotoSender:
+                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
+                                      nameOfsender:
+                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
+                                      initialDate: initialDate,
+                                      finalDate: finalDate,
+                                      subject: subject,
                                     ),
-                                  );
-                               
+                                  ),
+                                );
                               }
                               return null;
                             }),
@@ -496,8 +502,8 @@ class TaskStudentScreen extends StatelessWidget {
                                       fillColor: WidgetStateProperty
                                           .resolveWith<Color>(
                                         (Set<WidgetState> states) {
-                                          if (states.contains(
-                                              WidgetState.selected)) {
+                                          if (states
+                                              .contains(WidgetState.selected)) {
                                             return const Color(0xff00C535);
                                           }
                                           return Colors.white;
@@ -576,8 +582,8 @@ class TaskStudentScreen extends StatelessWidget {
                                       fillColor: WidgetStateProperty
                                           .resolveWith<Color>(
                                         (Set<WidgetState> states) {
-                                          if (states.contains(
-                                              WidgetState.selected)) {
+                                          if (states
+                                              .contains(WidgetState.selected)) {
                                             return const Color(0xff00C535);
                                           }
                                           return Colors.white;

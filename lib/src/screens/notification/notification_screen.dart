@@ -120,10 +120,14 @@ class NotificationScreen extends StatelessWidget {
                                 child: Center(
                                   child: GestureDetector(
                                     onTap: () {
-                                      if (_notificationsController
+                                      Map<String, dynamic> decodedData = jsonDecode(
+                                    _notificationsController
                                                   .activities[index]
-                                              ['metadataInfo'] !=
-                                          null) {
+                                              ['metadataInfo']);
+                                      if (decodedData['id'] !=
+                                          null && _notificationsController
+                                                  .activities[index]['idTipoNotificacion'] == 3 || _notificationsController
+                                                  .activities[index]['idTipoNotificacion'] == 5) {
                                         showNotificationDetails(
                                             context,
                                             _notificationsController

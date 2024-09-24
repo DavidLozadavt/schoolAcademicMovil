@@ -34,29 +34,29 @@ class HomeTeacher extends StatelessWidget {
                     isActive: true,
                   ),
                 ),
-                BottomNavigationBarItem(
-                  //backgroundColor: listColor[11].withOpacity(0.5),
-                  label: '',
-                  icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
-                  ),
-                  activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
-                    isActive: true,
-                  ),
-                ),
+                // BottomNavigationBarItem(
+                //   //backgroundColor: listColor[11].withOpacity(0.5),
+                //   label: '',
+                //   icon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/comentario.png',
+                //     title: 'Chats',
+                //   ),
+                //   activeIcon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/comentario.png',
+                //     title: 'Chats',
+                //     isActive: true,
+                //   ),
+                // ),
                 BottomNavigationBarItem(
                   //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
+                    title: 'Aula',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
+                    title: 'Aula',
                     isActive: true,
                   ),
                 ),
@@ -92,7 +92,7 @@ class HomeTeacher extends StatelessWidget {
               index: controller.currentIndex.value,
               children: [
                 HomeTeacherScreen(),
-                ActivitiesTeacherScreen(),
+                //ActivitiesTeacherScreen(),
                 SubjectsTeacherScreen(),
                 ProfileUserScreen(),
               ],

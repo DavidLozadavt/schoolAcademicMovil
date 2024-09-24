@@ -29,6 +29,7 @@ class TaskStudentController extends GetxController {
   void onInit() {
     super.onInit();
     getNotifications();
+    getActivitiesStudent();
   }
 
   Future<void> getNotifications() async {
@@ -40,6 +41,18 @@ class TaskStudentController extends GetxController {
       isLoading(true);
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> getActivitiesStudent() async {
+    try {
+      await _activityProvider.getActivitiesStudent();
+      // activities.assignAll(_notificationsProvider.activities);
+      // filteredActivities.assignAll(activities);
+
+     
+    } finally {
+      
     }
   }
 

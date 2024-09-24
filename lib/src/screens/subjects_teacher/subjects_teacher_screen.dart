@@ -136,7 +136,8 @@ class SubjectsTeacherScreen extends StatelessWidget {
                                                 "horaInicial"],
                                         _calendarController.events[index][
                                                 "horaFinal"],
-                                        _calendarController.events[index]["id"]);
+                                        _calendarController.events[index]["id"],
+                                        _calendarController.events[index]["materia"]["grado"]["idGrado"]);
                                     _subjectsTeacherController.loadSubjects();
                                     Get.toNamed('/subject_teacher');
                                   },

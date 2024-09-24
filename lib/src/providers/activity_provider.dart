@@ -22,6 +22,28 @@ class ActivityProvider extends GetConnect {
   var descripcionActividad = ''.obs;
   var archivo = Rxn<File>();
 
+  Future<void> getActivitiesStudent() async {
+    String token = await authService.getToken();
+    Response response = await get(
+      getActivitiesStudentUrl,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      //Map<String, dynamic> responseBody = response.body;
+      /*if (responseBody.isNotEmpty) {*/
+      //activitiesById.assignAll([responseBody]);
+      /*  } else {
+          throw Failure('La respuesta del servidor está vacía.');
+        }*/
+    } else {
+      throw Failure('Error al cargar las actividades');
+    }
+  }
+
   Future<void> getActivityById(String? id) async {
     String token = await authService.getToken();
     Response response = await get(
