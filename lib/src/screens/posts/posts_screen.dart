@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
 import 'package:photo_view/photo_view.dart';
@@ -16,7 +17,7 @@ class PostsScreen extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text(
-          'VtBook',
+          'EduBook',
           style: TextStyle(
             color: Colors.blueAccent,
             fontWeight: FontWeight.bold,
@@ -40,7 +41,7 @@ class PostsScreen extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
-              // child: HistoriasWidget(), 
+              //  child: HistoriasWidget(), 
             ),
           ];
         },
