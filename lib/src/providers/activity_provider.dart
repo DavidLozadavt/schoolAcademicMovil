@@ -13,10 +13,12 @@ import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ActivityProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
+  var activitiesStudent = <Map<String, dynamic>>[].obs;
   var activitiesById = <Map<String, dynamic>>[].obs;
   var allActivitiesById = <Map<String, dynamic>>[].obs;
   var questionnaireActivity = <Map<String, dynamic>>[].obs;
   var getTypeActivitiesById = <Map<String, dynamic>>[].obs;
+
 
   var tituloActividad = ''.obs;
   var descripcionActividad = ''.obs;
@@ -35,10 +37,12 @@ class ActivityProvider extends GetConnect {
     if (response.statusCode == 200) {
       //Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
-      //activitiesById.assignAll([responseBody]);
+      activitiesStudent.assignAll(response.body);
       /*  } else {
           throw Failure('La respuesta del servidor está vacía.');
         }*/
+    }else if(response.statusCode == 400){
+      activitiesStudent.assignAll([]);
     } else {
       throw Failure('Error al cargar las actividades');
     }
