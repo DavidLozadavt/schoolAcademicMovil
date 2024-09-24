@@ -18,6 +18,11 @@ class Calendar extends StatelessWidget {
             } else {
               return SfCalendar(
                 firstDayOfWeek: 1,
+                cellBorderColor: Colors.grey,
+                headerStyle: const CalendarHeaderStyle(
+                  backgroundColor: Colors.transparent,
+                ),
+                
                 view: CalendarView.week,
                 dataSource: _getDataSource(controller.events),
                 onTap: (details) => _onTap(context, details, controller.events),

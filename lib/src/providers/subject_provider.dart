@@ -16,7 +16,8 @@ class SubjectProvider extends GetConnect {
     String idProgram,
     String startTime,
     String endTime,
-    int idSchedule
+    int idSchedule,
+    int idDegree
   ) async {
     String token = await authProvider.getToken();
     dynamic data = {
@@ -25,11 +26,12 @@ class SubjectProvider extends GetConnect {
       "idPrograma": idProgram,
       "horaInicial": startTime,
       "horaFinal": endTime,
-      "idHorario": idSchedule
+      "idHorario": idSchedule,
+      "idGrado": idDegree
     };
 
     String jsonData = jsonEncode(data);
-   // print('a12346 $jsonData');
+    print('a12346 $jsonData');
     Response response = await get(
       '$getStudentByIdMateriaUrl$jsonData',
       headers: {

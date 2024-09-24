@@ -50,19 +50,19 @@ class HomeStudent extends StatelessWidget {
                     //messageCount: 50,
                   ),
                 ),
-                BottomNavigationBarItem(
-                 // backgroundColor: Colors.white,
-                  label: '',
-                  icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
-                  ),
-                  activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Mis notas',
-                    isActive: true,
-                  ),
-                ),
+                // BottomNavigationBarItem(
+                //  // backgroundColor: Colors.white,
+                //   label: '',
+                //   icon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Mis notas',
+                //   ),
+                //   activeIcon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Mis notas',
+                //     isActive: true,
+                //   ),
+                // ),
                 BottomNavigationBarItem(
                   //backgroundColor: Colors.white,
                   label: '',
@@ -96,7 +96,7 @@ class HomeStudent extends StatelessWidget {
               children: [
                 HomeStudentScreen(),
                 Chats(),
-                const StudentPage(),
+                //const StudentPage(),
                 PaymentsScreen(),
                 ProfileUserScreen(),
                 

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class CardStudent extends StatelessWidget {
@@ -6,6 +7,7 @@ class CardStudent extends StatelessWidget {
   final String urlPhotoStudent;
   final String attendant;
   final int qualification;
+  final VoidCallback onTapChat;
 
   const CardStudent({
     required this.name,
@@ -13,6 +15,7 @@ class CardStudent extends StatelessWidget {
     required this.urlPhotoStudent,
     required this.attendant,
     required this.qualification,
+    required this.onTapChat,
     super.key,
   });
 
@@ -36,60 +39,81 @@ class CardStudent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(urlPhotoStudent),
                     radius: 25,
                     backgroundColor: const Color.fromARGB(255, 236, 199, 199),
                   ),
+                  Flexible(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            subject,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                           Text(
+                             'Padre: $attendant',
+                             style: const TextStyle(
+                               color: Colors.white,
+                               fontSize: 12,
+                               fontWeight: FontWeight.bold,
+                             ),
+                           ),
+                         
+                          Text(
+                            '$qualification',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      Checkbox(
+                        fillColor: WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
+                            if (states.contains(WidgetState.selected)) {
+                              return const Color(0xff00C535);
+                            }
+                            return Colors.white;
+                          },
                         ),
+                        value: false,
+                        onChanged: (bool? value) {},
+                        activeColor: Colors.white,
+                        checkColor: Colors.black,
                       ),
-                      Text(
-                        subject,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Padre: $attendant',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      IconButton(
+                        onPressed: onTapChat,
+                        icon: const Icon(Icons.message),
+                        color: Colors.white,
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  Text(
-                    '$qualification',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ],
               ),
-            ),
-            const SizedBox(width: 10),
-            const Icon(
-              Icons.checklist_rounded,
-              color: Colors.white,
             ),
           ],
         ),
@@ -98,15 +122,14 @@ class CardStudent extends StatelessWidget {
   }
 
   Color getRandomColor() {
-  if (qualification >= 4.6) {
-    return const Color(0xFF749E60);
-  } else if (qualification >= 4.0 && qualification < 4.6) {
-    return const Color(0xFF7ECD57);
-  } else if (qualification > 3.0 && qualification < 4.0) {
-    return const Color(0xFFF44E1A);
-  } else {
-    return const Color(0xFFD63A3A);
+    if (qualification >= 4.6) {
+      return const Color(0xFF749E60);
+    } else if (qualification >= 4.0 && qualification < 4.6) {
+      return const Color(0xFF7ECD57);
+    } else if (qualification > 3.0 && qualification < 4.0) {
+      return const Color(0xFFF44E1A);
+    } else {
+      return const Color(0xFFD63A3A);
+    }
   }
-}
-
 }

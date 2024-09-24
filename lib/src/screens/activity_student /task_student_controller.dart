@@ -13,8 +13,13 @@ class TaskStudentController extends GetxController {
   TextEditingController commentController = TextEditingController();
 
   var isLoading = true.obs;
+
   var activities = <Map<String, dynamic>>[].obs;
+  var activitiesStudent = <Map<String, dynamic>>[].obs;
+
   var filteredActivities = <Map<String, dynamic>>[].obs;
+  var filteredActivitiesStudent = <Map<String, dynamic>>[].obs;
+
   var activitiesById = <Map<String, dynamic>>[].obs;
   var activityQuestionnaire = {}.obs;
   var typeActivitiesById = {}.obs;
@@ -29,6 +34,7 @@ class TaskStudentController extends GetxController {
   void onInit() {
     super.onInit();
     getNotifications();
+    getActivitiesStudent();
   }
 
   Future<void> getNotifications() async {
@@ -37,6 +43,17 @@ class TaskStudentController extends GetxController {
       activities.assignAll(_notificationsProvider.activities);
       filteredActivities.assignAll(activities);
 
+      isLoading(true);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getActivitiesStudent() async {
+    try {
+      await _activityProvider.getActivitiesStudent();
+      activitiesStudent.assignAll(_activityProvider.activitiesStudent);
+      filteredActivitiesStudent.assignAll(activities);
       isLoading(true);
     } finally {
       isLoading(false);
@@ -167,6 +184,28 @@ class TaskStudentController extends GetxController {
         } else {
           return false;
         }
+      }));
+    }
+  }
+
+  void filterActivitiesStudent(String query) {
+    if (query.isEmpty) {
+      filteredActivitiesStudent.assignAll(activitiesStudent);
+    } else {
+      filteredActivitiesStudent.assignAll(activitiesStudent.where((activity) {
+          final String affair = activity['actividad']['tituloActividad'].toString().toLowerCase();
+          final String nameTeacher =
+              activity['persona']['nombre1'].toString().toLowerCase();
+          final String lastNameTeacher = activity['persona']
+                  ['apellido1']
+              .toString()
+              .toLowerCase();
+          final String subject =
+             activity['actividad']['autor'].toString().toLowerCase();
+          return affair.contains(query.toLowerCase()) ||
+              nameTeacher.contains(query.toLowerCase()) ||
+              lastNameTeacher.contains(query.toLowerCase()) ||
+              subject.contains(query.toLowerCase());
       }));
     }
   }

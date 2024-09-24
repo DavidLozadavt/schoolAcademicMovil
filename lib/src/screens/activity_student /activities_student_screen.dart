@@ -14,13 +14,13 @@ import 'package:vtschool/src/screens/activity_student%20/task_student_controller
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 
-class TaskStudentScreen extends StatelessWidget {
+class ActivitiesStudentScreen extends StatelessWidget {
   final TaskStudentController _taskStudentController =
       Get.put(TaskStudentController());
   final TextEditingController _searchController = TextEditingController();
   final _flutterMediaDownloaderPlugin = MediaDownload();
 
-  TaskStudentScreen({super.key});
+  ActivitiesStudentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class TaskStudentScreen extends StatelessWidget {
                   },
                 ),
                 const Text(
-                  'Mis tareas',
+                  'Mis actividades',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class TaskStudentScreen extends StatelessWidget {
             child: TextField(
               controller: _searchController,
               onChanged: (value) {
-                _taskStudentController.filterActivities(value);
+                _taskStudentController.filterActivitiesStudent(value);
               },
               decoration: InputDecoration(
                 filled: true,
@@ -104,7 +104,7 @@ class TaskStudentScreen extends StatelessWidget {
                     ),
                   )
                 : Expanded(
-                    child: _taskStudentController.filteredActivities.isEmpty
+                    child: _taskStudentController.filteredActivitiesStudent.isEmpty
                         ? const Center(
                             child: Text(
                               'No tienes actividades',
@@ -117,31 +117,17 @@ class TaskStudentScreen extends StatelessWidget {
                           )
                         : ListView.builder(
                             itemCount: _taskStudentController
-                                .filteredActivities.length,
+                                .filteredActivitiesStudent.length,
                             itemBuilder: ((context, index) {
-                              Map<String, dynamic> decodedData = jsonDecode(
-                                  _taskStudentController
-                                          .filteredActivities[index]
-                                      ['metadataInfo']);
-                              if (decodedData['id'] != null &&
-                                      _taskStudentController
-                                                  .filteredActivities[index]
-                                              ['idTipoNotificacion'] ==
-                                          3 ||
-                                  _taskStudentController
-                                              .filteredActivities[index]
-                                          ['idTipoNotificacion'] ==
-                                      5) {
-                                Map<String, dynamic> decodedData = jsonDecode(
-                                    _taskStudentController
-                                            .filteredActivities[index]
-                                        ['metadataInfo']);
+                              
+                                 
+                            
+                                
                                 String idActividad =
-                                    decodedData['idActividad'].toString();
+                                    _taskStudentController.filteredActivitiesStudent[index]['idActividad'].toString();
                                 String initialDate =
-                                    decodedData['fechaInicial'];
-                                String finalDate = decodedData['fechaFinal'];
-                                String subject = decodedData['nombreMateria'];
+                                    _taskStudentController.filteredActivitiesStudent[index]['fechaInicial'];
+                                String finalDate = _taskStudentController.filteredActivitiesStudent[index]['fechaFinal'];
                                 return Center(
                                   child: GestureDetector(
                                     onTap: () async {
@@ -170,21 +156,21 @@ class TaskStudentScreen extends StatelessWidget {
                                     },
                                     child: CardTaskStudent(
                                       idActivity:
-                                          '${_taskStudentController.filteredActivities[index]['id']}',
+                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['id']}',
                                       affair:
-                                          '${_taskStudentController.filteredActivities[index]['asunto']}',
+                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['tituloActividad']}',
                                       urlPhotoSender:
-                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['rutaFoto']}',
+                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['rutaFoto']}',
                                       nameOfsender:
-                                          '${_taskStudentController.filteredActivities[index]['personaRemitente']['nombre1']} ${_taskStudentController.filteredActivities[index]['personaRemitente']['apellido1']}',
+                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['nombre1']} ${_taskStudentController.filteredActivitiesStudent[index]['persona']['apellido1']}',
                                       initialDate: initialDate,
                                       finalDate: finalDate,
-                                      subject: subject,
+                                      subject: '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
                                     ),
                                   ),
                                 );
-                              }
-                              return null;
+                              
+                             
                             }),
                           ),
                   ),

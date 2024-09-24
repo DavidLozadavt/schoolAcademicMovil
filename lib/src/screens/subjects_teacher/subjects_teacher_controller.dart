@@ -11,9 +11,10 @@ class SubjectsTeacherController extends GetxController {
     String idProgram,
     String startTime,
     String endTime,
-    int idSchedule) async {
+    int idSchedule,
+    int idDegree) async {
     try {
-      await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram, startTime, endTime, idSchedule);
+      await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram, startTime, endTime, idSchedule, idDegree);
       subject.assignAll(_subjectProvider.subject);
     } finally {
     }
@@ -34,5 +35,18 @@ class SubjectsTeacherController extends GetxController {
   }
 
  double get progress => timeElapsed.value / totalTime;
+
+ //checbox
+  var checkboxes = <bool>[].obs;
+
+ void loadSubjects() async {
+    if (subject.isNotEmpty && subject[0]['matriculas'] != null) {
+      checkboxes.assignAll(List.filled(subject[0]['matriculas'].length, true));
+    }
+  }
+
+  void toggleCheckbox(int index, bool value) {
+    checkboxes[index] = value;
+  }
 
 }
