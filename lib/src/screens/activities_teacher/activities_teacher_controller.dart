@@ -27,6 +27,11 @@ class ActivitiesTeacherController extends GetxController {
   final SubjectsTeacherController _subjectsTeacherController =
       Get.put(SubjectsTeacherController());
 
+  // var selectedCardColor = Colors.white.obs; // Color predeterminado
+
+  // void updateCardColor(Color color) {
+  //   selectedCardColor.value = color;
+  // }
   void getActivitiesById(String id) async {
     isLoading(true);
     try {
@@ -170,4 +175,15 @@ class ActivitiesTeacherController extends GetxController {
       isLoading(false);
     }
   }
+
+  //toogle
+  // void toggleActivityStatus(int activityId, bool isActive) {
+  //   var activity = activities1.firstWhere((a) => a.id == activityId);
+  //   activity.isActive = isActive;
+  //   activities1.refresh(); // Actualiza el estado de las actividades
+
+  //   // Lógica adicional para enviar el cambio al backend si es necesario
+  //   // Puedes hacer una llamada API para actualizar el estado en la base de datos
+  // }
+
 }

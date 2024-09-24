@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/providers/push_notification_controller.dart';
 import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class HomeTeacherScreen extends StatelessWidget {
@@ -108,9 +109,9 @@ final PushNotificationController _pushNotificationController =
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 50,
-              ),
+            
+              // Aquí se agrega el widget HistoriasWidget
+            //  HistoriasWidget(), 
               const Center(
                 child: Text(
                   '¡Tu semana al instante!',

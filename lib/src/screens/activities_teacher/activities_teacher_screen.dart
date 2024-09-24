@@ -113,7 +113,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 15),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 10,
@@ -183,7 +183,6 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                       icon: const Icon(Icons.delete_forever,
                                           color: Colors.redAccent),
                                       onPressed: () {
-                                        // Muestra el diálogo de confirmación
                                         _showDeleteConfirmationDialog(
                                             context, activity.id.toString());
                                       },
@@ -191,16 +190,14 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                                     IconButton(
                                       icon: const Icon(Icons.book_outlined,
                                           color: Colors.blueAccent),
-                                      onPressed: () {
-                                        // Acción para abrir actividad
-                                      },
+                                      onPressed: () {},
                                     ),
-                                    IconButton(
-                                      icon: const Icon(Icons.add,
-                                          color: Colors.greenAccent),
-                                      onPressed: () {
-                                        // Acción para agregar algo a la actividad
-                                      },
+                                    Switch(
+                                      value: false,
+                                      onChanged: (value) {},
+                                      activeColor: Colors.greenAccent,
+                                      inactiveThumbColor: Colors.redAccent,
+                                      inactiveTrackColor: Colors.white,
                                     ),
                                   ],
                                 ),
@@ -295,4 +292,6 @@ class ActivitiesTeacherScreen extends StatelessWidget {
       },
     );
   }
+
+  _showModalAssing(BuildContext context) async {}
 }

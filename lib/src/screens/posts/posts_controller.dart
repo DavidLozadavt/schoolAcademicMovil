@@ -4,40 +4,31 @@ import 'package:vtschool/src/providers/publication_provider.dart';
 
 class PublicacionesController extends GetxController {
   var publicaciones = <Publicacion>[].obs;
-  var isLoading = false.obs; 
-  var errorMessage = ''.obs; 
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
   final PublicationProvider _publicationProvider = PublicationProvider();
 
-    @override
+  @override
   void onInit() {
-    fetchPublicaciones(); 
+    fetchPublicaciones();
     super.onInit();
   }
 
   Future<void> fetchPublicaciones() async {
-  isLoading.value = true; 
-  errorMessage.value = ''; 
-  try {
-    publicaciones.value = await _publicationProvider.getPublications();
-  } catch (e) {
-    errorMessage.value = 'Error al obtener publicaciones: $e'; 
-    // Mostrar el error en un AlertDialog
-    Get.defaultDialog(
-      title: 'Error',
-      middleText: errorMessage.value,
-      onConfirm: () => Get.back(),
-      textConfirm: 'Aceptar',
-    );
-  } finally {
-    isLoading.value = false; 
-  }
-}
-
-
-    Future<void> _refreshPublicaciones() async {
-    await fetchPublicaciones(); 
+    isLoading.value = true;
+    errorMessage.value = '';
+    try {
+      publicaciones.value = await _publicationProvider.getPublications();
+    } catch (e) {
+      errorMessage.value = 'Error al cargar publicaciones';
+      Get.snackbar('Error', 'Algo salió mal en publicaciones');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-
-  
+  // Método expuesto para refrescar directamente
+  Future<void> refreshPublicaciones() async {
+    await fetchPublicaciones();
+  }
 }
