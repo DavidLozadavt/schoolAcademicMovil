@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/posts/create_post_screen.dart';
+import 'package:vtschool/src/screens/posts/page_idicator.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
-import 'package:photo_view/photo_view.dart';
 
 class PostsScreen extends StatelessWidget {
   final PublicacionesController publicacionesController =
@@ -42,9 +42,7 @@ class PostsScreen extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
-            SliverToBoxAdapter(
-                //  child: HistoriasWidget(),
-                ),
+            SliverToBoxAdapter(),
           ];
         },
         body: Obx(() {
@@ -130,50 +128,9 @@ class PostsScreen extends StatelessWidget {
                       ),
                       if (publicacion.urlImage.isNotEmpty ||
                           publicacion.imagenes!.isNotEmpty) ...[
-                        GestureDetector(
-                          onTap: () => _mostrarImagenFullScreen(
-                              context,
-                              publicacion
-                                  .urlImage), 
-                          child: Container(
-                             height: 450, 
-                            child: PageView(
-                              children: [
-                                
-                                if (publicacion.urlImage.isNotEmpty)
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(10)),
-                                    child: Image.network(
-                                      publicacion.urlImage,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const Text(
-                                            'Error al cargar la imagen');
-                                      },
-                                    ),
-                                  ),
-                                ...publicacion.imagenes!.map((imagen) {
-                                  return ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(10)),
-                                    child: Image.network(
-                                      imagen.urlImage,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const Text(
-                                            'Error al cargar la imagen');
-                                      },
-                                    ),
-                                  );
-                                }).toList(),
-                              ],
-                            ),
-                          ),
+                        // Crear un PageController para manejar la navegación del PageView
+                        PageViewWithIndicators(
+                          publicacion: publicacion,
                         ),
                       ],
                     ],
@@ -286,38 +243,6 @@ class PostsScreen extends StatelessWidget {
   }
 }
 
-class FullScreenImagePage extends StatelessWidget {
-  final String imageUrl;
 
-  const FullScreenImagePage({super.key, required this.imageUrl});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Center(
-        child: PhotoView(
-          imageProvider: NetworkImage(imageUrl),
-          backgroundDecoration: const BoxDecoration(color: Colors.black),
-        ),
-      ),
-    );
-  }
-}
 
-void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
-    ),
-  );
-}
