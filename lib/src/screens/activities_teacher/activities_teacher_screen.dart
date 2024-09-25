@@ -293,5 +293,4 @@ class ActivitiesTeacherScreen extends StatelessWidget {
     );
   }
 
-  _showModalAssing(BuildContext context) async {}
 }

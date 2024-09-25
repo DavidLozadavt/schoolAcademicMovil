@@ -5,46 +5,50 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Publicacion> publicacionFromJson(String str) => List<Publicacion>.from(json.decode(str).map((x) => Publicacion.fromJson(x)));
+List<Publicacion> publicacionFromJson(String str) => List<Publicacion>.from(
+    json.decode(str).map((x) => Publicacion.fromJson(x)));
 
-String publicacionToJson(List<Publicacion> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String publicacionToJson(List<Publicacion> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Publicacion {
-    final int id;
-    final String description;
-    final String urlImage;
-    final DateTime fechaPublicacion;
-    final int idUser;
-    final dynamic idEvento;
-    final int idCompany;
-    final dynamic idGrupoGeneral;
-    final String tipoPublicacion;
-    final dynamic idPropiedadPublicacion;
-    final dynamic deletedAt;
-    final DateTime createdAt;
-    final DateTime updatedAt;
-    final dynamic evento;
-    final User user;
+  final int id;
+  final String description;
+  final String urlImage;
+  final DateTime fechaPublicacion;
+  final int idUser;
+  final dynamic idEvento;
+  final int idCompany;
+  final dynamic idGrupoGeneral;
+  final String tipoPublicacion;
+  final dynamic idPropiedadPublicacion;
+  final dynamic deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final dynamic evento;
+  final User user;
+  final List<Imagene>? imagenes;
 
-    Publicacion({
-        required this.id,
-        required this.description,
-        required this.urlImage,
-        required this.fechaPublicacion,
-        required this.idUser,
-        required this.idEvento,
-        required this.idCompany,
-        required this.idGrupoGeneral,
-        required this.tipoPublicacion,
-        required this.idPropiedadPublicacion,
-        required this.deletedAt,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.evento,
-        required this.user,
-    });
+  Publicacion({
+    required this.id,
+    required this.description,
+    required this.urlImage,
+    required this.fechaPublicacion,
+    required this.idUser,
+    required this.idEvento,
+    required this.idCompany,
+    required this.idGrupoGeneral,
+    required this.tipoPublicacion,
+    required this.idPropiedadPublicacion,
+    required this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.evento,
+    required this.user,
+    this.imagenes,
+  });
 
-    factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(
+  factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(
         id: json["id"],
         description: json["description"],
         urlImage: json["urlImage"],
@@ -60,9 +64,13 @@ class Publicacion {
         updatedAt: DateTime.parse(json["updated_at"]),
         evento: json["evento"],
         user: User.fromJson(json["user"]),
-    );
+        imagenes: json["imagenes"] != null // Verificar si 'imagenes' no es nulo
+            ? List<Imagene>.from(
+                json["imagenes"].map((x) => Imagene.fromJson(x)))
+            : null, // Asignar nulo si 'imagenes' es nulo
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "description": description,
         "urlImage": urlImage,
@@ -78,29 +86,64 @@ class Publicacion {
         "updated_at": updatedAt.toIso8601String(),
         "evento": evento,
         "user": user.toJson(),
-    };
+        "imagenes": imagenes != null
+            ? List<dynamic>.from(imagenes!.map((x) => x.toJson()))
+            : null,
+      };
+}
+
+class Imagene {
+  final int id;
+  final int idPublicacion;
+  final String urlImage;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Imagene({
+    required this.id,
+    required this.idPublicacion,
+    required this.urlImage,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Imagene.fromJson(Map<String, dynamic> json) => Imagene(
+        id: json["id"],
+        idPublicacion: json["idPublicacion"],
+        urlImage: json["urlImage"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "idPublicacion": idPublicacion,
+        "urlImage": urlImage,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class User {
-    final int id;
-    final String email;
-    final int idPersona;
-    final dynamic deviceToken;
-    final dynamic emailVerifiedAt;
-    final String estadoMensajeria;
-    final Persona persona;
+  final int id;
+  final String email;
+  final int idPersona;
+  final dynamic deviceToken;
+  final dynamic emailVerifiedAt;
+  final String estadoMensajeria;
+  final Persona persona;
 
-    User({
-        required this.id,
-        required this.email,
-        required this.idPersona,
-        required this.deviceToken,
-        required this.emailVerifiedAt,
-        required this.estadoMensajeria,
-        required this.persona,
-    });
+  User({
+    required this.id,
+    required this.email,
+    required this.idPersona,
+    required this.deviceToken,
+    required this.emailVerifiedAt,
+    required this.estadoMensajeria,
+    required this.persona,
+  });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         email: json["email"],
         idPersona: json["idPersona"],
@@ -108,9 +151,9 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         estadoMensajeria: json["estadoMensajeria"],
         persona: Persona.fromJson(json["persona"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
         "idPersona": idPersona,
@@ -118,7 +161,7 @@ class User {
         "email_verified_at": emailVerifiedAt,
         "estadoMensajeria": estadoMensajeria,
         "persona": persona.toJson(),
-    };
+      };
 }
 
 class Persona {
@@ -175,7 +218,8 @@ class Persona {
         nombre2: json["nombre2"],
         apellido1: json["apellido1"],
         apellido2: json["apellido2"],
-        fechaNac: json["fechaNac"] != null ? DateTime.parse(json["fechaNac"]) : null,
+        fechaNac:
+            json["fechaNac"] != null ? DateTime.parse(json["fechaNac"]) : null,
         direccion: json["direccion"],
         email: json["email"],
         telefonoFijo: json["telefonoFijo"],
@@ -189,7 +233,9 @@ class Persona {
         idCiudadUbicacion: json["idCiudadUbicacion"],
         tipoPersona: json["tipoPersona"],
         createdAt: json["created_at"],
-        updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
+        updatedAt: json["updated_at"] != null
+            ? DateTime.parse(json["updated_at"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -199,7 +245,9 @@ class Persona {
         "nombre2": nombre2,
         "apellido1": apellido1,
         "apellido2": apellido2,
-        "fechaNac": fechaNac != null ? "${fechaNac?.year.toString().padLeft(4, '0')}-${fechaNac?.month.toString().padLeft(2, '0')}-${fechaNac?.day.toString().padLeft(2, '0')}" : null,
+        "fechaNac": fechaNac != null
+            ? "${fechaNac?.year.toString().padLeft(4, '0')}-${fechaNac?.month.toString().padLeft(2, '0')}-${fechaNac?.day.toString().padLeft(2, '0')}"
+            : null,
         "direccion": direccion,
         "email": email,
         "telefonoFijo": telefonoFijo,

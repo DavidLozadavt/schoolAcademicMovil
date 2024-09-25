@@ -46,7 +46,7 @@ const deleteActivitiesUrl = '${baseURL}deleteActividad/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 const rateActivityUrl = '${baseURL}respuesta-profesor/';
-const getPublicationsUrl = '${baseURL}publications';
+const publicationsUrl = '${baseURL}publications';
 const putAttendanceUrl = '${baseURL}materias/update_assistance';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';

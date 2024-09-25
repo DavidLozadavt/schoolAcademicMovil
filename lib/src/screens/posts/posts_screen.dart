@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/screens/posts/histories_screen.dart';
+import 'package:vtschool/src/screens/posts/create_post_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
 import 'package:photo_view/photo_view.dart';
@@ -14,23 +16,23 @@ class PostsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color.fromARGB(30, 255, 197, 2),
       appBar: AppBar(
         title: const Text(
-          'EduBook',
+          'SchoolBook',
           style: TextStyle(
-            color: Colors.blueAccent,
+            color: Color(0xFFFF6605),
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFFFDC4A),
         elevation: 1,
         foregroundColor: Colors.black,
         actions: [
           IconButton(
             icon:
-                const Icon(Icons.add_circle_outline, color: Colors.blueAccent),
+                const Icon(Icons.add_circle_outline, color: Color(0xFFFF6605)),
             onPressed: () {
               _mostrarFormularioPublicacion(context);
             },
@@ -41,8 +43,8 @@ class PostsScreen extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
-              //  child: HistoriasWidget(), 
-            ),
+                //  child: HistoriasWidget(),
+                ),
           ];
         },
         body: Obx(() {
@@ -61,7 +63,7 @@ class PostsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var publicacion = publicacionesController.publicaciones[index];
                 return Card(
-                  color: Colors.white,
+                  color: Color(0xFFFFDC4A),
                   elevation: 0.2,
                   margin:
                       const EdgeInsets.symmetric(vertical: 9, horizontal: 3),
@@ -79,7 +81,6 @@ class PostsScreen extends StatelessWidget {
                               onTap: () {
                                 _mostrarPerfilInformativo(
                                   context,
-                                  
                                   publicacion.user.persona.nombre1.toString(),
                                   publicacion.user.persona.apellido1.toString(),
                                   publicacion.user.persona.rutaFoto.toString(),
@@ -113,6 +114,12 @@ class PostsScreen extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            const Spacer(),
+                            Image.asset(
+                              'assets/images/SCOOL.png',
+                              height: 50,
+                              width: 50,
                             ),
                           ],
                         ),
@@ -150,58 +157,60 @@ class PostsScreen extends StatelessWidget {
     );
   }
 
+  void _mostrarFormularioPublicacion(BuildContext context) {
+    Get.to(() => CrearPublicacionScreen()); // Navegar a la nueva vista
+  }
 
- void _mostrarPerfilInformativo(BuildContext context, String nombre, String apellido, String rutaFoto) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Center(
-        child: Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Container( 
-            width: MediaQuery.of(context).size.width * 0.8, 
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center, 
-              children: [
-                ClipOval(
-                  child: Image.network(
-                    rutaFoto,
-                    width: 120,
-                    height: 120,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Text('Error al cargar la imagen');
-                    },
+  void _mostrarPerfilInformativo(
+      BuildContext context, String nombre, String apellido, String rutaFoto) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipOval(
+                    child: Image.network(
+                      rutaFoto,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Text('Error al cargar la imagen');
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  '${nombre} ${apellido}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: Colors.black87,
+                  const SizedBox(height: 16),
+                  Text(
+                    '${nombre} ${apellido}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'DOCENTE',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                const SizedBox(height: 16),
-              ],
+                  const SizedBox(height: 8),
+                  const Text(
+                    'DOCENTE',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    },
-  );
-}
-
-
-
+        );
+      },
+    );
+  }
 
   Widget _buildDescription(String description) {
     const int maxLength = 80;
@@ -280,82 +289,5 @@ void _mostrarImagenFullScreen(BuildContext context, String imageUrl) {
     MaterialPageRoute(
       builder: (context) => FullScreenImagePage(imageUrl: imageUrl),
     ),
-  );
-}
-
-void _mostrarFormularioPublicacion(BuildContext context) {
-  final autorController = TextEditingController();
-  final contenidoController = TextEditingController();
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        title: const Text(
-          'Nueva Publicación',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: autorController,
-              decoration: InputDecoration(
-                labelText: 'Autor',
-                labelStyle: TextStyle(color: Colors.grey[700]),
-                filled: true,
-                fillColor: Colors.grey[100],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: contenidoController,
-              decoration: InputDecoration(
-                labelText: 'Contenido',
-                labelStyle: TextStyle(color: Colors.grey[700]),
-                filled: true,
-                fillColor: Colors.grey[100],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              maxLines: 4,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child:
-                const Text('Cancelar', style: TextStyle(color: Colors.black87)),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            onPressed: () {
-              // Lógica para publicar la nueva publicación
-              Navigator.of(context).pop();
-            },
-            child:
-                const Text('Publicar', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      );
-    },
   );
 }
