@@ -106,12 +106,13 @@ class Chat extends StatelessWidget {
                           DateTime.parse(messages[index]['created_at']);
                       String formattedDate =
                           DateFormat('dd MMMM yyyy', 'es').format(dateTime);
-                      print('1${messages[index]['active_company_user']['idUser']}');
-                      print('2${selectedUser['matricula']['persona']['id']}');
-                      print('3${messages[index]}');
-                      bool isOwnMessage = messages[index]['active_company_user']['idUser'] !=
+                      ('1${messages[index]['active_company_user']['idUser']}');
+                      ('2${selectedUser['matricula']['persona']['id']}');
+                      ('3${messages[index]}');
+                      bool isOwnMessage = messages[index]['active_company_user']
+                              ['idUser'] !=
                           selectedUser['matricula']['persona']['id'];
-                      print('$isOwnMessage');
+                      ('$isOwnMessage');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -121,7 +122,8 @@ class Chat extends StatelessWidget {
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
-                            if (messages[index]['active_company_user']['idUser'] ==
+                            if (messages[index]['active_company_user']
+                                    ['idUser'] ==
                                 selectedUser['matricula']['persona']['id'])
                               CircleAvatar(
                                   backgroundImage: NetworkImage(
@@ -383,9 +385,9 @@ class Chat extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            if (messages[index]['active_company_user']['idUser'] !=
-                                selectedUser['matricula']['persona']['id']
-                                    )
+                            if (messages[index]['active_company_user']
+                                    ['idUser'] !=
+                                selectedUser['matricula']['persona']['id'])
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),
@@ -592,8 +594,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  print('No se selecciono nunguna imagen');
-                                  //print('No se seleccionó ninguna imagen');
+                                  ('No se selecciono nunguna imagen');
+                                  //('No se seleccionó ninguna imagen');
                                 }
                               },
                               icon: const Icon(Icons.camera_alt_outlined)),
@@ -608,8 +610,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  //print('No se seleccionó ninguna imagen');
-                                  print('No se seleccionó ninguna imagen');
+                                  //('No se seleccionó ninguna imagen');
+                                  ('No se seleccionó ninguna imagen');
                                 }
                               },
                               icon: const Icon(Icons.photo_library_outlined)),
@@ -623,7 +625,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  print('No se seleccionó ningun archivo');
+                                  ('No se seleccionó ningun archivo');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

@@ -15,6 +15,7 @@ class PublicacionesController extends GetxController {
     fetchPublicaciones();
     super.onInit();
   }
+  
 
   Future<void> fetchPublicaciones() async {
     isLoading.value = true;

@@ -46,8 +46,8 @@ class LoginController extends GetxController {
       }
       final UserData responseApiLogin = await authProvider.login(
           emailController.text, passwordController.text, tokenDevice);
-      print(responseApiLogin);
-      print(responseApiLogin.payload.roles[0]);
+      (responseApiLogin);
+      (responseApiLogin.payload.roles[0]);
       if (responseApiLogin.payload.roles[0] == 'ADMIN') {
         Get.snackbar(
           '¡Hola!',
@@ -66,19 +66,19 @@ class LoginController extends GetxController {
           goToHomePageStudent();
           Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
         });
-    
       } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
         await pref.setString('token', responseApiLogin.accessToken);
         await pref.setString('email', emailController.text);
         await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
         await pref.setString('idUser', responseApiLogin.user.id.toString());
         await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        await pref.setString('idContrato', responseApiLogin.user.persona.contrato!.id.toString());
+        await pref.setString('idContrato',
+            responseApiLogin.user.persona.contrato!.id.toString());
         // Get.snackbar(
         //   '¡Hola!',
         //   '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',
         // );
-       Future.delayed(const Duration(seconds: 1), () {
+        Future.delayed(const Duration(seconds: 1), () {
           goToHomePageTeacher();
           Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
         });

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,7 +60,7 @@ class PostsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var publicacion = publicacionesController.publicaciones[index];
                 return Card(
-                  color: Color(0xFFFFDC4A),
+                  color: const Color(0xFFF5F5F5),
                   elevation: 0.2,
                   margin:
                       const EdgeInsets.symmetric(vertical: 9, horizontal: 3),

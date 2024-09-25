@@ -104,75 +104,76 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     ),
                   )
                 : Expanded(
-                    child: _taskStudentController.filteredActivitiesStudent.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'No tienes actividades',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black45,
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: _taskStudentController
-                                .filteredActivitiesStudent.length,
-                            itemBuilder: ((context, index) {
-                              
-                                 
-                            
-                                
-                                String idActividad =
-                                    _taskStudentController.filteredActivitiesStudent[index]['idActividad'].toString();
-                                String initialDate =
-                                    _taskStudentController.filteredActivitiesStudent[index]['fechaInicial'];
-                                String finalDate = _taskStudentController.filteredActivitiesStudent[index]['fechaFinal'];
-                                return Center(
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      await _taskStudentController
-                                          .getTypeActivity(idActividad);
-
-                                      if (_taskStudentController
-                                                  .typeActivitiesById[
-                                              'tipoActividad'] ==
-                                          'GESTION') {
-                                        await _taskStudentController
-                                            .getActivityById(idActividad);
-                                        showNormalActivity(
-                                            context,
-                                            _taskStudentController
-                                                .activitiesById);
-                                      } else {
-                                        await _taskStudentController
-                                            .getActivityQuestionnaire(
-                                                idActividad);
-                                        showQuestionnaireActivity(
-                                            context,
-                                            _taskStudentController
-                                                .activityQuestionnaire);
-                                      }
-                                    },
-                                    child: CardTaskStudent(
-                                      idActivity:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['id']}',
-                                      affair:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['tituloActividad']}',
-                                      urlPhotoSender:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['rutaFoto']}',
-                                      nameOfsender:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['nombre1']} ${_taskStudentController.filteredActivitiesStudent[index]['persona']['apellido1']}',
-                                      initialDate: initialDate,
-                                      finalDate: finalDate,
-                                      subject: '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
-                                    ),
+                    child:
+                        _taskStudentController.filteredActivitiesStudent.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'No tienes actividades',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45,
                                   ),
-                                );
-                              
-                             
-                            }),
-                          ),
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: _taskStudentController
+                                    .filteredActivitiesStudent.length,
+                                itemBuilder: ((context, index) {
+                                  String idActividad = _taskStudentController
+                                      .filteredActivitiesStudent[index]
+                                          ['idActividad']
+                                      .toString();
+                                  String initialDate = _taskStudentController
+                                          .filteredActivitiesStudent[index]
+                                      ['fechaInicial'];
+                                  String finalDate = _taskStudentController
+                                          .filteredActivitiesStudent[index]
+                                      ['fechaFinal'];
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await _taskStudentController
+                                            .getTypeActivity(idActividad);
+
+                                        if (_taskStudentController
+                                                    .typeActivitiesById[
+                                                'tipoActividad'] ==
+                                            'GESTION') {
+                                          await _taskStudentController
+                                              .getActivityById(idActividad);
+                                          showNormalActivity(
+                                              context,
+                                              _taskStudentController
+                                                  .activitiesById);
+                                        } else {
+                                          await _taskStudentController
+                                              .getActivityQuestionnaire(
+                                                  idActividad);
+                                          showQuestionnaireActivity(
+                                              context,
+                                              _taskStudentController
+                                                  .activityQuestionnaire);
+                                        }
+                                      },
+                                      child: CardTaskStudent(
+                                        idActivity:
+                                            '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['id']}',
+                                        affair:
+                                            '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['tituloActividad']}',
+                                        urlPhotoSender:
+                                            '${_taskStudentController.filteredActivitiesStudent[index]['persona']['rutaFoto']}',
+                                        nameOfsender:
+                                            '${_taskStudentController.filteredActivitiesStudent[index]['persona']['nombre1']} ${_taskStudentController.filteredActivitiesStudent[index]['persona']['apellido1']}',
+                                        initialDate: initialDate,
+                                        finalDate: finalDate,
+                                        subject:
+                                            '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ),
                   ),
           ),
         ],
@@ -524,10 +525,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                               .toString(),
                                           3,
                                         );
-                                        // print(_taskStudentController
+                                        // (_taskStudentController
                                         //     .selectedAnswer);
-                                        print(
-                                            '${_taskStudentController.selectedAnswer}');
+                                        ('${_taskStudentController.selectedAnswer}');
                                       },
                                     ),
                                   ),
@@ -596,9 +596,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                           var selectedResponseDescription =
                                               options[index]
                                                   ['descripcionRespuesta'];
-                                          // print(selectedResponseId);
-                                          // print(selectedQuestionId);
-                                          // print(selectedResponseDescription);
+                                          // (selectedResponseId);
+                                          // (selectedQuestionId);
+                                          // (selectedResponseDescription);
 
                                           _taskStudentController.saveAnswers(
                                               selectedQuestionId,

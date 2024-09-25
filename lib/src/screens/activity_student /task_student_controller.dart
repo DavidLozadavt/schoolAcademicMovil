@@ -64,7 +64,7 @@ class TaskStudentController extends GetxController {
     try {
       await _activityProvider.getActivityById(id);
       activitiesById.assignAll(_activityProvider.activitiesById);
-      print(activitiesById);
+      (activitiesById);
     } finally {}
   }
 
@@ -87,7 +87,7 @@ class TaskStudentController extends GetxController {
     try {
       await _activityProvider.replyActivity(id, comment, file);
     } catch (e) {
-      print('Error al enviar la evidencia: $e');
+      ('Error al enviar la evidencia: $e');
     }
   }*/
 
@@ -131,15 +131,15 @@ class TaskStudentController extends GetxController {
           idQualification, selectedAnswer);
 
       answerRating.value = response;
-      //print('4444444444444 $answerRating');
+      //('4444444444444 $answerRating');
       await Get.bottomSheet(
         alert!,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      //print('Error al enviar la evidencia: $e');
-      print('Error al enviar la evidencia: $e');
+      //('Error al enviar la evidencia: $e');
+      ('Error al enviar la evidencia: $e');
     }
   }
 
@@ -154,7 +154,7 @@ class TaskStudentController extends GetxController {
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      //print('Error al enviar la evidencia: $e');
+      //('Error al enviar la evidencia: $e');
     }
   }
 
@@ -193,19 +193,18 @@ class TaskStudentController extends GetxController {
       filteredActivitiesStudent.assignAll(activitiesStudent);
     } else {
       filteredActivitiesStudent.assignAll(activitiesStudent.where((activity) {
-          final String affair = activity['actividad']['tituloActividad'].toString().toLowerCase();
-          final String nameTeacher =
-              activity['persona']['nombre1'].toString().toLowerCase();
-          final String lastNameTeacher = activity['persona']
-                  ['apellido1']
-              .toString()
-              .toLowerCase();
-          final String subject =
-             activity['actividad']['autor'].toString().toLowerCase();
-          return affair.contains(query.toLowerCase()) ||
-              nameTeacher.contains(query.toLowerCase()) ||
-              lastNameTeacher.contains(query.toLowerCase()) ||
-              subject.contains(query.toLowerCase());
+        final String affair =
+            activity['actividad']['tituloActividad'].toString().toLowerCase();
+        final String nameTeacher =
+            activity['persona']['nombre1'].toString().toLowerCase();
+        final String lastNameTeacher =
+            activity['persona']['apellido1'].toString().toLowerCase();
+        final String subject =
+            activity['actividad']['autor'].toString().toLowerCase();
+        return affair.contains(query.toLowerCase()) ||
+            nameTeacher.contains(query.toLowerCase()) ||
+            lastNameTeacher.contains(query.toLowerCase()) ||
+            subject.contains(query.toLowerCase());
       }));
     }
   }

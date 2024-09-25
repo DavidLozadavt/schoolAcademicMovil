@@ -11,14 +11,13 @@ class SubjectProvider extends GetConnect {
   var subject = <Map<String, dynamic>>[].obs;
 
   Future<void> getSubject(
-    String idWorkingDay,
-    String idSubject,
-    String idProgram,
-    String startTime,
-    String endTime,
-    int idSchedule,
-    int idDegree
-  ) async {
+      String idWorkingDay,
+      String idSubject,
+      String idProgram,
+      String startTime,
+      String endTime,
+      int idSchedule,
+      int idDegree) async {
     String token = await authProvider.getToken();
     dynamic data = {
       "idJornada": idWorkingDay,
@@ -31,7 +30,7 @@ class SubjectProvider extends GetConnect {
     };
 
     String jsonData = jsonEncode(data);
-    print('a12346 $jsonData');
+    ('a12346 $jsonData');
     Response response = await get(
       '$getStudentByIdMateriaUrl$jsonData',
       headers: {
@@ -39,9 +38,9 @@ class SubjectProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-   print('20000000000000000 ${response.body}');
+    ('20000000000000000 ${response.body}');
     if (response.statusCode == 200) {
-     if (response.body is List) {
+      if (response.body is List) {
         // Si la respuesta es una lista
         subject.assignAll((response.body as List).cast<Map<String, dynamic>>());
       } else if (response.body is Map) {
