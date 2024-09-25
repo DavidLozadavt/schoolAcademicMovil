@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,18 +21,27 @@ class PublicacionesController extends GetxController {
     super.onInit();
   }
 
-  Future<void> fetchPublicaciones() async {
-    isLoading.value = true;
-    errorMessage.value = '';
-    try {
-      publicaciones.value = await _publicationProvider.getPublications();
-    } catch (e) {
-      errorMessage.value = 'Error al cargar publicaciones';
-      Get.snackbar('Error', 'Algo salió mal en publicaciones');
-    } finally {
-      isLoading.value = false;
-    }
+ Future<void> fetchPublicaciones() async {
+  isLoading.value = true;
+  errorMessage.value = '';
+  try {
+    publicaciones.value = await _publicationProvider.getPublications();
+  } on DioError catch (dioError) {
+    // Si estás usando Dio para hacer peticiones HTTP, captura errores de red específicamente
+    errorMessage.value = 'Error de conexión: ${dioError.message}';
+    Get.snackbar('Error de red', 'No se pudo conectar al servidor');
+  } catch (e, stackTrace) {
+    // Captura el error general y el stack trace para más información
+    errorMessage.value = 'Error al cargar publicaciones: $e';
+    // Mostrar el snackbar con el mensaje de error
+    Get.snackbar('Error', 'Algo salió mal: $e');
+    // Puedes loguear el error y stack trace para futuras referencias
+    print('Error: $e');
+    print('Stack trace: $stackTrace');
+  } finally {
+    isLoading.value = false;
   }
+}
 
 //metod for cretation of post
   Future<void> createPublicacion(

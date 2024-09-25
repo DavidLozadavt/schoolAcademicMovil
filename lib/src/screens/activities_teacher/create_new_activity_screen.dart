@@ -18,7 +18,7 @@ class CreateNewActivityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Banco De Actividad'),
+        title: const Text('Banco De Actividades'),
         backgroundColor:  const Color(0xFFF5F5F5),
         elevation: 0,
       ),

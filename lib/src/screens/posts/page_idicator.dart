@@ -45,12 +45,12 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
               controller: _pageController,
               onPageChanged: _onPageChanged,
               children: [
-                if (widget.publicacion.urlImage.isNotEmpty)
+                if (widget.publicacion.urlImage!.isNotEmpty)
                   ClipRRect(
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.network(
-                      widget.publicacion.urlImage,
+                      widget.publicacion.urlImage.toString(),
                       width: double.infinity,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
@@ -63,7 +63,7 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.network(
-                      imagen.urlImage,
+                      imagen.urlImage.toString(),
                       width: double.infinity,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
@@ -85,11 +85,11 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
   void _mostrarImagenFullScreen(BuildContext context, int index) {
     String imageUrl;
 
-    if (index == 0 && widget.publicacion.urlImage.isNotEmpty) {
-      imageUrl = widget.publicacion.urlImage; // URL de la primera imagen
+    if (index == 0 && widget.publicacion.urlImage!.isNotEmpty) {
+      imageUrl = widget.publicacion.urlImage!; // URL de la primera imagen
     } else {
       imageUrl = widget.publicacion.imagenes![index - 1]
-          .urlImage; // URL de la imagen correspondiente
+          .urlImage!; // URL de la imagen correspondiente
     }
 
     Navigator.push(
@@ -104,7 +104,7 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        widget.publicacion.urlImage.isNotEmpty
+        widget.publicacion.urlImage!.isNotEmpty
             ? 1 + widget.publicacion.imagenes!.length
             : widget.publicacion.imagenes!.length,
         (index) {

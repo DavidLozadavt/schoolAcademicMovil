@@ -78,14 +78,14 @@ class PostsScreen extends StatelessWidget {
                               onTap: () {
                                 _mostrarPerfilInformativo(
                                   context,
-                                  publicacion.user.persona.nombre1.toString(),
-                                  publicacion.user.persona.apellido1.toString(),
-                                  publicacion.user.persona.rutaFoto.toString(),
+                                  publicacion.user!.persona!.nombre1.toString(),
+                                  publicacion.user!.persona!.apellido1.toString(),
+                                  publicacion.user!.persona!.rutaFoto.toString(),
                                 );
                               },
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(publicacion
-                                    .user.persona.rutaFoto
+                                    .user!.persona!.rutaFoto
                                     .toString()),
                                 radius: 25,
                               ),
@@ -95,7 +95,7 @@ class PostsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  publicacion.user.persona.nombre1.toString(),
+                                  publicacion.user!.persona!.nombre1.toString(),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18,
@@ -104,7 +104,7 @@ class PostsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  '${publicacion.fechaPublicacion.day}/${publicacion.fechaPublicacion.month}/${publicacion.fechaPublicacion.year}',
+                                  '${publicacion.fechaPublicacion!.day}/${publicacion.fechaPublicacion!.month}/${publicacion.fechaPublicacion!.year}',
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: Color.fromARGB(255, 10, 10, 10),
@@ -123,9 +123,9 @@ class PostsScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(11.0),
-                        child: _buildDescription(publicacion.description),
+                        child: _buildDescription(publicacion.description.toString()),
                       ),
-                      if (publicacion.urlImage.isNotEmpty ||
+                      if (publicacion.urlImage!.isNotEmpty ||
                           publicacion.imagenes!.isNotEmpty) ...[
                         // Crear un PageController para manejar la navegación del PageView
                         PageViewWithIndicators(

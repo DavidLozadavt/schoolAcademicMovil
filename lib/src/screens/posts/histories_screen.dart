@@ -28,7 +28,7 @@ class HistoriasWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             var publicacion = publicacionesController.publicaciones[index];
             return GestureDetector(
-              onTap: () => _mostrarImagenFullScreen(context, publicacion.urlImage),
+              onTap: () => _mostrarImagenFullScreen(context, publicacion.urlImage.toString()),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
@@ -53,13 +53,13 @@ class HistoriasWidget extends StatelessWidget {
                       ),
                       child: CircleAvatar(
                         radius: 35,
-                        backgroundImage: NetworkImage(publicacion.user.persona.rutaFoto.toString()),
+                        backgroundImage: NetworkImage(publicacion.user!.persona!.rutaFoto.toString()),
                         backgroundColor: Colors.grey[300],
                       ),
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      publicacion.user.persona.nombre1.toString(),
+                      publicacion.user!.persona!.nombre1.toString(),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
