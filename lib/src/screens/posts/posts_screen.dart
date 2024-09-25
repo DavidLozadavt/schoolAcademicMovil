@@ -128,20 +128,50 @@ class PostsScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(11.0),
                         child: _buildDescription(publicacion.description),
                       ),
-                      if (publicacion.urlImage.isNotEmpty) ...[
+                      if (publicacion.urlImage.isNotEmpty ||
+                          publicacion.imagenes!.isNotEmpty) ...[
                         GestureDetector(
                           onTap: () => _mostrarImagenFullScreen(
-                              context, publicacion.urlImage),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(10)),
-                            child: Image.network(
-                              publicacion.urlImage,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Text('Error al cargar la imagen');
-                              },
+                              context,
+                              publicacion
+                                  .urlImage), 
+                          child: Container(
+                             height: 450, 
+                            child: PageView(
+                              children: [
+                                
+                                if (publicacion.urlImage.isNotEmpty)
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(10)),
+                                    child: Image.network(
+                                      publicacion.urlImage,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Text(
+                                            'Error al cargar la imagen');
+                                      },
+                                    ),
+                                  ),
+                                ...publicacion.imagenes!.map((imagen) {
+                                  return ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(10)),
+                                    child: Image.network(
+                                      imagen.urlImage,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Text(
+                                            'Error al cargar la imagen');
+                                      },
+                                    ),
+                                  );
+                                }).toList(),
+                              ],
                             ),
                           ),
                         ),
