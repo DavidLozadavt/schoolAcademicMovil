@@ -117,7 +117,7 @@ class ActivitiesTeacherScreen extends StatelessWidget {
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 10,
-                                offset: const Offset(0, 5),
+                                offset: Offset(0, 5),
                               ),
                             ],
                             borderRadius: BorderRadius.circular(15),

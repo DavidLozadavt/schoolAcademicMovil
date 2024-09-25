@@ -24,7 +24,7 @@ class ConnectivityController extends GetxController {
         onPressed: () {
           Get.back();
         },
-        child: Text('Aceptar'),
+        child: const Text('Aceptar'),
       ),
     );
   }

@@ -2,7 +2,6 @@
 //
 //     final publicacion = publicacionFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<Publicacion> publicacionFromJson(String str) => List<Publicacion>.from(

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:vtschool/src/models/api_response_publications.dart';
 import 'package:vtschool/src/screens/posts/full_screen_widget.dart';
-import 'package:vtschool/src/screens/posts/posts_screen.dart';
 
 class PageViewWithIndicators extends StatefulWidget {
   final Publicacion publicacion;
 
-  const PageViewWithIndicators({Key? key, required this.publicacion})
-      : super(key: key);
+  const PageViewWithIndicators({super.key, required this.publicacion});
 
   @override
   _PageViewWithIndicatorsState createState() => _PageViewWithIndicatorsState();
@@ -41,7 +39,7 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
       children: [
         GestureDetector(
           onTap: () => _mostrarImagenFullScreen(context, _currentIndex),
-          child: Container(
+          child: SizedBox(
             height: 450,
             child: PageView(
               controller: _pageController,
@@ -73,7 +71,7 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
                       },
                     ),
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),
@@ -116,7 +114,7 @@ class _PageViewWithIndicatorsState extends State<PageViewWithIndicators> {
             height: 8.0,
             width: 8.0,
             decoration: BoxDecoration(
-              color: _currentIndex == index ? Color(0xFFFF6605) : Colors.grey,
+              color: _currentIndex == index ? const Color(0xFFFF6605) : Colors.grey,
               borderRadius: BorderRadius.circular(4.0),
             ),
           );

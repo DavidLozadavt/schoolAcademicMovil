@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:vtschool/src/models/api_response_publications.dart';
 import 'package:vtschool/src/providers/publication_provider.dart';
+import 'package:image/image.dart' as img;
+
 
 class PublicacionesController extends GetxController {
   var publicaciones = <Publicacion>[].obs;
@@ -37,7 +42,7 @@ class PublicacionesController extends GetxController {
     errorMessage.value = '';
     try {
       await _publicationProvider.createPublication(singleFile, multipleFiles, description);
-      await fetchPublicaciones(); 
+       await fetchPublicaciones(); 
       Get.snackbar('Éxito', 'Publicación creada exitosamente');
     } catch (e) {
       errorMessage.value = 'Error al crear la publicación';
@@ -52,4 +57,69 @@ class PublicacionesController extends GetxController {
   Future<void> refreshPublicaciones() async {
     await fetchPublicaciones();
   }
+
+
+
+
+Future<File?> seleccionarImagen(BuildContext context) async {
+  var status = await Permission.photos.status;
+  if (!status.isGranted) {
+    await Permission.photos.request();
+  }
+
+  final ImagePicker picker = ImagePicker();
+  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  
+  if (image == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Error al seleccionar imagen')),
+    );
+    return null;
+  }
+  File resizedImage = await _redimensionarImagen(image);
+  return resizedImage;
+}
+
+
+Future<List<File>?> seleccionarVariasImagenes(BuildContext context) async {
+    var status = await Permission.photos.status;
+    if (!status.isGranted) {
+      await Permission.photos.request();
+    }
+
+    if (!status.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Permiso de almacenamiento denegado')),
+      );
+      return null;
+    }
+
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> images = await picker.pickMultiImage();
+    List<File> resizedImages = [];
+    for (var image in images) {
+      File resizedImage = await _redimensionarImagen(image);
+      resizedImages.add(resizedImage);
+    }
+    return resizedImages;
+
+    return null;
+  }
+
+ Future<File> _redimensionarImagen(XFile image) async {
+    final imgFile = File(image.path);
+    final imageBytes = await imgFile.readAsBytes();
+    img.Image? originalImage = img.decodeImage(imageBytes);
+    img.Image resizedImage =
+        img.copyResize(originalImage!, width: 800, height: 800);
+    final resizedImageFile = File('${image.path}_resized.jpg');
+    await resizedImageFile
+        .writeAsBytes(img.encodeJpg(resizedImage, quality: 90));
+    return resizedImageFile;
+  }
+
+
+
+
+  
 }

@@ -15,7 +15,7 @@ class PostsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(30, 255, 197, 2),
+      backgroundColor: const Color.fromARGB(30, 255, 197, 2),
       appBar: AppBar(
         title: const Text(
           'SchoolBook',
@@ -41,7 +41,7 @@ class PostsScreen extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
-            SliverToBoxAdapter(),
+            const SliverToBoxAdapter(),
           ];
         },
         body: Obx(() {
@@ -144,7 +144,7 @@ class PostsScreen extends StatelessWidget {
   }
 
   void _mostrarFormularioPublicacion(BuildContext context) {
-    Get.to(() => CrearPublicacionScreen()); // Navegar a la nueva vista
+    Get.to(() => const CrearPublicacionScreen()); // Navegar a la nueva vista
   }
 
   void _mostrarPerfilInformativo(
@@ -176,7 +176,7 @@ class PostsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '${nombre} ${apellido}',
+                    '$nombre $apellido',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
@@ -216,7 +216,7 @@ class PostsScreen extends StatelessWidget {
               Text(
                 isExpanded
                     ? description
-                    : description.substring(0, maxLength) + '...',
+                    : '${description.substring(0, maxLength)}...',
                 style: TextStyle(fontSize: 15, color: Colors.grey[800]),
               ),
               GestureDetector(

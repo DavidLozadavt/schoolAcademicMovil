@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/posts/full_screen_widget.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
-import 'package:vtschool/src/screens/posts/posts_screen.dart';
 
 class HistoriasWidget extends StatelessWidget {
   final PublicacionesController publicacionesController = Get.find();
+
+  HistoriasWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

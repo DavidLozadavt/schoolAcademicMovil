@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
-import 'package:vtschool/src/widgets/card_student.dart';
 import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
 
 class SubjectTeacherScreen extends StatelessWidget {

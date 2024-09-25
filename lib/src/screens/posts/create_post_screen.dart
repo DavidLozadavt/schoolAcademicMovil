@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:vtschool/src/screens/posts/posts_controller.dart';
 
 class CrearPublicacionScreen extends StatefulWidget {
+  const CrearPublicacionScreen({super.key});
+
   @override
   _CrearPublicacionScreenState createState() => _CrearPublicacionScreenState();
 }
@@ -16,7 +16,7 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
   final descriptionController = TextEditingController();
   File? coverImage;
   List<File> secondaryImages = [];
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   void _mostrarDialogoCargando(String mensaje) {
     showDialog(
@@ -27,7 +27,7 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
           content: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(),
+              const CircularProgressIndicator(),
               const SizedBox(width: 20),
               Text(mensaje),
             ],
@@ -46,17 +46,15 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
         descriptionController.text,
       );
 
-      // Cambiar el mensaje a "Publicación creada"
-      Navigator.of(context).pop(); // Cerrar el diálogo de carga
+      Navigator.of(context).pop();
       _mostrarDialogoCargando('Publicación creada');
 
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pop(); // Cerrar el diálogo y regresar
-        Navigator.of(context).pop(); // Regresar a la pantalla anterior
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       });
     } catch (e) {
-      Navigator.of(context)
-          .pop(); // Cerrar el diálogo de carga en caso de error
+      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error al crear la publicación')),
       );
@@ -91,12 +89,13 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
                 maxLines: 4,
               ),
               const SizedBox(height: 10),
-              Text('Imagen de Portada',
+              const Text('Imagen de Portada',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               GestureDetector(
                 onTap: () async {
-                  File? image = await seleccionarImagen(context);
+                  File? image =
+                      await publicacionesController.seleccionarImagen(context);
                   if (image != null) {
                     setState(() {
                       coverImage = image;
@@ -122,7 +121,7 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text('Imágenes Secundarias',
+              const Text('Imágenes Secundarias',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Wrap(
@@ -132,7 +131,6 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
                   for (var image in secondaryImages)
                     GestureDetector(
                       onTap: () {
-                        // Lógica para eliminar la imagen (opcional)
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
@@ -149,8 +147,8 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
                     ),
                   GestureDetector(
                     onTap: () async {
-                      List<File>? seleccionadas =
-                          await _seleccionarVariasImagenes(context);
+                      List<File>? seleccionadas = await publicacionesController
+                          .seleccionarVariasImagenes(context);
                       if (seleccionadas != null) {
                         setState(() {
                           secondaryImages.addAll(seleccionadas);
@@ -177,16 +175,17 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
                   onPressed: () async {
                     if (coverImage != null &&
                         descriptionController.text.isNotEmpty) {
-                      await _crearPublicacion(); // Ejecutar el método para crear la publicación
+                      await _crearPublicacion();
                     }
                   },
-                  child: const Text('Publicar'),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 12),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     backgroundColor: const Color(0xFFFFDC4A),
                   ),
+                  child: const Text('Publicar'),
                 ),
               ),
             ],
@@ -195,41 +194,4 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
       ),
     );
   }
-
- Future<File?> seleccionarImagen(BuildContext context) async {
-  var status = await Permission.photos.status;
-  if (!status.isGranted) {
-    await Permission.photos.request();
-  }
-
-  final ImagePicker picker = ImagePicker();
-  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-  if (image == null) {
-    // Show   
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Error al seleccionar imagen')),
-    );
-    return null;
-  }
-  return File(image.path);
-}
-
-
-  Future<List<File>?> _seleccionarVariasImagenes(BuildContext context) async {
-  var status = await Permission.photos.status;
-  if (!status.isGranted) {
-    await Permission.photos.request();
-  }
-
-  if (!status.isGranted) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Permiso de almacenamiento denegado')),
-    );
-    return null;
-  }
-
-  final ImagePicker picker = ImagePicker();
-  final List<XFile>? images = await picker.pickMultiImage();
-  return images?.map((xFile) => File(xFile.path)).toList();
-}
 }

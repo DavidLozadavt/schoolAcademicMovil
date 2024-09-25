@@ -19,7 +19,7 @@ class CreateNewActivityScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Banco De Actividad'),
-        backgroundColor:  Color(0xFFF5F5F5),
+        backgroundColor:  const Color(0xFFF5F5F5),
         elevation: 0,
       ),
       body: Padding(
@@ -122,13 +122,13 @@ class CreateNewActivityScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 100),
       child: const Column(
         children: [
-          const Icon(
+          Icon(
             Icons.upload_file, 
             color: Colors.white, 
             size: 24,
           ),
-          const SizedBox(height: 8), 
-          const Text(
+          SizedBox(height: 8), 
+          Text(
             'Seleccionar Archivo',
             style: TextStyle(
               fontSize: 16,
@@ -160,8 +160,6 @@ class CreateNewActivityScreen extends StatelessWidget {
               _createActivitiesController.createActivity(
                   '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
               },
-
-            child: const Text('Crear Actividad'),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
             
@@ -169,6 +167,8 @@ class CreateNewActivityScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.0),
               ),
             ),
+
+            child: const Text('Crear Actividad'),
           ),
         ),
         const SizedBox(width: 16),
