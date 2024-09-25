@@ -136,7 +136,7 @@ class PublicacionesController extends GetxController {
     final imageBytes = await imgFile.readAsBytes();
     img.Image? originalImage = img.decodeImage(imageBytes);
     img.Image resizedImage =
-        img.copyResize(originalImage!, width: 850, height: 850);
+        img.copyResize(originalImage!, width: 1000, height: 1000);
     final resizedImageFile = File('${image.path}_resized.jpg');
     await resizedImageFile
         .writeAsBytes(img.encodeJpg(resizedImage, quality: 90));
