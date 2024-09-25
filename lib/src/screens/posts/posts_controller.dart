@@ -8,7 +8,6 @@ import 'package:vtschool/src/models/api_response_publications.dart';
 import 'package:vtschool/src/providers/publication_provider.dart';
 import 'package:image/image.dart' as img;
 
-
 class PublicacionesController extends GetxController {
   var publicaciones = <Publicacion>[].obs;
   var isLoading = false.obs;
@@ -20,7 +19,6 @@ class PublicacionesController extends GetxController {
     fetchPublicaciones();
     super.onInit();
   }
-  
 
   Future<void> fetchPublicaciones() async {
     isLoading.value = true;
@@ -35,14 +33,15 @@ class PublicacionesController extends GetxController {
     }
   }
 
-
 //metod for cretation of post
- Future<void> createPublicacion(File singleFile, List<File> multipleFiles, String description) async {
+  Future<void> createPublicacion(
+      File singleFile, List<File> multipleFiles, String description) async {
     isLoading.value = true;
     errorMessage.value = '';
     try {
-      await _publicationProvider.createPublication(singleFile, multipleFiles, description);
-       await fetchPublicaciones(); 
+      await _publicationProvider.createPublication(
+          singleFile, multipleFiles, description);
+      await fetchPublicaciones();
       Get.snackbar('Éxito', 'Publicación creada exitosamente');
     } catch (e) {
       errorMessage.value = 'Error al crear la publicación';
@@ -52,36 +51,31 @@ class PublicacionesController extends GetxController {
     }
   }
 
-
   // Método expuesto para refrescar directamente
   Future<void> refreshPublicaciones() async {
     await fetchPublicaciones();
   }
 
+  Future<File?> seleccionarImagen(BuildContext context) async {
+    var status = await Permission.photos.status;
+    if (!status.isGranted) {
+      await Permission.photos.request();
+    }
 
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-
-Future<File?> seleccionarImagen(BuildContext context) async {
-  var status = await Permission.photos.status;
-  if (!status.isGranted) {
-    await Permission.photos.request();
+    if (image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error al seleccionar imagen')),
+      );
+      return null;
+    }
+    File resizedImage = await _redimensionarImagen(image);
+    return resizedImage;
   }
 
-  final ImagePicker picker = ImagePicker();
-  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-  
-  if (image == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Error al seleccionar imagen')),
-    );
-    return null;
-  }
-  File resizedImage = await _redimensionarImagen(image);
-  return resizedImage;
-}
-
-
-Future<List<File>?> seleccionarVariasImagenes(BuildContext context) async {
+  Future<List<File>?> seleccionarVariasImagenes(BuildContext context) async {
     var status = await Permission.photos.status;
     if (!status.isGranted) {
       await Permission.photos.request();
@@ -95,31 +89,57 @@ Future<List<File>?> seleccionarVariasImagenes(BuildContext context) async {
     }
 
     final ImagePicker picker = ImagePicker();
-    final List<XFile> images = await picker.pickMultiImage();
+    final List<XFile>? images = await picker.pickMultiImage();
+
+    if (images == null || images.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error al seleccionar imágenes')),
+      );
+      return null;
+    }
+
+    // Muestra el diálogo de progreso
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const AlertDialog(
+          content: SizedBox(
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text('Cargando imágenes...'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
     List<File> resizedImages = [];
     for (var image in images) {
       File resizedImage = await _redimensionarImagen(image);
       resizedImages.add(resizedImage);
     }
-    return resizedImages;
 
-    return null;
+    // Cierra el diálogo de progreso
+    Navigator.of(context).pop();
+
+    return resizedImages;
   }
 
- Future<File> _redimensionarImagen(XFile image) async {
+  Future<File> _redimensionarImagen(XFile image) async {
     final imgFile = File(image.path);
     final imageBytes = await imgFile.readAsBytes();
     img.Image? originalImage = img.decodeImage(imageBytes);
     img.Image resizedImage =
-        img.copyResize(originalImage!, width: 800, height: 800);
+        img.copyResize(originalImage!, width: 850, height: 850);
     final resizedImageFile = File('${image.path}_resized.jpg');
     await resizedImageFile
         .writeAsBytes(img.encodeJpg(resizedImage, quality: 90));
     return resizedImageFile;
   }
-
-
-
-
-  
 }
