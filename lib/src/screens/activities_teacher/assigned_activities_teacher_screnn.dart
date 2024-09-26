@@ -174,7 +174,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
   }
 
   void _showUsersModal(BuildContext context,
-      {required  activityId, int? groupId}) async {
+      {required activityId, groupId}) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -192,9 +192,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
       },
     );
 
-    await _activitiesTeacherController.fetchActivitiesRegistration(
-        activityId.toString(),
-        idGrupo: groupId);
+    await _activitiesTeacherController
+        .fetchActivitiesRegistration(activityId.toString(), idGrupo: groupId);
 
     Navigator.of(context).pop();
     showModalBottomSheet(
@@ -331,7 +330,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.message, color: Colors.blue),
+                                icon: const Icon(Icons.message,
+                                    color: Colors.blue),
                                 onPressed: () {},
                               ),
                               IconButton(
@@ -514,8 +514,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       text: 'Calificar',
-                      backgroundColor:
-                          const Color.fromARGB(255, 234, 238, 240),
+                      backgroundColor: const Color.fromARGB(255, 234, 238, 240),
                       textColor: Colors.white,
                       onPressed: () {
                         _activitiesTeacherController.rateActivity(activity.id);
