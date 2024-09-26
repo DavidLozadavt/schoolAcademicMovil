@@ -1,5 +1,5 @@
 // local
-const baseURL = 'http://192.168.1.101:8000/api/';
+const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 // preproduccion
@@ -42,8 +42,11 @@ const getQualificationsStudentUrl =
     '${baseURL}get_court_by_matricula_academica_qualifications/';
 const getActivitiesByIdUrl = '${baseURL}actividadesAll?materia=';
 const createActivitiesUrl = '${baseURL}actividades/';
+const deleteActivitiesUrl = '${baseURL}deleteActividad/';
 const assignedActivitiesUrl = '${baseURL}actividades_by_user_docente/';
 const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
+const rateActivityUrl = '${baseURL}respuesta-profesor/';
+const publicationsUrl = '${baseURL}publications';
 const putAttendanceUrl = '${baseURL}materias/update_assistance';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
@@ -53,3 +56,5 @@ const putAttendanceUrl = '${baseURL}materias/update_assistance';
 //const serverError = 'Eror en la respuesta';
 //const unauthorized = 'Unauthorized';
 //const somethingWentWrong = 'Something went wrong, try again!';
+const noData = '${baseURL}default/imagenpordefecto.png';
+//se usa cuando el servidor no retonar archivo

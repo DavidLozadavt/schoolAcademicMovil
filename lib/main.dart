@@ -9,6 +9,7 @@ import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teacher_screnn.dart';
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
+import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_screen.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
@@ -19,6 +20,7 @@ import 'package:vtschool/src/screens/payments/registration_payment/payment_trans
 import 'package:vtschool/src/screens/payments/payments_screen.dart';
 import 'package:vtschool/src/screens/payments/registration_payment/physical_registration_payment_screen.dart';
 import 'package:vtschool/src/screens/payments/pse_screen.dart';
+import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
@@ -39,6 +41,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await pushNotificationProvider.initNotifications();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //  final ConnectivityController connectivityController = Get.put(ConnectivityController());
   runApp(
     const MyApp(),
   );
@@ -86,7 +89,13 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/subject_teacher', page: ()=> SubjectTeacherScreen()),
         GetPage(name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
         GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen()),
-        GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen())
+        GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen()),
+        GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
+        GetPage(name: '/posts', page: () => PostsScreen()),
+
+
+
+           
 
 
       ],

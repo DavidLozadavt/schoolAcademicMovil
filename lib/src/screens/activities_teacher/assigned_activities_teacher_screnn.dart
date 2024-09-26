@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_controller.dart';
+import 'package:vtschool/src/widgets/build_form.dart';
+import 'package:vtschool/src/widgets/custom_button.dart';
 
 class AssignedActivitiesTeacherScreen extends StatelessWidget {
   final ActivitiesTeacherController _activitiesTeacherController =
       Get.put(ActivitiesTeacherController());
   final TextEditingController _searchController = TextEditingController();
   AssignedActivitiesTeacherScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,37 +34,48 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            // Barra de búsqueda minimalista
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              height: 55,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.search, color: Colors.grey),
-                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _searchController,
                       onChanged: (value) {
-                        _activitiesTeacherController.filterActivities(value);
+                        _activitiesTeacherController
+                            .filterActivitiesAssigned(value);
                       },
                       decoration: const InputDecoration(
                         hintText: "Buscar actividades...",
                         hintStyle: TextStyle(color: Colors.grey),
                         border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
                       ),
+                      style: const TextStyle(fontSize: 14),
                     ),
+                  ),
+                  const Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                    size: 28,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            // Lista de actividades
             Obx(() {
-              if (_activitiesTeacherController.assignedActivities.isEmpty) {
+              if (_activitiesTeacherController
+                  .filteredActivitiesAssigned.isEmpty) {
                 return const Center(
                   child: Text(
                     'No hay actividades',
@@ -72,47 +85,80 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
               }
               return Expanded(
                 child: ListView.builder(
-                  itemCount:
-                      _activitiesTeacherController.assignedActivities.length,
+                  itemCount: _activitiesTeacherController
+                      .filteredActivitiesAssigned.length,
                   itemBuilder: (context, index) {
-                    var activity =
-                        _activitiesTeacherController.assignedActivities[index];
+                    var activity = _activitiesTeacherController
+                        .filteredActivitiesAssigned[index];
                     return Container(
                       margin: const EdgeInsets.only(bottom: 15),
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
+                            blurRadius: 6,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
                       child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
                         title: Text(
-                          activity.actividad.descripcionActividad,
+                          activity.actividad!.descripcionActividad as String,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
-                        subtitle: Text(
-                          activity.esGrupal
-                              ? "Actividad Grupal"
-                              : "Actividad Individual",
-                          style: const TextStyle(color: Colors.grey),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  activity.esGrupal
+                                      ? Icons.group
+                                      : Icons.person,
+                                  color: activity.esGrupal
+                                      ? Colors.blue
+                                      : Colors.orange,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  activity.esGrupal
+                                      ? "Actividad Grupal"
+                                      : "Actividad Individual",
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            if (activity.esGrupal &&
+                                activity.grupo != null) ...[
+                              const SizedBox(height: 5),
+                              Text(
+                                'Nombre Grupo: ${activity.grupo!.nombre}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ],
                         ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.person_outline),
+                          icon: Image.asset(
+                            'assets/images/trabajo-en-equipo.png',
+                            width: 40,
+                            height: 80,
+                          ),
                           onPressed: () {
                             _showUsersModal(
-                                context,
-                                activity
-                                    .idActividad); // Pasa el ID de la actividad
+                              context,
+                              activityId: activity.idActividad,
+                              groupId: activity.idGrupo,
+                            );
                           },
                         ),
                       ),
@@ -127,7 +173,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
     );
   }
 
-  void _showUsersModal(BuildContext context, int activityId) async {
+  void _showUsersModal(BuildContext context,
+      {required int activityId, int? groupId}) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -135,7 +182,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
         return const AlertDialog(
           content: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               CircularProgressIndicator(),
               SizedBox(width: 20),
               Text('Cargando...'),
@@ -145,10 +192,10 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
       },
     );
 
-    await _activitiesTeacherController.fetchActivitiesRegistration(activityId);
+    await _activitiesTeacherController.fetchActivitiesRegistration(activityId,
+        idGrupo: groupId);
 
     Navigator.of(context).pop();
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -163,17 +210,18 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Line at the top
-              Container(
-                height: 5,
-                width: 50,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
+              Center(
+                child: Container(
+                  height: 5,
+                  width: 50,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-              // Title
+              // Título
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -197,7 +245,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 }
 
                 return SizedBox(
-                  height: 600, // Adjust the height here
+                  height: 600,
                   child: ListView.builder(
                     padding: const EdgeInsets.all(15.0),
                     itemCount: _activitiesTeacherController
@@ -208,43 +256,56 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                       var persona =
                           activity.matriculaAcademica!.matricula!.persona;
 
+                      Color backgroundColor;
+                      if (activity.idEstado == 17) {
+                        backgroundColor = Colors.green[100]!;
+                      } else if (activity.idEstado == 9) {
+                        backgroundColor = Colors.yellow[100]!;
+                      } else {
+                        backgroundColor = Colors.white;
+                      }
+
+                      bool isDefaultPhoto = persona?.rutaFoto == null ||
+                          persona!.rutaFoto ==
+                              'http://192.168.101.12:8001/default/user.svg';
+
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: backgroundColor,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
                               spreadRadius: 2,
                               blurRadius: 4,
-                              offset: Offset(0, 2),
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
                         child: ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
-                          leading: persona?.rutaFoto != null
+                          leading: isDefaultPhoto
                               ? Container(
                                   width: 60.0,
                                   height: 60.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: NetworkImage(persona!.rutaFoto),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  width: 80.0,
-                                  height: 80.0,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       image: AssetImage(
                                           'assets/images/default_avatar.png'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage(persona.rutaFoto!),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -269,22 +330,35 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.message, color: Colors.blue),
-                                onPressed: () async{
-                                  
-                                  // _chatController.onConnectPressed(
-                                  //                   '${student['matricula']!['idPersona']}');
-                                  //               _chatController.getMessage(
-                                  //                   '${student['matricula']!['idPersona']}');
-                                  //               _chatController
-                                  //                   .setSelectedUser(users);
-                                  //               Get.toNamed('/chat');
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.edit, color: Colors.amber),
+                                icon: const Icon(Icons.message, color: Colors.blue),
                                 onPressed: () {},
                               ),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.amber),
+                                onPressed: () {
+                                  if (activity.comentarioEstudiante != null &&
+                                      activity
+                                          .comentarioEstudiante!.isNotEmpty) {
+                                    _showViewFormModal(context, activity);
+                                  } else {
+                                    // Mostrar un SnackBar usando GetX
+                                    Get.snackbar(
+                                      'Información',
+                                      'El estudiante aún no ha respuesto la actividad.',
+                                      snackPosition: SnackPosition.TOP,
+                                      backgroundColor: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        226,
+                                        82,
+                                      ),
+                                      colorText: Colors.white,
+                                      duration: const Duration(seconds: 3),
+                                    );
+                                  }
+                                },
+                              )
                             ],
                           ),
                         ),
@@ -294,6 +368,164 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                 );
               }),
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showViewFormModal(BuildContext context, var activity) {
+    _activitiesTeacherController.comentarioDocente.value =
+        activity.comentarioDocente ?? '';
+    _activitiesTeacherController.calificacionNumerica.value =
+        activity.calificacionNumerica?.toString() ?? '';
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      height: 5,
+                      width: 50,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Text(
+                      'Detalles de la Actividad',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Comentario del Estudiante
+                  FormFieldWidget(
+                    label: 'Comentario del Estudiante:',
+                    initialValue: activity.comentarioEstudiante ?? '',
+                    onChanged: (value) {},
+                    isReadOnly: true,
+                    maxLines: 5,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    textAlignVertical: TextAlignVertical.top,
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Documento Respuesta:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+
+                  activity.docRespuesta != null &&
+                          !activity.docRespuesta!.contains(
+                            'http://192.168.101.12:8001/default/imagenpordefecto.png',
+                          )
+                      ? SizedBox(
+                          height: 300,
+                          child: PDFView(
+                            filePath: activity.docRespuesta!.toString(),
+                            enableSwipe: true,
+                            swipeHorizontal: true,
+                            autoSpacing: false,
+                            pageFling: true,
+                            pageSnap: true,
+                          ),
+                        )
+                      : Container(
+                          height: 300,
+                          width: double.infinity, // Ajusta el ancho aquí
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: const DecorationImage(
+                              image:
+                                  AssetImage('assets/images/sin-contenido.png'),
+                              // Ajusta el ajuste aquí
+                            ),
+                          ),
+                        ),
+                  const SizedBox(height: 20),
+
+                  // Comentario del Docente
+                  FormFieldWidget(
+                    label: 'Comentario del Docente:',
+                    initialValue:
+                        _activitiesTeacherController.comentarioDocente.value,
+                    onChanged: (value) {
+                      _activitiesTeacherController.comentarioDocente.value =
+                          value;
+                    },
+                    maxLines: 5,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    textAlignVertical: TextAlignVertical.top,
+                  ),
+                  const SizedBox(height: 20),
+
+                  FormFieldWidget(
+                    label: 'Calificación Numérica:',
+                    initialValue:
+                        _activitiesTeacherController.calificacionNumerica.value,
+                    onChanged: (value) {
+                      if (RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                        _activitiesTeacherController
+                            .calificacionNumerica.value = value;
+                      }
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La calificación numérica es obligatoria';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    maxLines: 1,
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: CustomButton(
+                      text: 'Calificar',
+                      backgroundColor:
+                          const Color.fromARGB(255, 234, 238, 240),
+                      textColor: Colors.white,
+                      onPressed: () {
+                        _activitiesTeacherController.rateActivity(activity.id);
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icons.save,
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         );
       },

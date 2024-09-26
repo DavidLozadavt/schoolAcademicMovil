@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -523,10 +522,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                               .toString(),
                                           idTypeQuestion: 3,
                                         );
-                                        // print(_taskStudentController
+                                        // (_taskStudentController
                                         //     .selectedAnswer);
-                                        print(
-                                            '${_taskStudentController.selectedAnswer}');
+                                        ('${_taskStudentController.selectedAnswer}');
                                       },
                                     ),
                                   ),

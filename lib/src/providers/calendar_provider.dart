@@ -10,7 +10,7 @@ class CalendarProvider extends GetConnect {
   Future<void> fetchEventsStudent(String? id) async {
     String token = await authService.getToken();
 
-   /* Map<String, dynamic> requestData = {
+    /* Map<String, dynamic> requestData = {
       'idPrograma': 3,
       'relations': [
         'infraestructura.sede',
@@ -20,7 +20,7 @@ class CalendarProvider extends GetConnect {
         'periodo'
       ]
     };*/
-   
+
     //Uri uri = Uri.parse(horarioMateriaURL);
 
     /*Uri requestUri = uri
@@ -63,7 +63,7 @@ class CalendarProvider extends GetConnect {
 
     Uri requestUri = uri
         .replace(queryParameters: {'data_encoded': json.encode(requestData)});
- print(requestUri);*/
+ (requestUri);*/
     Response response = await get(
       '$getDiaryTeacherUrl$id',
       headers: {
@@ -71,7 +71,7 @@ class CalendarProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2025 ${response.body}');
+    ('2025 ${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         events.assignAll(response.body.cast<Map<String, dynamic>>());

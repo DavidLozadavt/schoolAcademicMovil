@@ -22,8 +22,8 @@ class ChatProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    // print('code .${response.statusCode}');
-     print('body .${response.body}');
+    // ('code .${response.statusCode}');
+    // ('body .${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         users.assignAll(response.body.cast<Map<String, dynamic>>());
@@ -38,14 +38,11 @@ class ChatProvider extends GetConnect {
   Future<void> getMessage(String idUserSelected) async {
     String token = await authService.getToken();
     Map<String, dynamic> data = {
-    "relations": [
-      "activeCompanyUser.user.persona",
-      "asignaciones"
-    ]
-  };
-  String jsonString = jsonEncode(data);
-  //  print('88888 $jsonString');
-    //   print('9999 $idUserSelected');
+      "relations": ["activeCompanyUser.user.persona", "asignaciones"]
+    };
+    String jsonString = jsonEncode(data);
+    //  ('88888 $jsonString');
+    //   ('9999 $idUserSelected');
     Response response = await get(
       '$getMessagesUserUrl$idUserSelected?data=$jsonString',
       headers: {
@@ -53,8 +50,8 @@ class ChatProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    //print('77777 ${response.body}');
-    //print('11111 ${response.statusCode}');
+    //('77777 ${response.body}');
+    //('11111 ${response.statusCode}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         messages.assignAll(response.body.cast<Map<String, dynamic>>());

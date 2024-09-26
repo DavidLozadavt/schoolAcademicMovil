@@ -11,7 +11,7 @@ class NotificationsController extends GetxController {
     super.onInit();
     getNotifications();
   }
-  
+
   Future<void> getNotifications() async {
     try {
       await _notificationsProvider.getNotifications();
@@ -27,11 +27,9 @@ class NotificationsController extends GetxController {
       await _notificationsProvider.readNotifications(id);
       await getNotifications();
     } catch (error) {
-      //print('Error fetching events: $error');
+      //('Error fetching events: $error');
     } finally {
       isLoading(false);
     }
   }
-
-
 }

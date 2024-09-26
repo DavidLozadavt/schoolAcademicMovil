@@ -108,9 +108,9 @@ final PushNotificationController _pushNotificationController =
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 50,
-              ),
+            
+              // Aquí se agrega el widget HistoriasWidget
+            //  HistoriasWidget(), 
               const Center(
                 child: Text(
                   '¡Tu semana al instante!',

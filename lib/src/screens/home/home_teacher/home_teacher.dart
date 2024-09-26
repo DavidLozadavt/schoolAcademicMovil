@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
+import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
@@ -59,6 +59,21 @@ class HomeTeacher extends StatelessWidget {
                     title: 'Aula',
                     isActive: true,
                   ),
+                  
+                ),
+                 BottomNavigationBarItem(
+                  //backgroundColor: listColor[11].withOpacity(0.5),
+                  label: '',
+                  icon: ItemNavigationButton(
+                    fileIcon: 'assets/images/posts.png',
+                    title: 'Posts',
+                  ),
+                  activeIcon: ItemNavigationButton(
+                    fileIcon: 'assets/images/posts.png',
+                    title: 'Posts',
+                    isActive: true,
+                  ),
+                  
                 ),
                 // BottomNavigationBarItem(
                 //   backgroundColor: listColor[11].withOpacity(0.5),
@@ -94,7 +109,9 @@ class HomeTeacher extends StatelessWidget {
                 HomeTeacherScreen(),
                 //ActivitiesTeacherScreen(),
                 SubjectsTeacherScreen(),
+                 PostsScreen(),
                 ProfileUserScreen(),
+             
               ],
             )),
         extendBody: true,

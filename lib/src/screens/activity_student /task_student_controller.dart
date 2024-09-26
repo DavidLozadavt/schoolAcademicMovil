@@ -94,7 +94,6 @@ class TaskStudentController extends GetxController {
           idQualification, selectedAnswer);
 
       answerRating.value = response;
-
       await Get.bottomSheet(
         alert!,
         isScrollControlled: true,
@@ -110,19 +109,18 @@ class TaskStudentController extends GetxController {
       filteredActivitiesStudent.assignAll(activitiesStudent);
     } else {
       filteredActivitiesStudent.assignAll(activitiesStudent.where((activity) {
-          final String affair = activity['actividad']['tituloActividad'].toString().toLowerCase();
-          final String nameTeacher =
-              activity['persona']['nombre1'].toString().toLowerCase();
-          final String lastNameTeacher = activity['persona']
-                  ['apellido1']
-              .toString()
-              .toLowerCase();
-          final String subject =
-             activity['actividad']['autor'].toString().toLowerCase();
-          return affair.contains(query.toLowerCase()) ||
-              nameTeacher.contains(query.toLowerCase()) ||
-              lastNameTeacher.contains(query.toLowerCase()) ||
-              subject.contains(query.toLowerCase());
+        final String affair =
+            activity['actividad']['tituloActividad'].toString().toLowerCase();
+        final String nameTeacher =
+            activity['persona']['nombre1'].toString().toLowerCase();
+        final String lastNameTeacher =
+            activity['persona']['apellido1'].toString().toLowerCase();
+        final String subject =
+            activity['actividad']['autor'].toString().toLowerCase();
+        return affair.contains(query.toLowerCase()) ||
+            nameTeacher.contains(query.toLowerCase()) ||
+            lastNameTeacher.contains(query.toLowerCase()) ||
+            subject.contains(query.toLowerCase());
       }));
     }
   }

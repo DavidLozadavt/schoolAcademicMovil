@@ -5,7 +5,7 @@ import 'package:vtschool/src/providers/auth_provider.dart';
 
 class TuitionsProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
- 
+
   var tuitionPayments = <Map<String, dynamic>>[].obs;
   var inscriptionPayments = <Map<String, dynamic>>[].obs;
 
@@ -18,7 +18,7 @@ class TuitionsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2025fff ${response.body}');
+    ('2025fff ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
@@ -40,11 +40,12 @@ class TuitionsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2026fff ${response.body}');
+    ('2026fff ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        inscriptionPayments.assignAll(response.body.cast<Map<String, dynamic>>());
+        inscriptionPayments
+            .assignAll(response.body.cast<Map<String, dynamic>>());
       } else {
         throw Failure('La respuesta del servidor está vacía.');
       }
@@ -52,5 +53,4 @@ class TuitionsProvider extends GetConnect {
       throw Failure('Error al cargar los pagos');
     }
   }
-
 }

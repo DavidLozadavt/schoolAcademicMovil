@@ -18,7 +18,7 @@ class AuthProvider extends GetConnect {
         headers: {'Accept': 'application/json'},
         {'email': email, 'password': contrasena, 'device_token': tokenDevice},
       );
-      print('es una prueba ${response.body}');
+      ('es una prueba ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Correo o contraseña incorrectos');
       }
@@ -43,7 +43,7 @@ class AuthProvider extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       });
-      print('profle ${response.statusCode}');
+      ('profle ${response.statusCode}');
 
       if (response.statusCode == 200) {
         return response.body['userData'];

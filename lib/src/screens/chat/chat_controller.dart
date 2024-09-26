@@ -51,8 +51,8 @@ class ChatController extends GetxController {
       filteredUsers.assignAll(users);
       isLoading(true);
     } catch (error) {
-      //print('Error: $error');
-      print('Error: $error');
+      //('Error: $error');
+      ('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -63,8 +63,8 @@ class ChatController extends GetxController {
       await _chatProvider.getMessage(idUserSelected);
       messages.assignAll(_chatProvider.messages);
     } catch (error) {
-     // print('Error: $error');
-       print('Error: $error');
+      // ('Error: $error');
+      ('Error: $error');
     } finally {
       isLoading(false);
     }
@@ -104,8 +104,8 @@ class ChatController extends GetxController {
   }
 
   void logMessage(String text) {
-    print("LOG: $text");
-    //print("LOG: $text");
+    ("LOG: $text");
+    //("LOG: $text");
     log.value += "$text\n";
   }
 
@@ -135,8 +135,8 @@ class ChatController extends GetxController {
           'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
       await pusher.subscribe(channelName: chatChannelName);
     } catch (e) {
-      //print('Error: $e');
-      print('Error: $e');
+      //('Error: $e');
+      ('Error: $e');
     }
   }
 
@@ -203,7 +203,7 @@ class ChatController extends GetxController {
     final intIdUserSelected = int.parse(idUserSelected.toString());
     final chatChannelName =
         'private-chat-one-to-one-${intMyIdUser < intIdUserSelected ? intMyIdUser : intIdUserSelected}-${intMyIdUser > intIdUserSelected ? intMyIdUser : intIdUserSelected}';
-   // print(data);
+    // (data);
     pusher.trigger(PusherEvent(
         channelName: chatChannelName,
         eventName: 'client-chat-one-to-one',
@@ -222,17 +222,15 @@ class ChatController extends GetxController {
       var jsonMessage = json.decode(jsonString);
       messages.add(jsonMessage);
       postMessage(jsonMessage);
-   /* if (scrollController.position.pixels ==
+      /* if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       jumpToEnd();
     }*/
     } catch (e) {
-      //print('Error: $e');
-       print('Error: $e');
+      //('Error: $e');
+      ('Error: $e');
     }
   }
-
-  
 
   void setSelectedFilePath(String path) {
     selectedFilePath.value = path;

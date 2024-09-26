@@ -19,7 +19,6 @@ class ActivityProvider extends GetConnect {
   var questionnaireActivity = <Map<String, dynamic>>[].obs;
   var getTypeActivitiesById = <Map<String, dynamic>>[].obs;
 
-
   var tituloActividad = ''.obs;
   var descripcionActividad = ''.obs;
   var archivo = Rxn<File>();
@@ -33,7 +32,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
+    (response.body);
     if (response.statusCode == 200) {
       //Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
@@ -41,7 +40,7 @@ class ActivityProvider extends GetConnect {
       /*  } else {
           throw Failure('La respuesta del servidor está vacía.');
         }*/
-    }else if(response.statusCode == 400){
+    } else if (response.statusCode == 400) {
       activitiesStudent.assignAll([]);
     } else {
       throw Failure('Error al cargar las actividades');
@@ -167,8 +166,8 @@ class ActivityProvider extends GetConnect {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //('Response status: ${response.statusCode}');
+      //('Response body: ${response.body}');
 
       if (response.statusCode != 200) {
         throw Exception('Error al enviar la respuesta: ${response.body}');
@@ -257,7 +256,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
+    (response.body);
     if (response.statusCode == 200) {
       /*if (responseBody.isNotEmpty) {*/
       allActivitiesById.assignAll(response.body);
@@ -278,7 +277,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
+    (response.body);
     if (response.statusCode == 200) {
       return (response.body as List)
           .map((activity) => Actividad.fromJson(activity))
@@ -297,7 +296,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
+    (response.body);
     if (response.statusCode == 200) {
       return (response.body as List)
           .map((activity) => AssignedActivities.fromJson(activity))
@@ -307,54 +306,88 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  // Future<List<Map<String, dynamic>>> fetchPersons(int activityId) async {
-  //   String token = await authService.getToken();
+  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(
+      int activityId,
+      {int? groupId}) async {
+    String token = await authService.getToken();
 
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse('$activityByregistrationUrl$activityId'),
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'accept': 'application/json',
-  //       },
-  //     );
+    Map<String, String> queryParameters = {};
+    if (groupId != null) {
+      queryParameters['idGrupo'] = groupId.toString();
+    }
 
-  //     if (response.statusCode == 200) {
-  //       var data = json.decode(response.body);
-  //       List<Map<String, dynamic>> persons = List<Map<String, dynamic>>.from(
-  //         data.map((activity) => Map<String, dynamic>.from(activity['matriculaAcademica']['matricula']['persona'])),
-  //       );
+    final url = Uri.parse('$activityByregistrationUrl$activityId').replace(
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
 
-  //       return persons;
-  //     } else {
-  //       throw Exception('Error en la solicitud: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error: $e');
-  //     throw Exception('Error al obtener personas: $e');
-  //   }
-  // }
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
 
-  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(int activityId) async {
-  final response = await http.get(
-    Uri.parse('$activityByregistrationUrl$activityId'),
-    headers: {
-      'Authorization': 'Bearer ${await authService.getToken()}',
-      'accept': 'application/json',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    List<Registrationsactivity> activities = registrationsactivityFromJson(json.encode(data));
-    return activities;
-  } else {
-    throw Exception('Error en la solicitud: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      List<Registrationsactivity> activities =
+          registrationsactivityFromJson(json.encode(data));
+      return activities;
+    } else {
+      throw Exception('Error en la solicitud: ${response.statusCode}');
+    }
   }
-}
 
-///asistencia
- Future<void> attendance({dynamic data}) async {
+  Future<void> rateActivity(int idCalificacion, String comentarioDocente,
+      String calificacionNumerica) async {
+    final url = '$rateActivityUrl$idCalificacion';
+    String token = await authService.getToken();
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'ComentarioDocente': comentarioDocente,
+          'calificacionNumerica': calificacionNumerica,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        ('Datos enviados correctamente');
+      } else {
+        final responseBody = jsonDecode(response.body);
+        throw Exception(responseBody['message'] ?? 'Error desconocido');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //eliminarActividades
+  Future<void> deleteActivityById(String id) async {
+    String token = await authService.getToken();
+
+    final response = await delete(
+      '$deleteActivitiesUrl$id',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      ('Actividad eliminada correctamente');
+    } else {
+      throw Failure('No se puede eliminar una actividad asignada');
+    }
+  }
+
+  ///asistencia
+  Future<void> attendance({dynamic data}) async {
     String token = await authService.getToken();
 
     Response response = await put(
@@ -367,10 +400,8 @@ class ActivityProvider extends GetConnect {
     );
 
     if (response.statusCode == 200) {
-      
     } else {
       throw Failure('Error al cargar los eventos');
     }
   }
-
 }

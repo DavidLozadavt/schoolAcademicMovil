@@ -65,12 +65,12 @@ class PaymentsController extends GetxController {
           List<Map<String, dynamic>>.from(institutions['data']);
       financialInstitutions.assignAll(fetchedInstitutions);
     } catch (error) {
-      //print(error);
+      //(error);
     }
   }
 
   void setSelectedInstitutionCode(String code) {
-    // print(code);
+    // (code);
     selectedInstitutionCode.value = code;
   }
 
@@ -81,7 +81,7 @@ class PaymentsController extends GetxController {
 
   void setselectedPersonTypesIndex(int index) {
     selectedPersonTypesIndex.value = index;
-    //print(index);
+    //(index);
   }
 
   var identificationTypes = [
@@ -92,8 +92,8 @@ class PaymentsController extends GetxController {
 
   void setSelectedIdentificationIndex(int index) {
     selectedIdentificationIndex.value = index;
-    //print(index);
-    print('$index');
+    //(index);
+    ('$index');
   }
 
   void toggleCheckbox() {
@@ -112,7 +112,7 @@ class PaymentsController extends GetxController {
   }
 
   Future<void> sendTransactionPse() async {
-    //print('prueba url: ${asyncPaymentUrl.value}');
+    //('prueba url: ${asyncPaymentUrl.value}');
     try {
       var data = {
         "codigoInstitucion": selectedInstitutionCode.value.toString(),
@@ -147,7 +147,7 @@ class PaymentsController extends GetxController {
           final responseGetFind = await _wompiProvider
               .getFindTransactionById(responsePse['data']['id'].toString());
           responseFindTransactionById(responseGetFind);
-          print('$responseFindTransactionById');
+          ('$responseFindTransactionById');
           setAsyncPaymentUrl(responseFindTransactionById['payment_method']
               ['extra']['async_payment_url']);
         });
@@ -155,14 +155,14 @@ class PaymentsController extends GetxController {
           Get.back();
           Get.toNamed('/pse');
           clearData();
-          //print(asyncPaymentUrl.value);
+          //(asyncPaymentUrl.value);
 
-          print(asyncPaymentUrl.value);
+          (asyncPaymentUrl.value);
         });
       }
     } catch (e) {
-      //print('Error al enviar los datos: $e');
-      print('Error al enviar los datos: $e');
+      //('Error al enviar los datos: $e');
+      ('Error al enviar los datos: $e');
     }
   }
 
@@ -195,14 +195,13 @@ class PaymentsController extends GetxController {
     selectedFiles[paymentId] = file;
   }
 
-
   void clearDataPhysicalPayments() {
     selectedFilePath.value = '';
     filePath.value = File('');
     selectedFiles.clear();
   }
 
-   void resetTotalValue() {
+  void resetTotalValue() {
     totalValue.value = 0;
     selectedPayments.clear();
   }

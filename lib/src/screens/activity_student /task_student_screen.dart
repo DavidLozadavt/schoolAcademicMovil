@@ -539,10 +539,9 @@ class TaskStudentScreen extends StatelessWidget {
                                               .toString(),
                                           3,
                                         );
-                                        // print(_taskStudentController
+                                        // (_taskStudentController
                                         //     .selectedAnswer);
-                                        print(
-                                            '${_taskStudentController.selectedAnswer}');
+                                        ('${_taskStudentController.selectedAnswer}');
                                       },
                                     ),
                                   ),
@@ -611,9 +610,9 @@ class TaskStudentScreen extends StatelessWidget {
                                           var selectedResponseDescription =
                                               options[index]
                                                   ['descripcionRespuesta'];
-                                          // print(selectedResponseId);
-                                          // print(selectedQuestionId);
-                                          // print(selectedResponseDescription);
+                                          // (selectedResponseId);
+                                          // (selectedQuestionId);
+                                          // (selectedResponseDescription);
 
                                           _taskStudentController.saveAnswers(
                                               selectedQuestionId,

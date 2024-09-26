@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -13,39 +12,38 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return SfCalendar(
-                firstDayOfWeek: 1,
-                cellBorderColor: Colors.grey,
-                headerStyle: const CalendarHeaderStyle(
-                  backgroundColor: Colors.transparent,
-                ),
-                
-                view: CalendarView.week,
-                dataSource: _getDataSource(controller.events),
-                onTap: (details) => _onTap(context, details, controller.events),
-              );
-            }
-          }
-    );
+      if (controller.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return SfCalendar(
+          firstDayOfWeek: 1,
+          cellBorderColor: Colors.grey,
+          headerStyle: const CalendarHeaderStyle(
+            backgroundColor: Colors.transparent,
+          ),
+          view: CalendarView.week,
+          dataSource: _getDataSource(controller.events),
+          onTap: (details) => _onTap(context, details, controller.events),
+        );
+      }
+    });
   }
 
   CalendarDataSource<Object?> _getDataSource(
-    List<Map<String, dynamic>> hourlyEvents) {
+      List<Map<String, dynamic>> hourlyEvents) {
     List<Appointment> appointments = [];
     for (var event in hourlyEvents) {
-      print(event);
-      var endTimeData = event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaFinal"];
+      (event);
+      var endTimeData = event["asignacionPeriodoProgramaJornada"]
+          ["asignacion_periodo_programa"]["periodo"]["fechaFinal"];
       DateTime fecha = DateTime.parse(endTimeData);
       fecha = DateTime(fecha.year, fecha.month, fecha.day, 12, 0);
       String fechaFormateada =
           '${DateFormat('yyyyMMddTHHmmss').format(fecha)}Z';
-      DateTime startTime =
-          DateTime.parse('${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaInicial"]}');
-      DateTime endTime =
-          DateTime.parse('${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
+      DateTime startTime = DateTime.parse(
+          '${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaInicial"]}');
+      DateTime endTime = DateTime.parse(
+          '${event["asignacionPeriodoProgramaJornada"]["asignacion_periodo_programa"]["periodo"]["fechaInicial"]} ${event["horaFinal"]}');
       var day = event['idDia'];
       String? dayOfWeek;
       //en pre cambiar la validacion por un string 1 a'1'
@@ -109,7 +107,8 @@ class Calendar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Materia: ${event["materia"]["materia"]["nombreMateria"]}'),
-            Text('Sede: ${event["infraestructura"]?["sede"]["nombreSede"] ?? 'No hay una sede asignada'}' ),
+            Text(
+                'Sede: ${event["infraestructura"]?["sede"]["nombreSede"] ?? 'No hay una sede asignada'}'),
             Text('Hora Inicial: ${event["horaInicial"]}'),
             Text('Hora Final: ${event["horaFinal"]}'),
           ],

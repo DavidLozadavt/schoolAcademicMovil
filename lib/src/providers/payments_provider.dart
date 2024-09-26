@@ -15,7 +15,7 @@ class WompiProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    //print('getFinancialInstitutions ${response.body}');
+    //('getFinancialInstitutions ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
@@ -38,7 +38,7 @@ class WompiProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    //print('sendTransactionPse ${response.statusCode}');
+    //('sendTransactionPse ${response.statusCode}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         return response.body;
@@ -50,7 +50,7 @@ class WompiProvider extends GetConnect {
     }
   }
 
-   Future<Map<String, dynamic>> getFindTransactionById(String id) async {
+  Future<Map<String, dynamic>> getFindTransactionById(String id) async {
     String token = await authService.getToken();
     Response response = await get(
       '$getFindTransactionByIdUrl$id',
@@ -60,8 +60,8 @@ class WompiProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    //print('getFindTransactionById ${response.body}');
-    print('getFindTransactionById ${response.body}');
+    //('getFindTransactionById ${response.body}');
+    ('getFindTransactionById ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
