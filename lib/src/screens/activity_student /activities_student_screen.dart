@@ -95,7 +95,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 : 
                  Expanded(
                      child: RefreshIndicator(
-                  onRefresh: _taskStudentController.refreshItems, 
+                     onRefresh: _taskStudentController.refreshItems, 
                       child:
                           _taskStudentController.filteredActivitiesStudent.isEmpty
                               ? const Center(
@@ -112,10 +112,10 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                   itemCount: _taskStudentController
                                       .filteredActivitiesStudent.length,
                                   itemBuilder: ((context, index) {
-                                    String idActividad = _taskStudentController
-                                        .filteredActivitiesStudent[index]
-                                            ['idActividad']
-                                        .toString();
+                                    // String idActividad = _taskStudentController
+                                    //     .filteredActivitiesStudent[index]
+                                    //         ['idActividad']
+                                    //     .toString();
                                     String initialDate = _taskStudentController
                                             .filteredActivitiesStudent[index]
                                         ['fechaInicial'];
@@ -284,7 +284,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     enableDocumentLinkAnnotation: true,
                     enableHyperlinkNavigation: true,
                     canShowScrollStatus: true,
-                    '${activityData['DocUrl']}',
+                    '${activityData['actividad']['DocUrl']}',
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -375,9 +375,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     disabledBackgroundColor: Colors.blue,
                   ),
-                  onPressed: () {
+                  onPressed: () async{
                     String idActividad = activityData['id'].toString();
-                    _taskStudentController.replyActivity(idActividad);
+                    await _taskStudentController.replyActivity(idActividad);
                     _taskStudentController.getActivitiesStudent();
                   },
                   child: const Text('Enviar evidencia'),
@@ -461,7 +461,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           activityData['actividad']['preguntas'][index];
                       final selectedValue = (-1).obs;
                       List<dynamic> options = question['respuestas'];
-                      if (question['idTipoPregunta'] == 3) {
+                      if (question['idTipoPregunta'] == "3") {
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
@@ -484,6 +484,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 5),
+                              if(question['DocUrl'] != null)
+                              Padding(padding: const EdgeInsets.all(10.0),
+                              child: Image.network(question['DocUrl'])),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: List.generate(
@@ -556,6 +559,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                   color: Colors.black,
                                 ),
                               ),
+                              if(question['DocUrl'] != null)
+                              Padding(padding: const EdgeInsets.all(10.0),
+                              child: Image.network(question['DocUrl'])),
                               const SizedBox(height: 5),
                               TextFormField(
                                 decoration: InputDecoration(

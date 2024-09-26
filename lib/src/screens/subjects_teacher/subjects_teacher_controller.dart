@@ -12,7 +12,7 @@ class SubjectsTeacherController extends GetxController {
     String startTime,
     String endTime,
     int idSchedule,
-    int idDegree) async {
+    String idDegree) async {
     try {
       await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram, startTime, endTime, idSchedule, idDegree);
       subject.assignAll(_subjectProvider.subject);
