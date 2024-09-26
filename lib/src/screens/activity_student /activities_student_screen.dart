@@ -542,7 +542,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.2),
+                               color: Colors.white24,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 0, 0, 0),
