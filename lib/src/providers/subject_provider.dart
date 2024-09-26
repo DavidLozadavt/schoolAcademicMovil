@@ -17,7 +17,7 @@ class SubjectProvider extends GetConnect {
       String startTime,
       String endTime,
       int idSchedule,
-      int idDegree) async {
+      String idDegree) async {
     String token = await authProvider.getToken();
     dynamic data = {
       "idJornada": idWorkingDay,

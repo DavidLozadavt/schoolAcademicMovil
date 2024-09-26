@@ -47,19 +47,19 @@ class Calendar extends StatelessWidget {
       var day = event['idDia'];
       String? dayOfWeek;
       //en pre cambiar la validacion por un string 1 a'1'
-      if (day == 1) {
+      if (day == '1') {
         dayOfWeek = 'MO';
-      } else if (day == 2) {
+      } else if (day == '2') {
         dayOfWeek = 'TU';
-      } else if (day == 3) {
+      } else if (day == '3') {
         dayOfWeek = 'WE';
-      } else if (day == 4) {
+      } else if (day == '4') {
         dayOfWeek = 'TH';
-      } else if (day == 5) {
+      } else if (day == '5') {
         dayOfWeek = 'FR';
-      } else if (day == 6) {
+      } else if (day == '6') {
         dayOfWeek = 'SA';
-      } else if (day == 7) {
+      } else if (day == '7') {
         dayOfWeek = 'SU';
       }
 

@@ -32,7 +32,7 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    (response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       //Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
