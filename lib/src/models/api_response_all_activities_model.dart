@@ -8,13 +8,13 @@ class Actividad {
     int id;
     String tituloActividad;
     String descripcionActividad;
-    String pathDocumentoActividad;
+    String? pathDocumentoActividad;
     dynamic autor;
     int idTipoActividad;
     int idMateria;
     int idEstado;
     int idCompany;
-    String docUrl;
+    String? docUrl;
     TipoActividad tipoActividad;
     Materia materia;
     Estado estado;
@@ -26,13 +26,13 @@ class Actividad {
         required this.id,
         required this.tituloActividad,
         required this.descripcionActividad,
-        required this.pathDocumentoActividad,
+         this.pathDocumentoActividad,
         required this.autor,
         required this.idTipoActividad,
         required this.idMateria,
         required this.idEstado,
         required this.idCompany,
-        required this.docUrl,
+         this.docUrl,
         required this.tipoActividad,
         required this.materia,
         required this.estado,
