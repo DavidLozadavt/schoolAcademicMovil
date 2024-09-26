@@ -8,7 +8,6 @@ import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/models/api_response_activities_registrations_model.dart';
-import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 
 class ActivityProvider extends GetConnect {

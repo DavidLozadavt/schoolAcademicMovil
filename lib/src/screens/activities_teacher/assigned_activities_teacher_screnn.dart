@@ -174,7 +174,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
   }
 
   void _showUsersModal(BuildContext context,
-      {required int activityId, int? groupId}) async {
+      {required  activityId, int? groupId}) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -192,7 +192,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
       },
     );
 
-    await _activitiesTeacherController.fetchActivitiesRegistration(activityId,
+    await _activitiesTeacherController.fetchActivitiesRegistration(
+        activityId.toString(),
         idGrupo: groupId);
 
     Navigator.of(context).pop();
@@ -267,7 +268,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
 
                       bool isDefaultPhoto = persona?.rutaFoto == null ||
                           persona!.rutaFoto ==
-                              'http://192.168.101.12:8001/default/user.svg';
+                              'https://pre-school-vt-1.virtualt.org//default//user.svg';
 
                       return Container(
                         margin: const EdgeInsets.only(bottom: 10),
