@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/models/api_assigned_activities.dart';
 import 'package:vtschool/src/models/api_response_activities_registrations_model.dart';
-import 'package:vtschool/src/models/api_response_all_activities_model.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
@@ -99,7 +98,8 @@ class ActivitiesTeacherController extends GetxController {
     }
   }
 
-  Future<void> fetchActivitiesRegistration(int activityId,
+  Future<void> fetchActivitiesRegistration(
+       activityId,
       {int? idGrupo}) async {
     isLoading(true);
     try {
