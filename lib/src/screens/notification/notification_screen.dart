@@ -233,7 +233,7 @@ class NotificationScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    if (notificationData['idTipoNotificacion'] != 4)
+                  /*  if (notificationData['idTipoNotificacion'] != 4)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
@@ -247,7 +247,7 @@ class NotificationScreen extends StatelessWidget {
                           'Ir a mis actividades',
                           style: TextStyle(color: Colors.blue),
                         ),
-                      ),
+                      ),*/
                     if (notificationData['estado']['estado'] == 'ACTIVO')
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
