@@ -12,7 +12,6 @@ import 'package:vtschool/src/screens/activities_teacher/create_new_activity_scre
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
-import 'package:vtschool/src/screens/activity_student%20/task_student_screen.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
 import 'package:vtschool/src/screens/payments/tuition_payments/physical_tuition_payments_screen.dart';
@@ -76,7 +75,6 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/home_admin', page: () => HomeAdmin()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
-        GetPage(name: '/task_student', page: () => TaskStudentScreen()),
         GetPage(name: '/chat', page: () => Chat()),
         GetPage(name: '/payments', page: () => PaymentsScreen()),
         GetPage(name: '/physical_registration_payment', page: () => PhysicalRegistrationPaymentScreen()),

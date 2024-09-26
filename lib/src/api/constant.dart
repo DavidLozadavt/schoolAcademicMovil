@@ -22,9 +22,9 @@ const getActivityQuestionnaireUrl =
     '${baseURL}cuestionario/actividad_cuestionario/';
 const postReplyActivityUrl = '${baseURL}responder_actividad/';
 const postReplyQuestionnaireUrl =
-    '${baseURL}cuestionario/responder_cuestionario/';
+    '${baseURL}cuestionario/responder_cuestionario_unificado/';
 const postReplyQuestionnaire1Url =
-    '${baseURL}cuestionario/responder_cuestionario1/';
+    '${baseURL}cuestionario/responder_cuestionario_unificado/';
 const getStudentByIdSubjectUrl = '${baseURL}get_student_by_id_materia/';
 const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
 const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';

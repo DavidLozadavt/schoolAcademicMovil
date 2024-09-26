@@ -37,7 +37,7 @@ class ActivityProvider extends GetConnect {
     if (response.statusCode == 200) {
       //Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
-      activitiesStudent.assignAll(response.body);
+      activitiesStudent.assignAll(response.body.cast<Map<String, dynamic>>());
       /*  } else {
           throw Failure('La respuesta del servidor está vacía.');
         }*/
@@ -153,6 +153,8 @@ class ActivityProvider extends GetConnect {
       var request =
           http.MultipartRequest('POST', Uri.parse('$postReplyActivityUrl$id'));
       request.headers['Authorization'] = 'Bearer $token';
+      request.headers['Content-Type'] = 'application/json';
+
       if (comment != null) {
         request.fields['ComentarioEstudiante'] = comment;
       }
@@ -165,12 +167,13 @@ class ActivityProvider extends GetConnect {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      //print('Response status: ${response.statusCode}');
-      //print('Response body: ${response.body}');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode != 200) {
         throw Exception('Error al enviar la respuesta: ${response.body}');
       }
+      
     } catch (e) {
       throw Exception('Error al enviar la respuesta: $e');
     }
@@ -180,6 +183,7 @@ class ActivityProvider extends GetConnect {
       String idQualification, dynamic answers) async {
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
+    print('877777777 $answersJson');
     try {
       Response response = await post(
         '$postReplyQuestionnaireUrl$idQualification',
@@ -190,6 +194,7 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
+       print('770999 ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }
@@ -211,10 +216,11 @@ class ActivityProvider extends GetConnect {
     throw Exception('Error: La función no devolvió un valor');
   }
 
-  Future<void> replyQuestionnaire1(
+  /*Future<void> replyQuestionnaire1(
       String idQualification, dynamic answers) async {
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
+    print(answersJson);
     try {
       Response response = await post(
         '$postReplyQuestionnaire1Url$idQualification',
@@ -238,7 +244,7 @@ class ActivityProvider extends GetConnect {
     } catch (e) {
       throw Failure('$e');
     }
-  }
+  }*/
 
   //Actividades por id de materia
 

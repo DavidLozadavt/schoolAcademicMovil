@@ -23,7 +23,7 @@ class ChatProvider extends GetConnect {
       },
     );
     // print('code .${response.statusCode}');
-    // print('body .${response.body}');
+     print('body .${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         users.assignAll(response.body.cast<Map<String, dynamic>>());

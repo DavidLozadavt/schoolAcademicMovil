@@ -28,29 +28,16 @@ class ActivitiesStudentScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 40),
-            height: 80,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                const Text(
-                  'Mis actividades',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
+            margin: const EdgeInsets.only(top: 40, left: 20),
+            height: 50,
+            child: const Text(
+             'Mis actividades',
+             style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+               color: Colors.black,
+             ),
+                            ),
           ),
           const SizedBox(
             height: 15,
@@ -96,6 +83,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
               ),
             ),
           ),
+             const SizedBox(
+            height: 15,
+          ),
           Obx(
             () => _taskStudentController.isLoading.value
                 ? const Expanded(
@@ -103,77 +93,86 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : Expanded(
-                    child: _taskStudentController.filteredActivitiesStudent.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'No tienes actividades',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black45,
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: _taskStudentController
-                                .filteredActivitiesStudent.length,
-                            itemBuilder: ((context, index) {
-                              
-                                 
-                            
-                                
-                                String idActividad =
-                                    _taskStudentController.filteredActivitiesStudent[index]['idActividad'].toString();
-                                String initialDate =
-                                    _taskStudentController.filteredActivitiesStudent[index]['fechaInicial'];
-                                String finalDate = _taskStudentController.filteredActivitiesStudent[index]['fechaFinal'];
-                                return Center(
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      await _taskStudentController
-                                          .getTypeActivity(idActividad);
-
-                                      if (_taskStudentController
-                                                  .typeActivitiesById[
-                                              'tipoActividad'] ==
-                                          'GESTION') {
-                                        await _taskStudentController
-                                            .getActivityById(idActividad);
-                                        showNormalActivity(
-                                            context,
-                                            _taskStudentController
-                                                .activitiesById);
-                                      } else {
-                                        await _taskStudentController
-                                            .getActivityQuestionnaire(
-                                                idActividad);
-                                        showQuestionnaireActivity(
-                                            context,
-                                            _taskStudentController
-                                                .activityQuestionnaire);
-                                      }
-                                    },
-                                    child: CardTaskStudent(
-                                      idActivity:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['id']}',
-                                      affair:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['tituloActividad']}',
-                                      urlPhotoSender:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['rutaFoto']}',
-                                      nameOfsender:
-                                          '${_taskStudentController.filteredActivitiesStudent[index]['persona']['nombre1']} ${_taskStudentController.filteredActivitiesStudent[index]['persona']['apellido1']}',
-                                      initialDate: initialDate,
-                                      finalDate: finalDate,
-                                      subject: '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
+                : 
+                 Expanded(
+                     child: RefreshIndicator(
+                  onRefresh: _taskStudentController.refreshItems, 
+                      child:
+                          _taskStudentController.filteredActivitiesStudent.isEmpty
+                              ? const Center(
+                                  child: Text(
+                                    'No tienes actividades',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black45,
                                     ),
                                   ),
-                                );
-                              
-                             
-                            }),
-                          ),
-                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: _taskStudentController
+                                      .filteredActivitiesStudent.length,
+                                  itemBuilder: ((context, index) {
+                                    String idActividad = _taskStudentController
+                                        .filteredActivitiesStudent[index]
+                                            ['idActividad']
+                                        .toString();
+                                    String initialDate = _taskStudentController
+                                            .filteredActivitiesStudent[index]
+                                        ['fechaInicial'];
+                                    String finalDate = _taskStudentController
+                                            .filteredActivitiesStudent[index]
+                                        ['fechaFinal'];
+                                    return Center(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          if (_taskStudentController
+                                                              .filteredActivitiesStudent[
+                                                          index]['actividad']
+                                                      ['tipoActividad']
+                                                  ['tipoActividad'] ==
+                                              'Normal') {
+                                           
+                                            showNormalActivity(
+                                                context,
+                                                _taskStudentController
+                                                        .filteredActivitiesStudent[
+                                                    index]);
+                  
+                                            print(
+                                                'Prueba data: ${_taskStudentController.activitiesById}');
+                                          } else {
+                                            // await _taskStudentController
+                                            //     .getActivityQuestionnaire(
+                                            //         idActividad);
+                                            showQuestionnaireActivity(
+                                                context,
+                                                _taskStudentController
+                                                        .filteredActivitiesStudent[
+                                                    index]);
+                                          }
+                                        },
+                                        child: CardTaskStudent(
+                                          idActivity:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['idActividad']}',
+                                          affair:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['tituloActividad']}',
+                                          urlPhotoSender:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['persona']['rutaFoto']}',
+                                          nameOfsender:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['persona']['nombre1']} ${_taskStudentController.filteredActivitiesStudent[index]['persona']['apellido1']}',
+                                          initialDate: initialDate,
+                                          finalDate: finalDate,
+                                          subject:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
+                                          status: '${_taskStudentController.filteredActivitiesStudent[index]['estado']['estado']}'
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                    ),
+                ),
           ),
         ],
       ),
@@ -208,7 +207,8 @@ class ActivitiesStudentScreen extends StatelessWidget {
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
     Color themeColor = Theme.of(context).dialogBackgroundColor;
-    if (activityData[0]['estado']['estado'] == 'ACTIVO') {
+    print(activityData);
+    if (activityData['estado']['estado'] == 'ACTIVO') {
       return Container(
         height: 700,
         decoration: BoxDecoration(
@@ -230,7 +230,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -242,14 +242,11 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   },
                   children: [
                     _buildTableRow('Título:',
-                        '${activityData[0]['tituloActividad']}', 16, 12),
+                        '${activityData['actividad']['tituloActividad']}', 16, 12),
                     _buildTableRow('Descripción:',
-                        '${activityData[0]['descripcionActividad']}', 16, 12),
-                    _buildTableRow(
-                        'Asignatura:',
-                        '${activityData[0]['materia']['nombreMateria']}',
-                        16,
-                        12),
+                        '${activityData['actividad']['descripcionActividad']}', 16, 12),
+                    _buildTableRow('Asignatura:',
+                        '${activityData['actividad']['materia']['nombreMateria']}', 16, 12),
                   ],
                 ),
                 Row(
@@ -259,13 +256,13 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       'Documento',
                       style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                     IconButton(
                       onPressed: () {
                         _flutterMediaDownloaderPlugin.downloadMedia(
-                            context, '${activityData[0]['DocUrl']}');
+                            context, '${activityData['actividad']['DocUrl']}');
                       },
                       icon: Icon(
                         Icons.downloading,
@@ -288,13 +285,13 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     enableDocumentLinkAnnotation: true,
                     enableHyperlinkNavigation: true,
                     canShowScrollStatus: true,
-                    '${activityData[0]['DocUrl']}',
+                    '${activityData['DocUrl']}',
                   ),
                 ),
                 const SizedBox(height: 15),
                 const Text(
                   'Responder actividad',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -343,18 +340,18 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     maxLines: null,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: listColor[11],
+                      fillColor: Colors.grey[200],
                       labelText: "Respuesta escrita",
                       hintText: "Respuesta escrita",
-                      hintStyle: const TextStyle(color: Colors.white),
-                      labelStyle: const TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(color: Colors.black),
                       prefixIcon: const Icon(
                         Icons.question_answer_outlined,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -362,7 +359,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -370,7 +367,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       ),
                       contentPadding: const EdgeInsets.symmetric(vertical: 1.0),
                     ),
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.black, fontSize: 12),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -380,10 +377,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     disabledBackgroundColor: Colors.blue,
                   ),
                   onPressed: () {
-                    String idActividad = activityData[0]
-                            ['calificacionActividad']['id']
-                        .toString();
-                    _taskStudentController.replyActivityP(idActividad);
+                    String idActividad = activityData['id'].toString();
+                    _taskStudentController.replyActivity(idActividad);
+                    _taskStudentController.getActivitiesStudent();
                   },
                   child: const Text('Enviar evidencia'),
                 ),
@@ -392,16 +388,22 @@ class ActivitiesStudentScreen extends StatelessWidget {
           ),
         ),
       );
+    } else if (activityData['estado']['estado'] == 'ACEPTADO') {
+      return showModalPastActivity(context, 'Ya respondio su actividad');
+    } else if (activityData['estado']['estado'] == 'CALIFICADO') {
+      return showModalPastActivity(
+          context, 'Su profesor ya califico su actividad');
     } else {
-      return showModalPastActivity(context, 'Su actividad');
+      //validar con la fecha
+      return showModalPastActivity(
+          context, 'Se vencio el plazo de su actividad');
     }
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
-    String idQualification =
-        activityData['calificacionActividad']['id'].toString();
+    String idQualification = activityData['id'].toString();
     Color themeColor = Theme.of(context).dialogBackgroundColor;
-    if (activityData['idEstado'] == 1) {
+    if (activityData['estado']['estado'] == 'ACTIVO') {
       return Container(
         height: 700,
         decoration: BoxDecoration(
@@ -423,7 +425,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -434,37 +436,41 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     1: FlexColumnWidth(3),
                   },
                   children: [
-                    _buildTableRow('Título:',
-                        '${activityData['tituloActividad']}', 16, 12),
-                    _buildTableRow('Descripción:',
-                        '${activityData['descripcionActividad']}', 16, 12),
-                    _buildTableRow('Asignatura:',
-                        '${activityData['materia']['nombreMateria']}', 16, 12),
+                    _buildTableRow(
+                        'Título:',
+                        '${activityData['actividad']['tituloActividad']}',
+                        16,
+                        12),
+                    _buildTableRow(
+                        'Descripción:',
+                        '${activityData['actividad']['descripcionActividad']}',
+                        16,
+                        12),
+                    _buildTableRow(
+                        'Asignatura:',
+                        '${activityData['actividad']['materia']['nombreMateria']}',
+                        16,
+                        12),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Column(
                   children: List.generate(
-                    activityData['preguntas'].length,
+                    activityData['actividad']['preguntas'].length,
                     (index) {
-                      var question = activityData['preguntas'][index];
-
-                      final List<int> selectedValues =
-                          List.filled(activityData['preguntas'].length, -1).obs;
-
-                      List<dynamic> options = [];
-                      for (var respuesta in question['respuestas']) {
-                        options.add(respuesta);
-                      }
+                      var question =
+                          activityData['actividad']['preguntas'][index];
+                      final selectedValue = (-1).obs;
+                      List<dynamic> options = question['respuestas'];
                       if (question['idTipoPregunta'] == 3) {
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white24,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
-                              color: const Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                           child: Column(
@@ -475,7 +481,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -492,25 +498,18 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                               .contains(WidgetState.selected)) {
                                             return const Color(0xff00C535);
                                           }
-                                          return Colors.white;
+                                          return Colors.black;
                                         },
                                       ),
                                       title: Text(
                                         options[index]['descripcionRespuesta'],
                                         style: const TextStyle(
-                                            color: Colors.white),
+                                            color: Colors.black),
                                       ),
                                       value: options[index]['id'],
-                                      groupValue: selectedValues[index],
+                                      groupValue: selectedValue.value,
                                       onChanged: (value) {
-                                        selectedValues[index] = value!;
-                                        for (int i = 0;
-                                            i < options.length;
-                                            i++) {
-                                          if (i != index) {
-                                            selectedValues[i] = -1;
-                                          }
-                                        }
+                                        selectedValue.value = value!;
                                         var selectedResponseId =
                                             options[index]['id'];
                                         var selectedQuestionId = question['id'];
@@ -518,11 +517,11 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                             options[index]
                                                 ['descripcionRespuesta'];
                                         _taskStudentController.saveAnswers(
-                                          selectedQuestionId,
-                                          selectedResponseId.toString(),
-                                          selectedResponseDescription
+                                          idQuestion: selectedQuestionId,
+                                          idAnswer: selectedResponseId.toString(),
+                                          description: selectedResponseDescription
                                               .toString(),
-                                          3,
+                                          idTypeQuestion: 3,
                                         );
                                         // print(_taskStudentController
                                         //     .selectedAnswer);
@@ -536,96 +535,16 @@ class ActivitiesStudentScreen extends StatelessWidget {
                             ],
                           ),
                         );
-                      } else if (question['idTipoPregunta'] == 4) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10.0),
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                question['descripcion'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                  options.length,
-                                  (index) => Obx(
-                                    () => CheckboxListTile(
-                                      fillColor: WidgetStateProperty
-                                          .resolveWith<Color>(
-                                        (Set<WidgetState> states) {
-                                          if (states
-                                              .contains(WidgetState.selected)) {
-                                            return const Color(0xff00C535);
-                                          }
-                                          return Colors.white;
-                                        },
-                                      ),
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        options[index]['descripcionRespuesta'],
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                      value: _taskStudentController
-                                          .selectedOptions
-                                          .contains(index),
-                                      onChanged: (bool? value) {
-                                        if (value != null) {
-                                          _taskStudentController
-                                              .toggleSelectedOption(index);
-                                          var selectedResponseId =
-                                              options[index]['id'];
-                                          var selectedQuestionId =
-                                              question['id'];
-                                          var selectedResponseDescription =
-                                              options[index]
-                                                  ['descripcionRespuesta'];
-                                          // print(selectedResponseId);
-                                          // print(selectedQuestionId);
-                                          // print(selectedResponseDescription);
-
-                                          _taskStudentController.saveAnswers(
-                                              selectedQuestionId,
-                                              selectedResponseId.toString(),
-                                              selectedResponseDescription
-                                                  .toString(),
-                                              4,
-                                              value: value);
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
                       } else {
-                        var idQuestion = question['id'].toString();
+                        var idQuestion = question['id'];
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.black.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
-                              color: const Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                           child: Column(
@@ -636,7 +555,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -644,30 +563,30 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 decoration: InputDecoration(
                                   hintText: 'Escribe tu respuesta aquí',
                                   hintStyle:
-                                      const TextStyle(color: Colors.white70),
+                                      const TextStyle(color: Colors.black54),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide:
-                                        const BorderSide(color: Colors.white),
+                                        const BorderSide(color: Colors.black),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide:
-                                        const BorderSide(color: Colors.white),
+                                        const BorderSide(color: Colors.black),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide:
-                                        const BorderSide(color: Colors.white),
+                                        const BorderSide(color: Colors.black),
                                   ),
                                 ),
-                                style: const TextStyle(color: Colors.white),
-                                cursorColor: Colors.white,
+                                style: const TextStyle(color: Colors.black),
+                                cursorColor: Colors.black,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 onChanged: (value) {
-                                  _taskStudentController.addValue(
-                                      value, idQuestion);
+                                  _taskStudentController.saveAnswers(
+                                      valueInput: value, idQuestion: idQuestion, idTypeQuestion: 2);
                                 },
                               ),
                             ],
@@ -683,8 +602,21 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     disabledBackgroundColor: Colors.blue,
                   ),
                   onPressed: () async {
-                    List<int> idTypeQuestion = [];
-                    var questions = activityData['preguntas'];
+                    if (_taskStudentController.selectedAnswer.isNotEmpty) {
+                        await _taskStudentController.replyQuestionnaire(
+                            idQualification,
+                           );
+                      } else {
+                        Get.defaultDialog(
+                          title: '¡Información!',
+                          middleText:
+                              'Debes responder por al menos una pregunta',
+                          textConfirm: 'OK',
+                          onConfirm: () => Get.back(),
+                        );
+                    }
+                    /*List<int> idTypeQuestion = [];
+                    var questions = activityData['actividad']['preguntas'];
                     for (var question in questions) {
                       idTypeQuestion.add(question["idTipoPregunta"]);
                     }
@@ -721,8 +653,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           onConfirm: () => Get.back(),
                         );
                       }
-                    }
+                    }**/
                     _taskStudentController.reiniciarRespuestas();
+                    _taskStudentController.getActivitiesStudent();
                   },
                   child: const Text('Enviar cuestionario'),
                 ),
@@ -731,12 +664,19 @@ class ActivitiesStudentScreen extends StatelessWidget {
           ),
         ),
       );
+    } else if (activityData['estado']['estado'] == 'PENDIENTE') {
+      return showModalPastActivity(context, 'El cuestionario ya no esta disponible');
+    } else if (activityData['estado']['estado'] == 'CALIFICADO') {
+      return showModalPastActivity(
+          context, 'Su profesor ya califico su cuestionario');
     } else {
-      return showModalPastActivity(context, 'El cuestionario');
+      //validar con la fecha
+      return showModalPastActivity(
+          context, 'Se vencio el plazo de su cuestionario');
     }
   }
 
-  Widget showModalPastActivity(BuildContext context, String name) {
+  Widget showModalPastActivity(BuildContext context, String title) {
     Color themeColor = Theme.of(context).dialogBackgroundColor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
@@ -767,7 +707,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(
-              '$name ya paso la fecha de presentación',
+              title,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

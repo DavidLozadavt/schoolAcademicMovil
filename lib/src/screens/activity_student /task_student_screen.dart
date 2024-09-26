@@ -1,4 +1,4 @@
-import 'dart:convert';
+/*import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -180,6 +180,7 @@ class TaskStudentScreen extends StatelessWidget {
                                       initialDate: initialDate,
                                       finalDate: finalDate,
                                       subject: subject,
+                                      status: 'Activo',
                                     ),
                                   ),
                                 );
@@ -708,8 +709,8 @@ class TaskStudentScreen extends StatelessWidget {
                       if (_taskStudentController
                               .valuesInputQuestionnaire.isNotEmpty ||
                           _taskStudentController.selectedAnswer.isNotEmpty) {
-                        await _taskStudentController.replyQuestionnaire1(
-                            idQualification, showModalInfoAnswer(context));
+                        // await _taskStudentController.replyQuestionnaire1(
+                        //     idQualification, showModalInfoAnswer(context));
                         await _taskStudentController
                             .replyQuestionnaire(idQualification);
                       } else {
@@ -1044,3 +1045,4 @@ class TaskStudentScreen extends StatelessWidget {
     );
   }
 }
+*/

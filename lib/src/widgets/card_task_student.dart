@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vtschool/src/config/theme/app_theme.dart';
 
 class CardTaskStudent extends StatelessWidget {
   final String idActivity;
@@ -9,6 +8,7 @@ class CardTaskStudent extends StatelessWidget {
   final String initialDate;
   final String finalDate;
   final String subject;
+  final String status;
 
   const CardTaskStudent({
     required this.idActivity,
@@ -18,6 +18,7 @@ class CardTaskStudent extends StatelessWidget {
     required this.initialDate,
     required this.finalDate,
     required this.subject,
+    required this.status,
     super.key,
   });
 
@@ -28,7 +29,7 @@ class CardTaskStudent extends StatelessWidget {
       child: Container(
         width: 350,
         decoration: BoxDecoration(
-          color: listColor[12].withOpacity(0.4),
+          color: getRandomColor(),
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
             color: Colors.grey[400]!,
@@ -101,5 +102,15 @@ class CardTaskStudent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+   Color getRandomColor() {
+    if (status == 'ACTIVO') {
+      return const Color.fromARGB(255, 157, 219, 129);
+    } else if (status == 'ACEPTADO' || status == 'PENDIENTE') {
+      return const Color.fromARGB(255, 240, 230, 93);
+    }  else {
+      return const Color.fromARGB(255, 247, 141, 141);
+    }
   }
 }

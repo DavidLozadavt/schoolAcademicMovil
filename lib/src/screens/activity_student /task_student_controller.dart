@@ -33,65 +33,28 @@ class TaskStudentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getNotifications();
+    
     getActivitiesStudent();
   }
 
-  Future<void> getNotifications() async {
-    try {
-      await _notificationsProvider.getNotifications();
-      activities.assignAll(_notificationsProvider.activities);
-      filteredActivities.assignAll(activities);
-
-      isLoading(true);
-    } finally {
-      isLoading(false);
-    }
+  Future<void> refreshItems() async {
+    await Future.delayed(const Duration(seconds: 1));
+    getActivitiesStudent();
   }
 
   Future<void> getActivitiesStudent() async {
     try {
       await _activityProvider.getActivitiesStudent();
       activitiesStudent.assignAll(_activityProvider.activitiesStudent);
-      filteredActivitiesStudent.assignAll(activities);
+      filteredActivitiesStudent.assignAll(activitiesStudent);
       isLoading(true);
     } finally {
       isLoading(false);
     }
   }
 
-  Future<void> getActivityById(String id) async {
-    try {
-      await _activityProvider.getActivityById(id);
-      activitiesById.assignAll(_activityProvider.activitiesById);
-      print(activitiesById);
-    } finally {}
-  }
 
-  Future<void> getTypeActivity(String id) async {
-    try {
-      final typeActivityData = await _activityProvider.getTypeActivity(id);
-      typeActivitiesById(typeActivityData);
-    } finally {}
-  }
-
-  Future<void> getActivityQuestionnaire(String id) async {
-    try {
-      final questionnaireActivity =
-          await _activityProvider.getActivityQuestionnaire(id);
-      activityQuestionnaire(questionnaireActivity);
-    } finally {}
-  }
-
-  /*Future<void> replyActivity(String id, String? comment, File? file) async {
-    try {
-      await _activityProvider.replyActivity(id, comment, file);
-    } catch (e) {
-      print('Error al enviar la evidencia: $e');
-    }
-  }*/
-
-  replyActivityP(String id) async {
+  replyActivity(String id) async {
     try {
       if (commentController.text.isEmpty && filePath.value.path.isEmpty) {
         Get.snackbar(
@@ -131,60 +94,14 @@ class TaskStudentController extends GetxController {
           idQualification, selectedAnswer);
 
       answerRating.value = response;
-      //print('4444444444444 $answerRating');
+
       await Get.bottomSheet(
         alert!,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      //print('Error al enviar la evidencia: $e');
       print('Error al enviar la evidencia: $e');
-    }
-  }
-
-  Future<void> replyQuestionnaire1(String idQualification, Widget alert) async {
-    try {
-      await _activityProvider.replyQuestionnaire1(
-          idQualification, valuesInputQuestionnaire);
-
-      await Get.bottomSheet(
-        alert,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-      );
-    } catch (e) {
-      //print('Error al enviar la evidencia: $e');
-    }
-  }
-
-  void filterActivities(String query) {
-    if (query.isEmpty) {
-      filteredActivities.assignAll(activities);
-    } else {
-      filteredActivities.assignAll(activities.where((activity) {
-        if (activity['metadataInfo'] != null) {
-          Map<String, dynamic> decodedData =
-              jsonDecode(activity['metadataInfo']);
-          final String affair = activity['asunto'].toString().toLowerCase();
-          final String id = activity['id'].toString().toLowerCase();
-          final String nameTeacher =
-              activity['personaRemitente']['nombre1'].toString().toLowerCase();
-          final String lastNameTeacher = activity['personaRemitente']
-                  ['apellido1']
-              .toString()
-              .toLowerCase();
-          final String subject =
-              decodedData['nombreMateria'].toString().toLowerCase();
-          return affair.contains(query.toLowerCase()) ||
-              id.contains(query.toLowerCase()) ||
-              nameTeacher.contains(query.toLowerCase()) ||
-              lastNameTeacher.contains(query.toLowerCase()) ||
-              subject.contains(query.toLowerCase());
-        } else {
-          return false;
-        }
-      }));
     }
   }
 
@@ -218,62 +135,41 @@ class TaskStudentController extends GetxController {
     filePath.value = path;
   }
 
+  void reiniciarRespuestas() {
+    selectedAnswer.clear();
+    valuesInputQuestionnaire.clear();
+  }
   void saveAnswers(
-      int idQuestion, String idAnswer, String description, int idTypeQuestion,
-      {bool? value}) {
+      {int? idQuestion, String? idAnswer, String? description, int? idTypeQuestion,
+      String? valueInput}) {
     var existingIndex = selectedAnswer
         .indexWhere((answer) => answer['idPregunta'] == idQuestion);
+         
     if (idTypeQuestion == 3) {
       if (existingIndex != -1) {
         selectedAnswer[existingIndex] = {
           'idPregunta': idQuestion,
           'respuesta': idAnswer,
-          'respuestas': description,
+          'descripcionRespuesta': description,
         };
       } else {
         selectedAnswer.add({
           'idPregunta': idQuestion,
           'respuesta': idAnswer,
-          'respuestas': description,
+          'descripcionRespuesta': description,
         });
       }
     } else {
-      if (value == true) {
-        selectedAnswer.add({
-          'idPregunta': idQuestion,
-          'respuesta': idAnswer,
-          'respuestas': description,
-        });
-      } else {
-        selectedAnswer.removeAt(existingIndex);
-      }
-    }
-  }
-
-  void reiniciarRespuestas() {
-    selectedAnswer.clear();
-    valuesInputQuestionnaire.clear();
-  }
-
-  void addValue(String value, String idQuestion) {
-    var existingIndex = valuesInputQuestionnaire
-        .indexWhere((answers) => answers['idPregunta'] == idQuestion);
-    if (existingIndex != -1) {
-      valuesInputQuestionnaire[existingIndex] = {
+      if (existingIndex != -1) {
+      selectedAnswer[existingIndex] = {
         'idPregunta': idQuestion,
-        'respuesta': value
+        'respuesta': valueInput
       };
     } else {
-      valuesInputQuestionnaire
-          .add({'idPregunta': idQuestion, 'respuesta': value});
+      selectedAnswer
+          .add({'idPregunta': idQuestion, 'respuesta': valueInput});
+    }
     }
   }
 
-  void toggleSelectedOption(int index) {
-    if (selectedOptions.contains(index)) {
-      selectedOptions.remove(index);
-    } else {
-      selectedOptions.add(index);
-    }
-  }
 }
