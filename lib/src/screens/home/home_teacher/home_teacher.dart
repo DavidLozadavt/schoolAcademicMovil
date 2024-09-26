@@ -66,11 +66,11 @@ class HomeTeacher extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/posts.png',
-                    title: 'Posts',
+                    title: 'Publicaciones',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/posts.png',
-                    title: 'Posts',
+                    title: 'Publicaciones',
                     isActive: true,
                   ),
                   
@@ -93,11 +93,11 @@ class HomeTeacher extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'Perfil',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'Perfil',
                     isActive: true,
                   ),
                 ),

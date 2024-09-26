@@ -171,7 +171,6 @@ class ActivityProvider extends GetConnect {
       if (response.statusCode != 200) {
         throw Exception('Error al enviar la respuesta: ${response.body}');
       }
-      
     } catch (e) {
       throw Exception('Error al enviar la respuesta: $e');
     }
@@ -192,7 +191,7 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
-       print('770999 ${response.body}');
+      print('770999 ${response.body}');
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }
@@ -305,9 +304,8 @@ class ActivityProvider extends GetConnect {
     }
   }
 
-  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(
-      int activityId,
-      {int? groupId}) async {
+  Future<List<Registrationsactivity>> fetchActivitiesRegistrations(activityId,
+      {groupId}) async {
     String token = await authService.getToken();
 
     Map<String, String> queryParameters = {};

@@ -332,7 +332,6 @@
 //     };
 // }
 
-
 import 'dart:convert';
 
 List<Registrationsactivity> registrationsactivityFromJson(String str) =>
@@ -343,61 +342,67 @@ String registrationsactivityToJson(List<Registrationsactivity> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Registrationsactivity {
-  final int id;
-  final String archivo;
-  final DateTime fechaCreacion;
-  final DateTime fechaInicial;
-  final DateTime fechaFinal;
-  final String calificacionNumerica;
-  final String calificacionEstandart;
-  final String comentarioDocente;
-  final String comentarioEstudiante;
+  final int? id;
+  final dynamic archivo;
+  final DateTime? fechaCreacion;
+  final DateTime? fechaInicial;
+  final DateTime? fechaFinal;
+  final dynamic calificacionNumerica;
+  final dynamic calificacionEstandart;
+  final dynamic comentarioDocente;
+  final dynamic comentarioEstudiante;
   final dynamic idActividad;
   final dynamic idAMartriculaAcademica;
   final dynamic idEstado;
   final dynamic idGrupo;
   final dynamic idPersona;
-  final String idCorte;
-  final DateTime fechaCalificacion;
+  final String? idCorte;
+  final DateTime? fechaCalificacion;
   final dynamic createdAt;
   final dynamic updatedAt;
-  final String notificacionEnviada;
-  final String docRespuesta;
-  final MatriculaAcademica matriculaAcademica;
-  final Estado estado;
+  final String? notificacionEnviada;
+  final dynamic docRespuesta;
+  final MatriculaAcademica? matriculaAcademica;
+  final Estado? estado;
 
   Registrationsactivity({
-    required this.id,
-    required this.archivo,
-    required this.fechaCreacion,
-    required this.fechaInicial,
-    required this.fechaFinal,
-    required this.calificacionNumerica,
-    required this.calificacionEstandart,
-    required this.comentarioDocente,
-    required this.comentarioEstudiante,
-    required this.idActividad,
-    required this.idAMartriculaAcademica,
-    required this.idEstado,
-    required this.idGrupo,
-    required this.idPersona,
-    required this.idCorte,
-    required this.fechaCalificacion,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.notificacionEnviada,
-    required this.docRespuesta,
-    required this.matriculaAcademica,
-    required this.estado,
+    this.id,
+    this.archivo,
+    this.fechaCreacion,
+    this.fechaInicial,
+    this.fechaFinal,
+    this.calificacionNumerica,
+    this.calificacionEstandart,
+    this.comentarioDocente,
+    this.comentarioEstudiante,
+    this.idActividad,
+    this.idAMartriculaAcademica,
+    this.idEstado,
+    this.idGrupo,
+    this.idPersona,
+    this.idCorte,
+    this.fechaCalificacion,
+    this.createdAt,
+    this.updatedAt,
+    this.notificacionEnviada,
+    this.docRespuesta,
+    this.matriculaAcademica,
+    this.estado,
   });
 
   factory Registrationsactivity.fromJson(Map<String, dynamic> json) =>
       Registrationsactivity(
         id: json["id"],
         archivo: json["archivo"],
-        fechaCreacion: DateTime.parse(json["fechaCreacion"]),
-        fechaInicial: DateTime.parse(json["fechaInicial"]),
-        fechaFinal: DateTime.parse(json["fechaFinal"]),
+        fechaCreacion: json["fechaCreacion"] != null
+            ? DateTime.parse(json["fechaCreacion"])
+            : null,
+        fechaInicial: json["fechaInicial"] != null
+            ? DateTime.parse(json["fechaInicial"])
+            : null,
+        fechaFinal: json["fechaFinal"] != null
+            ? DateTime.parse(json["fechaFinal"])
+            : null,
         calificacionNumerica: json["calificacionNumerica"],
         calificacionEstandart: json["calificacionEstandart"],
         comentarioDocente: json["ComentarioDocente"],
@@ -408,21 +413,25 @@ class Registrationsactivity {
         idGrupo: json["idGrupo"],
         idPersona: json["idPersona"],
         idCorte: json["idCorte"],
-        fechaCalificacion: DateTime.parse(json["fechaCalificacion"]),
+        fechaCalificacion: json["fechaCalificacion"] != null
+            ? DateTime.parse(json["fechaCalificacion"])
+            : null,
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         notificacionEnviada: json["notificacionEnviada"],
         docRespuesta: json["DocRespuesta"],
-        matriculaAcademica: MatriculaAcademica.fromJson(json["matriculaAcademica"]),
-        estado: Estado.fromJson(json["estado"]),
+        matriculaAcademica: json["matriculaAcademica"] != null
+            ? MatriculaAcademica.fromJson(json["matriculaAcademica"])
+            : null,
+        estado: json["estado"] != null ? Estado.fromJson(json["estado"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "archivo": archivo,
-        "fechaCreacion": fechaCreacion.toIso8601String(),
-        "fechaInicial": fechaInicial.toIso8601String(),
-        "fechaFinal": fechaFinal.toIso8601String(),
+        "fechaCreacion": fechaCreacion?.toIso8601String(),
+        "fechaInicial": fechaInicial?.toIso8601String(),
+        "fechaFinal": fechaFinal?.toIso8601String(),
         "calificacionNumerica": calificacionNumerica,
         "calificacionEstandart": calificacionEstandart,
         "ComentarioDocente": comentarioDocente,
@@ -433,25 +442,25 @@ class Registrationsactivity {
         "idGrupo": idGrupo,
         "idPersona": idPersona,
         "idCorte": idCorte,
-        "fechaCalificacion": fechaCalificacion.toIso8601String(),
+        "fechaCalificacion": fechaCalificacion?.toIso8601String(),
         "created_at": createdAt,
         "updated_at": updatedAt,
         "notificacionEnviada": notificacionEnviada,
         "DocRespuesta": docRespuesta,
-        "matriculaAcademica": matriculaAcademica.toJson(),
-        "estado": estado.toJson(),
+        "matriculaAcademica": matriculaAcademica?.toJson(),
+        "estado": estado?.toJson(),
       };
 }
 
 class Estado {
-  final int id;
-  final String estado;
-  final String descripcion;
+  final int? id;
+  final String? estado;
+  final String? descripcion;
 
   Estado({
-    required this.id,
-    required this.estado,
-    required this.descripcion,
+    this.id,
+    this.estado,
+    this.descripcion,
   });
 
   factory Estado.fromJson(Map<String, dynamic> json) => Estado(
@@ -468,24 +477,24 @@ class Estado {
 }
 
 class MatriculaAcademica {
-  final int id;
-  final String idAsignacionPeriodoProgramaJornada;
-  final String idMateria;
-  final String idMatricula;
-  final String estado;
+  final int? id;
+  final String? idAsignacionPeriodoProgramaJornada;
+  final String? idMateria;
+  final String? idMatricula;
+  final String? estado;
   final dynamic createdAt;
   final dynamic updatedAt;
-  final Matricula matricula;
+  final Matricula? matricula;
 
   MatriculaAcademica({
-    required this.id,
-    required this.idAsignacionPeriodoProgramaJornada,
-    required this.idMateria,
-    required this.idMatricula,
-    required this.estado,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.matricula,
+    this.id,
+    this.idAsignacionPeriodoProgramaJornada,
+    this.idMateria,
+    this.idMatricula,
+    this.estado,
+    this.createdAt,
+    this.updatedAt,
+    this.matricula,
   });
 
   factory MatriculaAcademica.fromJson(Map<String, dynamic> json) =>
@@ -497,7 +506,7 @@ class MatriculaAcademica {
         estado: json["estado"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        matricula: Matricula.fromJson(json["matricula"]),
+        matricula: json["matricula"] != null ? Matricula.fromJson(json["matricula"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -508,40 +517,40 @@ class MatriculaAcademica {
         "estado": estado,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "matricula": matricula.toJson(),
+        "matricula": matricula?.toJson(),
       };
 }
 
 class Matricula {
-  final int id;
-  final DateTime fecha;
+  final int? id;
+  final DateTime? fecha;
   final dynamic idAcudiente;
-  final String idAsignacionPeriodoProgramaJornada;
-  final String idPersona;
-  final String idCompany;
-  final String idGrado;
-  final String estado;
+  final String? idAsignacionPeriodoProgramaJornada;
+  final String? idPersona;
+  final String? idCompany;
+  final String? idGrado;
+  final String? estado;
   final dynamic createdAt;
   final dynamic updatedAt;
-  final Persona persona;
+  final Persona? persona;
 
   Matricula({
-    required this.id,
-    required this.fecha,
-    required this.idAcudiente,
-    required this.idAsignacionPeriodoProgramaJornada,
-    required this.idPersona,
-    required this.idCompany,
-    required this.idGrado,
-    required this.estado,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.persona,
+    this.id,
+    this.fecha,
+    this.idAcudiente,
+    this.idAsignacionPeriodoProgramaJornada,
+    this.idPersona,
+    this.idCompany,
+    this.idGrado,
+    this.estado,
+    this.createdAt,
+    this.updatedAt,
+    this.persona,
   });
 
   factory Matricula.fromJson(Map<String, dynamic> json) => Matricula(
         id: json["id"],
-        fecha: DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] != null ? DateTime.parse(json["fecha"]) : null,
         idAcudiente: json["idAcudiente"],
         idAsignacionPeriodoProgramaJornada: json["idAsignacionPeriodoProgramaJornada"],
         idPersona: json["idPersona"],
@@ -550,12 +559,12 @@ class Matricula {
         estado: json["estado"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        persona: Persona.fromJson(json["persona"]),
+        persona: json["persona"] != null ? Persona.fromJson(json["persona"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "fecha": fecha.toIso8601String(),
+        "fecha": fecha?.toIso8601String(),
         "idAcudiente": idAcudiente,
         "idAsignacionPeriodoProgramaJornada": idAsignacionPeriodoProgramaJornada,
         "idPersona": idPersona,
@@ -564,55 +573,55 @@ class Matricula {
         "estado": estado,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "persona": persona.toJson(),
+        "persona": persona?.toJson(),
       };
 }
 
 class Persona {
-  final int id;
-  final String identificacion;
-  final String nombre1;
+  final int? id;
+  final String? identificacion;
+  final String? nombre1;
   final dynamic nombre2;
-  final String apellido1;
-  final String apellido2;
-  final DateTime fechaNac;
-  final String direccion;
-  final String email;
-  final String telefonoFijo;
-  final String celular;
+  final String? apellido1;
+  final String? apellido2;
+  final DateTime? fechaNac;
+  final String? direccion;
+  final String? email;
+  final String? telefonoFijo;
+  final String? celular;
   final dynamic perfil;
-  final String sexo;
-  final String rh;
-  final String rutaFoto;
-  final String idTipoIdentificacion;
-  final String idCiudadNac;
-  final String idCiudadUbicacion;
-  final String tipoPersona;
+  final String? sexo;
+  final String? rh;
+  final String? rutaFoto;
+  final String? idTipoIdentificacion;
+  final String? idCiudadNac;
+  final String? idCiudadUbicacion;
+  final String? tipoPersona;
   final dynamic createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
 
   Persona({
-    required this.id,
-    required this.identificacion,
-    required this.nombre1,
-    required this.nombre2,
-    required this.apellido1,
-    required this.apellido2,
-    required this.fechaNac,
-    required this.direccion,
-    required this.email,
-    required this.telefonoFijo,
-    required this.celular,
-    required this.perfil,
-    required this.sexo,
-    required this.rh,
-    required this.rutaFoto,
-    required this.idTipoIdentificacion,
-    required this.idCiudadNac,
-    required this.idCiudadUbicacion,
-    required this.tipoPersona,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.identificacion,
+    this.nombre1,
+    this.nombre2,
+    this.apellido1,
+    this.apellido2,
+    this.fechaNac,
+    this.direccion,
+    this.email,
+    this.telefonoFijo,
+    this.celular,
+    this.perfil,
+    this.sexo,
+    this.rh,
+    this.rutaFoto,
+    this.idTipoIdentificacion,
+    this.idCiudadNac,
+    this.idCiudadUbicacion,
+    this.tipoPersona,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Persona.fromJson(Map<String, dynamic> json) => Persona(
@@ -622,7 +631,7 @@ class Persona {
         nombre2: json["nombre2"],
         apellido1: json["apellido1"],
         apellido2: json["apellido2"],
-        fechaNac: DateTime.parse(json["fechaNac"]),
+        fechaNac: json["fechaNac"] != null ? DateTime.parse(json["fechaNac"]) : null,
         direccion: json["direccion"],
         email: json["email"],
         telefonoFijo: json["telefonoFijo"],
@@ -636,7 +645,7 @@ class Persona {
         idCiudadUbicacion: json["idCiudadUbicacion"],
         tipoPersona: json["tipoPersona"],
         createdAt: json["created_at"],
-        updatedAt: DateTime.parse(json["updated_at"]),
+        updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -646,7 +655,7 @@ class Persona {
         "nombre2": nombre2,
         "apellido1": apellido1,
         "apellido2": apellido2,
-        "fechaNac": fechaNac.toIso8601String(),
+        "fechaNac": fechaNac?.toIso8601String(),
         "direccion": direccion,
         "email": email,
         "telefonoFijo": telefonoFijo,
@@ -660,6 +669,6 @@ class Persona {
         "idCiudadUbicacion": idCiudadUbicacion,
         "tipoPersona": tipoPersona,
         "created_at": createdAt,
-        "updated_at": updatedAt.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

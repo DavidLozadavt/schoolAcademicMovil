@@ -60,7 +60,7 @@ class ActivitiesTeacherController extends GetxController {
       descripcionActividad.value = '';
       archivo.value = null;
       await _refreshData();
-       Get.offNamed('/activities_teacher');
+      Get.offNamed('/activities_teacher');
     } catch (e) {
       Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.TOP);
     }
@@ -98,15 +98,14 @@ class ActivitiesTeacherController extends GetxController {
     }
   }
 
-  Future<void> fetchActivitiesRegistration(
-       activityId,
-      {int? idGrupo}) async {
+  Future<void> fetchActivitiesRegistration(activityId, {idGrupo}) async {
     isLoading(true);
     try {
       activitiesRegistration.value = await _activityProvider
           .fetchActivitiesRegistrations(activityId, groupId: idGrupo);
     } catch (e) {
       Get.snackbar("Error", "No se pudieron obtener las actividades: $e");
+      print(e);
     } finally {
       isLoading(false);
     }
@@ -163,6 +162,7 @@ class ActivitiesTeacherController extends GetxController {
           colorText: Colors.white);
     }
   }
+
 //eliminar actividades
   void deleteActivities(String id) async {
     isLoading(true);
@@ -185,5 +185,4 @@ class ActivitiesTeacherController extends GetxController {
   //   // Lógica adicional para enviar el cambio al backend si es necesario
   //   // Puedes hacer una llamada API para actualizar el estado en la base de datos
   // }
-
 }
