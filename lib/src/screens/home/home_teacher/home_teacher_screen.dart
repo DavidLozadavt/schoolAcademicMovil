@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/providers/push_notification_controller.dart';
 import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class HomeTeacherScreen extends StatelessWidget {
   HomeTeacherScreen({super.key});
-final PushNotificationController _pushNotificationController =
+  final PushNotificationController _pushNotificationController =
       Get.put(PushNotificationController());
   final ProfileUserController _profileController =
       Get.put(ProfileUserController());
@@ -108,44 +109,53 @@ final PushNotificationController _pushNotificationController =
                   ),
                 ],
               ),
-            
-              // Aquí se agrega el widget HistoriasWidget
-            //  HistoriasWidget(), 
-              const Center(
-                child: Text(
-                  '¡Tu semana al instante!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'CM Sans Serif',
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: SizedBox(
-                  width: 375,
-                  height: 400,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HistoriasWidget(),
+                    const SizedBox(
+                      height: 15,
                     ),
-                    padding: const EdgeInsets.all(18),
-                    child: Calendar(),
-                  ),
+                    const Center(
+                      child: Text(
+                        '¡Tu semana al instante!',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'CM Sans Serif',
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 375,
+                        height: 390,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(18),
+                          child: Calendar(),
+                        ),
+                      ),
+                    ),
+                   
+                  ],
                 ),
               ),
+               
             ],
           ),
         );

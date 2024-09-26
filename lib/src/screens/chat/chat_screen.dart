@@ -106,12 +106,12 @@ class Chat extends StatelessWidget {
                           DateTime.parse(messages[index]['created_at']);
                       String formattedDate =
                           DateFormat('dd MMMM yyyy', 'es').format(dateTime);
-                      ('1${messages[index]['active_company_user']['idUser']}');
-                      ('2${selectedUser['matricula']['persona']['id']}');
-                      ('3${messages[index]}');
+                      print('1${messages[index]['active_company_user']['idUser']}');
+                      print('2${selectedUser['matricula']['persona']['id']}');
+                      print('3${messages[index]}');
                       bool isOwnMessage = messages[index]['active_company_user']
-                              ['idUser'] !=
-                          selectedUser['matricula']['persona']['id'];
+                              ['idUser'].toString() !=
+                          selectedUser['matricula']['persona']['id'].toString();
                       ('$isOwnMessage');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
@@ -123,8 +123,8 @@ class Chat extends StatelessWidget {
                               : MainAxisAlignment.start,
                           children: [
                             if (messages[index]['active_company_user']
-                                    ['idUser'] ==
-                                selectedUser['matricula']['persona']['id'])
+                                    ['idUser'].toString() ==
+                                selectedUser['matricula']['persona']['id'].toString())
                               CircleAvatar(
                                   backgroundImage: NetworkImage(
                                     '${selectedUser['matricula']!['persona']['rutaFoto']}',
@@ -386,8 +386,8 @@ class Chat extends StatelessWidget {
                               ),
                             ),
                             if (messages[index]['active_company_user']
-                                    ['idUser'] !=
-                                selectedUser['matricula']['persona']['id'])
+                                    ['idUser'].toString() !=
+                                selectedUser['matricula']['persona']['id'].toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),

@@ -108,7 +108,7 @@ class CardTaskStudent extends StatelessWidget {
     if (status == 'ACTIVO') {
       return const Color.fromARGB(255, 157, 219, 129);
     } else if (status == 'ACEPTADO' || status == 'PENDIENTE') {
-      return const Color.fromARGB(255, 240, 230, 93);
+      return const  Color(0xFFFFDC4A);
     }  else {
       return const Color.fromARGB(255, 247, 141, 141);
     }

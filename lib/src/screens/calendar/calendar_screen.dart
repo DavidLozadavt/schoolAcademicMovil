@@ -65,7 +65,7 @@ class Calendar extends StatelessWidget {
 
       appointments.add(Appointment(
         startTime: startTime,
-        endTime: endTime,
+        endTime: endTime, 
         subject: '${event['materia']['materia']['nombreMateria']}',
         color: _getEventColor(event["estado"]),
         id: event["id"].toString(),
@@ -81,7 +81,7 @@ class Calendar extends StatelessWidget {
       case "SIN ASIGNAR":
         return Colors.grey;
       case "PENDIENTE":
-        return const Color.fromARGB(255, 252, 0, 0);
+        return const  Color(0xFFFFDC4A);
       default:
         return Colors.blue;
     }
