@@ -21,27 +21,23 @@ class PublicacionesController extends GetxController {
     super.onInit();
   }
 
- Future<void> fetchPublicaciones() async {
-  isLoading.value = true;
-  errorMessage.value = '';
-  try {
-    publicaciones.value = await _publicationProvider.getPublications();
-  } on DioError catch (dioError) {
-    // Si estás usando Dio para hacer peticiones HTTP, captura errores de red específicamente
-    errorMessage.value = 'Error de conexión: ${dioError.message}';
-    Get.snackbar('Error de red', 'No se pudo conectar al servidor');
-  } catch (e, stackTrace) {
-    // Captura el error general y el stack trace para más información
-    errorMessage.value = 'Error al cargar publicaciones: $e';
-    // Mostrar el snackbar con el mensaje de error
-    Get.snackbar('Error', 'Algo salió mal: $e');
-    // Puedes loguear el error y stack trace para futuras referencias
-    print('Error: $e');
-    print('Stack trace: $stackTrace');
-  } finally {
-    isLoading.value = false;
+  Future<void> fetchPublicaciones() async {
+    isLoading.value = true;
+    errorMessage.value = '';
+    try {
+      publicaciones.value = await _publicationProvider.getPublications();
+    } on DioError catch (dioError) {
+      errorMessage.value = 'Error de conexión: ${dioError.message}';
+      Get.snackbar('Error de red', 'No se pudo conectar al servidor');
+    } catch (e, stackTrace) {
+      errorMessage.value = 'Error al cargar publicaciones: $e';
+      Get.snackbar('Error', 'Algo salió mal: $e');
+      print('Error: $e');
+      print('Stack trace: $stackTrace');
+    } finally {
+      isLoading.value = false;
+    }
   }
-}
 
 //metod for cretation of post
   Future<void> createPublicacion(
@@ -81,7 +77,7 @@ class PublicacionesController extends GetxController {
       );
       return null;
     }
-    File resizedImage = await _redimensionarImagen(image);
+    File resizedImage = await _reducirCalidadImagen(image);
     return resizedImage;
   }
 
@@ -131,7 +127,7 @@ class PublicacionesController extends GetxController {
 
     List<File> resizedImages = [];
     for (var image in images) {
-      File resizedImage = await _redimensionarImagen(image);
+      File resizedImage = await _reducirCalidadImagen(image);
       resizedImages.add(resizedImage);
     }
 
@@ -141,15 +137,26 @@ class PublicacionesController extends GetxController {
     return resizedImages;
   }
 
-  Future<File> _redimensionarImagen(XFile image) async {
+  // Future<File> _reducirCalidadImagen(XFile image) async {
+  //   final imgFile = File(image.path);
+  //   final imageBytes = await imgFile.readAsBytes();
+  //   img.Image? originalImage = img.decodeImage(imageBytes);
+  //   img.Image resizedImage =
+  //       img.copyResize(originalImage!, width: 1000, height: 1000);
+  //   final resizedImageFile = File('${image.path}_resized.jpg');
+  //   await resizedImageFile
+  //       .writeAsBytes(img.encodeJpg(resizedImage, quality: 90));
+  //   return resizedImageFile;
+  // }
+
+  Future<File> _reducirCalidadImagen(XFile image) async {
     final imgFile = File(image.path);
     final imageBytes = await imgFile.readAsBytes();
     img.Image? originalImage = img.decodeImage(imageBytes);
-    img.Image resizedImage =
-        img.copyResize(originalImage!, width: 1000, height: 1000);
-    final resizedImageFile = File('${image.path}_resized.jpg');
-    await resizedImageFile
-        .writeAsBytes(img.encodeJpg(resizedImage, quality: 90));
-    return resizedImageFile;
+    final reducedQualityImageFile = File('${image.path}_reduced_quality.jpg');
+    await reducedQualityImageFile
+        .writeAsBytes(img.encodeJpg(originalImage!, quality: 70));
+
+    return reducedQualityImageFile;
   }
 }
