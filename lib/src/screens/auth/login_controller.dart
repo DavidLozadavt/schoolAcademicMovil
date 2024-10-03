@@ -33,63 +33,69 @@ class LoginController extends GetxController {
     Get.offAllNamed('/home_admin');
   }
 
-  login() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? tokenDevice = pref.getString('token_device') ?? '';
-    try {
-      if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-        Get.snackbar(
-          '¡Error!',
-          '¡Por favor completa todos los campos!',
-        );
-        return;
-      }
-      final UserData responseApiLogin = await authProvider.login(
-          emailController.text, passwordController.text, tokenDevice);
-      (responseApiLogin);
-      (responseApiLogin.payload.roles[0]);
-      if (responseApiLogin.payload.roles[0] == 'ADMIN') {
-        Get.snackbar(
-          '¡Hola!',
-          '¡Estamos trabajando para mejorar, pronto tendremos acceso para el administrador!',
-        );
-        //goToHomePageAdmin();
-      } else if (responseApiLogin.payload.roles[0] == 'ESTUDIANTE') {
-        await pref.setString('token', responseApiLogin.accessToken);
-        await pref.setString('email', emailController.text);
-        await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
-        await pref.setString('idUser', responseApiLogin.user.id.toString());
-        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        // await pref.setString(
-        //     'urlLogoCompany', responseApiLogin.payload.company.rutaLogoUrl);
-        Future.delayed(const Duration(seconds: 1), () {
-          goToHomePageStudent();
-          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
-        });
-      } else if (responseApiLogin.payload.roles[0] == 'DOCENTE') {
-        await pref.setString('token', responseApiLogin.accessToken);
-        await pref.setString('email', emailController.text);
-        await pref.setString('rolUser', responseApiLogin.payload.roles[0]);
-        await pref.setString('idUser', responseApiLogin.user.id.toString());
-        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        await pref.setString('idContrato',
-            responseApiLogin.user.persona.contrato!.id.toString());
-        // Get.snackbar(
-        //   '¡Hola!',
-        //   '¡Estamos trabajando para mejorar, pronto tendremos acceso para el docente!',
-        // );
-        Future.delayed(const Duration(seconds: 1), () {
-          goToHomePageTeacher();
-          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
-        });
-      }
-    } on Failure catch (e) {
+ login() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? tokenDevice = pref.getString('token_device') ?? '';
+  try {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       Get.snackbar(
         '¡Error!',
-        '${e.message}!',
+        '¡Por favor completa todos los campos!',
       );
+      return;
     }
+
+    final UserData responseApiLogin = await authProvider.login(
+        emailController.text, passwordController.text, tokenDevice);
+
+    String rolUsuario = responseApiLogin.payload.roles[0];
+    if (rolUsuario == 'ADMIN') {
+      Get.snackbar(
+        '¡Hola!',
+        '¡Estamos trabajando para mejorar, pronto tendremos acceso para el administrador!',
+      );
+      //goToHomePageAdmin();
+    } else if (rolUsuario == 'ESTUDIANTE') {
+      await pref.setString('token', responseApiLogin.accessToken);
+      await pref.setString('email', emailController.text);
+      await pref.setString('rolUser', rolUsuario);
+      await pref.setString('idUser', responseApiLogin.user.id.toString());
+      await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+      Future.delayed(const Duration(seconds: 1), () {
+        goToHomePageStudent();
+        Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+      });
+    } else if (rolUsuario == 'DOCENTE') {
+      await pref.setString('token', responseApiLogin.accessToken);
+      await pref.setString('email', emailController.text);
+      await pref.setString('rolUser', rolUsuario);
+      await pref.setString('idUser', responseApiLogin.user.id.toString());
+      await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+      await pref.setString('idContrato',
+          responseApiLogin.user.persona.contrato!.id.toString());
+      Future.delayed(const Duration(seconds: 1), () {
+        goToHomePageTeacher();
+        Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+      });
+    } else if (rolUsuario == 'ESTUDIANTEUP') {
+      // Guardar token y otros datos si es necesario
+      await pref.setString('token', responseApiLogin.accessToken);
+      await pref.setString('email', emailController.text);
+      await pref.setString('rolUser', rolUsuario);
+      await pref.setString('idUser', responseApiLogin.user.id.toString());
+      await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+
+      // Redirigir a la página para completar los datos
+      Get.offAllNamed('/complete_student_data');
+      Get.snackbar('¡Bienvenido!', 'Por favor, completa tus datos.');
+    }
+  } on Failure catch (e) {
+    Get.snackbar(
+      '¡Error!',
+      '${e.message}!',
+    );
   }
+}
 
   Future<void> loadEmailFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

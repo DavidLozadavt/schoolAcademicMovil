@@ -11,6 +11,7 @@ import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teac
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_screen.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
+import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
@@ -92,6 +93,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen()),
         GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
         GetPage(name: '/posts', page: () => PostsScreen()),
+        GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
 
 
 
