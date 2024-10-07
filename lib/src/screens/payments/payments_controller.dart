@@ -11,6 +11,8 @@ class PaymentsController extends GetxController {
 
   var isLoading = true.obs;
   var isLoading1 = true.obs;
+
+   var enrollmentsByPerson = <Map<String, dynamic>>[].obs;
   var tuitionPayments = <Map<String, dynamic>>[].obs;
   var inscriptionPayments = <Map<String, dynamic>>[].obs;
 
@@ -37,9 +39,31 @@ class PaymentsController extends GetxController {
   Rx<File> filePath = Rx<File>(File(''));
   var selectedFiles = <int, File>{}.obs;
 
-  Future<void> getTuitionPayments() async {
+   @override
+  void onInit() {
+    super.onInit();
+    getEnrollmentsByPerson();
+  }
+
+  Future<void> refreshItems() async {
+    await Future.delayed(const Duration(seconds: 1));
+    getEnrollmentsByPerson();
+  }
+
+
+  Future<void> getEnrollmentsByPerson() async {
     try {
-      await _tuitionsProvider.getTuitionPayments();
+      await _tuitionsProvider.getEnrollmentsByPerson();
+      enrollmentsByPerson.assignAll(_tuitionsProvider.enrollmentsByPerson);
+      isLoading(true);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getTuitionPayments(int idEnrollment) async {
+    try {
+      await _tuitionsProvider.getTuitionPayments(idEnrollment);
       tuitionPayments.assignAll(_tuitionsProvider.tuitionPayments);
       isLoading(true);
     } finally {

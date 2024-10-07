@@ -6,7 +6,6 @@ const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 //const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 //const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
-
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
 //const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
@@ -30,9 +29,12 @@ const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
 const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';
 const postMessagesUserUrl = '${baseURL}send_message_between_two_users/';
 const pusherUrl = '${baseURL}auth/pusher';
+const getEnrollmentsByPersonUrl =
+    '${baseURL}matriculas_by_persona?data=';
 const getTuitionPaymentAllowanceUrl =
-    '${baseURL}procesos/asignaciones_matricula_pagos';
-const getInscriptionPaymentUrl = '${baseURL}procesos/get_inscription';
+    '${baseURL}procesos/asignaciones_matricula_pagos?data_encoded=';
+const getInscriptionPaymentUrl = '${baseURL}procesos/get_inscription?data_encoded=';
+const getIsPaymentRequiredInscriptionUrl = '${baseURL}is_payment_required_inscription/';
 const getFinancialInstitutionsUrl = '${baseURL}get_financial_institutions';
 const postTransactionPseUrl = '${baseURL}transaction_pse';
 const getFindTransactionByIdUrl = '${baseURL}find_transaction_by_id/';
