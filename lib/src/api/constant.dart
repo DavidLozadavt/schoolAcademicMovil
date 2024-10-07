@@ -1,5 +1,7 @@
 // local
 const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
+// https://pre-school-vt-1.virtualt.org/api/ciudades
+
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 // preproduccion
@@ -50,6 +52,8 @@ const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 const rateActivityUrl = '${baseURL}respuesta-profesor/';
 const publicationsUrl = '${baseURL}publications';
 const putAttendanceUrl = '${baseURL}materias/update_assistance';
+const getCitysUrl = '${baseURL}ciudades';
+const getDepartament = '${baseURL}departamentos';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

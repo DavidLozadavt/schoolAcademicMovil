@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/src/screens/activity_student%20/activities_student_screen.dart';
+import 'package:vtschool/src/screens/activity_student/activities_student_screen.dart';
 
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';

@@ -9,7 +9,7 @@ import 'package:path/path.dart' as path;
 import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 
 import 'package:vtschool/src/config/theme/app_theme.dart';
-import 'package:vtschool/src/screens/activity_student%20/task_student_controller.dart';
+import 'package:vtschool/src/screens/activity_student/task_student_controller.dart';
 import 'package:vtschool/src/widgets/card_task_student.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 

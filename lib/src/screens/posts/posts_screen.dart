@@ -127,7 +127,6 @@ class PostsScreen extends StatelessWidget {
                       ),
                       if (publicacion.urlImage!.isNotEmpty ||
                           publicacion.imagenes!.isNotEmpty) ...[
-                        // Crear un PageController para manejar la navegación del PageView
                         PageViewWithIndicators(
                           publicacion: publicacion,
                         ),
