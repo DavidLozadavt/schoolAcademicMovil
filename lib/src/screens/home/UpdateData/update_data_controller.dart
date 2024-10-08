@@ -92,50 +92,43 @@ class UpdateStudentDataController extends GetxController {
     }
   }
 
+  Map<String, dynamic> buildStudentData() {
+    return {
+      'persona': {
+        'nombre1': nameOneController.text,
+        'nombre2': nameTwoController.text,
+        'apellido1': lastNameController.text,
+        'apellido2': lastName2Controller.text,
+        'telefono': phoneController.text,
+        'telefonoFijo': phonefijeController.text,
+        'direccion': addressController.text,
+        'email': emailController.text,
+        'identificacion': identificacionController.text,
+        'fechaNac': fechaNacController.text,
+      },
+    };
+  }
 
+  void saveStudentData() async {
+    isLoading.value = true;
+    final studentData = buildStudentData();
+    String jsonStudentData = jsonEncode(studentData);
 
-Map<String, dynamic> buildStudentData() {
-  return {
-    'persona': {
-      'nombre1': nameOneController.text,
-      'nombre2': nameTwoController.text,
-      'apellido1': lastNameController.text,
-      'apellido2': lastName2Controller.text,
-      'telefono': phoneController.text,
-      'telefonoFijo': phonefijeController.text,
-      'direccion': addressController.text,
-      'email': emailController.text,
-      'identificacion': identificacionController.text,
-      'fechaNac': fechaNacController.text,
-    },
-  };
-}
+    print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
 
-// Guardar los datos del estudiante
-void saveStudentData() async {
-  isLoading.value = true;
+    final response = await authProvider.updateDataUser(studentData);
 
-  final studentData = buildStudentData();
-  
-  // Convierte el Map a JSON
-  String jsonStudentData = jsonEncode(studentData);
-  
-  print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
+    if (response != null) {
+      Get.snackbar('¡Datos actualizado!', 'Inicial sesión nuevamente');
+      Get.offAllNamed('/login');
+    } else {
+      // Si hubo algún error
+      Get.snackbar('Error',
+          'No se pudo actualizar los datos del estudiante. Intenta de nuevo más tarde.');
+    }
 
-  await Future.delayed(const Duration(seconds: 2));
-
-  isLoading.value = false;
-
-  Get.snackbar(
-    '¡Datos guardados!', 
-    'Tus datos se han actualizado correctamente'
-  );
-  
-  // Aquí puedes realizar la llamada real al backend con 'jsonStudentData'
-  Get.offAllNamed('/home_student');
-}
-
-
+    isLoading.value = false;
+  }
 
   // Avanzar al siguiente paso
   void nextStep() {

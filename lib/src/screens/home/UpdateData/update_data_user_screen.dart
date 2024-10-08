@@ -55,7 +55,7 @@ class UpdateStudentDataPage extends StatelessWidget {
                                 'Teléfono', Icons.phone,
                                 keyboardType: TextInputType.phone),
                             const SizedBox(height: 16),
-                              _buildTextField(controller.phoneController,
+                              _buildTextField(controller.phonefijeController,
                                 'Teléfono Fijo', Icons.phone,
                                 keyboardType: TextInputType.phone),
                             const SizedBox(height: 16),

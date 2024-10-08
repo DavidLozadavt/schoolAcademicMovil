@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -5,6 +7,8 @@ import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
 
 import 'package:vtschool/src/models/auth_user_model.dart';
+import 'package:http/http.dart' as http;
+
 
 class AuthProvider extends GetConnect {
   var dataUser = <Map<String, dynamic>>[].obs;
@@ -55,6 +59,34 @@ class AuthProvider extends GetConnect {
       throw Failure('$e');
     }
     throw Failure('No se pudo obtener el perfil del usuario');
+  }
+
+
+   Future<Map<String, dynamic>?> updateDataUser(Map<String, dynamic> studentData) async {
+    try {
+      String url = '${baseURL}users/update_user_mobile';
+      String? token = await getToken();
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token', 
+        },
+        body: jsonEncode(studentData),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data; 
+      } else {
+        print('Error en la solicitud: ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print('Error al conectar con el servidor: $e');
+      return null;
+    }
   }
 
   Future logout() async {
