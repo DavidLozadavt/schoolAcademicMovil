@@ -57,7 +57,7 @@ class PaymentsScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      _paymentsController.getTuitionPayments();
+                      _paymentsController.getTuitionPayments(108);
                       CustomDialogWidget(
                         tittle: 'Pagos matricula',
                         paymentRoute: '/physical_tuition_payments',
