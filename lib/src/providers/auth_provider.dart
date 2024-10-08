@@ -60,7 +60,7 @@ class AuthProvider extends GetConnect {
   Future logout() async {
     String token = await getToken();
     try {
-      await post(logoutUrl, {}, headers: {'Authorization': 'Bearer $token'});
+      await post(logoutUrl, {/*'origen':'MOBILE'*/}, headers: {'Authorization': 'Bearer $token'});
     } catch (e) {
       throw Failure('$e');
     }
