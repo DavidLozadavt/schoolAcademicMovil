@@ -50,7 +50,7 @@ const activityByregistrationUrl = '${baseURL}actividades_matriculas_actividad/';
 const rateActivityUrl = '${baseURL}respuesta-profesor/';
 const publicationsUrl = '${baseURL}publications';
 const putAttendanceUrl = '${baseURL}materias/update_assistance';
-const getCitysUrl = '${baseURL}ciudades';
+const getCitysUrl = '${baseURL}get_Cityes';
 const getDepartament = '${baseURL}departamentos';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';

@@ -12,7 +12,7 @@ class UpdateStudentDataPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Actualizar mis datos'),
         centerTitle: true,
-        backgroundColor: Color(0xFFFFDC4A), 
+        backgroundColor: const Color(0xFFFFDC4A),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -20,7 +20,7 @@ class UpdateStudentDataPage extends StatelessWidget {
           if (controller.isLoading.value) {
             return const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFFFFDC4A), 
+                color: Color(0xFFFFDC4A),
               ),
             );
           } else {
@@ -40,16 +40,23 @@ class UpdateStudentDataPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _buildTextField(controller.nameOneController,
-                                'Nombre 1', Icons.person),
+                                'Primer Nombre', Icons.person),
                             const SizedBox(height: 16),
-                             _buildTextField(controller.nameTwoController,
-                                'Nombre 2', Icons.person),
+                            _buildTextField(controller.nameTwoController,
+                                'Segundo Nombre', Icons.person),
                             const SizedBox(height: 16),
-                             _buildTextField(controller.lastNameController,
-                                'Apellido', Icons.person),
+                            _buildTextField(controller.lastNameController,
+                                'Primer Apellido', Icons.person),
+                            const SizedBox(height: 16),
+                             _buildTextField(controller.lastName2Controller,
+                                'Segundo Apellido', Icons.person),
                             const SizedBox(height: 16),
                             _buildTextField(controller.phoneController,
                                 'Teléfono', Icons.phone,
+                                keyboardType: TextInputType.phone),
+                            const SizedBox(height: 16),
+                              _buildTextField(controller.phoneController,
+                                'Teléfono Fijo', Icons.phone,
                                 keyboardType: TextInputType.phone),
                             const SizedBox(height: 16),
                             _buildTextField(controller.emailController, 'Email',
@@ -60,8 +67,7 @@ class UpdateStudentDataPage extends StatelessWidget {
                                 'Identificación', Icons.perm_identity),
                             const SizedBox(height: 16),
                             GestureDetector(
-                              onTap: () => _selectDate(
-                                  context), 
+                              onTap: () => _selectDate(context),
                               child: AbsorbPointer(
                                 child: _buildTextField(
                                     controller.fechaNacController,
@@ -83,6 +89,63 @@ class UpdateStudentDataPage extends StatelessWidget {
                           children: [
                             _buildTextField(controller.addressController,
                                 'Dirección', Icons.location_on),
+                            const SizedBox(height: 16),
+                            Obx(() {
+                              // Indicador de carga para departamentos
+                              if (controller.departamentos.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: controller
+                                        .selectedDepartamento.value.isNotEmpty
+                                    ? controller.selectedDepartamento.value
+                                    : null,
+                                items: controller.departamentos.map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item['id'].toString(),
+                                    child: Text(item['descripcion']),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  controller.selectedDepartamento.value =
+                                      value!;
+                                  controller.selectedCiudad.value =
+                                      ''; // Resetear ciudad
+                                  controller
+                                      .fetchCityes(value); // Cargar ciudades
+                                },
+                                hint: const Text('Seleccione el departamento'),
+                              );
+                            }),
+                            const SizedBox(height: 16),
+                            Obx(() {
+                              // Indicador de carga para ciudades
+                              if (controller.isLoadingCiudades.value) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
+                                return DropdownButton<String>(
+                                  isExpanded: true,
+                                  value:
+                                      controller.selectedCiudad.value.isNotEmpty
+                                          ? controller.selectedCiudad.value
+                                          : null,
+                                  items: controller.ciudades.map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item['id'].toString(),
+                                      child: Text(item['descripcion']),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    controller.selectedCiudad.value = value!;
+                                  },
+                                  hint: const Text('Seleccione la ciudad'),
+                                );
+                              }
+                            }),
                           ],
                         ),
                         isActive: controller.currentStep.value >= 1,
@@ -102,16 +165,15 @@ class UpdateStudentDataPage extends StatelessWidget {
                               style: TextButton.styleFrom(),
                               child: const Text('Atrás'),
                             ),
-                        const  SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: details.onStepContinue,
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 12),
-                            ),
-                            child: const Text('Continuar'),
+                                // primary: const Color(0xFFFFDC4A),
+                                ),
+                            child: Text(controller.currentStep.value < 1
+                                ? 'Siguiente'
+                                : 'Actualizar'),
                           ),
                         ],
                       );
@@ -127,19 +189,15 @@ class UpdateStudentDataPage extends StatelessWidget {
   }
 
   Widget _buildTextField(
-      TextEditingController controller, String labelText, IconData icon,
+      TextEditingController controller, String label, IconData icon,
       {TextInputType keyboardType = TextInputType.text}) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        labelText: labelText,
-        prefixIcon: Icon(icon, color: Colors.indigoAccent),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        filled: true,
-        fillColor: Colors.grey[100],
+        labelText: label,
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(icon),
       ),
     );
   }
@@ -148,23 +206,17 @@ class UpdateStudentDataPage extends StatelessWidget {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: Colors.indigoAccent,
-            colorScheme:const ColorScheme.light(primary: Colors.indigoAccent),
-            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-          ),
-          child: child!,
-        );
-      },
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
 
     if (pickedDate != null) {
-      controller.fechaNacController.text =
-          "${pickedDate.toLocal()}".split(' ')[0];
+      // Formato de fecha
+      String formattedDate =
+          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+      // Actualiza el campo de texto con la fecha seleccionada
+      Get.find<UpdateStudentDataController>().fechaNacController.text =
+          formattedDate;
     }
   }
 }
