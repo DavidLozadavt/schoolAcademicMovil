@@ -55,27 +55,27 @@ class HomeStudent extends StatelessWidget {
                    label: '',
                    icon: ItemNavigationButton(
                      fileIcon: 'assets/images/note.png',
-                     title: 'Mis notas',
+                     title: 'Actividades',
                    ),
                    activeIcon: ItemNavigationButton(
                      fileIcon: 'assets/images/note.png',
-                     title: 'Mis notas',
+                     title: 'Actividades',
                      isActive: true,
                    ),
                  ),
-                BottomNavigationBarItem(
-                  //backgroundColor: Colors.white,
-                  label: '',
-                  icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
-                  ),
-                  activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
-                    isActive: true,
-                  ),
-                ),
+                 BottomNavigationBarItem(
+                   //backgroundColor: Colors.white,
+                   label: '',
+                   icon: ItemNavigationButton(
+                     fileIcon: 'assets/images/payment.png',
+                     title: 'Pagos',
+                   ),
+                   activeIcon: ItemNavigationButton(
+                     fileIcon: 'assets/images/payment.png',
+                     title: 'Pagos',
+                     isActive: true,
+                   ),
+                 ),
                 BottomNavigationBarItem(
                  // backgroundColor: Colors.white,
                   label: '',

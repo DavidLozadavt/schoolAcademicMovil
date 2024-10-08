@@ -56,9 +56,10 @@ class EnrollmentsPersonScreen extends StatelessWidget {
                                 return Center(
                                   child: GestureDetector(
                                     onTap: () async {
-                                      await _paymentsController.getTuitionPayments(_paymentsController
-                                          .enrollmentsByPerson[index]['id']);
-                                      Get.toNamed('/payments');
+                                    //   await _paymentsController.getTuitionPayments(_paymentsController
+                                    //       .enrollmentsByPerson[index]['id']);
+                                    //   Get.toNamed('/payments');
+                                    // 
                                     },
                                     child: CardEnrollmentsPerson(
                                       date: _paymentsController
