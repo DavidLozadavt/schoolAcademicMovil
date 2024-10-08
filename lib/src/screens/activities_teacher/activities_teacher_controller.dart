@@ -53,6 +53,7 @@ class ActivitiesTeacherController extends GetxController {
         tituloActividad.value,
         descripcionActividad.value,
         archivo.value,
+       
       );
       Get.snackbar('Éxito', 'Actividad creada correctamente',
           snackPosition: SnackPosition.TOP);
