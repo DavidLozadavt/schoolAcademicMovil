@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/errors/failure.dart';
 import 'package:vtschool/src/providers/activity_provider.dart';
-import 'package:vtschool/src/providers/notifications_provider.dart';
+//import 'package:vtschool/src/providers/notifications_provider.dart';
 
 class TaskStudentController extends GetxController {
-  final NotificationsProvider _notificationsProvider = NotificationsProvider();
+  //final NotificationsProvider _notificationsProvider = NotificationsProvider();
   final ActivityProvider _activityProvider = ActivityProvider();
   TextEditingController commentController = TextEditingController();
 
@@ -100,7 +99,7 @@ class TaskStudentController extends GetxController {
         backgroundColor: Colors.transparent,
       );
     } catch (e) {
-      print('Error al enviar la evidencia: $e');
+      //print('Error al enviar la evidencia: $e');
     }
   }
 

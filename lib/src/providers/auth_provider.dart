@@ -71,7 +71,7 @@ class AuthProvider extends GetConnect {
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          if (token != null) 'Authorization': 'Bearer $token', 
+          'Authorization': 'Bearer $token', 
         },
         body: jsonEncode(studentData),
       );
@@ -80,11 +80,11 @@ class AuthProvider extends GetConnect {
         final data = jsonDecode(response.body);
         return data; 
       } else {
-        print('Error en la solicitud: ${response.body}');
+        //print('Error en la solicitud: ${response.body}');
         return null;
       }
     } catch (e) {
-      print('Error al conectar con el servidor: $e');
+      //print('Error al conectar con el servidor: $e');
       return null;
     }
   }

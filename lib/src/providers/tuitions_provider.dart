@@ -19,7 +19,7 @@ class TuitionsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('255 ${response.body}');
+    //print('255 ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
@@ -41,7 +41,7 @@ class TuitionsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print('2025fff ${response.body}');
+    //print('2025fff ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {

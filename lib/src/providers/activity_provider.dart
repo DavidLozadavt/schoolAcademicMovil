@@ -31,7 +31,6 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
     if (response.statusCode == 200) {
       //Map<String, dynamic> responseBody = response.body;
       /*if (responseBody.isNotEmpty) {*/
@@ -180,7 +179,7 @@ class ActivityProvider extends GetConnect {
       String idQualification, dynamic answers) async {
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
-    print('877777777 $answersJson');
+
     try {
       Response response = await post(
         '$postReplyQuestionnaireUrl$idQualification',
@@ -191,7 +190,7 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
-      print('770999 ${response.body}');
+   
       if (response.statusCode == 401) {
         throw Failure('Otro');
       }

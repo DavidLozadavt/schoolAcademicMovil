@@ -106,9 +106,9 @@ class Chat extends StatelessWidget {
                           DateTime.parse(messages[index]['created_at']);
                       String formattedDate =
                           DateFormat('dd MMMM yyyy', 'es').format(dateTime);
-                      print('1${messages[index]['active_company_user']['idUser']}');
-                      print('2${selectedUser['matricula']['persona']['id']}');
-                      print('3${messages[index]}');
+                      //print('1${messages[index]['active_company_user']['idUser']}');
+                      //print('2${selectedUser['matricula']['persona']['id']}');
+                      //print('3${messages[index]}');
                       bool isOwnMessage = messages[index]['active_company_user']
                               ['idUser'].toString() !=
                           selectedUser['matricula']['persona']['id'].toString();

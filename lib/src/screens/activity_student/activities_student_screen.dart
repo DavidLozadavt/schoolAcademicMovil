@@ -206,7 +206,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
     Color themeColor = Theme.of(context).dialogBackgroundColor;
-    print(activityData);
+    //print(activityData);
     if (activityData['estado']['estado'] == 'ACTIVO') {
       return Container(
         height: 700,

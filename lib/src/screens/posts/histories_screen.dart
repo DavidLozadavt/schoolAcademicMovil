@@ -113,7 +113,7 @@ class _FullScreenImagePageState extends State<FullScreenImagePage> {
     super.initState();
     _progresses = List<double>.filled(widget.publicacion.imagenes!.length, 0.0);
 
-    _timer = Timer.periodic(Duration(seconds: 4), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (_currentIndex < widget.publicacion.imagenes!.length - 1) {
         _currentIndex++;
       } else {
@@ -123,7 +123,7 @@ class _FullScreenImagePageState extends State<FullScreenImagePage> {
 
       _pageController.animateToPage(
         _currentIndex,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
 
@@ -140,7 +140,7 @@ class _FullScreenImagePageState extends State<FullScreenImagePage> {
   }
 
   void _startProgress() {
-    Timer.periodic(Duration(milliseconds: 35), (timer) {
+    Timer.periodic(const Duration(milliseconds: 35), (timer) {
       setState(() {
         _progresses[_currentIndex] += 0.01;
       });

@@ -109,7 +109,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 15),
                         title: Text(
-                          activity.actividad!.descripcionActividad as String,
+                          activity.actividad.descripcionActividad,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -195,7 +195,8 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
     await _activitiesTeacherController
         .fetchActivitiesRegistration(activityId.toString(), idGrupo: groupId);
 
-    Navigator.of(context).pop();
+   // Navigator.of(context).pop();
+     Get.back();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

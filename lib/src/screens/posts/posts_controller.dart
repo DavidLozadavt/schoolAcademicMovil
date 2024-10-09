@@ -29,11 +29,11 @@ class PublicacionesController extends GetxController {
     } on DioError catch (dioError) {
       errorMessage.value = 'Error de conexión: ${dioError.message}';
       Get.snackbar('Error de red', 'No se pudo conectar al servidor');
-    } catch (e, stackTrace) {
+    } catch (e) {
       errorMessage.value = 'Error al cargar publicaciones: $e';
       Get.snackbar('Error', 'Algo salió mal: $e');
-      print('Error: $e');
-      print('Stack trace: $stackTrace');
+      //print('Error: $e');
+      //print('Stack trace: $stackTrace');
     } finally {
       isLoading.value = false;
     }
@@ -95,9 +95,9 @@ class PublicacionesController extends GetxController {
     }
 
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? images = await picker.pickMultiImage();
+    final List<XFile> images = await picker.pickMultiImage();
 
-    if (images == null || images.isEmpty) {
+    if (images.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error al seleccionar imágenes')),
       );
@@ -114,7 +114,7 @@ class PublicacionesController extends GetxController {
             height: 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 CircularProgressIndicator(),
                 SizedBox(height: 20),
                 Text('Cargando imágenes...'),
@@ -132,7 +132,8 @@ class PublicacionesController extends GetxController {
     }
 
     // Cierra el diálogo de progreso
-    Navigator.of(context).pop();
+   // Navigator.of(context).pop();
+    Get.back();
 
     return resizedImages;
   }
