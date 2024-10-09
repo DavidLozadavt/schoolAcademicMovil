@@ -1,5 +1,5 @@
 // local
-const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
+const baseURL = 'https://school-vt.virtualt.org/api/';
 // https://pre-school-vt-1.virtualt.org/api/ciudades
 
 // produccion
