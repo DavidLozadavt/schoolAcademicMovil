@@ -67,42 +67,44 @@ class ActivityProvider extends GetConnect {
   }
 
   Future<void> createActivityProvider(
-    String id,
-    String titulo,
-    String descripcion,
-    File? archivo,
-  ) async {
-    try {
-      String token = await authService.getToken();
-      String url = '$createActivitiesUrl$id';
-      var uri = Uri.parse(url);
-      var request = http.MultipartRequest('POST', uri);
-      request.fields['tituloActividad'] = titulo;
-      request.fields['descripcionActividad'] = descripcion;
-      request.headers['Authorization'] = 'Bearer $token';
-
-      if (archivo != null) {
-        String fileName = basename(archivo.path);
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'pathDocumentoActividadFile',
-            archivo.path,
-            filename: fileName,
-          ),
-        );
-      }
-
-      var response = await request.send();
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return;
-      } else {
-        String responseBody = await response.stream.bytesToString();
-        throw Exception('No se pudo crear la actividad: $responseBody');
-      }
-    } catch (e) {
-      throw Exception('Ocurrió un error: $e');
+  String id,
+  String titulo,
+  String descripcion,
+  File? archivo,
+) async {
+  try {
+    String token = await authService.getToken();
+    String url = '$createActivitiesUrl$id';
+    var uri = Uri.parse(url);
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['tituloActividad'] = titulo;
+    request.fields['descripcionActividad'] = descripcion;
+    request.fields['idTipoActividad'] = '2';
+    request.headers['Authorization'] = 'Bearer $token';
+    if (archivo != null) {
+      String fileName = basename(archivo.path);
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'pathDocumentoActividadFile',
+          archivo.path,
+          filename: fileName,
+        ),
+      );
     }
+
+    // Enviar la solicitud
+    var response = await request.send();
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else {
+      String responseBody = await response.stream.bytesToString();
+      throw Exception('No se pudo crear la actividad: $responseBody');
+    }
+  } catch (e) {
+    throw Exception('Ocurrió un error: $e');
   }
+}
+
 
   Future<Map<String, dynamic>> getTypeActivity(String? id) async {
     String token = await authService.getToken();
