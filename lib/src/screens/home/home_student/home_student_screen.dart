@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/providers/push_notification_controller.dart';
 
 import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class HomeStudentScreen extends StatelessWidget {
@@ -127,9 +128,13 @@ class HomeStudentScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                  HistoriasWidget(),
+                    const SizedBox(
+                      height: 15,
+                    ),
               const Center(
                 child: Text(
                   '¡Tu semana al instante!',
@@ -165,6 +170,10 @@ class HomeStudentScreen extends StatelessWidget {
                   ),
                 ),
               ),
+                  ],
+                ),
+              )
+             
             ],
           ),
         );

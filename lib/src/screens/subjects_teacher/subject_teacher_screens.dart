@@ -157,76 +157,72 @@ class SubjectTeacherScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Column(children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.person,
-                            color: Color(0xFFB8BCBD),
-                            size: 40,
-                          ),
-                          Text(
-                            '${_subjectsTeacherController.subject[0]['matriculas'].length}',
-                            style: const TextStyle(
-                                fontSize: 22, color: Color(0xFFB8BCBD)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Estudiantes',
-                        style:
-                            TextStyle(fontSize: 20, color: Color(0xFFB8BCBD)),
-                      ),
-                    ]),
-                  ],
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Obx(() {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Column(children: [
+                  Row(
                     children: [
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.blueAccent,
-                                  width: 8,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CircularProgressIndicator(
-                                value: _subjectsTeacherController.progress,
-                                strokeWidth: 6,
-                                backgroundColor: Colors.grey[300],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    Colors.blue),
-                              ),
-                            ),
-                          ],
-                        ),
+                      const Icon(
+                        Icons.person,
+                        color: Color(0xFFB8BCBD),
+                        size: 40,
                       ),
-                      Center(
-                        child: Text(
-                          '${_subjectsTeacherController.timeElapsed.value}s',
-                          style: const TextStyle(fontSize: 24),
-                        ),
+                      Text(
+                        '${_subjectsTeacherController.subject[0]['matriculas'].length}',
+                        style: const TextStyle(
+                            fontSize: 22, color: Color(0xFFB8BCBD)),
                       ),
                     ],
-                  );
-                }),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Estudiantes',
+                    style:
+                        TextStyle(fontSize: 20, color: Color(0xFFB8BCBD)),
+                  ),
+                ]),
+                // const SizedBox(
+                //   width: 30,
+                // ),
+                // Obx(() {
+                //   return Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       SizedBox(
+                //         width: 40,
+                //         height: 40,
+                //         child: Stack(
+                //           fit: StackFit.expand,
+                //           children: [
+                //             Container(
+                //               decoration: BoxDecoration(
+                //                 shape: BoxShape.circle,
+                //                 border: Border.all(
+                //                   color: Colors.blueAccent,
+                //                   width: 8,
+                //                 ),
+                //               ),
+                //             ),
+                //             Padding(
+                //               padding: const EdgeInsets.all(4.0),
+                //               child: CircularProgressIndicator(
+                //                 value: _subjectsTeacherController.progress,
+                //                 strokeWidth: 6,
+                //                 backgroundColor: Colors.grey[300],
+                //                 valueColor: const AlwaysStoppedAnimation<Color>(
+                //                     Colors.blue),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Center(
+                //         child: Text(
+                //           '${_subjectsTeacherController.timeElapsed.value}s',
+                //           style: const TextStyle(fontSize: 24),
+                //         ),
+                //       ),
+                //     ],
+                //   );
+                // }),
               ],
             ),
             // TextButton(
