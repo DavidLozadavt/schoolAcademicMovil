@@ -30,9 +30,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
             margin: const EdgeInsets.only(top: 40, left: 20),
             height: 50,
             child: const Text(
-             'Mis actividades',
+             'MIS ACTIVIDADES',
              style: TextStyle(
-               fontSize: 20,
+               fontSize: 18,
                fontWeight: FontWeight.bold,
                color: Colors.black,
              ),
@@ -51,7 +51,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color.fromARGB(255, 238, 238, 238),
-                hintText: "Buscar",
+                hintText: "BUSCAR",
                 hintStyle: const TextStyle(color: Colors.black54),
                 prefixIcon: Icon(
                   Icons.search,
@@ -100,7 +100,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           _taskStudentController.filteredActivitiesStudent.isEmpty
                               ? const Center(
                                   child: Text(
-                                    'No tienes actividades',
+                                    'NO TIENES ACTIVIDADES',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -225,9 +225,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 const ContSup(),
                 const SizedBox(height: 20),
                 const Text(
-                  'Actividad',
+                  'ACTIVIDAD',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -252,9 +252,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Documento',
+                      'DOCUMENTO',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -289,8 +289,8 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 const Text(
-                  'Responder actividad',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  'RESPONDER ACTIVIDAD',
+                  style: TextStyle(color: Colors.black, fontSize: 14),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -307,7 +307,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           _taskStudentController.setFilePath(file);
                         }
                       },
-                      child: const Text('Seleccionar archivo'),
+                      child: const Text('SELECCIONAR ARCHIVO'),
                     ),
                     const SizedBox(width: 5),
                     Obx(() {
@@ -324,7 +324,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       } else {
                         return const ElevatedButton(
                           onPressed: null,
-                          child: Text('Archivo'),
+                          child: Text('ARCHIVO'),
                         );
                       }
                     }),
@@ -340,8 +340,8 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey[200],
-                      labelText: "Respuesta escrita",
-                      hintText: "Respuesta escrita",
+                      labelText: "RESPUESTA ESCRITA",
+                      hintText: "RESPUESTA ESCRITA",
                       hintStyle: const TextStyle(color: Colors.black),
                       labelStyle: const TextStyle(color: Colors.black),
                       prefixIcon: const Icon(
@@ -380,7 +380,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     await _taskStudentController.replyActivity(idActividad);
                     _taskStudentController.getActivitiesStudent();
                   },
-                  child: const Text('Enviar evidencia'),
+                  child: const Text('ENVIAR EVIDENCIA'),
                 ),
               ],
             ),
@@ -420,7 +420,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 const ContSup(),
                 const SizedBox(height: 20),
                 const Text(
-                  'Cuestionario',
+                  'CUESTIONARIO',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -436,19 +436,19 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   },
                   children: [
                     _buildTableRow(
-                        'Título:',
+                        'TÍTULO:',
                         '${activityData['actividad']['tituloActividad']}',
-                        16,
+                        14,
                         12),
                     _buildTableRow(
-                        'Descripción:',
+                        'DESCRIPCIÓN:',
                         '${activityData['actividad']['descripcionActividad']}',
-                        16,
+                        14,
                         12),
                     _buildTableRow(
-                        'Asignatura:',
+                        'ASIGNATURA:',
                         '${activityData['actividad']['materia']['nombreMateria']}',
-                        16,
+                        14,
                         12),
                   ],
                 ),
@@ -565,7 +565,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                               const SizedBox(height: 5),
                               TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: 'Escribe tu respuesta aquí',
+                                  hintText: 'ESCRIBE TU RESPUESTA AQUÍ',
                                   hintStyle:
                                       const TextStyle(color: Colors.black54),
                                   border: OutlineInputBorder(
@@ -612,9 +612,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                            );
                       } else {
                         Get.defaultDialog(
-                          title: '¡Información!',
+                          title: '¡INFORMACIÓN!',
                           middleText:
-                              'Debes responder por al menos una pregunta',
+                              'DEBES RESPONDER AL MENOS UNA PREGUNTA',
                           textConfirm: 'OK',
                           onConfirm: () => Get.back(),
                         );
@@ -661,7 +661,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     _taskStudentController.reiniciarRespuestas();
                     _taskStudentController.getActivitiesStudent();
                   },
-                  child: const Text('Enviar cuestionario'),
+                  child: const Text('ENVIAR CUESTIONRIO'),
                 ),
               ],
             ),
@@ -676,7 +676,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
     } else {
       //validar con la fecha
       return showModalPastActivity(
-          context, 'Se vencio el plazo de su cuestionario');
+          context, 'SE VENCIO EL PLAZO DE SU CUESTIONARIO');
     }
   }
 
@@ -699,7 +699,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              'Información',
+              '¡INFORMACIÓN!',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -738,7 +738,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                         Get.back();
                       },
                       child: const Text(
-                        'Ok',
+                        'OK',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -771,9 +771,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              'Información',
+              '¡INFORMACIÓN!',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -783,9 +783,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              '¡Debes estar pendiente, el \n profesor enviará la nota final!',
+              '¡DEBES ESTAR PENDIENTE, EL \n PROFESOR ENVIARÁ LA NOTA FINAL!',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -810,7 +810,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                         Get.back();
                       },
                       child: const Text(
-                        'Ok',
+                        'OK',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -851,7 +851,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
             const ContSup(),
             const SizedBox(height: 20),
             const Text(
-              'Respuestas',
+              'RESPUESTAS',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -908,7 +908,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Calificacion final: $qualification',
+                  'CALIFICACIÓN FINAL: $qualification',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -927,14 +927,14 @@ class ActivitiesStudentScreen extends StatelessWidget {
                         Get.back();
                       },
                       child: const Text(
-                        'Ok',
+                        'OK',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
                   ),
                 ),
                 Text(
-                  'Cantidad de aciertos: $successes de $allQuestion ($percentage%)',
+                  'CANTIDAD DE ACIERTOS: $successes DE $allQuestion ($percentage%)',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,

@@ -16,7 +16,7 @@ class EnrollmentsPersonScreen extends StatelessWidget {
             margin: const EdgeInsets.only(top: 40),
             height: 50,
             child: const Text(
-              'Matriculas',
+              'MATRICULAS',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class EnrollmentsPersonScreen extends StatelessWidget {
                       child: _paymentsController.enrollmentsByPerson.isEmpty
                           ? const Center(
                               child: Text(
-                                'No tienes matriculas',
+                                'NO TIENES MATRICULAS',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

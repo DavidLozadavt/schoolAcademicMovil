@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vtschool/src/screens/home/home_guardian/children_controller.dart';
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/widgets/card_chats.dart';
 
 class ChildrenScreen extends StatelessWidget {
-  const ChildrenScreen({super.key});
+  final ChildrenController _childrenController = Get.put(ChildrenController());
+  ChildrenScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +18,18 @@ class ChildrenScreen extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                   //logoutApp(context);
-                    Get.toNamed('/login');
-                  },
+              IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
                 ),
+                onPressed: () {
+                  //logoutApp(context);
+                  Get.toNamed('/login');
+                },
+              ),
               const Text(
-                'HIJOS',
+                'ESTUDIANTES',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -37,12 +39,11 @@ class ChildrenScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              // Obx(
-              //   () => 
-                Expanded(
+              Obx(
+                () => Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(25),
-                    itemCount: 1,
+                    itemCount: _childrenController.childrenList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () async {},
@@ -58,15 +59,14 @@ class ChildrenScreen extends StatelessWidget {
                                 color: Colors.white60,
                               ),
                               boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.5),
-        spreadRadius: 2, 
-        blurRadius: 7,   
-        offset: Offset(3, 3),
-      ),
-    ],
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: const Offset(3, 3),
+                                ),
+                              ],
                             ),
-
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -74,27 +74,28 @@ class ChildrenScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 2.0),
                                   child: Row(
-                                    
                                     children: [
-                                      const CircleAvatar(
+                                      CircleAvatar(
                                         backgroundImage: NetworkImage(
-                                            'https://chisellabs.com/glossary/wp-content/uploads/2023/05/962b45f9-e2a6-4f59-8f0a-9e1e1a1d1f7f.png'),
+                                            _childrenController.childrenList[index].estudiante.rutaFoto),
                                         radius: 25,
-                                        backgroundColor: Color.fromARGB(
-                                            255, 236, 199, 199),
+                                        backgroundColor:
+                                            const Color.fromARGB(255, 236, 199, 199),
                                       ),
-                                      const SizedBox(width: 20,),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
                                       Flexible(
                                         child: Container(
                                           constraints: const BoxConstraints(
                                               maxWidth: 200),
-                                          child: const Column(
+                                          child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'ADRIAN MOLINA VELASCO',
-                                                style: TextStyle(
+                                                '${_childrenController.childrenList[index].estudiante.nombre1} ${_childrenController.childrenList[index].estudiante.nombre2} ${_childrenController.childrenList[index].estudiante.apellido1} ${_childrenController.childrenList[index].estudiante.apellido2}',
+                                                style: const TextStyle(
                                                   color: Colors.black54,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
@@ -115,7 +116,7 @@ class ChildrenScreen extends StatelessWidget {
                     },
                   ),
                 ),
-             // ),
+              ),
             ])),
       ),
     );

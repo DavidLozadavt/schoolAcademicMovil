@@ -16,7 +16,7 @@ class Chats extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-            padding: const EdgeInsets.only(bottom: 80),
+            padding: const EdgeInsets.only(bottom: 60),
             child: Column(children: [
               const SizedBox(
                 height: 25,

@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
         GetPage(name: '/recover_password', page: ()=> const RecoverPasswordScreen()),
         GetPage(name: '/update_password', page: () => const UpdatePasswordScreen()),
-        GetPage(name: '/guardian_children', page: () => const ChildrenScreen()),
+        GetPage(name: '/guardian_children', page: () => ChildrenScreen()),
       ],
     );
   }

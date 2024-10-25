@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +91,7 @@ class LoginController extends GetxController {
       await pref.setString('token', responseApiLogin.accessToken);
       await pref.setString('email', emailController.text);
       await pref.setString('rolUser', rolUsuario);
-      await pref.setString('idUser', responseApiLogin.user.id.toString());
+      await pref.setString('idUser', responseApiLogin.children![0].idEstudiante);
       await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
 
       // Redirigir a la página para completar los datos
@@ -100,7 +102,8 @@ class LoginController extends GetxController {
         await pref.setString('email', emailController.text);
         await pref.setString('rolUser', rolUsuario);
         await pref.setString('idUser', responseApiLogin.user.id.toString());
-          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+        await saveChildren(responseApiLogin.children);
         goToPageGuardian();
     }
   } on Failure catch (e) {
@@ -110,6 +113,16 @@ class LoginController extends GetxController {
     );
   }
 }
+
+ static Future<void> saveChildren(List<Children>? children) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (children != null) {
+      List<String> childrenJsonList =
+          children.map((child) => json.encode(child.toJson())).toList();
+      await pref.setStringList('children', childrenJsonList);
+    }
+  }
+
 
   Future<void> loadEmailFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
