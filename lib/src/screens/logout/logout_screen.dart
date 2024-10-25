@@ -44,6 +44,7 @@ Future<void> logoutApp(BuildContext context) async {
   await pref.remove('idUser');
   await pref.remove('tokenExpiresIn');
   await pref.remove('idContrato');
+  await pref.remove('children');
   //await pref.remove('urlLogoCompany');
   Get.find<ProfileUserController>().clearUserData();
   
