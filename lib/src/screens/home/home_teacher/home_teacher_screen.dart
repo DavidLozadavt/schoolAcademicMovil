@@ -36,12 +36,10 @@ class HomeTeacherScreen extends StatelessWidget {
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                ),
-                              );
+                             errorBuilder: (context, error, stackTrace) {
+                              return Image.asset('assets/images/profile.png', width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,);
                             },
                           ),
                         ),

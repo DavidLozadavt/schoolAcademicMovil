@@ -33,6 +33,13 @@ class LoginController extends GetxController {
     Get.offAllNamed('/home_admin');
   }
 
+  goToPageGuardian() {
+    Get.toNamed('/guardian_children');
+    ///cmabiar cuando este bien 
+    //Get.offAllNamed('/guardian_children');
+  }
+
+
  login() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   String? tokenDevice = pref.getString('token_device') ?? '';
@@ -88,6 +95,13 @@ class LoginController extends GetxController {
       // Redirigir a la página para completar los datos
       Get.offAllNamed('/complete_student_data');
       Get.snackbar('¡Bienvenido!', 'Por favor, completa tus datos.');
+    } else if(rolUsuario == 'ACUDIENTE'){
+       await pref.setString('token', responseApiLogin.accessToken);
+        await pref.setString('email', emailController.text);
+        await pref.setString('rolUser', rolUsuario);
+        await pref.setString('idUser', responseApiLogin.user.id.toString());
+          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+        goToPageGuardian();
     }
   } on Failure catch (e) {
     Get.snackbar(

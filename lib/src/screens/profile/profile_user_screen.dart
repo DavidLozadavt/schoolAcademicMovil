@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
+import 'package:vtschool/src/screens/payments/enrollments_person_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
+//import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
 import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
 
 class ProfileUserScreen extends StatelessWidget {
@@ -47,11 +49,15 @@ class ProfileUserScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                   ),
                   items: [
-                    /* _itemPopUpMenu(context, 'Editar perfil', true, 1,
-                            () => Get.to(() => const PagosPage())),*/
-                    /*_itemPopUpMenu(context, 'Términos y condiciones', true,
-                            3, () => Get.to(const PagosPage())),*/
-                    customDropdownMenuItem(context, 'Cerrar sesión', true, 1,
+                     customDropdownMenuItem(context, 'ACTUALIZAR PERFIL', true, 1,
+                            () => Get.to(() => EnrollmentsPersonScreen())),
+                    customDropdownMenuItem(context, 'CAMBIAR CONSTRASEA', true,
+                            2, ()async{
+                               await Future.delayed(const Duration(seconds: 1), (){
+                              Get.toNamed('/update_password');
+                            });
+                            }),
+                    customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 3,
                         () => logoutApp(context)),
                   ],
                   onChanged: (value) {},
@@ -85,11 +91,9 @@ class ProfileUserScreen extends StatelessWidget {
                             height: 110,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                ),
-                              );
+                              return Image.asset('assets/images/profile.png', width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,);
                             },
                           ),
                         ),
@@ -137,7 +141,7 @@ class ProfileUserScreen extends StatelessWidget {
                           height: 20,
                         ),
                         const Text(
-                          "Información Personal",
+                          "INFORMACIÓN PERSONAL",
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'CM Sans Serif',
@@ -149,25 +153,25 @@ class ProfileUserScreen extends StatelessWidget {
                           height: 10,
                         ),
                         buildTextFieldWithIcon(
-                          "Telefono",
+                          "TELEFONO",
                           Icons.phone,
                           '${_profileController.userProfile['persona']?['celular']}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Documento",
+                          "DOCUMENTO",
                           Icons.badge_outlined,
                           '${_profileController.userProfile['persona']?['identificacion']}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Ciudad de nacimiento",
+                          "CIUDAD DE NACIMIENTO",
                           Icons.badge_outlined,
                           '${_profileController.userProfile['persona']?['ciudad_nac']['descripcion']}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Ciudad actual",
+                          "CIUDAD ACTUAL",
                           Icons.location_city,
                           '${_profileController.userProfile['persona']?['ciudad_ubicacion']['descripcion']}',
                         ),

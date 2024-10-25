@@ -201,7 +201,7 @@ class Chat extends StatelessWidget {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                          'Descargar imagen'),
+                                                                          'DESCARGAR IMAGEN'),
                                                                       Icon(Icons
                                                                           .download_rounded),
                                                                     ],
@@ -228,16 +228,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -247,7 +247,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -280,16 +280,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -299,7 +299,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -329,16 +329,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -348,7 +348,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -402,7 +402,7 @@ class Chat extends StatelessWidget {
               } else {
                 return const Expanded(
                   child: Center(
-                    child: Text('No tienes mensajes'),
+                    child: Text('NO TIENES MENSAJES'),
                   ),
                 );
               }
@@ -509,7 +509,7 @@ class Chat extends StatelessWidget {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: listColor[10],
-                              hintText: "Mensaje",
+                              hintText: "MENSAJE",
                               hintStyle: TextStyle(color: listColor[14]),
                               prefixIcon: const SizedBox.shrink(),
                               suffixIcon: IconButton(
@@ -567,7 +567,7 @@ class Chat extends StatelessWidget {
                                     jsonMessage);
                               } else {
                                 Get.snackbar(
-                                    '¡Error!', 'El mensaje esta vacio');
+                                    '¡ERROR!', 'EL MENSAJE ESTA VACIO');
                               }
                             },
                             icon: const Icon(Icons.send)),
@@ -594,8 +594,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  ('No se selecciono nunguna imagen');
-                                  //('No se seleccionó ninguna imagen');
+                                  ('NO SE HA SELEECIONADO UNA IMAGEN');
+                                  
                                 }
                               },
                               icon: const Icon(Icons.camera_alt_outlined)),
@@ -611,7 +611,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setFilePath(file);
                                 } else {
                                   //('No se seleccionó ninguna imagen');
-                                  ('No se seleccionó ninguna imagen');
+                                  ('NO SE HA SELEECIONADO UNA IMAGEN');
                                 }
                               },
                               icon: const Icon(Icons.photo_library_outlined)),
@@ -625,7 +625,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  ('No se seleccionó ningun archivo');
+                                  ('NO SE HA SELEECIONADO UN ARCHIVO');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

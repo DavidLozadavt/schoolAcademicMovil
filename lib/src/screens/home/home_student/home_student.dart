@@ -28,11 +28,11 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
-                    title: 'Home',
+                    title: 'HOME',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
-                    title: 'Home',
+                    title: 'HOME',
                     isActive: true,
                   ),
                 ),
@@ -41,12 +41,12 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
+                    title: 'CHATS',
                     //messageCount: 50,
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
+                    title: 'CHATS',
                     isActive: true,
                     //messageCount: 50,
                   ),
@@ -56,11 +56,11 @@ class HomeStudent extends StatelessWidget {
                    label: '',
                    icon: ItemNavigationButton(
                      fileIcon: 'assets/images/note.png',
-                     title: 'Actividades',
+                     title: 'ACTIVIDADES',
                    ),
                    activeIcon: ItemNavigationButton(
                      fileIcon: 'assets/images/note.png',
-                     title: 'Actividades',
+                     title: 'ACTIVIDADES',
                      isActive: true,
                    ),
                  ),
@@ -69,11 +69,11 @@ class HomeStudent extends StatelessWidget {
                    label: '',
                    icon: ItemNavigationButton(
                      fileIcon: 'assets/images/payment.png',
-                     title: 'Pagos',
+                     title: 'PAGOS',
                    ),
                    activeIcon: ItemNavigationButton(
                      fileIcon: 'assets/images/payment.png',
-                     title: 'Pagos',
+                     title: 'PAGOS',
                      isActive: true,
                    ),
                  ),
@@ -82,11 +82,11 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/posts.png',
-                    title: 'Publicaciones',
+                    title: 'PUBLICACIONES',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/posts.png',
-                    title: 'Publicaciones',
+                    title: 'PUBLICACIONES',
                     isActive: true,
                   ),
                   
@@ -96,11 +96,11 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'PERFIL',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'PERFIL',
                     isActive: true,
                   ),
                 ),

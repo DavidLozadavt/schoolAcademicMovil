@@ -56,11 +56,9 @@ class HomeStudentScreen extends StatelessWidget {
                             height: 60,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                ),
-                              );
+                              return Image.asset('assets/images/profile.png', width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,);
                             },
                           ),
                         ),
@@ -71,11 +69,11 @@ class HomeStudentScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              '¡Hola! ',
+                              '¡HOLA! ',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'CM Sans Serif',
-                                fontSize: 14.0,
+                                fontSize: 13.0,
                                 //height: 1.5,
                               ),
                             ),
@@ -137,11 +135,11 @@ class HomeStudentScreen extends StatelessWidget {
                     ),
               const Center(
                 child: Text(
-                  '¡Tu semana al instante!',
+                  '¡TU SEMANA AL INSTANTE!',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'CM Sans Serif',
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),

@@ -13,6 +13,7 @@ import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_scree
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
+import 'package:vtschool/src/screens/home/home_guardian/children_screen.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
@@ -23,11 +24,13 @@ import 'package:vtschool/src/screens/payments/registration_payment/physical_regi
 import 'package:vtschool/src/screens/payments/pse_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subject_teacher_screens.dart';
+import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
 
 import 'src/screens/payments/tuition_payments/tuition_payments _transaction_screen.dart';
@@ -94,12 +97,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
         GetPage(name: '/posts', page: () => PostsScreen()),
         GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
-
-
-
-           
-
-
+        GetPage(name: '/recover_password', page: ()=> const RecoverPasswordScreen()),
+        GetPage(name: '/update_password', page: () => const UpdatePasswordScreen()),
+        GetPage(name: '/guardian_children', page: () => const ChildrenScreen()),
       ],
     );
   }

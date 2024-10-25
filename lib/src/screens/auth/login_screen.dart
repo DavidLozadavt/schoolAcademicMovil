@@ -149,7 +149,9 @@ class LoginScreen extends StatelessWidget {
 
   _forgotPassword(context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.toNamed('/recover_password');
+      },
       child: Text(
         "¿Olvido su contraseña?",
         style: TextStyle(color: listColor[10]),
