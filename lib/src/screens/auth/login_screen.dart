@@ -113,6 +113,8 @@ class LoginScreen extends StatelessWidget {
           ),
           child: Obx(() {
             return TextField(
+              obscureText: !_loginController
+                                .passwordVisible.value,
               controller: _loginController.passwordController,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
@@ -127,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                   Icons.password_rounded,
                   color: listColor[15],
                 ),
-                suffixIcon: Obx(() => IconButton(
+                suffixIcon: IconButton(
                     onPressed: _loginController.togglePasswordVisibility,
                     icon: Icon(
                       _loginController.passwordVisible.value
@@ -137,8 +139,7 @@ class LoginScreen extends StatelessWidget {
                           ? listColor[16]
                           : listColor[15],
                     ))),
-              ),
-              obscureText: !_loginController.passwordVisible.value,
+            
             );
           }),
         ),

@@ -12,7 +12,7 @@ class PaymentsController extends GetxController {
   var isLoading = true.obs;
   var isLoading1 = true.obs;
 
-   var enrollmentsByPerson = <Map<String, dynamic>>[].obs;
+  var enrollmentsByPerson = <Map<String, dynamic>>[].obs;
   var tuitionPayments = <Map<String, dynamic>>[].obs;
   var inscriptionPayments = <Map<String, dynamic>>[].obs;
 

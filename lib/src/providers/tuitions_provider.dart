@@ -19,11 +19,11 @@ class TuitionsProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    //print('255 ${response.body}');
+   // print('255 ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        enrollmentsByPerson.assignAll(response.body['data'].cast<Map<String, dynamic>>());
+         enrollmentsByPerson.assignAll(List<Map<String, dynamic>>.from(response.body['matriculas']));
       } else {
         throw Failure('La respuesta del servidor está vacía.');
       }

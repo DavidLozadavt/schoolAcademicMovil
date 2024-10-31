@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/config/fonts_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
-import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-
 Future<void> logoutApp(BuildContext context) async {
+
   final AuthProvider authProvider = AuthProvider();
   authProvider.logout();
   showDialog(
@@ -45,7 +44,8 @@ Future<void> logoutApp(BuildContext context) async {
   await pref.remove('tokenExpiresIn');
   await pref.remove('idContrato');
   await pref.remove('children');
-  //await pref.remove('urlLogoCompany');
-  Get.find<ProfileUserController>().clearUserData();
+  await pref.remove('idUserGuardian');
+  await pref.remove('password');
+  //Get.find<ProfileUserController>().clearUserData();
   
 }

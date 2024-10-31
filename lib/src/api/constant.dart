@@ -55,6 +55,11 @@ const putAttendanceUrl = '${baseURL}materias/update_assistance';
 const getCitysUrl = '${baseURL}get_Cityes';
 const getDepartament = '${baseURL}departamentos';
 
+//update and recover password 
+const updatePasswordUrl = '${baseURL}users/update_password/';
+const sendOtpUrl = '${baseURL}send_otp';
+const validateOtpUrl = '${baseURL}validate_otp';
+const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';
 

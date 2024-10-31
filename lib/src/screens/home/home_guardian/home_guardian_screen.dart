@@ -149,7 +149,6 @@ class HomeGuardianScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                   
                   ],
                 ),
               ),

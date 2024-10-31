@@ -17,7 +17,8 @@ class GlobalController extends GetxController {
       } else {
         String token = await authProvider.getToken();
         String rolUser = await authProvider.getRolUser();
-        //print('$token       and     $rolUser');
+        String idStudentSelected = await authProvider.getIdStudentSelect();
+       
         if (token == '') {
           Get.offAllNamed('/login');
         } else {
@@ -28,11 +29,13 @@ class GlobalController extends GetxController {
           } else if (rolUser == 'DOCENTE') {
             Get.offAllNamed('/home_teacher');
           } else if (rolUser == 'ACUDIENTE') {
-            //HACER OTRA VALIDACION PARA CUANDO AUN NO SE HA SELECCIONADO EL ESTUDIANTE
-            //Get.toNamed('/guardian_children');
-            Get.toNamed('/login');
-            ///cmabiar cuando este bien
-            //Get.offAllNamed('/guardian_children');
+            if(idStudentSelected.isNotEmpty){
+              Get.offAllNamed('/home_guardian');
+            }else if(idStudentSelected.isEmpty && rolUser.isNotEmpty){
+              Get.offAllNamed('/guardian_children');
+            }else{
+               Get.offAllNamed('/login');
+            }
           } else {
             Get.offAllNamed('/login');
           }

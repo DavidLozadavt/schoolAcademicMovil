@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:vtschool/src/screens/home/home_controller.dart';
-import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
+import 'package:vtschool/src/screens/home/home_guardian/home_guardian_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
-import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeGuardian extends StatelessWidget {
@@ -47,34 +46,34 @@ class HomeGuardian extends StatelessWidget {
                 //     isActive: true,
                 //   ),
                 // ),
-                BottomNavigationBarItem(
-                  //backgroundColor: listColor[11].withOpacity(0.5),
-                  label: '',
-                  icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Aula',
-                  ),
-                  activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/note.png',
-                    title: 'Aula',
-                    isActive: true,
-                  ),
+                // BottomNavigationBarItem(
+                //   //backgroundColor: listColor[11].withOpacity(0.5),
+                //   label: '',
+                //   icon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Aula',
+                //   ),
+                //   activeIcon: ItemNavigationButton(
+                //     fileIcon: 'assets/images/note.png',
+                //     title: 'Aula',
+                //     isActive: true,
+                //   ),
                   
-                ),
-                 BottomNavigationBarItem(
-                  //backgroundColor: listColor[11].withOpacity(0.5),
-                  label: '',
-                  icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/posts.png',
-                    title: 'Publicaciones',
-                  ),
-                  activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/posts.png',
-                    title: 'Publicaciones',
-                    isActive: true,
-                  ),
+                // ),
+                  BottomNavigationBarItem(
+                   //backgroundColor: listColor[11].withOpacity(0.5),
+                   label: '',
+                   icon: ItemNavigationButton(
+                     fileIcon: 'assets/images/posts.png',
+                     title: 'Publicaciones',
+                   ),
+                   activeIcon: ItemNavigationButton(
+                     fileIcon: 'assets/images/posts.png',
+                     title: 'Publicaciones',
+                     isActive: true,
+                   ),
                   
-                ),
+                 ),
                 // BottomNavigationBarItem(
                 //   backgroundColor: listColor[11].withOpacity(0.5),
                 //   label: '',
@@ -106,10 +105,10 @@ class HomeGuardian extends StatelessWidget {
         body: Obx(() => IndexedStack(
               index: controller.currentIndex.value,
               children: [
-                HomeTeacherScreen(),
+                HomeGuardianScreen(),
                 //ActivitiesTeacherScreen(),
-                SubjectsTeacherScreen(),
-                 PostsScreen(),
+                //SubjectsTeacherScreen(),
+                PostsScreen(),
                 ProfileUserScreen(),
              
               ],

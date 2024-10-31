@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
@@ -112,9 +110,9 @@ class UpdateStudentDataController extends GetxController {
   void saveStudentData() async {
     isLoading.value = true;
     final studentData = buildStudentData();
-    String jsonStudentData = jsonEncode(studentData);
+   // String jsonStudentData = jsonEncode(studentData);
 
-    print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
+    //print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
 
     final response = await authProvider.updateDataUser(studentData);
 

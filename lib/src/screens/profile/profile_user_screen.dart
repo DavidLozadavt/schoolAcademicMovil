@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/screens/payments/enrollments_person_screen.dart';
@@ -49,14 +50,24 @@ class ProfileUserScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                   ),
                   items: [
-                     customDropdownMenuItem(context, 'ACTUALIZAR PERFIL', true, 1,
-                            () => Get.to(() => EnrollmentsPersonScreen())),
-                    customDropdownMenuItem(context, 'CAMBIAR CONSTRASEA', true,
-                            2, ()async{
-                               await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/update_password');
-                            });
-                            }),
+                    //  customDropdownMenuItem(context, 'ACTUALIZAR PERFIL', true, 1,
+                    //         () => Get.to(() => EnrollmentsPersonScreen())),
+                    customDropdownMenuItem(
+                        context, 'CAMBIAR CONTRASEÑA', true, 2, () async {
+                      await Future.delayed(const Duration(seconds: 1), () {
+                        Get.toNamed('/update_password');
+                      });
+                    }),
+                    if (_profileController.rolUser == 'ACUDIENTE')
+                      customDropdownMenuItem(
+                          context, 'CAMBIAR ESTUDIANTE', true, 2, () async {
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        await Future.delayed(const Duration(seconds: 1), () {
+                          Get.offAllNamed('/guardian_children');
+                          pref.remove('idUser');
+                        });
+                      }),
                     customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 3,
                         () => logoutApp(context)),
                   ],
@@ -91,9 +102,12 @@ class ProfileUserScreen extends StatelessWidget {
                             height: 110,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return Image.asset('assets/images/profile.png', width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,);
+                              return Image.asset(
+                                'assets/images/profile.png',
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              );
                             },
                           ),
                         ),
@@ -183,7 +197,6 @@ class ProfileUserScreen extends StatelessWidget {
       ),
     );
   }
-
 }
 
 Widget buildTextFieldWithIcon(String label, IconData icon, String value) {

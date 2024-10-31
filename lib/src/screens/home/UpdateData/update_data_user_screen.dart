@@ -5,7 +5,9 @@ import 'package:vtschool/src/screens/home/UpdateData/update_data_controller.dart
 class UpdateStudentDataPage extends StatelessWidget {
   final UpdateStudentDataController controller =
       Get.put(UpdateStudentDataController());
-  final _formKey = GlobalKey<FormState>(); // Clave para el formulario
+  final _formKey = GlobalKey<FormState>();
+
+  UpdateStudentDataPage({super.key}); // Clave para el formulario
 
   @override
   Widget build(BuildContext context) {

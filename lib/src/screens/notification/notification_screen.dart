@@ -36,9 +36,9 @@ class NotificationScreen extends StatelessWidget {
                   },
                 ),
                 const Text(
-                  'Notificaciones',
+                  'NOTIFICACIONES',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -57,9 +57,9 @@ class NotificationScreen extends StatelessWidget {
                     child: _notificationsController.activities.isEmpty
                         ? const Center(
                             child: Text(
-                              'No tienes notificaciones',
+                              'NO TIENES NOTIFICACIONES',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -81,13 +81,13 @@ class NotificationScreen extends StatelessWidget {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: const Text("Confirmación"),
+                                          title: const Text("CONFIRMACIÓN"),
                                           content: const Text(
-                                              "¿Está seguro que deseas eliminar esta notificación?"),
+                                              "¿ESTÁ SEGURO QUE DESEA ELIMINAR ESTA NOTIFICACOIÓN?"),
                                           actions: <Widget>[
                                             TextButton(
                                               onPressed: () => Get.back(),
-                                              child: const Text("Cancelar"),
+                                              child: const Text("CANCELAR"),
                                             ),
                                             TextButton(
                                               onPressed: () {
@@ -96,7 +96,7 @@ class NotificationScreen extends StatelessWidget {
                                                     .activities
                                                     .removeAt(index);
                                               },
-                                              child: const Text("Eliminar"),
+                                              child: const Text("ELIMINAR"),
                                             ),
                                           ],
                                         );
@@ -197,7 +197,7 @@ class NotificationScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              'Detalle',
+              'DETALLE',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

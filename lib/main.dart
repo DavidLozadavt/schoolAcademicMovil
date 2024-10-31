@@ -14,6 +14,7 @@ import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_guardian/children_screen.dart';
+import 'package:vtschool/src/screens/home/home_guardian/home_guardian.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
@@ -24,6 +25,8 @@ import 'package:vtschool/src/screens/payments/registration_payment/physical_regi
 import 'package:vtschool/src/screens/payments/pse_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_by_otp_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_otp_screen.dart';
 import 'package:vtschool/src/screens/recover_password/recover_password_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
@@ -80,6 +83,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/home_student', page: () => HomeStudent()),
         GetPage(name: '/home_teacher', page: () => HomeTeacher()),
         GetPage(name: '/home_admin', page: () => HomeAdmin()),
+        GetPage(name: '/home_guardian', page: () => HomeGuardian()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/chat', page: () => Chat()),
@@ -97,8 +101,10 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
         GetPage(name: '/posts', page: () => PostsScreen()),
         GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
-        GetPage(name: '/recover_password', page: ()=> const RecoverPasswordScreen()),
-        GetPage(name: '/update_password', page: () => const UpdatePasswordScreen()),
+        GetPage(name: '/recover_password', page: ()=> RecoverPasswordScreen()),
+        GetPage(name: '/otp_screen', page: ()=> RecoverPasswordOtpScreen()),
+        GetPage(name: '/reset_password_by_otp', page: ()=> RecoverPasswordByOtpScreen()),
+        GetPage(name: '/update_password', page: () => UpdatePasswordScreen()),
         GetPage(name: '/guardian_children', page: () => ChildrenScreen()),
       ],
     );

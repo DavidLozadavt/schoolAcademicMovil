@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/home/home_guardian/children_controller.dart';
-import 'package:vtschool/src/screens/logout/logout_screen.dart';
-import 'package:vtschool/src/widgets/card_chats.dart';
 
 class ChildrenScreen extends StatelessWidget {
   final ChildrenController _childrenController = Get.put(ChildrenController());
@@ -18,16 +16,20 @@ class ChildrenScreen extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  //logoutApp(context);
-                  Get.toNamed('/login');
-                },
-              ),
+              // Row(
+              //   children: [
+              //     IconButton(
+              //       icon: const Icon(
+              //         Icons.arrow_back,
+              //         color: Colors.black,
+              //       ),
+              //       onPressed: () {
+              //         //logoutApp(context);
+              //         Get.toNamed('/login');
+              //       },
+              //     ),
+              //   ],
+              // ),
               const Text(
                 'ESTUDIANTES',
                 style: TextStyle(
@@ -46,7 +48,10 @@ class ChildrenScreen extends StatelessWidget {
                     itemCount: _childrenController.childrenList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () async {},
+                        onTap: () async {
+                          await _childrenController.saveIdStudentSelect(_childrenController.childrenList[index].idEstudiante.toString());
+                          Get.offAndToNamed('/home_guardian');
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(

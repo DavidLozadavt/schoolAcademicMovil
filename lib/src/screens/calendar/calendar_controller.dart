@@ -24,6 +24,7 @@ class CalendarController1 extends GetxController {
       if (rolUser == 'DOCENTE') {
         await _calendarProvider.fetchEventsTeacher(idContrato);
       } else if (rolUser == 'ESTUDIANTE' || rolUser == 'ACUDIENTE') {
+      //  print('aqio $rolUser ------ $idUser');
         await _calendarProvider.fetchEventsStudent(idUser);
       } else if (rolUser == 'ADMIN') {
         await _calendarProvider.fetchEventsTeacher(idUser);

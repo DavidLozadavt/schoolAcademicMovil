@@ -23,6 +23,12 @@ class ChildrenController extends GetxController {
     }
   }
 
+  //saveIdEstudentSelect(String idEstudiante) {}
+Future<void> saveIdStudentSelect(String idStudentSelected) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.setString('idUser', idStudentSelected);
+  }
+
  
 }
 

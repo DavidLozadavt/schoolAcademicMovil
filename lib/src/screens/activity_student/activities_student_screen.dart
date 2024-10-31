@@ -138,8 +138,8 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                                         .filteredActivitiesStudent[
                                                     index]);
                   
-                                            print(
-                                                'Prueba data: ${_taskStudentController.activitiesById}');
+                                            // print(
+                                            //     'Prueba data: ${_taskStudentController.activitiesById}');
                                           } else {
                                             // await _taskStudentController
                                             //     .getActivityQuestionnaire(

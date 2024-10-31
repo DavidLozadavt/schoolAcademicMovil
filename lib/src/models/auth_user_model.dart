@@ -109,8 +109,8 @@ class Persona {
 
 class Children {
   int id;
-  String idEstudiante;
-  String idAcudiente;
+  int idEstudiante;
+  int idAcudiente;
   Estudiante estudiante;
 
   Children({

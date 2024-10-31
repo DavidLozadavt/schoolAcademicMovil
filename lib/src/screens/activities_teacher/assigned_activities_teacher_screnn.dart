@@ -198,6 +198,7 @@ class AssignedActivitiesTeacherScreen extends StatelessWidget {
    // Navigator.of(context).pop();
      Get.back();
     showModalBottomSheet(
+      // ignore: use_build_context_synchronously
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,

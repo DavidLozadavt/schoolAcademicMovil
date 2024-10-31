@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/config/theme/app_theme.dart';
-//import 'package:get/get.dart';
-//import 'package:vtschool/src/screens/recover_password/recover_password_controller.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_controller.dart';
 
 class RecoverPasswordScreen extends StatelessWidget {
-  // final RecoverPasswordController _recoverPasswordController =
-  //     Get.put(RecoverPasswordController());
-  const RecoverPasswordScreen({super.key});
+  final RecoverPasswordController _recoverPasswordController =
+      Get.put(RecoverPasswordController());
+  RecoverPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +24,14 @@ class RecoverPasswordScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    Get.back();
-                    
-                  },
-                ),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -68,72 +66,64 @@ class RecoverPasswordScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 20),
-
-                      // Campo de texto para el correo electrónico
-                      // const TextField(
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Correo electrónico',
-                      //     border: OutlineInputBorder(),
-                      //     hintText: 'Ingrese su correo electrónico',
-                      //   ),
-                      // ),
-
                       Container(
                         color: Colors.transparent,
-                      
-
                         child: TextField(
-                          
-                          onChanged: (value) {},
-                          keyboardType: TextInputType.emailAddress,
-                      
-                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            hintText: "Ingrese su correo electrónico",
-                            labelText: 'Correo electrónico',
-                            hintStyle: TextStyle(color: listColor[15]),
-                            
-                            labelStyle:
-                                TextStyle(color: listColor[15], fontSize: 16, fontWeight: FontWeight.bold),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: listColor[15],
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: listColor[15], width: 5),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10.0),
+                              onChanged: (value) {},
+                              controller: _recoverPasswordController.emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                hintText: "CORREO ELECTRNICO",
+                                labelText: 'CORREO ELECTRNICO',
+                                hintStyle: TextStyle(color: listColor[15]),
+                                labelStyle: TextStyle(
+                                    color: listColor[15],
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                                prefixIcon: Icon(
+                                  Icons.email_outlined,
+                                  color: listColor[15],
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: listColor[15], width: 5),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: listColor[15], width: 1),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: listColor[15], width: 1.5),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 7.0, horizontal: 20),
+                              ),
+                              style: TextStyle(
+                                color: listColor[15],
                               ),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: listColor[15], width: 1),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: listColor[15], width: 1.5),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 7.0, horizontal: 20),
-                          ),
-                          style: TextStyle(
-                            color: listColor[15],
-                          ),
-                        ),
+                        
                       ),
                       const SizedBox(height: 20),
-
-                      ElevatedButton(
+                      Obx((){
+                        return _recoverPasswordController.sendEmailIsLoading.value ?
+                        const Center(
+                          child: CircularProgressIndicator() ):  ElevatedButton(
                         onPressed: () {
+                         _recoverPasswordController.sendOtp();
                           FocusScope.of(context).requestFocus();
                         },
                         style: ElevatedButton.styleFrom(
@@ -150,7 +140,12 @@ class RecoverPasswordScreen extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                      ),
+                          
+                          );
+                        
+                        
+                      }),
+                     
                       const SizedBox(height: 20),
                     ],
                   ),
