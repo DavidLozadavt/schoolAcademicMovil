@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
-import 'package:vtschool/src/screens/payments/enrollments_person_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-//import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
 import 'package:vtschool/src/widgets/drop_down_menu_item.dart';
 
 class ProfileUserScreen extends StatelessWidget {

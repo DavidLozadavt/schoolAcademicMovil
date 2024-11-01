@@ -625,7 +625,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  ('NO SE HA SELEECIONADO UN ARCHIVO');
+                                  ('NO SE HA SELECIONADO UN ARCHIVO');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

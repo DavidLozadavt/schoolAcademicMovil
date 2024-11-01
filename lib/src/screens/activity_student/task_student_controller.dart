@@ -32,7 +32,6 @@ class TaskStudentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    
     getActivitiesStudent();
   }
 
@@ -53,7 +52,7 @@ class TaskStudentController extends GetxController {
   }
 
 
-  replyActivity(String id) async {
+  Future<void> replyActivity(String id) async {
     try {
       if (commentController.text.isEmpty && filePath.value.path.isEmpty) {
         Get.snackbar(
@@ -87,17 +86,13 @@ class TaskStudentController extends GetxController {
   }
 
   Future<void> replyQuestionnaire(String idQualification,
-      {Widget? alert}) async {
+     ) async {
     try {
+      
       final response = await _activityProvider.replyQuestionnaire(
           idQualification, selectedAnswer);
-
       answerRating.value = response;
-      await Get.bottomSheet(
-        alert!,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-      );
+     
     } catch (e) {
       //print('Error al enviar la evidencia: $e');
     }
@@ -132,12 +127,12 @@ class TaskStudentController extends GetxController {
     filePath.value = path;
   }
 
-  void reiniciarRespuestas() {
+  void resetAnswers() {
     selectedAnswer.clear();
     valuesInputQuestionnaire.clear();
   }
   void saveAnswers(
-      {int? idQuestion, String? idAnswer, String? description, int? idTypeQuestion,
+      {int? idQuestion, int? idAnswer, String? description, int? idTypeQuestion,
       String? valueInput}) {
     var existingIndex = selectedAnswer
         .indexWhere((answer) => answer['idPregunta'] == idQuestion);
@@ -146,13 +141,13 @@ class TaskStudentController extends GetxController {
       if (existingIndex != -1) {
         selectedAnswer[existingIndex] = {
           'idPregunta': idQuestion,
-          'respuesta': idAnswer,
+          'idRespuesta': idAnswer,
           'descripcionRespuesta': description,
         };
       } else {
         selectedAnswer.add({
           'idPregunta': idQuestion,
-          'respuesta': idAnswer,
+          'idRespuesta': idAnswer,
           'descripcionRespuesta': description,
         });
       }

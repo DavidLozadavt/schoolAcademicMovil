@@ -24,7 +24,6 @@ class EnrollmentsPersonScreen extends StatelessWidget {
               ),
             ),
           ),
-         
           const SizedBox(
             height: 15,
           ),
@@ -39,13 +38,19 @@ class EnrollmentsPersonScreen extends StatelessWidget {
                     child: RefreshIndicator(
                       onRefresh: _paymentsController.refreshItems,
                       child: _paymentsController.enrollmentsByPerson.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'NO TIENES MATRICULAS',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black45,
+                          ? SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'NO TIENES MATRICULAS',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45,
+                                  ),
                                 ),
                               ),
                             )
@@ -56,10 +61,10 @@ class EnrollmentsPersonScreen extends StatelessWidget {
                                 return Center(
                                   child: GestureDetector(
                                     onTap: () async {
-                                    //   await _paymentsController.getTuitionPayments(_paymentsController
-                                    //       .enrollmentsByPerson[index]['id']);
-                                    //   Get.toNamed('/payments');
-                                    // 
+                                      //   await _paymentsController.getTuitionPayments(_paymentsController
+                                      //       .enrollmentsByPerson[index]['id']);
+                                      //   Get.toNamed('/payments');
+                                      //
                                     },
                                     child: CardEnrollmentsPerson(
                                       date: _paymentsController

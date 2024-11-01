@@ -18,12 +18,12 @@ class CardNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2.0),
+      margin: const EdgeInsets.symmetric(vertical: 3.0),
       width: 350,
       decoration: BoxDecoration(
         color: status == 'ACTIVO'
-            ? listColor[10].withOpacity(0.7)
-            : listColor[12].withOpacity(0.4),
+            ? listColor[10]
+            : listColor[12],
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: const Color.fromARGB(255, 129, 129, 129),

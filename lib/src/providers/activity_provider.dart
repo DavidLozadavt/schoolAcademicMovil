@@ -181,7 +181,7 @@ class ActivityProvider extends GetConnect {
       String idQualification, dynamic answers) async {
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
-
+    print(answersJson);
     try {
       Response response = await post(
         '$postReplyQuestionnaireUrl$idQualification',
@@ -192,9 +192,12 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
+
+      print(response.body);
+      print(response.statusCode);
    
       if (response.statusCode == 401) {
-        throw Failure('Otro');
+        throw Failure('Error');
       }
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');

@@ -8,7 +8,7 @@ import 'package:vtschool/src/widgets/card_notifications.dart';
 import 'package:vtschool/src/widgets/cont_sup.dart';
 
 class NotificationScreen extends StatelessWidget {
-   final PushNotificationController _pushNotificationController =
+  final PushNotificationController _pushNotificationController =
       Get.put(PushNotificationController());
   final NotificationsController _notificationsController =
       Get.put(NotificationsController());
@@ -49,90 +49,84 @@ class NotificationScreen extends StatelessWidget {
           Obx(
             () => _notificationsController.isLoading.value
                 ? const Expanded(
-                  child: Center(
+                    child: Center(
                       child: CircularProgressIndicator(),
                     ),
-                )
+                  )
                 : Expanded(
-                    child: _notificationsController.activities.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'NO TIENES NOTIFICACIONES',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount:
-                                _notificationsController.activities.length,
-                            itemBuilder: ((context, index) {
-                              return Dismissible(
-                                key: Key(_notificationsController
-                                    .activities[index]['id']
-                                    .toString()),
-                                direction: DismissDirection.endToStart,
-                                confirmDismiss: (direction) async {
-                                  if (direction ==
-                                      DismissDirection.endToStart) {
-                                    return await showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text("CONFIRMACIÓN"),
-                                          content: const Text(
-                                              "¿ESTÁ SEGURO QUE DESEA ELIMINAR ESTA NOTIFICACOIÓN?"),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () => Get.back(),
-                                              child: const Text("CANCELAR"),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Get.back();
-                                                _notificationsController
-                                                    .activities
-                                                    .removeAt(index);
-                                              },
-                                              child: const Text("ELIMINAR"),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    return false;
-                                  }
-                                },
-                                background: Container(
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 243, 57, 57),
-                                    borderRadius: BorderRadius.circular(10.0),
+                    child: RefreshIndicator(
+                      onRefresh: _notificationsController.refreshNotifications,
+                      child: _notificationsController.activities.isEmpty
+                          ? SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: Container(
+                                height:
+                                  MediaQuery.of(context).size.height * 0.8,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'NO TIENES NOTIFICACIONES',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
                                   ),
-                                  alignment: Alignment.centerRight,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 22.0, vertical: 3),
-                                  child: const Icon(Icons.delete_outlined),
                                 ),
-                                child: Center(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Map<String, dynamic> decodedData = jsonDecode(
-                                    _notificationsController
-                                                  .activities[index]
-                                              ['metadataInfo']);
-                                      if (decodedData['id'] !=
-                                          null && _notificationsController
-                                                  .activities[index]['idTipoNotificacion'] == 3 || _notificationsController
-                                                  .activities[index]['idTipoNotificacion'] == 5) {
-                                        showNotificationDetails(
-                                            context,
-                                            _notificationsController
-                                                .activities[index]);
-                                      } else {
+                              ))
+                          : ListView.builder(
+                              itemCount:
+                                  _notificationsController.activities.length,
+                              itemBuilder: ((context, index) {
+                                return Dismissible(
+                                  key: Key(_notificationsController
+                                      .activities[index]['id']
+                                      .toString()),
+                                  direction: DismissDirection.endToStart,
+                                  confirmDismiss: (direction) async {
+                                    if (direction ==
+                                        DismissDirection.endToStart) {
+                                      return await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text("CONFIRMACIÓN"),
+                                            content: const Text(
+                                                "¿ESTÁ SEGURO QUE DESEA ELIMINAR ESTA NOTIFICACOIÓN?"),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Get.back(),
+                                                child: const Text("CANCELAR"),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                  _notificationsController
+                                                      .activities
+                                                      .removeAt(index);
+                                                },
+                                                child: const Text("ELIMINAR"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return false;
+                                    }
+                                  },
+                                  background: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 243, 57, 57),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    alignment: Alignment.centerRight,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 22.0, vertical: 3),
+                                    child: const Icon(Icons.delete_outlined),
+                                  ),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      onTap: () {
                                         if (_notificationsController
                                                     .activities[index]['estado']
                                                 ['estado'] ==
@@ -141,23 +135,23 @@ class NotificationScreen extends StatelessWidget {
                                               .readNotifications(
                                                   '${_notificationsController.activities[index]['id']}');
                                         }
-                                      }
-                                    },
-                                    child: CardNotifications(
-                                      affair:
-                                          '${_notificationsController.activities[index]['asunto']}',
-                                      date:
-                                          '${_notificationsController.activities[index]['fecha']}',
-                                      hour:
-                                          '${_notificationsController.activities[index]['hora']}',
-                                      status:
-                                          '${_notificationsController.activities[index]['estado']['estado']}',
+                                      },
+                                      child: CardNotifications(
+                                        affair:
+                                            '${_notificationsController.activities[index]['asunto']}',
+                                        date:
+                                            '${_notificationsController.activities[index]['fecha']}',
+                                        hour:
+                                            '${_notificationsController.activities[index]['hora']}',
+                                        status:
+                                            '${_notificationsController.activities[index]['estado']['estado']}',
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }),
-                          ),
+                                );
+                              }),
+                            ),
+                    ),
                   ),
           ),
         ],
@@ -233,7 +227,7 @@ class NotificationScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                  /*  if (notificationData['idTipoNotificacion'] != 4)
+                    /*  if (notificationData['idTipoNotificacion'] != 4)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
