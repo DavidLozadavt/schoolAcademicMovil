@@ -26,7 +26,7 @@ class PublicacionesController extends GetxController {
     errorMessage.value = '';
     try {
       publicaciones.value = await _publicationProvider.getPublications();
-    } on DioError catch (dioError) {
+    } on DioException catch (dioError) {
       errorMessage.value = 'Error de conexión: ${dioError.message}';
       Get.snackbar('Error de red', 'No se pudo conectar al servidor');
     } catch (e) {

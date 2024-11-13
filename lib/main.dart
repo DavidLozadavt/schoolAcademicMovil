@@ -33,6 +33,7 @@ import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subject_teacher_screens.dart';
+import 'package:vtschool/src/screens/support/support_screen.dart';
 import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
 
@@ -106,6 +107,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/reset_password_by_otp', page: ()=> RecoverPasswordByOtpScreen()),
         GetPage(name: '/update_password', page: () => UpdatePasswordScreen()),
         GetPage(name: '/guardian_children', page: () => ChildrenScreen()),
+        GetPage(name: '/support', page: () => SupportScreen()),
       ],
     );
   }

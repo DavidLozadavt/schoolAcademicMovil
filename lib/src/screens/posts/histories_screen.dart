@@ -96,7 +96,7 @@ class HistoriasWidget extends StatelessWidget {
 class FullScreenImagePage extends StatefulWidget {
   final Publicacion publicacion;
 
-  FullScreenImagePage({required this.publicacion});
+  const FullScreenImagePage({required this.publicacion});
 
   @override
   _FullScreenImagePageState createState() => _FullScreenImagePageState();

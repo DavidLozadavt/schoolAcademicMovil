@@ -216,20 +216,18 @@ class ActivitiesStudentScreen extends StatelessWidget {
   DateTime fechaActual = DateTime.now();
 
   final DateFormat formatoFechaHora = DateFormat('dd/MM/yyyy HH:mm');
-String mensaje;
+String message;
   if (fechaActual.isAfter(fechaFinal)) {
-    mensaje = '1';
+    message = '1';
   } else if (fechaActual.isBefore(fechaInicial)) {
-    mensaje = '2';
+    message = '2';
   } else {
-    mensaje = '3';
-    
-    showModalPastActivity(context);
+    message = '3';
   }
     Color themeColor = Theme.of(context).dialogBackgroundColor;
     bool isPdf = activityData['actividad']['DocUrl'] != null &&
         activityData['actividad']['DocUrl'].endsWith('.pdf');
-    if (activityData['estado']['estado'] == 'ACTIVO' && mensaje == '3') {
+    if (activityData['estado']['estado'] == 'ACTIVO' && message == '3') {
       return Container(
         height: 700,
         decoration: BoxDecoration(
@@ -454,7 +452,7 @@ String mensaje;
       return showModalPastActivity(context,
           qualification: '${activityData['calificacionNumerica']}',
           commentTeacher: '${activityData['ComentarioDocente']}');
-    } else if(mensaje == '2') {
+    } else if(message == '2') {
       return showModalPastActivity(context,
           title: 'Aún no puedes realizar esta actividad, empieza el ${formatoFechaHora.format(fechaInicial)}.');
     }else{

@@ -119,6 +119,14 @@ class HomeStudent extends StatelessWidget {
               ],
             )),
         extendBody: true,
+         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.amber[100],
+          onPressed: () {
+            Get.toNamed('/support');
+          },
+          tooltip: 'Support',
+          child: const Icon(Icons.support_agent_rounded),
+        ),
       ),
     );
   }

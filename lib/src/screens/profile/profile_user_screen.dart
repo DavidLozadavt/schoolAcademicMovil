@@ -56,9 +56,11 @@ class ProfileUserScreen extends StatelessWidget {
                         Get.toNamed('/update_password');
                       });
                     }),
+                     customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 2,
+                        () => logoutApp(context)),
                     if (_profileController.rolUser == 'ACUDIENTE')
                       customDropdownMenuItem(
-                          context, 'CAMBIAR ESTUDIANTE', true, 2, () async {
+                          context, 'CAMBIAR ESTUDIANTE', true, 3, () async {
                         SharedPreferences pref =
                             await SharedPreferences.getInstance();
                         await Future.delayed(const Duration(seconds: 1), () {
@@ -66,8 +68,7 @@ class ProfileUserScreen extends StatelessWidget {
                           pref.remove('idUser');
                         });
                       }),
-                    customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 3,
-                        () => logoutApp(context)),
+                   
                   ],
                   onChanged: (value) {},
                 ),

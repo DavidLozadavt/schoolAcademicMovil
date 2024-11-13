@@ -115,7 +115,6 @@ class RecoverPasswordScreen extends StatelessWidget {
                                 color: listColor[15],
                               ),
                             ),
-                        
                       ),
                       const SizedBox(height: 20),
                       Obx((){

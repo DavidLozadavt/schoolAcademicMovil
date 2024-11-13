@@ -8,6 +8,8 @@ const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 //const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 //const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
+//pre sena
+//const baseURL = 'https://school-sena.virtualt.org/api/';
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
 //const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
@@ -60,6 +62,9 @@ const updatePasswordUrl = '${baseURL}users/update_password/';
 const sendOtpUrl = '${baseURL}send_otp';
 const validateOtpUrl = '${baseURL}validate_otp';
 const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
+const postSupportUrl = '${baseURL}store_support';
+const noData = '${baseURL}default/imagenpordefecto.png';
+
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';
 
@@ -67,5 +72,4 @@ const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
 //const serverError = 'Eror en la respuesta';
 //const unauthorized = 'Unauthorized';
 //const somethingWentWrong = 'Something went wrong, try again!';
-const noData = '${baseURL}default/imagenpordefecto.png';
 //se usa cuando el servidor no retonar archivo

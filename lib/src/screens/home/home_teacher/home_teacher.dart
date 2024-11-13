@@ -59,9 +59,8 @@ class HomeTeacher extends StatelessWidget {
                     title: 'Aula',
                     isActive: true,
                   ),
-                  
                 ),
-                 BottomNavigationBarItem(
+                BottomNavigationBarItem(
                   //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
                   icon: ItemNavigationButton(
@@ -73,7 +72,6 @@ class HomeTeacher extends StatelessWidget {
                     title: 'Publicaciones',
                     isActive: true,
                   ),
-                  
                 ),
                 // BottomNavigationBarItem(
                 //   backgroundColor: listColor[11].withOpacity(0.5),
@@ -109,12 +107,19 @@ class HomeTeacher extends StatelessWidget {
                 HomeTeacherScreen(),
                 //ActivitiesTeacherScreen(),
                 SubjectsTeacherScreen(),
-                 PostsScreen(),
+                PostsScreen(),
                 ProfileUserScreen(),
-             
               ],
             )),
         extendBody: true,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.amber[100],
+          onPressed: () {
+            Get.toNamed('/support');
+          },
+          tooltip: 'Support',
+          child: const Icon(Icons.support_agent_rounded),
+        ),
       ),
     );
   }

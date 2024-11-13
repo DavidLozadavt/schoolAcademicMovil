@@ -123,8 +123,8 @@ class AuthProvider extends GetConnect {
          headers: {'accept': 'application/json'},
         {'email': email},
       );
-      print(response.statusCode);
-      print(response.body);
+      //print(response.statusCode);
+      //print(response.body);
       if (response.statusCode == 200) {
         Get.offAllNamed('/otp_screen');
       }else{
