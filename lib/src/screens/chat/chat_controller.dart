@@ -18,6 +18,7 @@ class ChatController extends GetxController {
   var messageController = TextEditingController();
   var isLoading = true.obs;
   var users = <Map<String, dynamic>>[].obs;
+  var groups = <Map<String, dynamic>>[].obs;
   var filteredUsers = <Map<String, dynamic>>[].obs;
   var messages = <Map<String, dynamic>>[].obs;
   final _selectedUser = {}.obs;
@@ -32,6 +33,7 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
     getUsers();
+    getGroups();
   }
 
   /*void jumpToEnd() {
@@ -53,6 +55,18 @@ class ChatController extends GetxController {
     } catch (error) {
       //('Error: $error');
       ('Error: $error');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getGroups() async {
+    try {
+      await _chatProvider.getGroups();
+      groups.assignAll(_chatProvider.groups);
+      print('2545 $groups');
+    } catch (error) {
+      print('Error: $error');
     } finally {
       isLoading(false);
     }

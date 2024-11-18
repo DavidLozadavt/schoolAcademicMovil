@@ -32,12 +32,11 @@ class ActivityProvider extends GetConnect {
       },
     );
     if (response.statusCode == 200) {
-      //Map<String, dynamic> responseBody = response.body;
-      /*if (responseBody.isNotEmpty) {*/
-      activitiesStudent.assignAll(response.body.cast<Map<String, dynamic>>());
-      /*  } else {
-          throw Failure('La respuesta del servidor está vacía.');
-        }*/
+      if (response.body.isNotEmpty) {
+          activitiesStudent.assignAll(response.body.cast<Map<String, dynamic>>());
+        } else {
+          throw Failure('La respuesta del servidor está vacía');
+        }
     } else if (response.statusCode == 400) {
       activitiesStudent.assignAll([]);
     } else {

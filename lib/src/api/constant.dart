@@ -63,6 +63,7 @@ const sendOtpUrl = '${baseURL}send_otp';
 const validateOtpUrl = '${baseURL}validate_otp';
 const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
 const postSupportUrl = '${baseURL}store_support';
+const getGroupsUrl = '${baseURL}group_general';
 const noData = '${baseURL}default/imagenpordefecto.png';
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';

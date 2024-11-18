@@ -11,6 +11,7 @@ class SupportController extends GetxController {
    RxString selectedFilePath = ''.obs;
    Rx<File> filePath = Rx<File>(File(''));
     final SupportProvider _supportProvider = SupportProvider();
+    var sendSupportValue = false.obs;
 
 Future<void> sendSupport() async {
     try {
@@ -24,9 +25,11 @@ Future<void> sendSupport() async {
 
       if (comment.text.isNotEmpty &&
             filePath.value.path.isNotEmpty) {
+          sendSupportValue.value = true;
           await _supportProvider.sendSupport(
               comment.text, filePath.value);
         } else if (filePath.value.path.isEmpty) {
+          sendSupportValue.value = true;
            await _supportProvider.sendSupport(
               comment.text, null);
       }
