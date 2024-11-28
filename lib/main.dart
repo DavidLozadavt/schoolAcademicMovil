@@ -35,6 +35,7 @@ import 'package:vtschool/src/screens/starting/starting_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subject_teacher_screens.dart';
 import 'package:vtschool/src/screens/support/support_screen.dart';
 import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
+import 'package:vtschool/src/screens/update_profile/update_profile_screen.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
 
 import 'src/screens/payments/tuition_payments/tuition_payments _transaction_screen.dart';
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/starting_init_screen',
       getPages: [
         GetPage(
-            name: '/starting_init_screen', page: () => StartingInitScreen()),
+            name: '/starting_init_screen', page: () => const StartingInitScreen()),
         GetPage(name: '/starting', page: () => const StartingScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home_student', page: () => HomeStudent()),
@@ -89,6 +90,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/chat', page: () => Chat()),
         GetPage(name: '/payments', page: () => PaymentsScreen()),
+        GetPage(name: '/update_profile', page: () => UpdateProfileScreen()),
         GetPage(name: '/physical_registration_payment', page: () => PhysicalRegistrationPaymentScreen()),
         GetPage(name: '/payment_transaction_registration', page: () => PaymentTransactionRegistrationScreen()),
         GetPage(name: '/tuition_payments_transaction', page: () => TuitionPaymentsTransactionScreen()),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-import 'package:vtschool/src/widgets/card_chats.dart';  
+import 'package:vtschool/src/widgets/card_chats.dart';
 
 class Chats extends StatelessWidget {
   Chats({super.key});
@@ -75,64 +75,57 @@ class Chats extends StatelessWidget {
                   ),
                 ),
               ),
-              if(_chatController.groups.isNotEmpty)
-              Obx(
-                () => SizedBox(
-                  height: 120,
-                  child: ListView.builder(
-                   scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.all(25),
-                          itemCount: _chatController.groups.length,
-                          itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () async {
-                                },
-                                child:  Container(
-            width: 120, // Ancho de cada elemento
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                    
-                      borderRadius: BorderRadius.circular(12.0),
-                     
+              if (_chatController.groups.isNotEmpty)
+                Obx(
+                  () => SizedBox(
+                    height: 120,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(25),
+                      itemCount: _chatController.groups.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () async {},
+                          child: Container(
+                            width: 120,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://img2.pngdownload.id/20180622/qfj/aazcdq748.webp'),
+                                ),
+                                Text(
+                                  _chatController.groups[index]['nombreGrupo'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 14.0),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-                const SizedBox(height: 8.0),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://img2.pngdownload.id/20180622/qfj/aazcdq748.webp'
-                  ),
-                ),
-
-               
-               
-                Text(
-                  _chatController.groups[index]['nombreGrupo'],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14.0),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-                              );
-                          },
-                        ),
-                ),
-              ),
               Obx(
                 () => _chatController.isLoading.value
                     ? const Expanded(
-                      child: Center(
+                        child: Center(
                           child: CircularProgressIndicator(),
                         ),
-                    )
+                      )
                     : Expanded(
                         child: _chatController.filteredUsers.isEmpty
                             ? const Center(
@@ -149,12 +142,11 @@ class Chats extends StatelessWidget {
                                 padding: const EdgeInsets.all(25),
                                 itemCount: _chatController.filteredUsers.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  
                                   final users =
                                       _chatController.filteredUsers[index];
-                              
-                                  if (profileUserController.userProfile['persona']
-                                          ['id'] !=
+
+                                  if (profileUserController
+                                          .userProfile['persona']['id'] !=
                                       users['matricula']!['persona']['id']) {
                                     return GestureDetector(
                                       onTap: () async {
@@ -173,8 +165,9 @@ class Chats extends StatelessWidget {
                                             ['nombre1'],
                                         lastName: users['matricula']!['persona']
                                             ['apellido1'],
-                                        endMessage: users['matricula']!['persona']
-                                            ['email'],
+                                        endMessage:
+                                            users['matricula']!['persona']
+                                                ['email'],
                                       ),
                                     );
                                   } else {

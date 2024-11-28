@@ -62,12 +62,14 @@ class User {
   String deviceToken;
   String estadoMensajeria;
   Persona persona;
+  List<ActivationCompanyUser> activationCompanyUsers;
 
   User({
     required this.id,
     required this.deviceToken,
     required this.estadoMensajeria,
     required this.persona,
+    required this.activationCompanyUsers,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -75,6 +77,8 @@ class User {
         deviceToken: json["device_token"],
         estadoMensajeria: json["estadoMensajeria"],
         persona: Persona.fromJson(json["persona"]),
+        activationCompanyUsers: List<ActivationCompanyUser>.from(json["activation_company_users"].map((x) => ActivationCompanyUser.fromJson(x))),
+        
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,7 +86,33 @@ class User {
         "device_token": deviceToken,
         "estadoMensajeria": estadoMensajeria,
         "persona": persona.toJson(),
+        "activation_company_users": List<dynamic>.from(activationCompanyUsers.map((x) => x.toJson())),
+        
       };
+}
+
+class ActivationCompanyUser {
+    
+    int idEstado;
+    
+
+    ActivationCompanyUser({
+        
+        required this.idEstado,
+     
+    });
+
+    factory ActivationCompanyUser.fromJson(Map<String, dynamic> json) => ActivationCompanyUser(
+      
+        idEstado: json["idEstado"],
+       
+    );
+
+    Map<String, dynamic> toJson() => {
+        
+        "idEstado": idEstado,
+       
+    };
 }
 
 class Persona {

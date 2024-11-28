@@ -51,41 +51,13 @@ class LoginController extends GetxController {
           emailController.text, passwordController.text, tokenDevice);
 
       String rolUsuario = responseApiLogin.payload.roles[0];
-      if (rolUsuario == 'ADMIN') {
-        Get.snackbar(
-          '¡Hola!',
-          '¡Estamos trabajando para mejorar, pronto tendremos acceso para el administrador!',
-        );
-        //goToHomePageAdmin();
-      } else if (rolUsuario == 'ESTUDIANTE') {
+      String idStatus =
+          responseApiLogin.user.activationCompanyUsers[0].idEstado.toString();
+      print(rolUsuario);
+      print(idStatus);
+      if (idStatus == '18') {
         await pref.setString('token', responseApiLogin.accessToken);
         await pref.setString('email', emailController.text);
-        await pref.setString('password', passwordController.text);
-        await pref.setString('rolUser', rolUsuario);
-        await pref.setString('idUser', responseApiLogin.user.id.toString());
-        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        Future.delayed(const Duration(seconds: 1), () {
-          goToHomePageStudent();
-          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
-        });
-      } else if (rolUsuario == 'DOCENTE') {
-        await pref.setString('token', responseApiLogin.accessToken);
-        await pref.setString('email', emailController.text);
-
-        await pref.setString('rolUser', rolUsuario);
-        await pref.setString('idUser', responseApiLogin.user.id.toString());
-        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        await pref.setString('idContrato',
-            responseApiLogin.user.persona.contrato!.id.toString());
-        Future.delayed(const Duration(seconds: 1), () {
-          goToHomePageTeacher();
-          Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
-        });
-      } else if (rolUsuario == 'ESTUDIANTEUP') {
-        // Guardar token y otros datos si es necesario
-        await pref.setString('token', responseApiLogin.accessToken);
-        await pref.setString('email', emailController.text);
-
         await pref.setString('rolUser', rolUsuario);
         await pref.setString('idUser', responseApiLogin.user.id.toString());
         await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
@@ -93,16 +65,59 @@ class LoginController extends GetxController {
         // Redirigir a la página para completar los datos
         Get.offAllNamed('/complete_student_data');
         Get.snackbar('¡Bienvenido!', 'Por favor, completa tus datos.');
-      } else if (rolUsuario == 'ACUDIENTE') {
-        await pref.setString('token', responseApiLogin.accessToken);
-        await pref.setString('email', emailController.text);
+      } else {
+        if (rolUsuario == 'ADMIN') {
+          Get.snackbar(
+            '¡Hola!',
+            '¡Estamos trabajando para mejorar, pronto tendremos acceso para el administrador!',
+          );
+          //goToHomePageAdmin();
+        } else if (rolUsuario == 'ESTUDIANTE' || rolUsuario == 'APRENDIZ') {
+          await pref.setString('token', responseApiLogin.accessToken);
+          await pref.setString('email', emailController.text);
+          await pref.setString('password', passwordController.text);
+          await pref.setString('rolUser', rolUsuario);
+          await pref.setString('idUser', responseApiLogin.user.id.toString());
+          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+          Future.delayed(const Duration(seconds: 1), () {
+            goToHomePageStudent();
+            Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+          });
+        } else if (rolUsuario == 'DOCENTE') {
+          await pref.setString('token', responseApiLogin.accessToken);
+          await pref.setString('email', emailController.text);
+          await pref.setString('rolUser', rolUsuario);
+          await pref.setString('idUser', responseApiLogin.user.id.toString());
+          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+          await pref.setString('idContrato',
+              responseApiLogin.user.persona.contrato!.id.toString());
+          Future.delayed(const Duration(seconds: 1), () {
+            goToHomePageTeacher();
+            Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
+          });
+        } else if (rolUsuario == 'ESTUDIANTEUP' || rolUsuario == 'DOCENTE') {
+          // Guardar token y otros datos si es necesario
+          await pref.setString('token', responseApiLogin.accessToken);
+          await pref.setString('email', emailController.text);
 
-        await pref.setString('rolUser', rolUsuario);
-        await pref.setString(
-            'idUserGuardian', responseApiLogin.user.id.toString());
-        await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
-        await saveChildren(responseApiLogin.children);
-        goToPageGuardian();
+          await pref.setString('rolUser', rolUsuario);
+          await pref.setString('idUser', responseApiLogin.user.id.toString());
+          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+
+          // Redirigir a la página para completar los datos
+          Get.offAllNamed('/complete_student_data');
+          Get.snackbar('¡Bienvenido!', 'Por favor, completa tus datos.');
+        } else if (rolUsuario == 'ACUDIENTE') {
+          await pref.setString('token', responseApiLogin.accessToken);
+          await pref.setString('email', emailController.text);
+
+          await pref.setString('rolUser', rolUsuario);
+          await pref.setString(
+              'idUserGuardian', responseApiLogin.user.id.toString());
+          await pref.setInt('tokenExpiresIn', responseApiLogin.expiresIn);
+          await saveChildren(responseApiLogin.children);
+          goToPageGuardian();
+        }
       }
     } on Failure catch (e) {
       Get.snackbar(
@@ -126,5 +141,4 @@ class LoginController extends GetxController {
     String savedEmail = prefs.getString('email') ?? '';
     emailController.text = savedEmail;
   }
-
 }

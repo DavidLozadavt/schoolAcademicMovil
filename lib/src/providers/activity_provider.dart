@@ -37,11 +37,9 @@ class ActivityProvider extends GetConnect {
         } else {
           throw Failure('La respuesta del servidor está vacía');
         }
-    } else if (response.statusCode == 400) {
-      activitiesStudent.assignAll([]);
     } else {
-      throw Failure('Error al cargar las actividades');
-    }
+      activitiesStudent.assignAll([]);
+    } 
   }
 
   Future<void> getActivityById(String? id) async {

@@ -64,19 +64,19 @@ class HomeStudent extends StatelessWidget {
                      isActive: true,
                    ),
                  ),
-                 BottomNavigationBarItem(
-                   //backgroundColor: Colors.white,
-                   label: '',
-                   icon: ItemNavigationButton(
-                     fileIcon: 'assets/images/payment.png',
-                     title: 'PAGOS',
-                   ),
-                   activeIcon: ItemNavigationButton(
-                     fileIcon: 'assets/images/payment.png',
-                     title: 'PAGOS',
-                     isActive: true,
-                   ),
-                 ),
+                //  BottomNavigationBarItem(
+                //    //backgroundColor: Colors.white,
+                //    label: '',
+                //    icon: ItemNavigationButton(
+                //      fileIcon: 'assets/images/payment.png',
+                //      title: 'PAGOS',
+                //    ),
+                //    activeIcon: ItemNavigationButton(
+                //      fileIcon: 'assets/images/payment.png',
+                //      title: 'PAGOS',
+                //      isActive: true,
+                //    ),
+                //  ),
                  BottomNavigationBarItem(
                   //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
@@ -112,8 +112,8 @@ class HomeStudent extends StatelessWidget {
                 HomeStudentScreen(),
                 Chats(),
                 ActivitiesStudentScreen(),
-                EnrollmentsPersonScreen(),
-                                 PostsScreen(),
+                //EnrollmentsPersonScreen(),
+                PostsScreen(),
                 ProfileUserScreen(),
                 
               ],

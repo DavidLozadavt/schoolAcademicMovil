@@ -51,16 +51,22 @@ class ProfileUserScreen extends StatelessWidget {
                     //  customDropdownMenuItem(context, 'ACTUALIZAR PERFIL', true, 1,
                     //         () => Get.to(() => EnrollmentsPersonScreen())),
                     customDropdownMenuItem(
-                        context, 'CAMBIAR CONTRASEÑA', true, 2, () async {
+                        context, 'CAMBIAR CONTRASEÑA', true, 1, () async {
                       await Future.delayed(const Duration(seconds: 1), () {
                         Get.toNamed('/update_password');
                       });
                     }),
-                     customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 2,
+                    customDropdownMenuItem(
+                        context, 'ACTUALIZAR PERFIL', true, 2, () async {
+                      await Future.delayed(const Duration(seconds: 1), () {
+                        Get.toNamed('/update_profile');
+                      });
+                    }),
+                     customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 3,
                         () => logoutApp(context)),
                     if (_profileController.rolUser == 'ACUDIENTE')
                       customDropdownMenuItem(
-                          context, 'CAMBIAR ESTUDIANTE', true, 3, () async {
+                          context, 'CAMBIAR ESTUDIANTE', true, 4, () async {
                         SharedPreferences pref =
                             await SharedPreferences.getInstance();
                         await Future.delayed(const Duration(seconds: 1), () {
@@ -116,14 +122,14 @@ class ProfileUserScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                                '${_profileController.userProfile['persona']?['nombre1']} ${_profileController.userProfile['persona']?['apellido1']}',
+                                '${_profileController.userProfile['persona']?['nombre1'] ?? 'Sin datos'} ${_profileController.userProfile['persona']?['apellido1'] ?? 'Sin datos'}',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'CM Sans Serif',
                                   fontSize: 24.0,
                                 )),
                             Text(
-                              '${_profileController.userProfile['persona']?['email']}',
+                              '${_profileController.userProfile['persona']?['email'] ?? 'Sin datos'}',
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'Averta_Light',
@@ -168,25 +174,25 @@ class ProfileUserScreen extends StatelessWidget {
                         buildTextFieldWithIcon(
                           "TELEFONO",
                           Icons.phone,
-                          '${_profileController.userProfile['persona']?['celular']}',
+                          '${_profileController.userProfile['persona']?['celular'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
                           "DOCUMENTO",
                           Icons.badge_outlined,
-                          '${_profileController.userProfile['persona']?['identificacion']}',
+                          '${_profileController.userProfile['persona']?['identificacion'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
                           "CIUDAD DE NACIMIENTO",
                           Icons.badge_outlined,
-                          '${_profileController.userProfile['persona']?['ciudad_nac']['descripcion']}',
+                          '${_profileController.userProfile['persona']?['ciudad_nac']?['descripcion'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
                           "CIUDAD ACTUAL",
                           Icons.location_city,
-                          '${_profileController.userProfile['persona']?['ciudad_ubicacion']['descripcion']}',
+                          '${_profileController.userProfile['persona']?['ciudad_ubicacion']?['descripcion'] ?? 'Sin datos'}',
                         ),
                       ],
                     ),

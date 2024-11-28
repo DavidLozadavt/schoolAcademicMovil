@@ -129,7 +129,7 @@ class SupportScreen extends StatelessWidget {
                           const SizedBox(height: 8.0),
                           const Padding(
                             padding: EdgeInsets.only(left: 18.0),
-                            child: Text('ARCHIVO (OPCIONA)'),
+                            child: Text('ARCHIVO (OPCIONAL)'),
                           ),
                           const SizedBox(
                             height: 3.0,

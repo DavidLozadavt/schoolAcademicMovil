@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:vtschool/src/api/constant.dart';
 import 'package:vtschool/src/errors/failure.dart';
@@ -12,14 +14,20 @@ class TuitionsProvider extends GetConnect {
 
   Future<void> getEnrollmentsByPerson() async {
     String token = await authService.getToken();
+    Map<String, dynamic> data = {
+    "page": 1,
+    "pageSize": 10,
+  };
+
+  String jsonString = jsonEncode(data);
     Response response = await get(
-      '$getEnrollmentsByPersonUrl{"relations":["persona","asignacionMatriculaTransaccion.transaccion.pago","asignacionPeriodoProgramaJornada.asignacionPeriodoPrograma.programa.nivelEducativo","grado"]}',
+      '$getEnrollmentsByPersonUrl$jsonString',
       headers: {
         'Authorization': 'Bearer $token',
         'accept': 'application/json',
       },
     );
-   // print('255 ${response.body}');
+   print('255 ${response.body}');
 
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {

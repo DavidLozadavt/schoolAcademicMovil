@@ -18,30 +18,30 @@ class GlobalController extends GetxController {
         String token = await authProvider.getToken();
         String rolUser = await authProvider.getRolUser();
         String idStudentSelected = await authProvider.getIdStudentSelect();
-       
+
         if (token == '') {
           Get.offAllNamed('/login');
         } else {
           if (rolUser == 'ADMIN') {
             Get.offAllNamed('/home_admin');
-          } else if (rolUser == 'ESTUDIANTE') {
+          } else if (rolUser == 'ESTUDIANTE' || rolUser == 'APRENDIZ') {
             Get.offAllNamed('/home_student');
           } else if (rolUser == 'DOCENTE') {
             Get.offAllNamed('/home_teacher');
           } else if (rolUser == 'ACUDIENTE') {
-            if(idStudentSelected.isNotEmpty){
+            if (idStudentSelected.isNotEmpty) {
               Get.offAllNamed('/home_guardian');
-            }else if(idStudentSelected.isEmpty && rolUser.isNotEmpty){
+            } else if (idStudentSelected.isEmpty && rolUser.isNotEmpty) {
               Get.offAllNamed('/guardian_children');
-            }else{
-               Get.offAllNamed('/login');
+            } else {
+              Get.offAllNamed('/login');
             }
           } else {
             Get.offAllNamed('/login');
           }
         }
       }
-    } catch (e) {
+    } catch (e) {  
       Get.offNamed('/starting');
     }
   }

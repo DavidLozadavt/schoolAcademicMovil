@@ -120,7 +120,7 @@ class ChatProvider extends GetConnect {
       if (response.body.isNotEmpty) {
         groups.assignAll(response.body.cast<Map<String, dynamic>>());
       } else {
-        throw Failure('La respuesta del servidor está vacía');
+        groups.assignAll(response.body.cast<Map<String, dynamic>>());
       }
     } else {
       throw Failure('Error al cargar los grupos');

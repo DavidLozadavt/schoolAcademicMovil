@@ -6,24 +6,25 @@ class SubjectsTeacherController extends GetxController {
   var isLoading = true.obs;
   var subject = <Map<String, dynamic>>[].obs;
 
-  Future<void> getSubject(String idWorkingDay,
-    String idSubject,
-    String idProgram,
-    String startTime,
-    String endTime,
-    int idSchedule,
-    String idDegree) async {
+  Future<void> getSubject(
+      String idWorkingDay,
+      String idSubject,
+      String idProgram,
+      String startTime,
+      String endTime,
+      int idSchedule,
+      String idDegree) async {
     try {
-      await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram, startTime, endTime, idSchedule, idDegree);
+      await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram,
+          startTime, endTime, idSchedule, idDegree);
       subject.assignAll(_subjectProvider.subject);
     } finally {
     }
   }
 
   ///¿relog
-  var timeElapsed = 0.obs; 
-  var totalTime = 20; 
-
+  var timeElapsed = 0.obs;
+  var totalTime = 20;
 
   void startTimer() {
     Future.delayed(const Duration(seconds: 1), () {
@@ -34,12 +35,12 @@ class SubjectsTeacherController extends GetxController {
     });
   }
 
- double get progress => timeElapsed.value / totalTime;
+  double get progress => timeElapsed.value / totalTime;
 
- //checbox
+  //checbox
   var checkboxes = <bool>[].obs;
 
- void loadSubjects() async {
+  void loadSubjects() async {
     if (subject.isNotEmpty && subject[0]['matriculas'] != null) {
       checkboxes.assignAll(List.filled(subject[0]['matriculas'].length, true));
     }
@@ -48,5 +49,4 @@ class SubjectsTeacherController extends GetxController {
   void toggleCheckbox(int index, bool value) {
     checkboxes[index] = value;
   }
-
 }

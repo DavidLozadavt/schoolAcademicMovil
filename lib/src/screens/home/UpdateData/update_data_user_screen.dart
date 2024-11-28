@@ -250,7 +250,7 @@ class UpdateStudentDataPage extends StatelessWidget {
       String formattedDate =
           "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
       // Actualiza el campo de texto con la fecha seleccionada
-      Get.find<UpdateStudentDataController>().fechaNacController.text =
+controller.fechaNacController.text =
           formattedDate;
     }
   }
