@@ -52,6 +52,7 @@ class ChatController extends GetxController {
       users.assignAll(_chatProvider.users);
       filteredUsers.assignAll(users);
       isLoading(true);
+      print(filteredUsers);
     } catch (error) {
       //('Error: $error');
       ('Error: $error');

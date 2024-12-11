@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:vtschool/src/providers/citys_provider.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class UpdateProfileController extends GetConnect {
@@ -29,28 +30,46 @@ class UpdateProfileController extends GetConnect {
   final addressController = TextEditingController();
   final landlineController = TextEditingController();
   final emailController = TextEditingController();
+  CitiesProvider citiesProvider = CitiesProvider();
+  var isLoadingCities = false.obs;
+  var departments = [].obs;
+  var cities = [].obs;
+  var selectedDepartment = ''.obs;
+  var selectedCity = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-     descriptionController.text = _profileController.userProfile['persona']?['perfil'] ?? '';
-     firstNameController.text  = _profileController.userProfile['persona']?['nombre1'] ?? '';
-     middleNameController.text  = _profileController.userProfile['persona']?['nombre2'] ?? '';
-     lastName1Controller.text  = _profileController.userProfile['persona']?['apellido1'] ?? '';
-     lastName2Controller.text  = _profileController.userProfile['persona']?['apellido2'] ?? '';
-     dateController.text  = _profileController.userProfile['persona']?['fechaNac'] ?? '';
+    fetchDepartments();
+    descriptionController.text =
+        _profileController.userProfile['persona']?['perfil'] ?? '';
+    firstNameController.text =
+        _profileController.userProfile['persona']?['nombre1'] ?? '';
+    middleNameController.text =
+        _profileController.userProfile['persona']?['nombre2'] ?? '';
+    lastName1Controller.text =
+        _profileController.userProfile['persona']?['apellido1'] ?? '';
+    lastName2Controller.text =
+        _profileController.userProfile['persona']?['apellido2'] ?? '';
+    dateController.text =
+        _profileController.userProfile['persona']?['fechaNac'] ?? '';
     // idTypeController.text  = ;
-     idNumberController.text  = _profileController.userProfile['persona']?['identificacion'] ?? '';
-     mobileController.text  = _profileController.userProfile['persona']?['celular'] ?? '';
+    idNumberController.text =
+        _profileController.userProfile['persona']?['identificacion'] ?? '';
+    mobileController.text =
+        _profileController.userProfile['persona']?['celular'] ?? '';
     // genderController.text  = ;
-     //bloodTypeController.text  = ;
+    //bloodTypeController.text  = ;
     // birthDepartmentController.text  = ;
-   //  birthCityController.text  = ;
-   //  locationDepartmentController.text  = ;
-   //  locationCityController.text  = ;
-     addressController.text  = _profileController.userProfile['persona']?['direccion'] ?? '';
-     landlineController.text  = _profileController.userProfile['persona']?['telefonoFijo'] ?? '';
-     emailController.text  = _profileController.userProfile['persona']?['email'] ?? '';
+    //  birthCityController.text  = ;
+    //  locationDepartmentController.text  = ;
+    //  locationCityController.text  = ;
+    addressController.text =
+        _profileController.userProfile['persona']?['direccion'] ?? '';
+    landlineController.text =
+        _profileController.userProfile['persona']?['telefonoFijo'] ?? '';
+    emailController.text =
+        _profileController.userProfile['persona']?['email'] ?? '';
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -87,6 +106,28 @@ class UpdateProfileController extends GetConnect {
     } else {
       final result = await permission.request();
       return result.isGranted;
+    }
+  }
+
+  Future<void> fetchDepartments() async {
+    try {
+      final response = await citiesProvider.getDepartments();
+      departments.value = response;
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudieron cargar los departamentos');
+    }
+  }
+
+  Future<void> fetchCities(String idDepartment) async {
+    try {
+      isLoadingCities.value = true;
+
+      final response = await citiesProvider.getCities(idDepartment);
+      cities.value = response;
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudieron cargar las ciudades');
+    } finally {
+      isLoadingCities.value = false;
     }
   }
 }

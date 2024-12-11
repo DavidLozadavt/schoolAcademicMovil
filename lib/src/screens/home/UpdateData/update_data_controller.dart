@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/providers/citys_provider.dart'; // Importa el proveedor
 
@@ -17,7 +18,7 @@ class UpdateStudentDataController extends GetxController {
   TextEditingController phonefijeController = TextEditingController();
 
   final AuthProvider authProvider = AuthProvider();
-  final CitysProvider citysProvider = CitysProvider(); // Proveedor de ciudades
+  final CitiesProvider citiesProvider = CitiesProvider(); // Proveedor de ciudades
 
   var userProfile = {}.obs;
   var isLoading = false.obs;
@@ -67,7 +68,7 @@ class UpdateStudentDataController extends GetxController {
 
   Future<void> fetchDepartamentos() async {
     try {
-      final response = await citysProvider.getDepartaments();
+      final response = await citiesProvider.getDepartments();
       departamentos.value = response;
     } catch (e) {
       Get.snackbar('Error', 'No se pudieron cargar los departamentos');
@@ -79,8 +80,8 @@ class UpdateStudentDataController extends GetxController {
     try {
       isLoadingCiudades.value = true;
 
-      final response = await citysProvider
-          .getCityes(idDepartamento); // Pasa el idDepartamento a la función
+      final response = await citiesProvider
+          .getCities(idDepartamento); // Pasa el idDepartamento a la función
       ciudades.value = response; // Llenar la lista de ciudades
     } catch (e) {
       Get.snackbar('Error', 'No se pudieron cargar las ciudades');
@@ -108,9 +109,10 @@ class UpdateStudentDataController extends GetxController {
   }
 
   void saveStudentData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     isLoading.value = true;
     final studentData = buildStudentData();
-   // String jsonStudentData = jsonEncode(studentData);
+    // String jsonStudentData = jsonEncode(studentData);
 
     //print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
 
@@ -118,6 +120,14 @@ class UpdateStudentDataController extends GetxController {
 
     if (response != null) {
       Get.snackbar('¡Datos actualizado!', 'Inicial sesión nuevamente');
+
+      Get.offAllNamed('/login');
+      await pref.remove('token');
+      await pref.remove('rolUser');
+      await pref.remove('idUser');
+      await pref.remove('tokenExpiresIn');
+      await pref.remove('idContrato');
+      await pref.remove('idStatus');
       Get.offAllNamed('/login');
     } else {
       // Si hubo algún error

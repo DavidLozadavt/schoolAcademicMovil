@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
+import 'package:vtschool/src/screens/nuevo/nuevo_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
@@ -73,19 +74,19 @@ class HomeTeacher extends StatelessWidget {
                     isActive: true,
                   ),
                 ),
-                // BottomNavigationBarItem(
-                //   backgroundColor: listColor[11].withOpacity(0.5),
-                //   label: '',
-                //   icon: const ItemNavigationButton(
-                //     fileIcon: 'assets/images/payment.png',
-                //     title: 'Pagos',
-                //   ),
-                //   activeIcon: const ItemNavigationButton(
-                //     fileIcon: 'assets/images/payment.png',
-                //     title: 'Pagos',
-                //     isActive: true,
-                //   ),
-                // ),
+                 BottomNavigationBarItem(
+                   //backgroundColor: listColor[11].withOpacity(0.5),
+                   label: '',
+                   icon: const ItemNavigationButton(
+                     fileIcon: 'assets/images/payment.png',
+                     title: 'Nuevo',
+                   ),
+                   activeIcon: const ItemNavigationButton(
+                     fileIcon: 'assets/images/payment.png',
+                     title: 'Nuevo',
+                     isActive: true,
+                   ),
+                 ),
                 BottomNavigationBarItem(
                   //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
@@ -105,9 +106,9 @@ class HomeTeacher extends StatelessWidget {
               index: controller.currentIndex.value,
               children: [
                 HomeTeacherScreen(),
-                //ActivitiesTeacherScreen(),
                 SubjectsTeacherScreen(),
                 PostsScreen(),
+                CoursePage(),
                 ProfileUserScreen(),
               ],
             )),

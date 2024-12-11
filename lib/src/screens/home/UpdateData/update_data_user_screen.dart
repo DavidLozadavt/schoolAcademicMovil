@@ -28,7 +28,8 @@ class UpdateStudentDataPage extends StatelessWidget {
               ),
             );
           } else {
-            return Form(  // Se agrega el Form para validación
+            return Form(
+              // Se agrega el Form para validación
               key: _formKey,
               child: Column(
                 children: [
@@ -75,8 +76,8 @@ class UpdateStudentDataPage extends StatelessWidget {
                                   'Teléfono Fijo', Icons.phone,
                                   keyboardType: TextInputType.phone),
                               const SizedBox(height: 16),
-                              _buildTextField(controller.emailController, 'Email',
-                                  Icons.email,
+                              _buildTextField(controller.emailController,
+                                  'Email', Icons.email,
                                   keyboardType: TextInputType.emailAddress),
                               const SizedBox(height: 16),
                               _buildTextField(
@@ -107,7 +108,8 @@ class UpdateStudentDataPage extends StatelessWidget {
                             children: [
                               _buildTextField(controller.addressController,
                                   'Dirección', Icons.location_on,
-                                  isRequired: true), // Añadir validación obligatoria
+                                  isRequired:
+                                      true), // Añadir validación obligatoria
                               const SizedBox(height: 16),
                               Obx(() {
                                 // Indicador de carga para departamentos
@@ -117,8 +119,8 @@ class UpdateStudentDataPage extends StatelessWidget {
                                 }
                                 return DropdownButton<String>(
                                   isExpanded: true,
-                                  value: controller.selectedDepartamento.value
-                                          .isNotEmpty
+                                  value: controller
+                                          .selectedDepartamento.value.isNotEmpty
                                       ? controller.selectedDepartamento.value
                                       : null,
                                   items: controller.departamentos.map((item) {
@@ -133,8 +135,8 @@ class UpdateStudentDataPage extends StatelessWidget {
                                     controller.selectedCiudad.value = '';
                                     controller.fetchCityes(value);
                                   },
-                                  hint: const Text(
-                                      'Seleccione el departamento'),
+                                  hint:
+                                      const Text('Seleccione el departamento'),
                                 );
                               }),
                               const SizedBox(height: 16),
@@ -147,8 +149,8 @@ class UpdateStudentDataPage extends StatelessWidget {
                                 } else {
                                   return DropdownButton<String>(
                                     isExpanded: true,
-                                    value: controller.selectedCiudad.value
-                                            .isNotEmpty
+                                    value: controller
+                                            .selectedCiudad.value.isNotEmpty
                                         ? controller.selectedCiudad.value
                                         : null,
                                     items: controller.ciudades.map((item) {
@@ -213,7 +215,8 @@ class UpdateStudentDataPage extends StatelessWidget {
 
   Widget _buildTextField(
       TextEditingController controller, String label, IconData icon,
-      {TextInputType keyboardType = TextInputType.text, bool isRequired = false}) {
+      {TextInputType keyboardType = TextInputType.text,
+      bool isRequired = false}) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -246,12 +249,11 @@ class UpdateStudentDataPage extends StatelessWidget {
     );
 
     if (pickedDate != null) {
-      // Formato de fecha
       String formattedDate =
-          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
-      // Actualiza el campo de texto con la fecha seleccionada
-controller.fechaNacController.text =
-          formattedDate;
+          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+      controller.fechaNacController.text = formattedDate;
+
+      print(formattedDate);
     }
   }
 }

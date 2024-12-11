@@ -114,17 +114,23 @@ class UpdateProfileScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             _buildTextField("Descripción de Perfil",
-                                _updateProfileController.descriptionController, icon: Icons.description_outlined),
+                                _updateProfileController.descriptionController,
+                                icon: Icons.description_outlined),
                             _buildTextField("Primer nombre",
-                                _updateProfileController.firstNameController, icon: Icons.person),
+                                _updateProfileController.firstNameController,
+                                icon: Icons.person),
                             _buildTextField("Nombre 2",
-                                _updateProfileController.middleNameController, icon: Icons.person),
+                                _updateProfileController.middleNameController,
+                                icon: Icons.person),
                             _buildTextField("Apellido 1",
-                                _updateProfileController.lastName1Controller,  icon: Icons.person),
+                                _updateProfileController.lastName1Controller,
+                                icon: Icons.person),
                             _buildTextField("Apellido 2",
-                                _updateProfileController.lastName2Controller,  icon: Icons.person),
+                                _updateProfileController.lastName2Controller,
+                                icon: Icons.person),
                             _buildTextField("Identificación",
-                                _updateProfileController.idNumberController,  icon: Icons.person),
+                                _updateProfileController.idNumberController,
+                                icon: Icons.person),
                             _buildTextField("Celular",
                                 _updateProfileController.mobileController),
                             _buildTextField("Dirección",
@@ -137,6 +143,113 @@ class UpdateProfileScreen extends StatelessWidget {
                                   _updateProfileController.dateController,
                                 ),
                               ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              margin:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: listColor[16].withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Obx(() {
+                                if (_updateProfileController
+                                    .departments.isEmpty) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                return DropdownButton<String>(
+                                  isExpanded: true,
+                                  value: _updateProfileController
+                                          .selectedDepartment.value.isNotEmpty
+                                      ? _updateProfileController
+                                          .selectedDepartment.value
+                                      : null,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  dropdownColor: Colors.white,
+                                  icon: Icon(
+                                      Icons.arrow_drop_down_circle_outlined,
+                                      color: listColor[15]),
+                                  items: _updateProfileController.departments
+                                      .map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item['id'].toString(),
+                                      child: Text(item['descripcion'],
+                                          style:
+                                              TextStyle(color: listColor[15])),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    _updateProfileController
+                                        .selectedDepartment.value = value!;
+                                    _updateProfileController
+                                        .selectedCity.value = '';
+                                    _updateProfileController.fetchCities(value);
+                                  },
+                                  hint:
+                                      Text('Seleccione el departamento',  style: TextStyle(color: listColor[15])),
+                                );
+                              }),
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: listColor[16].withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Obx(() {
+                                if (_updateProfileController
+                                    .isLoadingCities.value) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return DropdownButton<String>(
+                                    isExpanded: true,
+                                    value: _updateProfileController
+                                            .selectedCity.value.isNotEmpty
+                                        ? _updateProfileController
+                                            .selectedCity.value
+                                        : null,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    dropdownColor: Colors.white,
+                                    icon: Icon(
+                                        Icons.arrow_drop_down_circle_outlined,
+                                        color: listColor[15]),
+                                    items: _updateProfileController.cities
+                                        .map((item) {
+                                      return DropdownMenuItem<String>(
+                                        value: item['id'].toString(),
+                                        child: Text(item['descripcion'],
+                                            style: TextStyle(
+                                                color: listColor[15])),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      _updateProfileController
+                                          .selectedCity.value = value!;
+                                    },
+                                    hint: Text('Seleccione la ciudad',  style: TextStyle(color: listColor[15])),
+                                  );
+                                }
+                              }),
                             ),
                             /*_buildTextField("Tipo de Identificación", controller.tipoIdController),
                                    
@@ -214,7 +327,8 @@ class UpdateProfileScreen extends StatelessWidget {
   }
 
   Widget _buildTextField(String label, TextEditingController controller,
-      {TextInputType keyboardType = TextInputType.text, IconData icon = Icons.import_contacts}) {
+      {TextInputType keyboardType = TextInputType.text,
+      IconData icon = Icons.import_contacts}) {
     /*
     
     onChanged: (value) {},
@@ -240,7 +354,7 @@ class UpdateProfileScreen extends StatelessWidget {
           labelStyle: TextStyle(
               color: listColor[15], fontSize: 16, fontWeight: FontWeight.bold),
           prefixIcon: Icon(
-             icon,
+            icon,
             color: listColor[15],
           ),
           border: OutlineInputBorder(

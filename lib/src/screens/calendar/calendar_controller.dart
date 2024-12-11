@@ -33,6 +33,7 @@ class CalendarController1 extends GetxController {
         await _calendarProvider.fetchEventsTeacher(idUser);
       }
       events.assignAll(_calendarProvider.events);
+      filteredEvents.assignAll(events);
     } catch (error) {
       //('Error fetching events: $error');
     } finally {

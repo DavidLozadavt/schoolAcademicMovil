@@ -11,6 +11,7 @@ class GlobalController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
       if (isFirstTime) {
         await prefs.setBool('isFirstTime', false);
         Get.offNamed('/starting');
@@ -18,30 +19,34 @@ class GlobalController extends GetxController {
         String token = await authProvider.getToken();
         String rolUser = await authProvider.getRolUser();
         String idStudentSelected = await authProvider.getIdStudentSelect();
-
-        if (token == '') {
+        String? idStatus = prefs.getString('idStatus') ?? '';
+        if (token.isEmpty) {
           Get.offAllNamed('/login');
         } else {
-          if (rolUser == 'ADMIN') {
-            Get.offAllNamed('/home_admin');
-          } else if (rolUser == 'ESTUDIANTE' || rolUser == 'APRENDIZ') {
-            Get.offAllNamed('/home_student');
-          } else if (rolUser == 'DOCENTE') {
-            Get.offAllNamed('/home_teacher');
-          } else if (rolUser == 'ACUDIENTE') {
-            if (idStudentSelected.isNotEmpty) {
-              Get.offAllNamed('/home_guardian');
-            } else if (idStudentSelected.isEmpty && rolUser.isNotEmpty) {
-              Get.offAllNamed('/guardian_children');
+          if (idStatus == '18') {
+             Get.offAllNamed('/complete_student_data');
+          } else {
+            if (rolUser == 'ADMIN') {
+              Get.offAllNamed('/home_admin');
+            } else if (rolUser == 'ESTUDIANTE' || rolUser == 'APRENDIZ') {
+              Get.offAllNamed('/home_student');
+            } else if (rolUser == 'DOCENTE') {
+              Get.offAllNamed('/home_teacher');
+            } else if (rolUser == 'ACUDIENTE') {
+              if (idStudentSelected.isNotEmpty) {
+                Get.offAllNamed('/home_guardian');
+              } else if (idStudentSelected.isEmpty && rolUser.isNotEmpty) {
+                Get.offAllNamed('/guardian_children');
+              } else {
+                Get.offAllNamed('/login');
+              }
             } else {
               Get.offAllNamed('/login');
             }
-          } else {
-            Get.offAllNamed('/login');
           }
         }
       }
-    } catch (e) {  
+    } catch (e) {
       Get.offNamed('/starting');
     }
   }

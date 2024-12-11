@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:vtschool/src/api/constant.dart';
 
-class CitysProvider extends GetConnect {
-  Future<List<dynamic>> getDepartaments() async {
+class CitiesProvider extends GetConnect {
+  Future<List<dynamic>> getDepartments() async {
     final response = await get(getDepartament);
     if (response.status.hasError) {
       return Future.error(response.statusText ?? 'Error desconocido');
@@ -11,7 +11,7 @@ class CitysProvider extends GetConnect {
     }
   }
 
-  Future<List<dynamic>> getCityes(String departamentoId) async {
+  Future<List<dynamic>> getCities(String departamentoId) async {
     final response = await get(
         '$getCitysUrl/$departamentoId'); // Asegúrate de usar la URL correcta
     if (response.status.hasError) {

@@ -101,8 +101,25 @@ class Chats extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 8.0),
                                 CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://img2.pngdownload.id/20180622/qfj/aazcdq748.webp'),
+                                  backgroundColor: Colors.grey[
+                                      200],
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      _chatController.groups[index]['imagen'],
+                                      fit: BoxFit.cover,
+                                      width: double
+                                          .infinity, 
+                                      height: double
+                                          .infinity, 
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          'assets/images/profile.png',
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
                                 Text(
                                   _chatController.groups[index]['nombreGrupo'],

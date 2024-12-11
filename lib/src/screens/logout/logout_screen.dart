@@ -46,6 +46,7 @@ Future<void> logoutApp(BuildContext context) async {
   await pref.remove('children');
   await pref.remove('idUserGuardian');
   await pref.remove('password');
+   await pref.remove('idStatus');
   //Get.find<ProfileUserController>().clearUserData();
   
 }

@@ -74,7 +74,8 @@ class AuthProvider extends GetConnect {
         },
         body: jsonEncode(studentData),
       );
-
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data;
@@ -89,7 +90,7 @@ class AuthProvider extends GetConnect {
   }
 
   Future<void> updatePassword(
-    String idUser, String passwordNew, String passwordOld) async {
+      String idUser, String passwordNew, String passwordOld) async {
     String token = await getToken();
     dynamic data = {
       "passwordNew": passwordNew,
@@ -118,54 +119,50 @@ class AuthProvider extends GetConnect {
   }
 
   Future sendOtp(String email) async {
-      Response response = await post(
-        sendOtpUrl,
-         headers: {'accept': 'application/json'},
-        {'email': email},
-      );
-      //print(response.statusCode);
-      //print(response.body);
-      if (response.statusCode == 200) {
-        Get.offAllNamed('/otp_screen');
-      }else{
-         throw Failure('Error al enviar correo');
-      }
-
+    Response response = await post(
+      sendOtpUrl,
+      headers: {'accept': 'application/json'},
+      {'email': email},
+    );
+    //print(response.statusCode);
+    //print(response.body);
+    if (response.statusCode == 200) {
+      Get.offAllNamed('/otp_screen');
+    } else {
+      throw Failure('Error al enviar correo');
+    }
   }
 
-   Future validateOtp(String email, String otp) async {
-      Response response = await post(
-        validateOtpUrl,
-         headers: {'accept': 'application/json'},
-        {'email': email, 'otp': otp},
-      );
-      print(response.statusCode);
-      print(response.body);
-      if (response.statusCode == 200) {
-       Get.offAllNamed('/reset_password_by_otp');
-      }else{
-         throw Failure('Error al enviar el codigo');
-      }
+  Future validateOtp(String email, String otp) async {
+    Response response = await post(
+      validateOtpUrl,
+      headers: {'accept': 'application/json'},
+      {'email': email, 'otp': otp},
+    );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      Get.offAllNamed('/reset_password_by_otp');
+    } else {
+      throw Failure('Error al enviar el codigo');
+    }
   }
 
-   Future resetPasswordByOtp(String email, String otp, String password) async {
-      Response response = await post(
-        validateOtpUrl,
-         headers: {'accept': 'application/json'},
-        {'email': email, 'otp': otp, 'password': password},
-      );
-      print(response.statusCode);
-      print(response.body);
-      if (response.statusCode == 200) {
-       Get.offAllNamed('/login');
-       Get.snackbar("Éxito", "Contraseña cambiada correctamente");
-      }else{
-         throw Failure('Error al enviar la contraseña');
-      }
-
+  Future resetPasswordByOtp(String email, String otp, String password) async {
+    Response response = await post(
+      validateOtpUrl,
+      headers: {'accept': 'application/json'},
+      {'email': email, 'otp': otp, 'password': password},
+    );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      Get.offAllNamed('/login');
+      Get.snackbar("Éxito", "Contraseña cambiada correctamente");
+    } else {
+      throw Failure('Error al enviar la contraseña');
+    }
   }
-
-
 
   Future logout() async {
     String token = await getToken();
