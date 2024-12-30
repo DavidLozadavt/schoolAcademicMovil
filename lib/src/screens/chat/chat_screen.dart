@@ -66,7 +66,7 @@ class Chat extends StatelessWidget {
               },
               child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      '${selectedUser['matricula']!['persona']['rutaFoto']}'),
+                      '${selectedUser['rutaFoto']}'),
                   backgroundColor: Colors.transparent),
             ),
             const SizedBox(width: 10),
@@ -74,9 +74,9 @@ class Chat extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    '${selectedUser['matricula']!['persona']['nombre1']} ${selectedUser['matricula']!['persona']['apellido1']}'),
+                    '${selectedUser['nombre1']} ${selectedUser['apellido1']}'),
                 Text(
-                  '${selectedUser['matricula']!['persona']['email']}',
+                  '${selectedUser['usuario']['estadoMensajeria']}',
                   style: const TextStyle(fontSize: 12),
                 ),
               ],
@@ -111,7 +111,7 @@ class Chat extends StatelessWidget {
                       //print('3${messages[index]}');
                       bool isOwnMessage = messages[index]['active_company_user']
                               ['idUser'].toString() !=
-                          selectedUser['matricula']['persona']['id'].toString();
+                          selectedUser['usuario']['idPersona'].toString();
                       ('$isOwnMessage');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
@@ -124,10 +124,10 @@ class Chat extends StatelessWidget {
                           children: [
                             if (messages[index]['active_company_user']
                                     ['idUser'].toString() ==
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['usuario']['idPersona'].toString())
                               CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                    '${selectedUser['matricula']!['persona']['rutaFoto']}',
+                                    '${selectedUser['rutaFoto']}',
                                   ),
                                   backgroundColor: Colors.transparent),
                             const SizedBox(width: 8.0),
@@ -387,7 +387,7 @@ class Chat extends StatelessWidget {
                             ),
                             if (messages[index]['active_company_user']
                                     ['idUser'].toString() !=
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['usuario']['idPersona'].toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),
@@ -557,13 +557,13 @@ class Chat extends StatelessWidget {
                               if (_chatController
                                   .messageController.text.isNotEmpty) {
                                 await _chatController.sendMessage(
-                                    '${selectedUser['matricula']!['persona']['id']}');
+                                    '${selectedUser['usuario']['idPersona']}');
                                 _chatController.messageController.clear();
                                 _chatController.clearSelectedFilePath();
                                 var jsonMessage =
                                     json.encode(_chatController.postMessage);
                                 _chatController.onTriggerEventPressed(
-                                    '${selectedUser['matricula']!['persona']['id']}',
+                                    '${selectedUser['usuario']['idPersona']}',
                                     jsonMessage);
                               } else {
                                 Get.snackbar(

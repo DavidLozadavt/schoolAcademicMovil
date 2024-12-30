@@ -91,13 +91,12 @@ class ChatController extends GetxController {
     } else {
       filteredUsers.assignAll(users.where((user) {
         final String name =
-            user['matricula']!['persona']['nombre1'].toString().toLowerCase();
+            user['nombre1'].toString().toLowerCase();
         final String lastName =
-            user['matricula']!['persona']['apellido1'].toString().toLowerCase();
+            user['apellido1'].toString().toLowerCase();
         final String email =
-            user['matricula']!['persona']['email'].toString().toLowerCase();
-        final String identifications = user['matricula']!['persona']
-                ['identificacion']
+            user['email'].toString().toLowerCase();
+        final String identifications = user['identificacion']
             .toString()
             .toLowerCase();
         return name.contains(query.toLowerCase()) ||

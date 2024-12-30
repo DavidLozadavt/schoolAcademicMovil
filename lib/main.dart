@@ -3,14 +3,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teacher_screnn.dart';
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_screen.dart';
+import 'package:vtschool/src/screens/activity_student/activities_student_screen.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
+import 'package:vtschool/src/screens/groups/groups_screen.dart';
 import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
 import 'package:vtschool/src/screens/home/home_guardian/children_screen.dart';
@@ -79,7 +80,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/starting_init_screen',
       getPages: [
         GetPage(
-            name: '/starting_init_screen', page: () => const StartingInitScreen()),
+            name: '/starting_init_screen',
+            page: () => const StartingInitScreen()),
         GetPage(name: '/starting', page: () => const StartingScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home_student', page: () => HomeStudent()),
@@ -91,25 +93,48 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/chat', page: () => Chat()),
         GetPage(name: '/payments', page: () => PaymentsScreen()),
         GetPage(name: '/update_profile', page: () => UpdateProfileScreen()),
-        GetPage(name: '/physical_registration_payment', page: () => PhysicalRegistrationPaymentScreen()),
-        GetPage(name: '/payment_transaction_registration', page: () => PaymentTransactionRegistrationScreen()),
-        GetPage(name: '/tuition_payments_transaction', page: () => TuitionPaymentsTransactionScreen()),
-        GetPage(name: '/physical_tuition_payments', page: () => PhysicalTuitionPaymentsScreen()),
+        GetPage(
+            name: '/physical_registration_payment',
+            page: () => PhysicalRegistrationPaymentScreen()),
+        GetPage(
+            name: '/payment_transaction_registration',
+            page: () => PaymentTransactionRegistrationScreen()),
+        GetPage(
+            name: '/tuition_payments_transaction',
+            page: () => TuitionPaymentsTransactionScreen()),
+        GetPage(
+            name: '/physical_tuition_payments',
+            page: () => PhysicalTuitionPaymentsScreen()),
         GetPage(name: '/pse', page: () => PseScreen()),
-        GetPage(name: '/form_payments_transaction', page: () => FormPaymentsScreen()),
-        GetPage(name: '/subject_teacher', page: ()=> SubjectTeacherScreen()),
-        GetPage(name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
-        GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen()),
-        GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen()),
-        GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
+        GetPage(
+            name: '/form_payments_transaction',
+            page: () => FormPaymentsScreen()),
+        GetPage(name: '/subject_teacher', page: () => SubjectTeacherScreen()),
+        GetPage(
+            name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
+        GetPage(
+            name: '/new_activity_teacher',
+            page: () => CreateNewActivityScreen()),
+        GetPage(
+            name: '/assigned_activities',
+            page: () => AssignedActivitiesTeacherScreen()),
+        GetPage(
+            name: '/rate_activities',
+            page: () => const RateQuestionnaireScreen()),
         GetPage(name: '/posts', page: () => PostsScreen()),
-        GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
-        GetPage(name: '/recover_password', page: ()=> RecoverPasswordScreen()),
-        GetPage(name: '/otp_screen', page: ()=> RecoverPasswordOtpScreen()),
-        GetPage(name: '/reset_password_by_otp', page: ()=> RecoverPasswordByOtpScreen()),
+        GetPage(
+            name: '/complete_student_data',
+            page: () => UpdateStudentDataPage()),
+        GetPage(name: '/recover_password', page: () => RecoverPasswordScreen()),
+        GetPage(name: '/otp_screen', page: () => RecoverPasswordOtpScreen()),
+        GetPage(
+            name: '/reset_password_by_otp',
+            page: () => RecoverPasswordByOtpScreen()),
         GetPage(name: '/update_password', page: () => UpdatePasswordScreen()),
         GetPage(name: '/guardian_children', page: () => ChildrenScreen()),
         GetPage(name: '/support', page: () => SupportScreen()),
+        GetPage(name: '/groups', page: () => GroupsScreen()),
+        GetPage(name: '/activities_student', page: () => ActivitiesStudentScreen()),
       ],
     );
   }

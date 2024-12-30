@@ -27,18 +27,44 @@ class ActivitiesStudentScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(top: 40, left: 20),
-            height: 50,
-            child: const Text(
-              'MIS ACTIVIDADES',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+           Container(
+            margin: const EdgeInsets.only(top: 40),
+            height: 80,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Get.back();
+                    
+                  },
+                ),
+                const Text(
+                  'MIS ACTIVIDADES',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
+          // Container(
+          //   margin: const EdgeInsets.only(top: 40, left: 20),
+          //   height: 50,
+          //   child: const Text(
+          //     'MIS ACTIVIDADES',
+          //     style: TextStyle(
+          //       fontSize: 18,
+          //       fontWeight: FontWeight.bold,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 15,
           ),

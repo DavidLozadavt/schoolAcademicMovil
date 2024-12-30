@@ -32,13 +32,18 @@ class UpdateProfileController extends GetConnect {
   final emailController = TextEditingController();
   CitiesProvider citiesProvider = CitiesProvider();
   var isLoadingCities = false.obs;
+  var isLoadingCities2 = false.obs;
   var departments = [].obs;
   var cities = [].obs;
+  var cities2 = [].obs;
   var selectedDepartment = ''.obs;
   var selectedCity = ''.obs;
 
+  var selectedDepartment2 = ''.obs;
+  var selectedCity2 = ''.obs;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     fetchDepartments();
     descriptionController.text =
@@ -70,6 +75,23 @@ class UpdateProfileController extends GetConnect {
         _profileController.userProfile['persona']?['telefonoFijo'] ?? '';
     emailController.text =
         _profileController.userProfile['persona']?['email'] ?? '';
+    selectedDepartment.value = _profileController.userProfile['persona']
+            ['ciudad_nac']['idDepartamento']
+        .toString();
+    selectedCity.value = _profileController.userProfile['persona']['ciudad_nac']
+            ['id']
+        .toString();
+    selectedDepartment2.value = _profileController.userProfile['persona']
+            ['ciudad_ubicacion']['idDepartamento']
+        .toString();
+    selectedCity2.value = _profileController.userProfile['persona']
+            ['ciudad_ubicacion']['id']
+        .toString();
+    selectedIdentificationType.value = _profileController.userProfile['persona']['idTipoIdentificacion'].toString();
+    selectedRH.value = _profileController.userProfile['persona']['rh'];
+    selectedGender.value = _profileController.userProfile['persona']['sexo'];
+    await fetchCities(selectedDepartment.value);
+    await fetchCities2(selectedDepartment2.value);
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -129,5 +151,61 @@ class UpdateProfileController extends GetConnect {
     } finally {
       isLoadingCities.value = false;
     }
+  }
+
+  Future<void> fetchCities2(String idDepartment) async {
+    try {
+      isLoadingCities2.value = true;
+      final response = await citiesProvider.getCities(idDepartment);
+      cities2.value = response;
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudieron cargar las ciudades');
+    } finally {
+      isLoadingCities2.value = false;
+    }
+  }
+
+  var identificationTypes = [
+    {'id': 1, 'detalle': 'CÉDULA DE CIUDADANÍA'},
+    {'id': 2, 'detalle': 'TARJETA DE IDENTIDAD'},
+    {'id': 3, 'detalle': 'PASAPORTE'},
+    {'id': 4, 'detalle': 'CÉDILA DE EXTRANGERIA'},
+    {'id': 5, 'detalle': 'REGISTRO CIVIL'},
+  ].obs;
+
+  var selectedIdentificationType = ''.obs;
+
+  void updateIdentificationType(String value) {
+    selectedIdentificationType.value = value;
+  }
+
+  final List<String> listGender = [
+    'F',
+    'M',
+    'OTRO',
+    'PREFIERO NO DECIRLO'
+  ].obs;
+
+  var selectedGender = ''.obs;
+
+  void updateGender(String value) {
+    selectedIdentificationType.value = value;
+  }
+
+  final List<String> RH = [
+    'O+',
+    'O-',
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+  ].obs;
+
+  var selectedRH = ''.obs;
+
+  void updateRH(String value) {
+    selectedIdentificationType.value = value;
   }
 }

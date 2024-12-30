@@ -147,7 +147,7 @@ class SubjectsTeacherScreen extends StatelessWidget {
                                     Get.toNamed('/subject_teacher');
                                   },
                                   onTapCalendar: () {
-                                    Get.toNamed('/activities_teacher');
+                                   // Get.toNamed('/activities_teacher');
                                   },
                                 );
                               }),

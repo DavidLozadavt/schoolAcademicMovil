@@ -7,7 +7,7 @@ class UpdateStudentDataPage extends StatelessWidget {
       Get.put(UpdateStudentDataController());
   final _formKey = GlobalKey<FormState>();
 
-  UpdateStudentDataPage({super.key}); // Clave para el formulario
+  UpdateStudentDataPage({super.key}); 
 
   @override
   Widget build(BuildContext context) {

@@ -161,35 +161,26 @@ class Chats extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index) {
                                   final users =
                                       _chatController.filteredUsers[index];
-
-                                  if (profileUserController
-                                          .userProfile['persona']['id'] !=
-                                      users['matricula']!['persona']['id']) {
                                     return GestureDetector(
                                       onTap: () async {
                                         _chatController.onConnectPressed(
-                                            '${users['matricula']!['idPersona']}');
+                                            '${users['usuario']!['idPersona']}');
                                         _chatController.getMessage(
-                                            '${users['matricula']!['idPersona']}');
+                                            '${users['usuario']!['idPersona']}');
                                         _chatController.setSelectedUser(users);
                                         Get.toNamed('/chat');
                                       },
                                       child: CardChats(
                                         urlPhotoSender:
-                                            users['matricula']!['persona']
-                                                ['rutaFoto'],
-                                        name: users['matricula']!['persona']
-                                            ['nombre1'],
-                                        lastName: users['matricula']!['persona']
-                                            ['apellido1'],
+                                            users['rutaFoto'],
+                                        name: users['nombre1'],
+                                        lastName: users['apellido1'],
                                         endMessage:
-                                            users['matricula']!['persona']
-                                                ['email'],
+                                            users['email'] ?? '',
+                                        status: users['usuario']['estadoMensajeria'],
                                       ),
                                     );
-                                  } else {
-                                    return const SizedBox.shrink();
-                                  }
+                                  
                                 },
                               ),
                       ),

@@ -7,6 +7,7 @@ import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeStudent extends StatelessWidget {
@@ -50,32 +51,32 @@ class HomeStudent extends StatelessWidget {
                     //messageCount: 50,
                   ),
                 ),
-                 BottomNavigationBarItem(
-                  // backgroundColor: Colors.white,
-                   label: '',
-                   icon: ItemNavigationButton(
-                     fileIcon: 'assets/images/note.png',
-                     title: 'ACTIVIDADES',
-                   ),
-                   activeIcon: ItemNavigationButton(
-                     fileIcon: 'assets/images/note.png',
-                     title: 'ACTIVIDADES',
-                     isActive: true,
-                   ),
-                 ),
                 //  BottomNavigationBarItem(
-                //    //backgroundColor: Colors.white,
+                //   // backgroundColor: Colors.white,
                 //    label: '',
                 //    icon: ItemNavigationButton(
-                //      fileIcon: 'assets/images/payment.png',
-                //      title: 'PAGOS',
+                //      fileIcon: 'assets/images/note.png',
+                //      title: 'ACTIVIDADES',
                 //    ),
                 //    activeIcon: ItemNavigationButton(
-                //      fileIcon: 'assets/images/payment.png',
-                //      title: 'PAGOS',
+                //      fileIcon: 'assets/images/note.png',
+                //      title: 'ACTIVIDADES',
                 //      isActive: true,
                 //    ),
                 //  ),
+                 BottomNavigationBarItem(
+                  //backgroundColor: listColor[11].withOpacity(0.5),
+                  label: '',
+                  icon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'AULA',
+                  ),
+                  activeIcon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'AULA',
+                    isActive: true,
+                  ),
+                ),
                  BottomNavigationBarItem(
                   //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
@@ -110,8 +111,8 @@ class HomeStudent extends StatelessWidget {
               children: [
                 HomeStudentScreen(),
                 Chats(),
-                ActivitiesStudentScreen(),
-                //EnrollmentsPersonScreen(),
+               // ActivitiesStudentScreen(),
+                SubjectsTeacherScreen(),
                 PostsScreen(),
                 ProfileUserScreen(),
                 

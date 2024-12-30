@@ -93,7 +93,7 @@ class LoginController extends GetxController {
             goToHomePageTeacher();
             Get.snackbar('¡Hola!', 'Un gusto tenerte de nuevo');
           });
-        } else if (rolUser == 'ESTUDIANTEUP' || rolUser == 'DOCENTE') {
+        } else if (rolUser == 'ESTUDIANTEUP' || rolUser == 'DOCENTEUP') {
         
           await pref.setString('token', responseApiLogin.accessToken);
           await pref.setString('email', emailController.text);

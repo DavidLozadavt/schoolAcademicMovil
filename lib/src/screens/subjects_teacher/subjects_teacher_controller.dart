@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+import 'package:vtschool/src/providers/auth_provider.dart';
 import 'package:vtschool/src/providers/subject_provider.dart';
 
 class SubjectsTeacherController extends GetxController {
+   final AuthProvider authProvider = AuthProvider();
   final SubjectProvider _subjectProvider = SubjectProvider();
   var isLoading = true.obs;
   var subject = <Map<String, dynamic>>[].obs;
+  var rolUser = '';
 
   Future<void> getSubject(
       String idWorkingDay,
@@ -14,6 +17,7 @@ class SubjectsTeacherController extends GetxController {
       String endTime,
       int idSchedule,
       String idDegree) async {
+        rolUser = await authProvider.getRolUser();
     try {
       await _subjectProvider.getSubject(idWorkingDay, idSubject, idProgram,
           startTime, endTime, idSchedule, idDegree);

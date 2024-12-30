@@ -78,12 +78,12 @@ class HomeTeacher extends StatelessWidget {
                    //backgroundColor: listColor[11].withOpacity(0.5),
                    label: '',
                    icon: const ItemNavigationButton(
-                     fileIcon: 'assets/images/payment.png',
-                     title: 'Nuevo',
+                     fileIcon: 'assets/images/task.png',
+                     title: 'FICHAS',
                    ),
                    activeIcon: const ItemNavigationButton(
-                     fileIcon: 'assets/images/payment.png',
-                     title: 'Nuevo',
+                     fileIcon: 'assets/images/task.png',
+                     title: 'FICHAS',
                      isActive: true,
                    ),
                  ),

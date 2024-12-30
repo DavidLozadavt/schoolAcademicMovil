@@ -40,145 +40,357 @@ class UpdateProfileScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 16.0, right: 16.0, top: 50.0, bottom: 16.0),
-                child: Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.all(15.0),
-                      width: 370,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255)
-                            .withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.all(15.0),
+                    width: 370,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 255, 255, 255)
+                          .withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(
+                        color: Colors.white,
                       ),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'ACTUALIZAR PERFIL',
-                              style: TextStyle(
-                                color: listColor[15],
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'ACTUALIZAR PERFIL',
+                            style: TextStyle(
+                              color: listColor[15],
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 20),
-                            Center(
-                              child: Obx(
-                                () => GestureDetector(
-                                  onTap: () => showImagePickerModal(
-                                      context, _profileUserController),
-                                  child: ClipOval(
-                                    child: _updateProfileController
-                                                .profileImage.value ==
-                                            null
-                                        ? Image.network(
-                                            _profileUserController
-                                                        .userProfile['persona']
-                                                    ?['rutaFoto'] ??
-                                                '',
-                                            width: 110,
-                                            height: 110,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Image.asset(
-                                                'assets/images/profile.png',
-                                                width: 110,
-                                                height: 110,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                          )
-                                        : Image.file(
-                                            _updateProfileController
-                                                .profileImage.value!,
-                                            width: 110,
-                                            height: 110,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Image.asset(
-                                                'assets/images/profile.png',
-                                                width: 110,
-                                                height: 110,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                          ),
-                                  ),
+                          ),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: Obx(
+                              () => GestureDetector(
+                                onTap: () => showImagePickerModal(
+                                    context, _profileUserController),
+                                child: ClipOval(
+                                  child: _updateProfileController
+                                              .profileImage.value ==
+                                          null
+                                      ? Image.network(
+                                          _profileUserController
+                                                      .userProfile['persona']
+                                                  ?['rutaFoto'] ??
+                                              '',
+                                          width: 110,
+                                          height: 110,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              'assets/images/profile.png',
+                                              width: 110,
+                                              height: 110,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                        )
+                                      : Image.file(
+                                          _updateProfileController
+                                              .profileImage.value!,
+                                          width: 110,
+                                          height: 110,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              'assets/images/profile.png',
+                                              width: 110,
+                                              height: 110,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                        ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            _buildTextField("Descripción de Perfil",
-                                _updateProfileController.descriptionController,
-                                icon: Icons.description_outlined),
-                            _buildTextField("Primer nombre",
-                                _updateProfileController.firstNameController,
-                                icon: Icons.person),
-                            _buildTextField("Nombre 2",
-                                _updateProfileController.middleNameController,
-                                icon: Icons.person),
-                            _buildTextField("Apellido 1",
-                                _updateProfileController.lastName1Controller,
-                                icon: Icons.person),
-                            _buildTextField("Apellido 2",
-                                _updateProfileController.lastName2Controller,
-                                icon: Icons.person),
-                            _buildTextField("Identificación",
-                                _updateProfileController.idNumberController,
-                                icon: Icons.person),
-                            _buildTextField("Celular",
-                                _updateProfileController.mobileController),
-                            _buildTextField("Dirección",
-                                _updateProfileController.addressController),
-                            GestureDetector(
-                              onTap: () => _selectDate(context),
-                              child: AbsorbPointer(
-                                child: _buildTextField(
-                                  'Fecha nacimiento',
-                                  _updateProfileController.dateController,
-                                ),
+                          ),
+                          const SizedBox(height: 20),
+                          _buildTextField("Descripción de Perfil",
+                              _updateProfileController.descriptionController,
+                              icon: Icons.description_outlined),
+                          _buildTextField("Primer nombre",
+                              _updateProfileController.firstNameController,
+                              icon: Icons.person),
+                          _buildTextField("Segundo Nombre",
+                              _updateProfileController.middleNameController,
+                              icon: Icons.person),
+                          _buildTextField("Primer Apellido",
+                              _updateProfileController.lastName1Controller,
+                              icon: Icons.person),
+                          _buildTextField("Segundo Apellido",
+                              _updateProfileController.lastName2Controller,
+                              icon: Icons.person),
+                          GestureDetector(
+                            onTap: () => _selectDate(context),
+                            child: AbsorbPointer(
+                              child: _buildTextField(
+                                icon: Icons.date_range_rounded,
+                                'Fecha nacimiento',
+                                _updateProfileController.dateController,
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              margin:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              if (_updateProfileController
+                                  .identificationTypes.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: _updateProfileController
+                                        .selectedIdentificationType
+                                        .value
+                                        .isNotEmpty
+                                    ? _updateProfileController
+                                        .selectedIdentificationType.value
+                                    : null,
                                 borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: listColor[16].withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Obx(() {
-                                if (_updateProfileController
-                                    .departments.isEmpty) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
+                                dropdownColor: Colors.white,
+                                underline: const SizedBox.shrink(),
+                                icon: Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: listColor[15]),
+                                items: _updateProfileController
+                                    .identificationTypes
+                                    .map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item['id'].toString(),
+                                    child: Text(item['detalle'].toString(),
+                                        style: TextStyle(color: listColor[15])),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  _updateProfileController
+                                      .selectedIdentificationType
+                                      .value = value!;
+                                },
+                                hint: Text('Tipo de identificación',
+                                    style: TextStyle(color: listColor[15])),
+                              );
+                            }),
+                          ),
+                          _buildTextField("Identificación",
+                              _updateProfileController.idNumberController,
+                              icon: Icons.badge_outlined),
+                          _buildTextField("Celular",
+                              _updateProfileController.mobileController,
+                              icon: Icons.contact_phone_outlined),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              if (_updateProfileController.listGender.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: _updateProfileController
+                                        .selectedGender.value.isNotEmpty
+                                    ? _updateProfileController
+                                        .selectedGender.value
+                                    : null,
+                                borderRadius: BorderRadius.circular(10.0),
+                                dropdownColor: Colors.white,
+                                underline: const SizedBox.shrink(),
+                                icon: Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: listColor[15]),
+                                items: _updateProfileController.listGender
+                                    .map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item,
+                                        style: TextStyle(color: listColor[15])),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  _updateProfileController
+                                      .selectedGender.value = value!;
+                                },
+                                hint: Text('Sexo',
+                                    style: TextStyle(color: listColor[15])),
+                              );
+                            }),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              if (_updateProfileController.RH.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: _updateProfileController
+                                        .selectedRH.value.isNotEmpty
+                                    ? _updateProfileController.selectedRH.value
+                                    : null,
+                                borderRadius: BorderRadius.circular(10.0),
+                                dropdownColor: Colors.white,
+                                underline: const SizedBox.shrink(),
+                                icon: Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: listColor[15]),
+                                items: _updateProfileController.RH.map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item,
+                                        style: TextStyle(color: listColor[15])),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  _updateProfileController.selectedRH.value =
+                                      value!;
+                                },
+                                hint: Text('RH',
+                                    style: TextStyle(color: listColor[15])),
+                              );
+                            }),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              if (_updateProfileController
+                                  .departments.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: _updateProfileController
+                                        .selectedDepartment.value.isNotEmpty
+                                    ? _updateProfileController
+                                        .selectedDepartment.value
+                                    : null,
+                                borderRadius: BorderRadius.circular(10.0),
+                                dropdownColor: Colors.white,
+                                underline: const SizedBox.shrink(),
+                                icon: Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: listColor[15]),
+                                items: _updateProfileController.departments
+                                    .map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item['id'].toString(),
+                                    child: Text(item['descripcion'],
+                                        style: TextStyle(color: listColor[15])),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  _updateProfileController
+                                      .selectedDepartment.value = value!;
+                                  _updateProfileController.selectedCity.value =
+                                      '';
+                                  _updateProfileController.fetchCities(value);
+                                },
+                                hint: Text('Departamento de nacimiento',
+                                    style: TextStyle(color: listColor[15])),
+                              );
+                            }),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              if (_updateProfileController
+                                  .isLoadingCities.value) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
                                 return DropdownButton<String>(
                                   isExpanded: true,
                                   value: _updateProfileController
-                                          .selectedDepartment.value.isNotEmpty
+                                          .selectedCity.value.isNotEmpty
                                       ? _updateProfileController
-                                          .selectedDepartment.value
+                                          .selectedCity.value
                                       : null,
                                   borderRadius: BorderRadius.circular(10.0),
                                   dropdownColor: Colors.white,
+                                  underline: const SizedBox.shrink(),
                                   icon: Icon(
                                       Icons.arrow_drop_down_circle_outlined,
                                       color: listColor[15]),
-                                  items: _updateProfileController.departments
+                                  items: _updateProfileController.cities
                                       .map((item) {
                                     return DropdownMenuItem<String>(
                                       value: item['id'].toString(),
@@ -189,101 +401,155 @@ class UpdateProfileScreen extends StatelessWidget {
                                   }).toList(),
                                   onChanged: (value) {
                                     _updateProfileController
-                                        .selectedDepartment.value = value!;
-                                    _updateProfileController
-                                        .selectedCity.value = '';
-                                    _updateProfileController.fetchCities(value);
+                                        .selectedCity.value = value!;
                                   },
-                                  hint:
-                                      Text('Seleccione el departamento',  style: TextStyle(color: listColor[15])),
+                                  hint: Text('Ciudad de nacimiento',
+                                      style: TextStyle(color: listColor[15])),
                                 );
-                              }),
+                              }
+                            }),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
+                            child: Obx(() {
+                              if (_updateProfileController
+                                  .departments.isEmpty) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return DropdownButton<String>(
+                                isExpanded: true,
+                                value: _updateProfileController
+                                        .selectedDepartment2.value.isNotEmpty
+                                    ? _updateProfileController
+                                        .selectedDepartment2.value
+                                    : null,
                                 borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: listColor[16].withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Obx(() {
-                                if (_updateProfileController
-                                    .isLoadingCities.value) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
+                                dropdownColor: Colors.white,
+                                underline: const SizedBox.shrink(),
+                                icon: Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: listColor[15]),
+                                items: _updateProfileController.departments
+                                    .map((item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item['id'].toString(),
+                                    child: Text(item['descripcion'],
+                                        style: TextStyle(color: listColor[15])),
                                   );
-                                } else {
-                                  return DropdownButton<String>(
-                                    isExpanded: true,
-                                    value: _updateProfileController
-                                            .selectedCity.value.isNotEmpty
-                                        ? _updateProfileController
-                                            .selectedCity.value
-                                        : null,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    dropdownColor: Colors.white,
-                                    icon: Icon(
-                                        Icons.arrow_drop_down_circle_outlined,
-                                        color: listColor[15]),
-                                    items: _updateProfileController.cities
-                                        .map((item) {
-                                      return DropdownMenuItem<String>(
-                                        value: item['id'].toString(),
-                                        child: Text(item['descripcion'],
-                                            style: TextStyle(
-                                                color: listColor[15])),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      _updateProfileController
-                                          .selectedCity.value = value!;
-                                    },
-                                    hint: Text('Seleccione la ciudad',  style: TextStyle(color: listColor[15])),
-                                  );
-                                }
-                              }),
+                                }).toList(),
+                                onChanged: (value) {
+                                  _updateProfileController
+                                      .selectedDepartment2.value = value!;
+                                  _updateProfileController.selectedCity2.value =
+                                      '';
+                                  _updateProfileController.fetchCities2(value);
+                                },
+                                hint: Text(
+                                  'Departamento de ubicación',
+                                  style: TextStyle(color: listColor[15]),
+                                ),
+                              );
+                            }),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            margin:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: listColor[16].withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
                             ),
-                            /*_buildTextField("Tipo de Identificación", controller.tipoIdController),
-                                   
-                                  
-                                    _buildTextField("Sexo", controller.sexoController),
-                                    _buildTextField("RH", controller.rhController),
-                                    _buildTextField("Departamento de Nacimiento", controller.depNacimientoController),
-                                    _buildTextField("Ciudad de Nacimiento", controller.ciudadNacimientoController),
-                                    _buildTextField("Departamento de Ubicación", controller.depUbicacionController),
-                                    _buildTextField("Ciudad de Ubicación", controller.ciudadUbicacionController),
-                                    
-                                    _buildTextField("Teléfono Fijo", controller.telefonoFijoController),
-                                    _buildTextField("Correo Electrónico", controller.correoController),*/
-                            ElevatedButton(
-                              onPressed: () async {
-                                FocusScope.of(context).requestFocus();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: listColor[15],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
+                            child: Obx(() {
+                              if (_updateProfileController
+                                  .isLoadingCities2.value) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
+                                return DropdownButton<String>(
+                                  isExpanded: true,
+                                  value: _updateProfileController
+                                          .selectedCity2.value.isNotEmpty
+                                      ? _updateProfileController
+                                          .selectedCity2.value
+                                      : null,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  dropdownColor: Colors.white,
+                                  underline: const SizedBox.shrink(),
+                                  icon: Icon(
+                                      Icons.arrow_drop_down_circle_outlined,
+                                      color: listColor[15]),
+                                  items: _updateProfileController.cities2
+                                      .map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item['id'].toString(),
+                                      child: Text(item['descripcion'],
+                                          style:
+                                              TextStyle(color: listColor[15])),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    _updateProfileController
+                                        .selectedCity2.value = value!;
+                                  },
+                                  hint: Text('Ciudad de ubicación',
+                                      style: TextStyle(color: listColor[15])),
+                                );
+                              }
+                            }),
+                          ),
+                          _buildTextField("Dirección",
+                              _updateProfileController.addressController,
+                              icon: Icons.location_on_outlined),
+                          _buildTextField("Teléfono Fijo",
+                              _updateProfileController.landlineController,
+                              icon: Icons.contact_phone_outlined),
+                          _buildTextField("Correo Electrónico",
+                              _updateProfileController.emailController,
+                              icon: Icons.contact_mail_outlined),
+                          ElevatedButton(
+                            onPressed: () async {
+                              FocusScope.of(context).requestFocus();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: listColor[15],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
                               ),
-                              child: const Text(
-                                'GUARDAR',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            ),
+                            child: const Text(
+                              'GUARDAR',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
                               ),
-                            )
-                          ]),
-                    ),
+                            ),
+                          )
+                        ]),
                   ),
                 ),
               ),

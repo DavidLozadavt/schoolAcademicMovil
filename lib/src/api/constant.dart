@@ -1,7 +1,6 @@
 // local
 //const baseURL = 'https://pre-school-vt-1.virtualt.org/api/';
 // https://pre-school-vt-1.virtualt.org/api/ciudades
-
 // produccion
 //const baseURL = 'https://school-vt.virtualt.org/api/';
 // preproduccion
@@ -10,11 +9,8 @@
 //const baseURL = 'https://demo-school-plataform.virtualt.org/api/';
 //pre sena
 //const baseURL = 'https://school-sena.virtualt.org/api/';
-
 //localhost
 const baseURL = 'http://192.168.1.101:8000/api/';
-
-
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
 //const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
@@ -34,7 +30,6 @@ const postReplyQuestionnaireUrl =
 const postReplyQuestionnaire1Url =
     '${baseURL}cuestionario/responder_cuestionario_unificado/';
 const getStudentByIdSubjectUrl = '${baseURL}get_student_by_id_materia/';
-    
 //revisar este endpoint ->
 const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
 const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';
