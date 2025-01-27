@@ -101,16 +101,13 @@ class Chats extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 8.0),
                                 CircleAvatar(
-                                  backgroundColor: Colors.grey[
-                                      200],
+                                  backgroundColor: Colors.grey[200],
                                   child: ClipOval(
                                     child: Image.network(
                                       _chatController.groups[index]['imagen'],
                                       fit: BoxFit.cover,
-                                      width: double
-                                          .infinity, 
-                                      height: double
-                                          .infinity, 
+                                      width: double.infinity,
+                                      height: double.infinity,
                                       errorBuilder:
                                           (context, error, stackTrace) {
                                         return Image.asset(
@@ -161,26 +158,25 @@ class Chats extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index) {
                                   final users =
                                       _chatController.filteredUsers[index];
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        _chatController.onConnectPressed(
-                                            '${users['usuario']!['idPersona']}');
-                                        _chatController.getMessage(
-                                            '${users['usuario']!['idPersona']}');
-                                        _chatController.setSelectedUser(users);
-                                        Get.toNamed('/chat');
-                                      },
-                                      child: CardChats(
-                                        urlPhotoSender:
-                                            users['rutaFoto'],
-                                        name: users['nombre1'],
-                                        lastName: users['apellido1'],
-                                        endMessage:
-                                            users['email'] ?? '',
-                                        status: users['usuario']['estadoMensajeria'],
-                                      ),
-                                    );
-                                  
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      _chatController.onConnectPressed(
+                                          '${users['usuario']!['idPersona']}');
+                                      _chatController.getMessage(
+                                          '${users['usuario']!['idPersona']}');
+                                      _chatController.setSelectedUser(users);
+                                      print(users);
+                                      Get.toNamed('/chat');
+                                    },
+                                    child: CardChats(
+                                      urlPhotoSender: users['rutaFoto'],
+                                      name: users['nombre1'],
+                                      lastName: users['apellido1'],
+                                      endMessage: users['email'] ?? '',
+                                      status: users['usuario']
+                                          ['estadoMensajeria'],
+                                    ),
+                                  );
                                 },
                               ),
                       ),

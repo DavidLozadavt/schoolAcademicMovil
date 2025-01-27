@@ -58,6 +58,13 @@ const publicationsUrl = '${baseURL}publications';
 const putAttendanceUrl = '${baseURL}materias/update_assistance';
 const getCitysUrl = '${baseURL}get_Cityes';
 const getDepartament = '${baseURL}departamentos';
+const getCoursesByTeacherUrl = '${baseURL}tokens_contract_teacher';
+const getCourseByIdUrl = '${baseURL}contract_teacher_tokens?idAsignacionPeriodoProgramaJornada=';
+const getSessionByIdUrl = '${baseURL}get_sesion/';
+const getAssistanceByIdUrl = '${baseURL}asitencias_sesion/';
+const getCompetencesByIdUrl = '${baseURL}get_competencias/';
+const getCompetencesRapUrl = '${baseURL}get_competencias_raps/';
+const getSessionRapsUrl = '${baseURL}get_sesion_by_rap/';
 
 //update and recover password 
 const updatePasswordUrl = '${baseURL}users/update_password/';
@@ -67,6 +74,7 @@ const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
 const postSupportUrl = '${baseURL}store_support';
 const getGroupsUrl = '${baseURL}group_general';
 const noData = '${baseURL}default/imagenpordefecto.png';
+
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

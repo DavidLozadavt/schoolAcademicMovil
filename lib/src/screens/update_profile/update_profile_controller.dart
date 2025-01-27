@@ -87,7 +87,9 @@ class UpdateProfileController extends GetConnect {
     selectedCity2.value = _profileController.userProfile['persona']
             ['ciudad_ubicacion']['id']
         .toString();
-    selectedIdentificationType.value = _profileController.userProfile['persona']['idTipoIdentificacion'].toString();
+    selectedIdentificationType.value = _profileController.userProfile['persona']
+            ['idTipoIdentificacion']
+        .toString();
     selectedRH.value = _profileController.userProfile['persona']['rh'];
     selectedGender.value = _profileController.userProfile['persona']['sexo'];
     await fetchCities(selectedDepartment.value);
@@ -179,12 +181,7 @@ class UpdateProfileController extends GetConnect {
     selectedIdentificationType.value = value;
   }
 
-  final List<String> listGender = [
-    'F',
-    'M',
-    'OTRO',
-    'PREFIERO NO DECIRLO'
-  ].obs;
+  final List<String> listGender = ['F', 'M', 'OTRO', 'PREFIERO NO DECIRLO'].obs;
 
   var selectedGender = ''.obs;
 
@@ -207,5 +204,9 @@ class UpdateProfileController extends GetConnect {
 
   void updateRH(String value) {
     selectedIdentificationType.value = value;
+  }
+
+  Future saveData() async{
+    
   }
 }

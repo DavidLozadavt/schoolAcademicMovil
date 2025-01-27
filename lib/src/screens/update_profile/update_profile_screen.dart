@@ -531,8 +531,11 @@ class UpdateProfileScreen extends StatelessWidget {
                               _updateProfileController.emailController,
                               icon: Icons.contact_mail_outlined),
                           ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               FocusScope.of(context).requestFocus();
+                              Get.snackbar('¡EXITO!',
+                                  'SUS DATOS SE ACTUALIZARON CORRECTAMENTE');
+                              Get.back();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: listColor[15],

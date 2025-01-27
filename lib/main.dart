@@ -10,6 +10,8 @@ import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teac
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_screen.dart';
 import 'package:vtschool/src/screens/activity_student/activities_student_screen.dart';
+import 'package:vtschool/src/screens/assigned_courses_teacher%20/statistics_by_course_screen.dart';
+import 'package:vtschool/src/screens/assigned_courses_teacher%20/statistics_by_subjects.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
 import 'package:vtschool/src/screens/groups/groups_screen.dart';
 import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
@@ -135,6 +137,8 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/support', page: () => SupportScreen()),
         GetPage(name: '/groups', page: () => GroupsScreen()),
         GetPage(name: '/activities_student', page: () => ActivitiesStudentScreen()),
+        GetPage(name: '/statistics_by_course', page: () => StatisticsByCourseScreen()),
+        GetPage(name: '/statistics_by_subject', page: () => StatisticsBySubjects()),
       ],
     );
   }

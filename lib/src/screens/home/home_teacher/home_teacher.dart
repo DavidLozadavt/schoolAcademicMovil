@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher_screen.dart';
-import 'package:vtschool/src/screens/nuevo/nuevo_screen.dart';
+import 'package:vtschool/src/screens/assigned_courses_teacher%20/assigned_courses_teacher_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
@@ -108,7 +108,7 @@ class HomeTeacher extends StatelessWidget {
                 HomeTeacherScreen(),
                 SubjectsTeacherScreen(),
                 PostsScreen(),
-                CoursePage(),
+                AssignedCoursesTeacherScreen(),
                 ProfileUserScreen(),
               ],
             )),
