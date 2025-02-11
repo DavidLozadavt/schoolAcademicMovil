@@ -15,6 +15,9 @@ allprojects {
         google()
         mavenCentral()
     }
+    configurations.all {
+    exclude group: "com.google.errorprone", module: "error_prone_annotations"
+    }
 }
 
 rootProject.buildDir = '../build'

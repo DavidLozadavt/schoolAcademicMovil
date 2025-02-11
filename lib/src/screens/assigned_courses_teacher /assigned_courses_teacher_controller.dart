@@ -13,6 +13,8 @@ class AssignedCoursesTeacherController extends GetxController {
   var competences = <Map<String, dynamic>>[].obs;
   var rapsBySubject = <Map<String, dynamic>>[].obs;
   var rapsSession = <Map<String, dynamic>>[].obs;
+  var selectedOption = Rx<String?>(null);
+  var dataStatusByMatriculation = <Map<String, dynamic>>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -50,6 +52,16 @@ class AssignedCoursesTeacherController extends GetxController {
     } finally {}
   }
 
+  Map<String, int> getAttendanceCounts() {
+    int present = assistance.where((e) => e['asistio'] == 1).length;
+    int absent = assistance.where((e) => e['asistio'] == 0).length;
+
+    return {
+      'Present': present,
+      'Absent': absent,
+    };
+  }
+
   Future<void> getCompetences(String id) async {
     try {
       await _coursesByTeacherProvider.getCompetences(id);
@@ -66,16 +78,43 @@ class AssignedCoursesTeacherController extends GetxController {
     } finally {}
   }
 
-Future<void> getSessionRaps(
-      String id) async {
+  Future<void> getSessionRaps(String id) async {
     try {
-      await _coursesByTeacherProvider.getSessionRaps(
-          id);
+      await _coursesByTeacherProvider.getSessionRaps(id);
       rapsSession.assignAll(_coursesByTeacherProvider.rapsSession);
     } finally {}
   }
+
   void filterCourses(String courseId) async {
     await getCourseById(courseId);
     selectedCourseId.value = courseId;
   }
+
+  Future<void> getStatusByMatriculation(String id, String status) async {
+  try {
+    // Limpia la lista antes de obtener nuevos datos
+    dataStatusByMatriculation.clear();
+
+    // Llamada al proveedor para obtener los datos
+    await _coursesByTeacherProvider.getStatusByMatriculation(id, status);
+
+    // Asigna los nuevos datos a la lista observable
+    if (_coursesByTeacherProvider.dataStatusByMatriculation.isNotEmpty) {
+      dataStatusByMatriculation.assignAll(_coursesByTeacherProvider.dataStatusByMatriculation);
+    }
+  } catch (e) {
+    print("Error al obtener el estado por matrícula: $e");
+  }
+}
+
+
+  var listStatusByMatriculation = [
+    'EN FORMACION',
+    'RETIRO VOLUNTARIO',
+    'POR EVALUAR',
+    'TRASLADO',
+    'APLAZADO',
+    'APROBADO',
+    'CURSADO',
+  ].obs;
 }

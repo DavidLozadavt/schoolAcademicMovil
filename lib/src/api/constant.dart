@@ -10,7 +10,7 @@
 //pre sena
 //const baseURL = 'https://school-sena.virtualt.org/api/';
 //localhost
-const baseURL = 'http://192.168.1.101:8000/api/';
+const baseURL = 'http://192.168.0.104:8000/api/';
 const loginURL = '${baseURL}auth/login';
 const logoutUrl = '${baseURL}auth/logout';
 //const getHorarioMateriaURL = '${baseURL}materias/horario_materia';
@@ -35,12 +35,13 @@ const getUsersByUserUrl = '${baseURL}users/get_users_by_user_authenticated';
 const getMessagesUserUrl = '${baseURL}get_comments_user_to_user/';
 const postMessagesUserUrl = '${baseURL}send_message_between_two_users/';
 const pusherUrl = '${baseURL}auth/pusher';
-const getEnrollmentsByPersonUrl =
-    '${baseURL}matriculas_by_persona?data=';
+const getEnrollmentsByPersonUrl = '${baseURL}matriculas_by_persona?data=';
 const getTuitionPaymentAllowanceUrl =
     '${baseURL}procesos/asignaciones_matricula_pagos?data_encoded=';
-const getInscriptionPaymentUrl = '${baseURL}procesos/get_inscription?data_encoded=';
-const getIsPaymentRequiredInscriptionUrl = '${baseURL}is_payment_required_inscription/';
+const getInscriptionPaymentUrl =
+    '${baseURL}procesos/get_inscription?data_encoded=';
+const getIsPaymentRequiredInscriptionUrl =
+    '${baseURL}is_payment_required_inscription/';
 const getFinancialInstitutionsUrl = '${baseURL}get_financial_institutions';
 const postTransactionPseUrl = '${baseURL}transaction_pse';
 const getFindTransactionByIdUrl = '${baseURL}find_transaction_by_id/';
@@ -59,14 +60,17 @@ const putAttendanceUrl = '${baseURL}materias/update_assistance';
 const getCitysUrl = '${baseURL}get_Cityes';
 const getDepartament = '${baseURL}departamentos';
 const getCoursesByTeacherUrl = '${baseURL}tokens_contract_teacher';
-const getCourseByIdUrl = '${baseURL}contract_teacher_tokens?idAsignacionPeriodoProgramaJornada=';
+const getCourseByIdUrl =
+    '${baseURL}contract_teacher_tokens?idAsignacionPeriodoProgramaJornada=';
 const getSessionByIdUrl = '${baseURL}get_sesion/';
 const getAssistanceByIdUrl = '${baseURL}asitencias_sesion/';
 const getCompetencesByIdUrl = '${baseURL}get_competencias/';
 const getCompetencesRapUrl = '${baseURL}get_competencias_raps/';
 const getSessionRapsUrl = '${baseURL}get_sesion_by_rap/';
+const getStatusByMatriculationUrl =
+    '${baseURL}matriculas_by_state?idAsignacionPeriodoProgramaJornada=';
 
-//update and recover password 
+//update and recover password
 const updatePasswordUrl = '${baseURL}users/update_password/';
 const sendOtpUrl = '${baseURL}send_otp';
 const validateOtpUrl = '${baseURL}validate_otp';
@@ -74,7 +78,6 @@ const resetPasswordByOtpUrl = '${baseURL}reset_password_by_otp';
 const postSupportUrl = '${baseURL}store_support';
 const getGroupsUrl = '${baseURL}group_general';
 const noData = '${baseURL}default/imagenpordefecto.png';
-
 
 //const urlUpdateProfile = '${baseURL}auth/update_profile';
 //const urlCiudad = '${baseURL}ciudades';

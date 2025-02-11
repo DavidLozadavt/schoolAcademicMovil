@@ -10,6 +10,7 @@ class CoursesByTeacherProvider extends GetConnect {
   var competences = <Map<String, dynamic>>[].obs;
   var rapsBySubject = <Map<String, dynamic>>[].obs;
   var rapsSession = <Map<String, dynamic>>[].obs;
+  var dataStatusByMatriculation = <Map<String, dynamic>>[].obs;
   Future<void> getAllCourses() async {
     String token = await authService.getToken();
     Response response = await get(
@@ -35,6 +36,7 @@ class CoursesByTeacherProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
+    print('Adrian ${response.body}');
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -116,11 +118,26 @@ class CoursesByTeacherProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       rapsSession.assignAll(response.body.cast<Map<String, dynamic>>());
     } else {
+      rapsSession.assignAll([]);
+    }
+  }
+
+   Future<void> getStatusByMatriculation(String id, String status) async {
+    String token = await authService.getToken();
+    Response response = await get(
+      '$getStatusByMatriculationUrl$id&estado=$status',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      dataStatusByMatriculation.assignAll(response.body.cast<Map<String, dynamic>>());
+    } else {
+      dataStatusByMatriculation.clear();
       rapsSession.assignAll([]);
     }
   }
