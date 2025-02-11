@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vtschool/src/screens/logout/logout_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
@@ -47,12 +48,33 @@ class ProfileUserScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                   ),
                   items: [
-                    /* _itemPopUpMenu(context, 'Editar perfil', true, 1,
-                            () => Get.to(() => const PagosPage())),*/
-                    /*_itemPopUpMenu(context, 'Términos y condiciones', true,
-                            3, () => Get.to(const PagosPage())),*/
-                    customDropdownMenuItem(context, 'Cerrar sesión', true, 1,
+                    //  customDropdownMenuItem(context, 'ACTUALIZAR PERFIL', true, 1,
+                    //         () => Get.to(() => EnrollmentsPersonScreen())),
+                    customDropdownMenuItem(
+                        context, 'CAMBIAR CONTRASEÑA', true, 1, () async {
+                      await Future.delayed(const Duration(seconds: 1), () {
+                        Get.toNamed('/update_password');
+                      });
+                    }),
+                    customDropdownMenuItem(
+                        context, 'ACTUALIZAR PERFIL', true, 2, () async {
+                      await Future.delayed(const Duration(seconds: 1), () {
+                        Get.toNamed('/update_profile');
+                      });
+                    }),
+                     customDropdownMenuItem(context, 'CERRAR SESIÓN', true, 3,
                         () => logoutApp(context)),
+                    if (_profileController.rolUser == 'ACUDIENTE')
+                      customDropdownMenuItem(
+                          context, 'CAMBIAR ESTUDIANTE', true, 4, () async {
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        await Future.delayed(const Duration(seconds: 1), () {
+                          Get.offAllNamed('/guardian_children');
+                          pref.remove('idUser');
+                        });
+                      }),
+                   
                   ],
                   onChanged: (value) {},
                 ),
@@ -85,10 +107,11 @@ class ProfileUserScreen extends StatelessWidget {
                             height: 110,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                ),
+                              return Image.asset(
+                                'assets/images/profile.png',
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
                               );
                             },
                           ),
@@ -99,14 +122,14 @@ class ProfileUserScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                                '${_profileController.userProfile['persona']?['nombre1']} ${_profileController.userProfile['persona']?['apellido1']}',
+                                '${_profileController.userProfile['persona']?['nombre1'] ?? 'Sin datos'} ${_profileController.userProfile['persona']?['apellido1'] ?? 'Sin datos'}',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'CM Sans Serif',
                                   fontSize: 24.0,
                                 )),
                             Text(
-                              '${_profileController.userProfile['persona']?['email']}',
+                              '${_profileController.userProfile['persona']?['email'] ?? 'Sin datos'}',
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'Averta_Light',
@@ -137,7 +160,7 @@ class ProfileUserScreen extends StatelessWidget {
                           height: 20,
                         ),
                         const Text(
-                          "Información Personal",
+                          "INFORMACIÓN PERSONAL",
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'CM Sans Serif',
@@ -149,68 +172,33 @@ class ProfileUserScreen extends StatelessWidget {
                           height: 10,
                         ),
                         buildTextFieldWithIcon(
-                          "Telefono",
+                          "TELEFONO",
                           Icons.phone,
-                          '${_profileController.userProfile['persona']?['celular']}',
+                          '${_profileController.userProfile['persona']?['celular'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Documento",
+                          "DOCUMENTO",
                           Icons.badge_outlined,
-                          '${_profileController.userProfile['persona']?['identificacion']}',
+                          '${_profileController.userProfile['persona']?['identificacion'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Ciudad de nacimiento",
+                          "CIUDAD DE NACIMIENTO",
                           Icons.badge_outlined,
-                          '${_profileController.userProfile['persona']?['ciudad_nac']['descripcion']}',
+                          '${_profileController.userProfile['persona']?['ciudad_nac']?['descripcion'] ?? 'Sin datos'}',
                         ),
                         const SizedBox(height: 10),
                         buildTextFieldWithIcon(
-                          "Ciudad actual",
+                          "CIUDAD ACTUAL",
                           Icons.location_city,
-                          '${_profileController.userProfile['persona']?['ciudad_ubicacion']['descripcion']}',
+                          '${_profileController.userProfile['persona']?['ciudad_ubicacion']?['descripcion'] ?? 'Sin datos'}',
                         ),
                       ],
                     ),
                   ),
           ),
         ],
-      ),
-    );
-  }
-
-  DropdownMenuItem _itemPopUpMenu(BuildContext context, String text,
-      bool enabled, int value, Function onTap,
-      {Color color = const Color(0xFFE8E8E8),
-      Color colorText = Colors.black54,
-      Color colorBorder = Colors.black26}) {
-    return DropdownMenuItem(
-      onTap: (() => onTap()),
-      alignment: Alignment.center,
-      enabled: enabled,
-      value: value,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: enabled
-            ? BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(
-                  color: colorBorder,
-                ),
-                color: color,
-              )
-            : null,
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: enabled ? colorText : Colors.grey[300],
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            overflow: TextOverflow.visible,
-          ),
-        ),
       ),
     );
   }

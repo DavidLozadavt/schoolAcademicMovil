@@ -5,8 +5,9 @@ import 'package:vtschool/src/screens/activity_student/activities_student_screen.
 import 'package:vtschool/src/screens/chat/chats_screen.dart';
 import 'package:vtschool/src/screens/home/home_controller.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student_screen.dart';
-import 'package:vtschool/src/screens/payments/payments_screen.dart';
+import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_screen.dart';
 import 'package:vtschool/src/widgets/item_navigation_button.dart';
 
 class HomeStudent extends StatelessWidget {
@@ -27,11 +28,11 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
-                    title: 'Home',
+                    title: 'HOME',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/home.png',
-                    title: 'Home',
+                    title: 'HOME',
                     isActive: true,
                   ),
                 ),
@@ -40,52 +41,66 @@ class HomeStudent extends StatelessWidget {
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
+                    title: 'CHATS',
                     //messageCount: 50,
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/comentario.png',
-                    title: 'Chats',
+                    title: 'CHATS',
                     isActive: true,
                     //messageCount: 50,
+                  ),
+                ),
+                //  BottomNavigationBarItem(
+                //   // backgroundColor: Colors.white,
+                //    label: '',
+                //    icon: ItemNavigationButton(
+                //      fileIcon: 'assets/images/note.png',
+                //      title: 'ACTIVIDADES',
+                //    ),
+                //    activeIcon: ItemNavigationButton(
+                //      fileIcon: 'assets/images/note.png',
+                //      title: 'ACTIVIDADES',
+                //      isActive: true,
+                //    ),
+                //  ),
+                 BottomNavigationBarItem(
+                  //backgroundColor: listColor[11].withOpacity(0.5),
+                  label: '',
+                  icon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'AULA',
+                  ),
+                  activeIcon: ItemNavigationButton(
+                    fileIcon: 'assets/images/note.png',
+                    title: 'AULA',
+                    isActive: true,
                   ),
                 ),
                  BottomNavigationBarItem(
-                  // backgroundColor: Colors.white,
-                   label: '',
-                   icon: ItemNavigationButton(
-                     fileIcon: 'assets/images/note.png',
-                     title: 'Mis notas',
-                   ),
-                   activeIcon: ItemNavigationButton(
-                     fileIcon: 'assets/images/note.png',
-                     title: 'Mis notas',
-                     isActive: true,
-                   ),
-                 ),
-                BottomNavigationBarItem(
-                  //backgroundColor: Colors.white,
+                  //backgroundColor: listColor[11].withOpacity(0.5),
                   label: '',
                   icon: ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
+                    fileIcon: 'assets/images/posts.png',
+                    title: 'PUBLICACIONES',
                   ),
                   activeIcon: ItemNavigationButton(
-                    fileIcon: 'assets/images/payment.png',
-                    title: 'Pagos',
+                    fileIcon: 'assets/images/posts.png',
+                    title: 'PUBLICACIONES',
                     isActive: true,
                   ),
+                  
                 ),
                 BottomNavigationBarItem(
                  // backgroundColor: Colors.white,
                   label: '',
                   icon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'PERFIL',
                   ),
                   activeIcon: ItemNavigationButton(
                     fileIcon: 'assets/images/profile.png',
-                    title: 'Profile',
+                    title: 'PERFIL',
                     isActive: true,
                   ),
                 ),
@@ -96,13 +111,22 @@ class HomeStudent extends StatelessWidget {
               children: [
                 HomeStudentScreen(),
                 Chats(),
-                ActivitiesStudentScreen(),
-                PaymentsScreen(),
+               // ActivitiesStudentScreen(),
+                SubjectsTeacherScreen(),
+                PostsScreen(),
                 ProfileUserScreen(),
                 
               ],
             )),
         extendBody: true,
+         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.amber[100],
+          onPressed: () {
+            Get.toNamed('/support');
+          },
+          tooltip: 'Support',
+          child: const Icon(Icons.support_agent_rounded),
+        ),
       ),
     );
   }

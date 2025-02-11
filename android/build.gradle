@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.8.21'
+    ext.kotlin_version = '2.0.0'
     repositories {
         google()
         mavenCentral()
@@ -15,11 +15,25 @@ allprojects {
         google()
         mavenCentral()
     }
+    configurations.all {
+    exclude group: "com.google.errorprone", module: "error_prone_annotations"
+    }
 }
 
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin("com.android.application") ||
+                project.plugins.hasPlugin("com.android.library")) {
+            project.android {
+                compileSdkVersion 34
+                buildToolsVersion "34.0.0"
+            }
+        }
+    }
 }
 subprojects {
     project.evaluationDependsOn(':app')

@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/screens/starting/global_controller.dart';
 
 class StartingInitScreen extends StatelessWidget {
-  StartingInitScreen({super.key});
+  const StartingInitScreen({super.key});
 
-  final GlobalController controller =
-      Get.put(GlobalController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
+    final GlobalController controller =
+      Get.put(GlobalController(), permanent: true);
     return SafeArea(
       child: Scaffold(
         body: Center(

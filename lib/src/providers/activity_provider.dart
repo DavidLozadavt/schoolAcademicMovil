@@ -31,19 +31,15 @@ class ActivityProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    print(response.body);
     if (response.statusCode == 200) {
-      //Map<String, dynamic> responseBody = response.body;
-      /*if (responseBody.isNotEmpty) {*/
-      activitiesStudent.assignAll(response.body.cast<Map<String, dynamic>>());
-      /*  } else {
-          throw Failure('La respuesta del servidor está vacía.');
-        }*/
-    } else if (response.statusCode == 400) {
-      activitiesStudent.assignAll([]);
+      // if (response.body.isNotEmpty) {
+          activitiesStudent.assignAll(response.body.cast<Map<String, dynamic>>());
+        // } else {
+        //   throw Failure('La respuesta del servidor está vacía');
+        // }
     } else {
-      throw Failure('Error al cargar las actividades');
-    }
+      activitiesStudent.assignAll([]);
+    } 
   }
 
   Future<void> getActivityById(String? id) async {
@@ -68,42 +64,44 @@ class ActivityProvider extends GetConnect {
   }
 
   Future<void> createActivityProvider(
-    String id,
-    String titulo,
-    String descripcion,
-    File? archivo,
-  ) async {
-    try {
-      String token = await authService.getToken();
-      String url = '$createActivitiesUrl$id';
-      var uri = Uri.parse(url);
-      var request = http.MultipartRequest('POST', uri);
-      request.fields['tituloActividad'] = titulo;
-      request.fields['descripcionActividad'] = descripcion;
-      request.headers['Authorization'] = 'Bearer $token';
-
-      if (archivo != null) {
-        String fileName = basename(archivo.path);
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'pathDocumentoActividadFile',
-            archivo.path,
-            filename: fileName,
-          ),
-        );
-      }
-
-      var response = await request.send();
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return;
-      } else {
-        String responseBody = await response.stream.bytesToString();
-        throw Exception('No se pudo crear la actividad: $responseBody');
-      }
-    } catch (e) {
-      throw Exception('Ocurrió un error: $e');
+  String id,
+  String titulo,
+  String descripcion,
+  File? archivo,
+) async {
+  try {
+    String token = await authService.getToken();
+    String url = '$createActivitiesUrl$id';
+    var uri = Uri.parse(url);
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['tituloActividad'] = titulo;
+    request.fields['descripcionActividad'] = descripcion;
+    request.fields['idTipoActividad'] = '2';
+    request.headers['Authorization'] = 'Bearer $token';
+    if (archivo != null) {
+      String fileName = basename(archivo.path);
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'pathDocumentoActividadFile',
+          archivo.path,
+          filename: fileName,
+        ),
+      );
     }
+
+    // Enviar la solicitud
+    var response = await request.send();
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else {
+      String responseBody = await response.stream.bytesToString();
+      throw Exception('No se pudo crear la actividad: $responseBody');
+    }
+  } catch (e) {
+    throw Exception('Ocurrió un error: $e');
   }
+}
+
 
   Future<Map<String, dynamic>> getTypeActivity(String? id) async {
     String token = await authService.getToken();
@@ -180,7 +178,7 @@ class ActivityProvider extends GetConnect {
       String idQualification, dynamic answers) async {
     dynamic answersJson = jsonEncode(answers);
     String token = await authService.getToken();
-    print('877777777 $answersJson');
+    print(answersJson);
     try {
       Response response = await post(
         '$postReplyQuestionnaireUrl$idQualification',
@@ -191,9 +189,12 @@ class ActivityProvider extends GetConnect {
         contentType: 'application/json',
         answersJson,
       );
-      print('770999 ${response.body}');
+
+      print(response.body);
+      print(response.statusCode);
+   
       if (response.statusCode == 401) {
-        throw Failure('Otro');
+        throw Failure('Error');
       }
       if (response.statusCode != 200) {
         throw Failure('Algo salió mal, vuelve a intentarlo');

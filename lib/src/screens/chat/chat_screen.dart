@@ -53,7 +53,7 @@ class Chat extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                '${selectedUser['matricula']!['persona']['rutaFoto']}',
+                                '${selectedUser['rutaFoto']}',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -66,7 +66,7 @@ class Chat extends StatelessWidget {
               },
               child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      '${selectedUser['matricula']!['persona']['rutaFoto']}'),
+                      '${selectedUser['rutaFoto']}'),
                   backgroundColor: Colors.transparent),
             ),
             const SizedBox(width: 10),
@@ -74,9 +74,9 @@ class Chat extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    '${selectedUser['matricula']!['persona']['nombre1']} ${selectedUser['matricula']!['persona']['apellido1']}'),
+                    '${selectedUser['nombre1']} ${selectedUser['apellido1']}'),
                 Text(
-                  '${selectedUser['matricula']!['persona']['email']}',
+                  '${selectedUser['usuario']['estadoMensajeria']}',
                   style: const TextStyle(fontSize: 12),
                 ),
               ],
@@ -106,12 +106,12 @@ class Chat extends StatelessWidget {
                           DateTime.parse(messages[index]['created_at']);
                       String formattedDate =
                           DateFormat('dd MMMM yyyy', 'es').format(dateTime);
-                      print('1${messages[index]['active_company_user']['idUser']}');
-                      print('2${selectedUser['matricula']['persona']['id']}');
-                      print('3${messages[index]}');
+                      //print('1${messages[index]['active_company_user']['idUser']}');
+                      //print('2${selectedUser['matricula']['persona']['id']}');
+                      //print('3${messages[index]}');
                       bool isOwnMessage = messages[index]['active_company_user']
                               ['idUser'].toString() !=
-                          selectedUser['matricula']['persona']['id'].toString();
+                          selectedUser['usuario']['idPersona'].toString();
                       ('$isOwnMessage');
                       dynamic archivos = messages[index]['archivos'];
                       return Container(
@@ -124,10 +124,10 @@ class Chat extends StatelessWidget {
                           children: [
                             if (messages[index]['active_company_user']
                                     ['idUser'].toString() ==
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['usuario']['idPersona'].toString())
                               CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                    '${selectedUser['matricula']!['persona']['rutaFoto']}',
+                                    '${selectedUser['rutaFoto']}',
                                   ),
                                   backgroundColor: Colors.transparent),
                             const SizedBox(width: 8.0),
@@ -201,7 +201,7 @@ class Chat extends StatelessWidget {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                          'Descargar imagen'),
+                                                                          'DESCARGAR IMAGEN'),
                                                                       Icon(Icons
                                                                           .download_rounded),
                                                                     ],
@@ -228,16 +228,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -247,7 +247,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -280,16 +280,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -299,7 +299,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -329,16 +329,16 @@ class Chat extends StatelessWidget {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Get.defaultDialog(
-                                                      title: "Mensaje",
+                                                      title: "MENSAJE",
                                                       content: Text(
-                                                          "¿Desea descargar el archivo $fileName?"),
+                                                          "¿DESEA DESCARGAR EL ARCHIVO $fileName?"),
                                                       actions: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("No"),
+                                                              const Text("NO"),
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
@@ -348,7 +348,7 @@ class Chat extends StatelessWidget {
                                                             Get.back();
                                                           },
                                                           child:
-                                                              const Text("Si"),
+                                                              const Text("SI"),
                                                         ),
                                                       ],
                                                     );
@@ -387,7 +387,7 @@ class Chat extends StatelessWidget {
                             ),
                             if (messages[index]['active_company_user']
                                     ['idUser'].toString() !=
-                                selectedUser['matricula']['persona']['id'].toString())
+                                selectedUser['usuario']['idPersona'].toString())
                               CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     '${profileUserController.userProfile['persona']?['rutaFoto']}'),
@@ -402,7 +402,7 @@ class Chat extends StatelessWidget {
               } else {
                 return const Expanded(
                   child: Center(
-                    child: Text('No tienes mensajes'),
+                    child: Text('NO TIENES MENSAJES'),
                   ),
                 );
               }
@@ -509,7 +509,7 @@ class Chat extends StatelessWidget {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: listColor[10],
-                              hintText: "Mensaje",
+                              hintText: "MENSAJE",
                               hintStyle: TextStyle(color: listColor[14]),
                               prefixIcon: const SizedBox.shrink(),
                               suffixIcon: IconButton(
@@ -557,17 +557,17 @@ class Chat extends StatelessWidget {
                               if (_chatController
                                   .messageController.text.isNotEmpty) {
                                 await _chatController.sendMessage(
-                                    '${selectedUser['matricula']!['persona']['id']}');
+                                    '${selectedUser['usuario']['idPersona']}');
                                 _chatController.messageController.clear();
                                 _chatController.clearSelectedFilePath();
                                 var jsonMessage =
                                     json.encode(_chatController.postMessage);
                                 _chatController.onTriggerEventPressed(
-                                    '${selectedUser['matricula']!['persona']['id']}',
+                                    '${selectedUser['usuario']['idPersona']}',
                                     jsonMessage);
                               } else {
                                 Get.snackbar(
-                                    '¡Error!', 'El mensaje esta vacio');
+                                    '¡ERROR!', 'EL MENSAJE ESTA VACIO');
                               }
                             },
                             icon: const Icon(Icons.send)),
@@ -594,8 +594,8 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  ('No se selecciono nunguna imagen');
-                                  //('No se seleccionó ninguna imagen');
+                                  ('NO SE HA SELEECIONADO UNA IMAGEN');
+                                  
                                 }
                               },
                               icon: const Icon(Icons.camera_alt_outlined)),
@@ -611,7 +611,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setFilePath(file);
                                 } else {
                                   //('No se seleccionó ninguna imagen');
-                                  ('No se seleccionó ninguna imagen');
+                                  ('NO SE HA SELEECIONADO UNA IMAGEN');
                                 }
                               },
                               icon: const Icon(Icons.photo_library_outlined)),
@@ -625,7 +625,7 @@ class Chat extends StatelessWidget {
                                   _chatController.setSelectedFilePath(filePath);
                                   _chatController.setFilePath(file);
                                 } else {
-                                  ('No se seleccionó ningun archivo');
+                                  ('NO SE HA SELECIONADO UN ARCHIVO');
                                 }
                               },
                               icon: const Icon(Icons.attach_file)),

@@ -12,6 +12,7 @@ class ChatProvider extends GetConnect {
   final AuthProvider authService = AuthProvider();
   var users = <Map<String, dynamic>>[].obs;
   var messages = <Map<String, dynamic>>[].obs;
+  var groups = <Map<String, dynamic>>[].obs;
 
   Future<void> getUsersByUser() async {
     String token = await authService.getToken();
@@ -22,8 +23,8 @@ class ChatProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    // ('code .${response.statusCode}');
-    // ('body .${response.body}');
+    print('code .${response.statusCode}');
+    print('body .${response.body}');
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         users.assignAll(response.body.cast<Map<String, dynamic>>());
@@ -101,6 +102,28 @@ class ChatProvider extends GetConnect {
       }
     } catch (e) {
       throw Exception('Error al enviar el mensaje');
+    }
+  }
+
+  Future<void> getGroups() async {
+    String token = await authService.getToken();
+    Response response = await get(
+      getGroupsUrl,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': 'application/json',
+      },
+    );
+    print('77777 ${response.body}');
+    print('11111 ${response.statusCode}');
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
+        groups.assignAll(response.body.cast<Map<String, dynamic>>());
+      } else {
+        groups.assignAll(response.body.cast<Map<String, dynamic>>());
+      }
+    } else {
+      throw Failure('Error al cargar los grupos');
     }
   }
 }

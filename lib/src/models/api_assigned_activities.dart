@@ -354,7 +354,7 @@ List<AssignedActivities> assignedActivitiesFromJson(String str) => List<Assigned
 String assignedActivitiesToJson(List<AssignedActivities> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AssignedActivities {
-    final int id;
+    final dynamic id;
     final String? archivo;
     final DateTime fechaCreacion;
     final DateTime fechaInicial;
@@ -363,19 +363,19 @@ class AssignedActivities {
     final String? calificacionEstandart;
     final String? comentarioDocente;
     final String? comentarioEstudiante;
-    final dynamic  idActividad;
-    final String idAMartriculaAcademica;
-    final String idEstado;
+    final dynamic idActividad;
+    final dynamic idAMartriculaAcademica;
+    final dynamic idEstado;
     final dynamic idGrupo;
-    final String idPersona;
-    final String idCorte;
+    final dynamic idPersona;
+    final dynamic idCorte;
     final DateTime? fechaCalificacion;
     final dynamic createdAt;
     final dynamic updatedAt;
-    final String notificacionEnviada;
+    final dynamic notificacionEnviada;
     final bool esGrupal;
     final dynamic grupo;
-    final String docRespuesta;
+    final dynamic docRespuesta;
     final Actividad actividad;
 
     AssignedActivities({
@@ -458,17 +458,17 @@ class AssignedActivities {
 }
 
 class Actividad {
-    final int id;
-    final String tituloActividad;
-    final String descripcionActividad;
-    final String? pathDocumentoActividad;
-    final String autor;
-    final String idTipoActividad;
-    final String idMateria;
-    final String idEstado;
-    final String idCompany;
-    final String idPersona;
-    final String docUrl;
+    final dynamic id;
+    final dynamic tituloActividad;
+    final dynamic descripcionActividad;
+    final dynamic pathDocumentoActividad;
+    final dynamic autor;
+    final dynamic idTipoActividad;
+    final dynamic idMateria;
+    final dynamic idEstado;
+    final dynamic idCompany;
+    final dynamic idPersona;
+    final dynamic docUrl;
     final Materia materia;
     final TipoActividad tipoActividad;
     final Estado estado;
@@ -526,9 +526,9 @@ class Actividad {
 }
 
 class Estado {
-    final int id;
-    final String estado;
-    final String descripcion;
+    final dynamic id;
+    final dynamic estado;
+    final dynamic descripcion;
 
     Estado({
         required this.id,
@@ -549,14 +549,15 @@ class Estado {
     };
 }
 
+
 class Materia {
-    final int id;
-    final String nombreMateria;
+    final dynamic id;
+    final dynamic nombreMateria;
     final dynamic descripcion;
-    final String idCompany;
-    final DateTime createdAt;
-    final DateTime updatedAt;
-    final String idAreaConocimiento;
+    final dynamic idCompany;
+    final dynamic createdAt;
+    final dynamic updatedAt;
+    final dynamic idAreaConocimiento;
     final dynamic idMateriaPadre;
 
     Materia({
@@ -586,18 +587,19 @@ class Materia {
         "nombreMateria": nombreMateria,
         "descripcion": descripcion,
         "idCompany": idCompany,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": (createdAt is DateTime) ? createdAt.toIso8601String() : createdAt,
+        "updated_at": (updatedAt is DateTime) ? updatedAt.toIso8601String() : updatedAt,
         "idAreaConocimiento": idAreaConocimiento,
         "idMateriaPadre": idMateriaPadre,
     };
 }
 
+
 class TipoActividad {
-    final int id;
-    final String tipoActividad;
-    final String descripcion;
-    final String idCompany;
+    final dynamic id;
+    final dynamic tipoActividad;
+    final dynamic descripcion;
+    final dynamic idCompany;
 
     TipoActividad({
         required this.id,

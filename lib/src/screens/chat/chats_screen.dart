@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
-import 'package:vtschool/src/widgets/card_chats.dart';  
+import 'package:vtschool/src/widgets/card_chats.dart';
 
 class Chats extends StatelessWidget {
   Chats({super.key});
@@ -13,126 +13,176 @@ class Chats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-          padding: const EdgeInsets.only(bottom: 80),
-          child: Column(children: [
-            const SizedBox(
-              height: 25,
-            ),
-            const Text(
-              'Chats',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+            padding: const EdgeInsets.only(bottom: 60),
+            child: Column(children: [
+              const SizedBox(
+                height: 25,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, left: 18.0, right: 18.0),
-              child: TextField(
-                controller: _searchController,
-                onChanged: (value) {
-                  _chatController.filterUsers(value);
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(255, 238, 238, 238),
-                  hintText: "Buscar",
-                  hintStyle: const TextStyle(color: Colors.black54),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: _searchController.text.isNotEmpty
-                        ? Colors.black54
-                        : Colors.black38,
-                  ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black54,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25.0),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+              const Text(
+                'CHATS',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, left: 18.0, right: 18.0),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (value) {
+                    _chatController.filterUsers(value);
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color.fromARGB(255, 238, 238, 238),
+                    hintText: "BUSCAR",
+                    hintStyle: const TextStyle(color: Colors.black54),
+                    prefixIcon: Icon(
+                      Icons.search,
                       color: _searchController.text.isNotEmpty
                           ? Colors.black54
                           : Colors.black38,
                     ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(25.0),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black54,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25.0),
+                      ),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: _searchController.text.isNotEmpty
+                            ? Colors.black54
+                            : Colors.black38,
+                      ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(25.0),
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 7.0),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 7.0),
-                ),
-                style: const TextStyle(
-                  color: Colors.black54,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                  ),
                 ),
               ),
-            ),
-            Obx(
-              () => _chatController.isLoading.value
-                  ? const Expanded(
-                    child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                  )
-                  : Expanded(
-                      child: _chatController.filteredUsers.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'No tienes chats',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+              if (_chatController.groups.isNotEmpty)
+                Obx(
+                  () => SizedBox(
+                    height: 120,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(25),
+                      itemCount: _chatController.groups.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () async {},
+                          child: Container(
+                            width: 120,
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(25),
-                              itemCount: _chatController.filteredUsers.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                
-                                final users =
-                                    _chatController.filteredUsers[index];
-                            
-                                if (profileUserController.userProfile['persona']
-                                        ['id'] !=
-                                    users['matricula']!['persona']['id']) {
+                                const SizedBox(height: 8.0),
+                                CircleAvatar(
+                                  backgroundColor: Colors.grey[200],
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      _chatController.groups[index]['imagen'],
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          'assets/images/profile.png',
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  _chatController.groups[index]['nombreGrupo'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 14.0),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              Obx(
+                () => _chatController.isLoading.value
+                    ? const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Expanded(
+                        child: _chatController.filteredUsers.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'NO TIENES CHATS',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                            : ListView.builder(
+                                padding: const EdgeInsets.all(25),
+                                itemCount: _chatController.filteredUsers.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final users =
+                                      _chatController.filteredUsers[index];
                                   return GestureDetector(
                                     onTap: () async {
                                       _chatController.onConnectPressed(
-                                          '${users['matricula']!['idPersona']}');
+                                          '${users['usuario']!['idPersona']}');
                                       _chatController.getMessage(
-                                          '${users['matricula']!['idPersona']}');
+                                          '${users['usuario']!['idPersona']}');
                                       _chatController.setSelectedUser(users);
+                                      print(users);
                                       Get.toNamed('/chat');
                                     },
                                     child: CardChats(
-                                      urlPhotoSender:
-                                          users['matricula']!['persona']
-                                              ['rutaFoto'],
-                                      name: users['matricula']!['persona']
-                                          ['nombre1'],
-                                      lastName: users['matricula']!['persona']
-                                          ['apellido1'],
-                                      endMessage: users['matricula']!['persona']
-                                          ['email'],
+                                      urlPhotoSender: users['rutaFoto'],
+                                      name: users['nombre1'],
+                                      lastName: users['apellido1'],
+                                      endMessage: users['email'] ?? '',
+                                      status: users['usuario']
+                                          ['estadoMensajeria'],
                                     ),
                                   );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
-                            ),
-                    ),
-            ),
-          ])),
+                                },
+                              ),
+                      ),
+              ),
+            ])),
+      ),
     );
   }
 }

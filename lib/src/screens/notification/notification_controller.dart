@@ -22,6 +22,11 @@ class NotificationsController extends GetxController {
     }
   }
 
+   Future<void> refreshNotifications() async {
+    await Future.delayed(const Duration(seconds: 1));
+    getNotifications();
+  }
+
   Future<void> readNotifications(String id) async {
     try {
       await _notificationsProvider.readNotifications(id);

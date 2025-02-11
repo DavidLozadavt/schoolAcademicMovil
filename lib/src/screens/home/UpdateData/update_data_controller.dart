@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vtschool/src/providers/auth_provider.dart';
+import 'package:vtschool/src/providers/citys_provider.dart'; // Importa el proveedor
 
 class UpdateStudentDataController extends GetxController {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nameOneController = TextEditingController();
+  TextEditingController nameTwoController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController lastName2Controller = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  final AuthProvider authProvider = AuthProvider();
-  var userProfile = {}.obs;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController identificacionController = TextEditingController();
+  TextEditingController fechaNacController = TextEditingController();
+  TextEditingController phonefijeController = TextEditingController();
 
+  final AuthProvider authProvider = AuthProvider();
+  final CitiesProvider citiesProvider = CitiesProvider(); // Proveedor de ciudades
+
+  var userProfile = {}.obs;
   var isLoading = false.obs;
   var currentStep = 0.obs;
+  var isLoadingCiudades = false.obs;
+
+  var departamentos = [].obs;
+  var ciudades = [].obs;
+  var selectedDepartamento = ''.obs;
+  var selectedCiudad = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchEvents();
+    fetchDepartamentos();
   }
 
   Future<void> fetchEvents() async {
@@ -24,25 +43,99 @@ class UpdateStudentDataController extends GetxController {
       final userData = await authProvider.getProfile();
       userProfile(userData);
 
-      nameController.text = userProfile['persona']['nombre1'] + ' ' +
-      userProfile['persona']['apellido1'];
+      nameOneController.text = userProfile['persona']['nombre1'] ?? '';
+      lastNameController.text = userProfile['persona']['apellido1'] ?? '';
+      nameTwoController.text = userProfile['persona']['nombre2'] ?? '';
+      lastName2Controller.text = userProfile['persona']['apellido2'] ?? '';
+      lastName2Controller.text = userProfile['persona']['apellido2'] ?? '';
+      phonefijeController.text = userProfile['persona']['telefonoFijo'] ?? '';
       phoneController.text = userProfile['persona']['celular'] ?? '';
+      addressController.text = userProfile['persona']['direccion'] ?? '';
+      emailController.text = userProfile['persona']['email'] ?? '';
+      identificacionController.text =
+          userProfile['persona']['identificacion'] ?? '';
+      fechaNacController.text = userProfile['persona']['fechaNac'] ?? '';
 
+      selectedDepartamento.value =
+          userProfile['persona']['ciudad_nac']['idDepartamento'].toString();
+      selectedCiudad.value =
+          userProfile['persona']['ciudad_nac']['id'].toString();
+      await fetchCityes(selectedDepartamento.value);
     } finally {
       isLoading(false);
     }
   }
 
-  void saveStudentData() async {
-    isLoading.value = true;
+  Future<void> fetchDepartamentos() async {
+    try {
+      final response = await citiesProvider.getDepartments();
+      departamentos.value = response;
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudieron cargar los departamentos');
+    }
+  }
 
-    await Future.delayed(const Duration(seconds: 2));
+  // Obtener ciudades basadas en el departamento seleccionado
+  Future<void> fetchCityes(String idDepartamento) async {
+    try {
+      isLoadingCiudades.value = true;
+
+      final response = await citiesProvider
+          .getCities(idDepartamento); // Pasa el idDepartamento a la función
+      ciudades.value = response; // Llenar la lista de ciudades
+    } catch (e) {
+      Get.snackbar('Error', 'No se pudieron cargar las ciudades');
+    } finally {
+      // Finalizar el estado de carga
+      isLoadingCiudades.value = false;
+    }
+  }
+
+  Map<String, dynamic> buildStudentData() {
+    return {
+      'persona': {
+        'nombre1': nameOneController.text,
+        'nombre2': nameTwoController.text,
+        'apellido1': lastNameController.text,
+        'apellido2': lastName2Controller.text,
+        'telefono': phoneController.text,
+        'telefonoFijo': phonefijeController.text,
+        'direccion': addressController.text,
+        'email': emailController.text,
+        'identificacion': identificacionController.text,
+        'fechaNac': fechaNacController.text,
+      },
+    };
+  }
+
+  void saveStudentData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    isLoading.value = true;
+    final studentData = buildStudentData();
+    // String jsonStudentData = jsonEncode(studentData);
+
+    //print('Datos del estudiante que se enviarán al backend: $jsonStudentData');
+
+    final response = await authProvider.updateDataUser(studentData);
+
+    if (response != null) {
+      Get.snackbar('¡Datos actualizado!', 'Inicial sesión nuevamente');
+
+      Get.offAllNamed('/login');
+      await pref.remove('token');
+      await pref.remove('rolUser');
+      await pref.remove('idUser');
+      await pref.remove('tokenExpiresIn');
+      await pref.remove('idContrato');
+      await pref.remove('idStatus');
+      Get.offAllNamed('/login');
+    } else {
+      // Si hubo algún error
+      Get.snackbar('Error',
+          'No se pudo actualizar los datos del estudiante. Intenta de nuevo más tarde.');
+    }
 
     isLoading.value = false;
-
-    Get.snackbar(
-        '¡Datos guardados!', 'Tus datos se han actualizado correctamente');
-    Get.offAllNamed('/home_student');
   }
 
   // Avanzar al siguiente paso
@@ -50,7 +143,7 @@ class UpdateStudentDataController extends GetxController {
     if (currentStep.value < 1) {
       currentStep.value += 1;
     } else {
-      saveStudentData();  // Guardar datos cuando se finalizan todos los pasos
+      saveStudentData();
     }
   }
 

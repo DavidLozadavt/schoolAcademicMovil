@@ -5,16 +5,19 @@ class ProfileUserController extends GetxController {
   final AuthProvider authProvider = AuthProvider();
   var isLoading = true.obs;
   var userProfile = {}.obs;
+  var rolUser = '';
   // var urlLogoCompany = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchEvents();
+    
     //urlPhotoCompany();
   }
 
   Future<void> fetchEvents() async {
+    rolUser = await authProvider.getRolUser();
     try {
       final userData = await authProvider.getProfile();
       userProfile(userData);

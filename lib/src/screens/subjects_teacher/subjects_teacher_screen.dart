@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/src/screens/calendar/calendar_controller.dart';
-import 'package:vtschool/src/screens/chat/chat_controller.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subjects_teacher_controller.dart';
 import 'package:vtschool/src/widgets/card_subject_teacher.dart';
@@ -11,7 +10,7 @@ import 'package:vtschool/src/widgets/card_subject_teacher.dart';
 class SubjectsTeacherScreen extends StatelessWidget {
   SubjectsTeacherScreen({super.key});
   final TextEditingController _searchController = TextEditingController();
-  final ChatController _chatController = Get.put(ChatController());
+  //final ChatController _chatController = Get.put(ChatController());
   final ProfileUserController profileUserController =
       Get.put(ProfileUserController());
   final CalendarController1 _calendarController =
@@ -43,7 +42,7 @@ class SubjectsTeacherScreen extends StatelessWidget {
               child: TextField(
                 controller: _searchController,
                 onChanged: (value) {
-                  _chatController.filterUsers(value);
+                  _calendarController.filterEvents(value);
                 },
                 decoration: InputDecoration(
                   filled: true,
@@ -85,14 +84,14 @@ class SubjectsTeacherScreen extends StatelessWidget {
               height: 25,
             ),
             Obx(
-              () => _chatController.isLoading.value
+              () => _calendarController.isLoading.value
                   ? const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),
                       ),
                     )
                   : Expanded(
-                      child: _chatController.filteredUsers.isNotEmpty
+                      child: _calendarController.filteredEvents.isEmpty
                           ? const Center(
                               child: Text(
                                 'No tienes materias',
@@ -111,39 +110,45 @@ class SubjectsTeacherScreen extends StatelessWidget {
                                 mainAxisSpacing: 10.0,
                                 crossAxisSpacing: 10.0,
                                 childAspectRatio: 0.8,
-                              ), 
-                              itemCount: _calendarController.events.length,
+                              ),
+                              itemCount: _calendarController.filteredEvents.length,
                               itemBuilder: (context, index) {
                                 return CardSubjectTeacher(
                                   nameSubject:
-                                      '${_calendarController.events[index]["materia"]["materia"]["nombreMateria"]}',
+                                      '${_calendarController.filteredEvents[index]["materia"]["materia"]["nombreMateria"]}',
                                   workingDay:
-                                      '${_calendarController.events[index]["asignacionPeriodoProgramaJornada"]["jornada"]["nombreJornada"]}',
+                                      '${_calendarController.filteredEvents[index]["asignacionPeriodoProgramaJornada"]["jornada"]["nombreJornada"]}',
                                   program:
-                                      '${_calendarController.events[index]["materia"]["grado"]["programa"]["nombrePrograma"]}',
+                                      '${_calendarController.filteredEvents[index]["materia"]["grado"]["programa"]["nombrePrograma"]}',
                                   color: getRandomColor(),
                                   onTap: () async {
                                     await _subjectsTeacherController.getSubject(
-                                        _calendarController.events[index][
-                                                "asignacionPeriodoProgramaJornada"]
-                                            ["idJornada"].toString(),
-                                        _calendarController.events[index][
-                                                "materia"]["idMateria"].toString(),
-                                        _calendarController.events[index][
-                                                "asignacionPeriodoProgramaJornada"]
-                                            ["asignacion_periodo_programa"]["idPrograma"].toString(),
-                                          _calendarController.events[index][
-                                                "horaInicial"],
-                                        _calendarController.events[index][
-                                                "horaFinal"],
-                                        _calendarController.events[index]["id"],
-                                        _calendarController.events[index]["materia"]["grado"]["idGrado"]);
+                                        _calendarController.filteredEvents[index]
+                                                ["asignacionPeriodoProgramaJornada"]
+                                                ["idJornada"]
+                                            .toString(),
+                                        _calendarController.filteredEvents[index]
+                                                ["materia"]["idMateria"]
+                                            .toString(),
+                                        _calendarController.filteredEvents[index]
+                                                ["asignacionPeriodoProgramaJornada"]
+                                                ["asignacion_periodo_programa"]
+                                                ["idPrograma"]
+                                            .toString(),
+                                        _calendarController.filteredEvents[index]
+                                            ["horaInicial"],
+                                        _calendarController.filteredEvents[index]
+                                            ["horaFinal"],
+                                        _calendarController.filteredEvents[index]["id"],
+                                        _calendarController.filteredEvents[index]
+                                                ["materia"]["grado"]["idGrado"]
+                                            .toString());
                                     _subjectsTeacherController.loadSubjects();
                                     Get.toNamed('/subject_teacher');
                                   },
-                                  onTapCalendar: () {
-                                    Get.toNamed('/activities_teacher');
-                                  },
+                                  // onTapCalendar: () {
+                                    // Get.toNamed('/activities_teacher');
+                                  // },
                                 );
                               }),
                     ),
@@ -155,10 +160,9 @@ class SubjectsTeacherScreen extends StatelessWidget {
 
 Color getRandomColor() {
   Random random = Random();
-  return Color.fromARGB(
-    255,
-    random.nextInt(256),
-    random.nextInt(256),
-    random.nextInt(256),
-  );
+  int r = 180 + random.nextInt(76);
+  int g = 180 + random.nextInt(76);
+  int b = 180 + random.nextInt(76);
+  return Color.fromARGB(255, r, g, b);
 }
+

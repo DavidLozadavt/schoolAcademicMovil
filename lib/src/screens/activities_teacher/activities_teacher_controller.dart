@@ -53,6 +53,7 @@ class ActivitiesTeacherController extends GetxController {
         tituloActividad.value,
         descripcionActividad.value,
         archivo.value,
+       
       );
       Get.snackbar('Éxito', 'Actividad creada correctamente',
           snackPosition: SnackPosition.TOP);
@@ -86,8 +87,8 @@ class ActivitiesTeacherController extends GetxController {
       final lowerCaseQuery = query.toLowerCase();
       filteredActivitiesAssigned.value = assignedActivities.where((activity) {
         final descripcion =
-            activity.actividad!.descripcionActividad!.toLowerCase();
-        final title = activity.actividad!.tituloActividad?.toLowerCase();
+            activity.actividad.descripcionActividad.toLowerCase();
+       // final title = activity.actividad!.tituloActividad.toLowerCase();
         final tipo = activity.esGrupal ? "grupal" : "individual";
         final grupo = activity.grupo?.nombre?.toLowerCase() ?? "";
 
@@ -105,7 +106,7 @@ class ActivitiesTeacherController extends GetxController {
           .fetchActivitiesRegistrations(activityId, groupId: idGrupo);
     } catch (e) {
       Get.snackbar("Error", "No se pudieron obtener las actividades: $e");
-      print(e);
+      //print(e);
     } finally {
       isLoading(false);
     }

@@ -30,7 +30,7 @@ class SubjectProvider extends GetConnect {
     };
 
     String jsonData = jsonEncode(data);
-    ('a12346 $jsonData');
+   
     Response response = await get(
       '$getStudentByIdMateriaUrl$jsonData',
       headers: {
@@ -38,13 +38,13 @@ class SubjectProvider extends GetConnect {
         'accept': 'application/json',
       },
     );
-    ('20000000000000000 ${response.body}');
+    print('20000000000000000 ${response.body}');
     if (response.statusCode == 200) {
       if (response.body is List) {
-        // Si la respuesta es una lista
+       
         subject.assignAll((response.body as List).cast<Map<String, dynamic>>());
       } else if (response.body is Map) {
-        // Si la respuesta es un solo objeto
+        
         subject.assignAll([response.body as Map<String, dynamic>]);
       } else {
         throw Failure('El formato de la respuesta no es compatible');

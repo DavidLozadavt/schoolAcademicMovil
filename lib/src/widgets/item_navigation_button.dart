@@ -24,7 +24,7 @@ class ItemNavigationButton extends StatelessWidget {
           children: [
             ImageIcon(
               AssetImage(fileIcon),
-              size: 30,
+              size: 25,
               color: isActive ? Colors.black87 : Colors.black26,
             ),
             if (messageCount > 0)
@@ -44,7 +44,7 @@ class ItemNavigationButton extends StatelessWidget {
           title,
           style: TextStyle(
             color: isActive ? Colors.black87 : Colors.black26,
-            fontSize: isActive ? 13 : 12,
+            fontSize: isActive ? 12 : 11,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),

@@ -3,16 +3,21 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import 'package:vtschool/src/config/theme/app_theme.dart';
 import 'package:vtschool/src/providers/push_notification_provider.dart';
 import 'package:vtschool/src/screens/activities_teacher/activities_teacher_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/assigned_activities_teacher_screnn.dart';
 import 'package:vtschool/src/screens/activities_teacher/create_new_activity_screen.dart';
 import 'package:vtschool/src/screens/activities_teacher/rate_questionnaire_screen.dart';
+import 'package:vtschool/src/screens/activity_student/activities_student_screen.dart';
+import 'package:vtschool/src/screens/assigned_courses_teacher%20/statistics_by_course_screen.dart';
+import 'package:vtschool/src/screens/assigned_courses_teacher%20/statistics_by_subjects.dart';
 import 'package:vtschool/src/screens/chat/chat_screen.dart';
+import 'package:vtschool/src/screens/groups/groups_screen.dart';
 import 'package:vtschool/src/screens/home/UpdateData/update_data_user_screen.dart';
 import 'package:vtschool/src/screens/home/home_admin/home_admin.dart';
+import 'package:vtschool/src/screens/home/home_guardian/children_screen.dart';
+import 'package:vtschool/src/screens/home/home_guardian/home_guardian.dart';
 import 'package:vtschool/src/screens/home/home_student/home_student.dart';
 import 'package:vtschool/src/screens/notification/notification_screen.dart';
 import 'package:vtschool/src/screens/payments/form_payments_screen.dart';
@@ -23,11 +28,17 @@ import 'package:vtschool/src/screens/payments/registration_payment/physical_regi
 import 'package:vtschool/src/screens/payments/pse_screen.dart';
 import 'package:vtschool/src/screens/posts/posts_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_by_otp_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_otp_screen.dart';
+import 'package:vtschool/src/screens/recover_password/recover_password_screen.dart';
 import 'package:vtschool/src/screens/starting/starting_page.dart';
 import 'package:vtschool/src/screens/auth/login_screen.dart';
 import 'package:vtschool/src/screens/home/home_teacher/home_teacher.dart';
 import 'package:vtschool/src/screens/starting/starting_screen.dart';
 import 'package:vtschool/src/screens/subjects_teacher/subject_teacher_screens.dart';
+import 'package:vtschool/src/screens/support/support_screen.dart';
+import 'package:vtschool/src/screens/update_password/update_password_screen.dart';
+import 'package:vtschool/src/screens/update_profile/update_profile_screen.dart';
 import 'package:vtschool/src/utils/firebase_options.dart';
 
 import 'src/screens/payments/tuition_payments/tuition_payments _transaction_screen.dart';
@@ -71,35 +82,63 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/starting_init_screen',
       getPages: [
         GetPage(
-            name: '/starting_init_screen', page: () => StartingInitScreen()),
+            name: '/starting_init_screen',
+            page: () => const StartingInitScreen()),
         GetPage(name: '/starting', page: () => const StartingScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home_student', page: () => HomeStudent()),
         GetPage(name: '/home_teacher', page: () => HomeTeacher()),
         GetPage(name: '/home_admin', page: () => HomeAdmin()),
+        GetPage(name: '/home_guardian', page: () => HomeGuardian()),
         GetPage(name: '/profile_view', page: () => ProfileUserScreen()),
         GetPage(name: '/notification', page: () => NotificationScreen()),
         GetPage(name: '/chat', page: () => Chat()),
         GetPage(name: '/payments', page: () => PaymentsScreen()),
-        GetPage(name: '/physical_registration_payment', page: () => PhysicalRegistrationPaymentScreen()),
-        GetPage(name: '/payment_transaction_registration', page: () => PaymentTransactionRegistrationScreen()),
-        GetPage(name: '/tuition_payments_transaction', page: () => TuitionPaymentsTransactionScreen()),
-        GetPage(name: '/physical_tuition_payments', page: () => PhysicalTuitionPaymentsScreen()),
+        GetPage(name: '/update_profile', page: () => UpdateProfileScreen()),
+        GetPage(
+            name: '/physical_registration_payment',
+            page: () => PhysicalRegistrationPaymentScreen()),
+        GetPage(
+            name: '/payment_transaction_registration',
+            page: () => PaymentTransactionRegistrationScreen()),
+        GetPage(
+            name: '/tuition_payments_transaction',
+            page: () => TuitionPaymentsTransactionScreen()),
+        GetPage(
+            name: '/physical_tuition_payments',
+            page: () => PhysicalTuitionPaymentsScreen()),
         GetPage(name: '/pse', page: () => PseScreen()),
-        GetPage(name: '/form_payments_transaction', page: () => FormPaymentsScreen()),
-        GetPage(name: '/subject_teacher', page: ()=> SubjectTeacherScreen()),
-        GetPage(name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
-        GetPage(name: '/new_activity_teacher', page: () => CreateNewActivityScreen()),
-        GetPage(name: '/assigned_activities', page: () => AssignedActivitiesTeacherScreen()),
-        GetPage(name: '/rate_activities', page: () => const RateQuestionnaireScreen()),
+        GetPage(
+            name: '/form_payments_transaction',
+            page: () => FormPaymentsScreen()),
+        GetPage(name: '/subject_teacher', page: () => SubjectTeacherScreen()),
+        GetPage(
+            name: '/activities_teacher', page: () => ActivitiesTeacherScreen()),
+        GetPage(
+            name: '/new_activity_teacher',
+            page: () => CreateNewActivityScreen()),
+        GetPage(
+            name: '/assigned_activities',
+            page: () => AssignedActivitiesTeacherScreen()),
+        GetPage(
+            name: '/rate_activities',
+            page: () => const RateQuestionnaireScreen()),
         GetPage(name: '/posts', page: () => PostsScreen()),
-        GetPage(name: '/complete_student_data', page: () => UpdateStudentDataPage()),
-
-
-
-           
-
-
+        GetPage(
+            name: '/complete_student_data',
+            page: () => UpdateStudentDataPage()),
+        GetPage(name: '/recover_password', page: () => RecoverPasswordScreen()),
+        GetPage(name: '/otp_screen', page: () => RecoverPasswordOtpScreen()),
+        GetPage(
+            name: '/reset_password_by_otp',
+            page: () => RecoverPasswordByOtpScreen()),
+        GetPage(name: '/update_password', page: () => UpdatePasswordScreen()),
+        GetPage(name: '/guardian_children', page: () => ChildrenScreen()),
+        GetPage(name: '/support', page: () => SupportScreen()),
+        GetPage(name: '/groups', page: () => GroupsScreen()),
+        GetPage(name: '/activities_student', page: () => ActivitiesStudentScreen()),
+        GetPage(name: '/statistics_by_course', page: () => StatisticsByCourseScreen()),
+        GetPage(name: '/statistics_by_subject', page: () => StatisticsBySubjects()),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-DropdownMenuItem<int> customDropdownMenuItem(
+DropdownMenuItem customDropdownMenuItem(
   BuildContext context, String text,
       bool enabled, int value, Function onTap,
   {
@@ -8,8 +8,8 @@ DropdownMenuItem<int> customDropdownMenuItem(
   Color colorText = Colors.black54,
   Color colorBorder = Colors.black26,
 }) {
-  return DropdownMenuItem<int>(
-    onTap: () => onTap(),
+  return DropdownMenuItem(
+    onTap: (() => onTap()),
     alignment: Alignment.center,
     enabled: enabled,
     value: value,

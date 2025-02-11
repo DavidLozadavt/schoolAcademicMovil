@@ -6,7 +6,7 @@ class CardSubjectTeacher extends StatelessWidget {
   final String program;
   final Color color;
   final VoidCallback onTap;
-  final VoidCallback onTapCalendar;
+ // final VoidCallback onTapCalendar;
 
   const CardSubjectTeacher({
     required this.nameSubject,
@@ -14,7 +14,7 @@ class CardSubjectTeacher extends StatelessWidget {
     required this.program,
     required this.color,
     required this.onTap,
-    required this.onTapCalendar,
+    //required this.onTapCalendar,
     super.key,
   });
 
@@ -85,12 +85,12 @@ class CardSubjectTeacher extends StatelessWidget {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: onTapCalendar,
-                      child: const Icon(
-                        Icons.calendar_month_outlined,
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: onTapCalendar,
+                    //   child: const Icon(
+                    //     Icons.calendar_month_outlined,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

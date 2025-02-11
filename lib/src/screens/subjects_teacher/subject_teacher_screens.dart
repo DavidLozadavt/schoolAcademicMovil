@@ -49,55 +49,67 @@ class SubjectTeacherScreen extends StatelessWidget {
                       padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                     ),
                     items: [
-                      customDropdownMenuItem(
-                          context,
-                          'Gestión de actividades',
-                          true,
-                          1,
-                          () async{
-                            _activitiesTeacherController.getActivitiesById('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]['id']}');
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/activities_teacher');
-                            });
-                          } 
-                        ),
-
-                         customDropdownMenuItem(
-                          context,
-                          'Actividades asignadas',
-                          true,
-                          2,
-                          () async{
-                            _activitiesTeacherController.getActivitiesByTeacher('${_subjectsTeacherController.subject[0]['horario'][0]["materia"]
-                                 ["materia"]['id']}');
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/assigned_activities');
-                            });
-                          } 
-                        ),
+                      if (_subjectsTeacherController.rolUser == 'DOCENTE') ...[
                         customDropdownMenuItem(
-                          context,
-                          'Salir',
-                          true,
-                          3,
-                          () {
-                            _subjectsTeacherController.subject.value = [];
-                             Get.back();
-                          },
-                         ),
-                          customDropdownMenuItem(
-                          context,
-                          'Maquetado',
-                          true,
-                          4,
-                          () async{
-                        
-                            await Future.delayed(const Duration(seconds: 1), (){
-                              Get.toNamed('/rate_activities');
-                            });
-                          } 
-                        ),
+                            context, 'Gestión de actividades', true, 1,
+                            () async {
+                          _activitiesTeacherController.getActivitiesById(
+                              '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/activities_teacher');
+                          });
+                        }),
+                        customDropdownMenuItem(
+                            context, 'Actividades asignadas', true, 2,
+                            () async {
+                          _activitiesTeacherController.getActivitiesByTeacher(
+                              '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/assigned_activities');
+                          });
+                        }),
+                        customDropdownMenuItem(context, 'Grupos', true, 2,
+                            () async {
+                          _activitiesTeacherController.getActivitiesByTeacher(
+                              '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/groups');
+                          });
+                        }),
+                        customDropdownMenuItem(context, 'Maquetado', true, 4,
+                            () async {
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/rate_activities');
+                          });
+                        }),
+                      ],
+                      if (_subjectsTeacherController.rolUser == 'ESTUDIANTE' ||
+                          _subjectsTeacherController.rolUser == 'APRENDIZ') ...[
+                        customDropdownMenuItem(context, 'Actividades', true, 4,
+                            () async {
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/activities_student');
+                          });
+                        }),
+                        customDropdownMenuItem(context, 'Grupos', true, 2,
+                            () async {
+                          _activitiesTeacherController.getActivitiesByTeacher(
+                              '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]['id']}');
+                          await Future.delayed(const Duration(seconds: 1), () {
+                            Get.toNamed('/groups');
+                          });
+                        }),
+                      ],
+                      customDropdownMenuItem(
+                        context,
+                        'Salir',
+                        true,
+                        3,
+                        () {
+                          _subjectsTeacherController.subject.value = [];
+                          Get.back();
+                        },
+                      ),
                     ],
                     onChanged: (value) {},
                   ),
@@ -157,82 +169,29 @@ class SubjectTeacherScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Column(children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.person,
-                            color: Color(0xFFB8BCBD),
-                            size: 40,
-                          ),
-                          Text(
-                            '${_subjectsTeacherController.subject[0]['matriculas'].length}',
-                            style: const TextStyle(
-                                fontSize: 22, color: Color(0xFFB8BCBD)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Estudiantes',
-                        style:
-                            TextStyle(fontSize: 20, color: Color(0xFFB8BCBD)),
-                      ),
-                    ]),
-                  ],
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Obx(() {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Column(children: [
+                  Row(
                     children: [
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.blueAccent,
-                                  width: 8,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CircularProgressIndicator(
-                                value: _subjectsTeacherController.progress,
-                                strokeWidth: 6,
-                                backgroundColor: Colors.grey[300],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    Colors.blue),
-                              ),
-                            ),
-                          ],
-                        ),
+                      const Icon(
+                        Icons.person,
+                        color: Color(0xFFB8BCBD),
+                        size: 40,
                       ),
-                      Center(
-                        child: Text(
-                          '${_subjectsTeacherController.timeElapsed.value}s',
-                          style: const TextStyle(fontSize: 24),
-                        ),
+                      Text(
+                        '${_subjectsTeacherController.subject[0]['matriculas'].length}',
+                        style: const TextStyle(
+                            fontSize: 22, color: Color(0xFFB8BCBD)),
                       ),
                     ],
-                  );
-                }),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Estudiantes',
+                    style: TextStyle(fontSize: 20, color: Color(0xFFB8BCBD)),
+                  ),
+                ]),
               ],
             ),
-            // TextButton(
-            //   child: const Text("Start"),
-            //   onPressed: () => _subjectsTeacherController.startTimer(),
-            // ),
             Column(
               children: [
                 Padding(
@@ -264,12 +223,15 @@ class SubjectTeacherScreen extends StatelessWidget {
                                   style: const TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
-                                Text(
-                                  _subjectsTeacherController.subject[0]
-                                          ['horario'][0]["materia"]["materia"]
-                                      ["nombreMateria"],
-                                  style: const TextStyle(
-                                      fontSize: 18, color: Colors.white),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    _subjectsTeacherController.subject[0]
+                                            ['horario'][0]["materia"]["materia"]
+                                        ["nombreMateria"],
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
@@ -281,13 +243,30 @@ class SubjectTeacherScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 12.0),
-                          const Column(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.library_books_rounded,
-                                color: Colors.white,
-                              ),
+                              if (_subjectsTeacherController.rolUser ==
+                                  'ESTUDIANTE' || _subjectsTeacherController.rolUser ==
+                                  'APRENDIZ')
+                                IconButton(
+                                  onPressed: () async {
+                                   // print();
+                                     _chatController.onConnectPressed(
+                                         '${_subjectsTeacherController.subject[0]['horario'][0]["contrato"]["persona"]['usuario']['idPersona']}');
+                                     _chatController.getMessage(
+                                         '${_subjectsTeacherController.subject[0]['horario'][0]["contrato"]["persona"]['usuario']['idPersona']}');
+                                    _chatController.setSelectedUser(
+                                         _subjectsTeacherController.subject[0]['horario'][0]["contrato"]["persona"]);
+                                    Get.toNamed('/chat');
+                                  },
+                                  icon: const Icon(Icons.message),
+                                  color: Colors.white,
+                                ),
+                              // const Icon(
+                              //   Icons.library_books_rounded,
+                              //   color: Colors.white,
+                              // ),
                             ],
                           ),
                         ],
@@ -320,6 +299,7 @@ class SubjectTeacherScreen extends StatelessWidget {
                           final person = student['matricula']['persona'];
                           final users = _subjectsTeacherController.subject[0]
                               ['matriculas'][index];
+                          print(users);
                           Color getRandomColor() {
                             if (student["notaFinal"] >= 4.6) {
                               return const Color(0xFF749E60);
@@ -346,98 +326,77 @@ class SubjectTeacherScreen extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 2.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                  // Avatar de la persona
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(person["rutaFoto"]),
+                                    radius: 25,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 236, 199, 199),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        CircleAvatar(
-                                          backgroundImage:
-                                              NetworkImage(person["rutaFoto"]),
-                                          radius: 25,
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 236, 199, 199),
-                                        ),
-                                        Flexible(
-                                          child: Container(
-                                            constraints: const BoxConstraints(
-                                                maxWidth: 200),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${person["nombre1"]} ${person["apellido1"]}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '${_subjectsTeacherController.subject[0]['horario'][0]["materia"]["materia"]["nombreMateria"]}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Padre: ${student['acudiente']?['nombre1'] ?? 'Sin'} ${student['acudiente']?['apellido1'] ?? 'acudiente'}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '${student["notaFinal"]}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 30,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            '${person["nombre1"]} ${person["apellido1"]}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
-                                        Column(
-                                          children: [
-                                            Obx(() => Checkbox(
-                                                  value:
-                                                      _subjectsTeacherController
-                                                          .checkboxes[index],
-                                                  onChanged: (bool? value) {
-                                                    _subjectsTeacherController
-                                                        .toggleCheckbox(
-                                                            index, value!);
-                                                  },
-                                                  activeColor: Colors.white,
-                                                  checkColor: Colors.black,
-                                                )),
-                                            IconButton(
-                                              onPressed: () async {
-                                                _chatController.onConnectPressed(
-                                                    '${student['matricula']!['idPersona']}');
-                                                _chatController.getMessage(
-                                                    '${student['matricula']!['idPersona']}');
-                                                _chatController
-                                                    .setSelectedUser(users);
-                                                Get.toNamed('/chat');
-                                              },
-                                              icon: const Icon(Icons.message),
-                                              color: Colors.white,
-                                            ),
-                                          ],
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          '${student["notaFinal"]}',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ],
                                     ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      if (_subjectsTeacherController.rolUser ==
+                                          'DOCENTE')
+                                        Obx(() => Checkbox(
+                                              value: _subjectsTeacherController
+                                                  .checkboxes[index],
+                                              onChanged: (bool? value) {
+                                                _subjectsTeacherController
+                                                    .toggleCheckbox(
+                                                        index, value!);
+                                              },
+                                              activeColor: Colors.white,
+                                              checkColor: Colors.black,
+                                            )),
+                                      IconButton(
+                                        onPressed: () async {
+                                          _chatController.onConnectPressed(
+                                              '${student['matricula']!['idPersona']}');
+                                          _chatController.getMessage(
+                                              '${student['matricula']!['idPersona']}');
+                                          _chatController.setSelectedUser(
+                                              users['matricula']['persona']);
+                                          Get.toNamed('/chat');
+                                        },
+                                        icon: const Icon(Icons.message),
+                                        color: Colors.white,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

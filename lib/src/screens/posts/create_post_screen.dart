@@ -16,7 +16,7 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
   final descriptionController = TextEditingController();
   File? coverImage;
   List<File> secondaryImages = [];
-  final bool _isLoading = false;
+  //final bool _isLoading = false;
 
   void _mostrarDialogoCargando(String mensaje) {
     showDialog(
@@ -46,15 +46,19 @@ class _CrearPublicacionScreenState extends State<CrearPublicacionScreen> {
         descriptionController.text,
       );
 
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
+       Get.back();
       _mostrarDialogoCargando('Publicación creada');
 
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
+        Get.back();
+        Get.back();
+        //Navigator.of(context).pop();
+        //Navigator.of(context).pop();
       });
     } catch (e) {
-      Navigator.of(context).pop();
+     // Navigator.of(context).pop();
+       Get.back();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error al crear la publicación')),
       );

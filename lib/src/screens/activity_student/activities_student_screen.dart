@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:file_picker/file_picker.dart';
 // ignore: depend_on_referenced_packages
@@ -26,18 +27,44 @@ class ActivitiesStudentScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(top: 40, left: 20),
-            height: 50,
-            child: const Text(
-             'Mis actividades',
-             style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-               color: Colors.black,
-             ),
-                            ),
+           Container(
+            margin: const EdgeInsets.only(top: 40),
+            height: 80,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Get.back();
+                    
+                  },
+                ),
+                const Text(
+                  'MIS ACTIVIDADES',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
+          // Container(
+          //   margin: const EdgeInsets.only(top: 40, left: 20),
+          //   height: 50,
+          //   child: const Text(
+          //     'MIS ACTIVIDADES',
+          //     style: TextStyle(
+          //       fontSize: 18,
+          //       fontWeight: FontWeight.bold,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 15,
           ),
@@ -51,7 +78,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color.fromARGB(255, 238, 238, 238),
-                hintText: "Buscar",
+                hintText: "BUSCAR",
                 hintStyle: const TextStyle(color: Colors.black54),
                 prefixIcon: Icon(
                   Icons.search,
@@ -82,76 +109,79 @@ class ActivitiesStudentScreen extends StatelessWidget {
               ),
             ),
           ),
-             const SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Obx(
-            () => _taskStudentController.isLoading.value
-                ? const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : 
-                 Expanded(
-                     child: RefreshIndicator(
-                     onRefresh: _taskStudentController.refreshItems, 
-                      child:
-                          _taskStudentController.filteredActivitiesStudent.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                    'No tienes actividades',
+          Obx(() => _taskStudentController.isLoading.value
+              ? const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: _taskStudentController.refreshItems,
+                    child:
+                        _taskStudentController.filteredActivitiesStudent.isEmpty
+                            ? SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'NO TIENES ACTIVIDADES',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black45,
                                     ),
                                   ),
-                                )
-                              : ListView.builder(
-                                  itemCount: _taskStudentController
-                                      .filteredActivitiesStudent.length,
-                                  itemBuilder: ((context, index) {
-                                    // String idActividad = _taskStudentController
-                                    //     .filteredActivitiesStudent[index]
-                                    //         ['idActividad']
-                                    //     .toString();
-                                    String initialDate = _taskStudentController
-                                            .filteredActivitiesStudent[index]
-                                        ['fechaInicial'];
-                                    String finalDate = _taskStudentController
-                                            .filteredActivitiesStudent[index]
-                                        ['fechaFinal'];
-                                    return Center(
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          if (_taskStudentController
-                                                              .filteredActivitiesStudent[
-                                                          index]['actividad']
-                                                      ['tipoActividad']
-                                                  ['tipoActividad'] ==
-                                              'Normal') {
-                                           
-                                            showNormalActivity(
-                                                context,
-                                                _taskStudentController
-                                                        .filteredActivitiesStudent[
-                                                    index]);
-                  
-                                            print(
-                                                'Prueba data: ${_taskStudentController.activitiesById}');
-                                          } else {
-                                            // await _taskStudentController
-                                            //     .getActivityQuestionnaire(
-                                            //         idActividad);
-                                            showQuestionnaireActivity(
-                                                context,
-                                                _taskStudentController
-                                                        .filteredActivitiesStudent[
-                                                    index]);
-                                          }
-                                        },
-                                        child: CardTaskStudent(
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: _taskStudentController
+                                    .filteredActivitiesStudent.length,
+                                itemBuilder: ((context, index) {
+                                  // String idActividad = _taskStudentController
+                                  //     .filteredActivitiesStudent[index]
+                                  //         ['idActividad']
+                                  //     .toString();
+                                  String initialDate = _taskStudentController
+                                          .filteredActivitiesStudent[index]
+                                      ['fechaInicial'];
+                                  String finalDate = _taskStudentController
+                                          .filteredActivitiesStudent[index]
+                                      ['fechaFinal'];
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        if (_taskStudentController
+                                                            .filteredActivitiesStudent[
+                                                        index]['actividad']
+                                                    ['tipoActividad']
+                                                ['tipoActividad'] ==
+                                            'Normal') {
+                                          showNormalActivity(
+                                              context,
+                                              _taskStudentController
+                                                      .filteredActivitiesStudent[
+                                                  index]);
+
+                                          // print(
+                                          //     'Prueba data: ${_taskStudentController.activitiesById}');
+                                        } else {
+                                          // await _taskStudentController
+                                          //     .getActivityQuestionnaire(
+                                          //         idActividad);
+                                          showQuestionnaireActivity(
+                                              context,
+                                              _taskStudentController
+                                                      .filteredActivitiesStudent[
+                                                  index]);
+                                        }
+                                      },
+                                      child: CardTaskStudent(
                                           idActivity:
                                               '${_taskStudentController.filteredActivitiesStudent[index]['idActividad']}',
                                           affair:
@@ -164,15 +194,14 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                           finalDate: finalDate,
                                           subject:
                                               '${_taskStudentController.filteredActivitiesStudent[index]['actividad']['materia']['nombreMateria']}',
-                                          status: '${_taskStudentController.filteredActivitiesStudent[index]['estado']['estado']}'
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                ),
-                    ),
-                ),
-          ),
+                                          status:
+                                              '${_taskStudentController.filteredActivitiesStudent[index]['estado']['estado']}'),
+                                    ),
+                                  );
+                                }),
+                              ),
+                  ),
+                )),
         ],
       ),
     );
@@ -205,9 +234,26 @@ class ActivitiesStudentScreen extends StatelessWidget {
   }
 
   Widget showNormalActivityModal(BuildContext context, activityData) {
+  String fechaInicialString = activityData['fechaInicial'];
+  String fechaFinalString = activityData['fechaFinal'];
+
+  DateTime fechaInicial = DateTime.parse(fechaInicialString);
+  DateTime fechaFinal = DateTime.parse(fechaFinalString);
+  DateTime fechaActual = DateTime.now();
+
+  final DateFormat formatoFechaHora = DateFormat('dd/MM/yyyy HH:mm');
+String message;
+  if (fechaActual.isAfter(fechaFinal)) {
+    message = '1';
+  } else if (fechaActual.isBefore(fechaInicial)) {
+    message = '2';
+  } else {
+    message = '3';
+  }
     Color themeColor = Theme.of(context).dialogBackgroundColor;
-    print(activityData);
-    if (activityData['estado']['estado'] == 'ACTIVO') {
+    bool isPdf = activityData['actividad']['DocUrl'] != null &&
+        activityData['actividad']['DocUrl'].endsWith('.pdf');
+    if (activityData['estado']['estado'] == 'ACTIVO' && message == '3') {
       return Container(
         height: 700,
         decoration: BoxDecoration(
@@ -225,9 +271,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 const ContSup(),
                 const SizedBox(height: 20),
                 const Text(
-                  'Actividad',
+                  'ACTIVIDAD',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -240,21 +286,30 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     1: FlexColumnWidth(3),
                   },
                   children: [
-                    _buildTableRow('Título:',
-                        '${activityData['actividad']['tituloActividad']}', 16, 12),
-                    _buildTableRow('Descripción:',
-                        '${activityData['actividad']['descripcionActividad']}', 16, 12),
-                    _buildTableRow('Asignatura:',
-                        '${activityData['actividad']['materia']['nombreMateria']}', 16, 12),
+                    _buildTableRow(
+                        'Título:',
+                        '${activityData['actividad']['tituloActividad']}',
+                        16,
+                        12),
+                    _buildTableRow(
+                        'Descripción:',
+                        '${activityData['actividad']['descripcionActividad']}',
+                        16,
+                        12),
+                    _buildTableRow(
+                        'Asignatura:',
+                        '${activityData['actividad']['materia']['nombreMateria']}',
+                        16,
+                        12),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Documento',
+                      'DOCUMENTO',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -270,27 +325,55 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  height: 410,
-                  margin: const EdgeInsets.only(right: 8.0, left: 8.0),
-                  padding: const EdgeInsets.all(7.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: SfPdfViewer.network(
-                    enableTextSelection: true,
-                    enableDoubleTapZooming: true,
-                    enableDocumentLinkAnnotation: true,
-                    enableHyperlinkNavigation: true,
-                    canShowScrollStatus: true,
-                    '${activityData['actividad']['DocUrl']}',
-                  ),
-                ),
+                isPdf
+                    ? Container(
+                        height: 410,
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.all(7.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.white),
+                        ),
+                        child: SfPdfViewer.network(
+                          enableTextSelection: true,
+                          enableDoubleTapZooming: true,
+                          enableDocumentLinkAnnotation: true,
+                          enableHyperlinkNavigation: true,
+                          canShowScrollStatus: true,
+                          '${activityData['actividad']['DocUrl']}',
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.black,
+                                child: InteractiveViewer(
+                                  maxScale: 5.0,
+                                  minScale: 1.0,
+                                  child: Image.network(
+                                    activityData['actividad']['DocUrl'],
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Image.network(
+                            activityData['actividad']['DocUrl'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                 const SizedBox(height: 15),
                 const Text(
-                  'Responder actividad',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  'RESPONDER ACTIVIDAD',
+                  style: TextStyle(color: Colors.black, fontSize: 14),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -307,7 +390,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           _taskStudentController.setFilePath(file);
                         }
                       },
-                      child: const Text('Seleccionar archivo'),
+                      child: const Text('SELECCIONAR ARCHIVO'),
                     ),
                     const SizedBox(width: 5),
                     Obx(() {
@@ -324,7 +407,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                       } else {
                         return const ElevatedButton(
                           onPressed: null,
-                          child: Text('Archivo'),
+                          child: Text('ARCHIVO'),
                         );
                       }
                     }),
@@ -340,8 +423,8 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey[200],
-                      labelText: "Respuesta escrita",
-                      hintText: "Respuesta escrita",
+                      labelText: "RESPUESTA ESCRITA",
+                      hintText: "RESPUESTA ESCRITA",
                       hintStyle: const TextStyle(color: Colors.black),
                       labelStyle: const TextStyle(color: Colors.black),
                       prefixIcon: const Icon(
@@ -375,12 +458,12 @@ class ActivitiesStudentScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     disabledBackgroundColor: Colors.blue,
                   ),
-                  onPressed: () async{
+                  onPressed: () async {
                     String idActividad = activityData['id'].toString();
                     await _taskStudentController.replyActivity(idActividad);
                     _taskStudentController.getActivitiesStudent();
                   },
-                  child: const Text('Enviar evidencia'),
+                  child: const Text('ENVIAR EVIDENCIA'),
                 ),
               ],
             ),
@@ -388,18 +471,24 @@ class ActivitiesStudentScreen extends StatelessWidget {
         ),
       );
     } else if (activityData['estado']['estado'] == 'ACEPTADO') {
-      return showModalPastActivity(context, 'Ya respondio su actividad');
+      return showModalPastActivity(context,
+          title:
+              'Ya respondio su actividad, debe esperar que su profesor la califique');
     } else if (activityData['estado']['estado'] == 'CALIFICADO') {
-      return showModalPastActivity(
-          context, 'Su profesor ya califico su actividad');
-    } else {
-      //validar con la fecha
-      return showModalPastActivity(
-          context, 'Se vencio el plazo de su actividad');
+      return showModalPastActivity(context,
+          qualification: '${activityData['calificacionNumerica']}',
+          commentTeacher: '${activityData['ComentarioDocente']}');
+    } else if(message == '2') {
+      return showModalPastActivity(context,
+          title: 'Aún no puedes realizar esta actividad, empieza el ${formatoFechaHora.format(fechaInicial)}.');
+    }else{
+      return showModalPastActivity(context,
+          title: 'Su actividad vencio el ${formatoFechaHora.format(fechaFinal)}.');
     }
   }
 
   Widget showQuestionnaireActivityModal(BuildContext context, activityData) {
+    print(activityData);
     String idQualification = activityData['id'].toString();
     Color themeColor = Theme.of(context).dialogBackgroundColor;
     if (activityData['estado']['estado'] == 'ACTIVO') {
@@ -420,7 +509,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                 const ContSup(),
                 const SizedBox(height: 20),
                 const Text(
-                  'Cuestionario',
+                  'CUESTIONARIO',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -436,19 +525,19 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   },
                   children: [
                     _buildTableRow(
-                        'Título:',
+                        'TÍTULO:',
                         '${activityData['actividad']['tituloActividad']}',
-                        16,
+                        14,
                         12),
                     _buildTableRow(
-                        'Descripción:',
+                        'DESCRIPCIÓN:',
                         '${activityData['actividad']['descripcionActividad']}',
-                        16,
+                        14,
                         12),
                     _buildTableRow(
-                        'Asignatura:',
+                        'ASIGNATURA:',
                         '${activityData['actividad']['materia']['nombreMateria']}',
-                        16,
+                        14,
                         12),
                   ],
                 ),
@@ -461,7 +550,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           activityData['actividad']['preguntas'][index];
                       final selectedValue = (-1).obs;
                       List<dynamic> options = question['respuestas'];
-                      if (question['idTipoPregunta'] == "3") {
+                      if (question['idTipoPregunta'] == 3) {
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
@@ -484,9 +573,10 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 5),
-                              if(question['DocUrl'] != null)
-                              Padding(padding: const EdgeInsets.all(10.0),
-                              child: Image.network(question['DocUrl'])),
+                              if (question['DocUrl'] != null)
+                                Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.network(question['DocUrl'])),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: List.generate(
@@ -520,9 +610,10 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                                 ['descripcionRespuesta'];
                                         _taskStudentController.saveAnswers(
                                           idQuestion: selectedQuestionId,
-                                          idAnswer: selectedResponseId.toString(),
-                                          description: selectedResponseDescription
-                                              .toString(),
+                                          idAnswer: selectedResponseId,
+                                          description:
+                                              selectedResponseDescription
+                                                  .toString(),
                                           idTypeQuestion: 3,
                                         );
                                         // (_taskStudentController
@@ -542,7 +633,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                               color: Colors.white24,
+                            color: Colors.white24,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: const Color.fromARGB(255, 0, 0, 0),
@@ -559,13 +650,14 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                   color: Colors.black,
                                 ),
                               ),
-                              if(question['DocUrl'] != null)
-                              Padding(padding: const EdgeInsets.all(10.0),
-                              child: Image.network(question['DocUrl'])),
+                              if (question['DocUrl'] != null)
+                                Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.network(question['DocUrl'])),
                               const SizedBox(height: 5),
                               TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: 'Escribe tu respuesta aquí',
+                                  hintText: 'ESCRIBE TU RESPUESTA AQUÍ',
                                   hintStyle:
                                       const TextStyle(color: Colors.black54),
                                   border: OutlineInputBorder(
@@ -590,7 +682,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
                                 maxLines: null,
                                 onChanged: (value) {
                                   _taskStudentController.saveAnswers(
-                                      valueInput: value, idQuestion: idQuestion, idTypeQuestion: 2);
+                                      valueInput: value,
+                                      idQuestion: idQuestion,
+                                      idTypeQuestion: 2);
                                 },
                               ),
                             ],
@@ -607,61 +701,21 @@ class ActivitiesStudentScreen extends StatelessWidget {
                   ),
                   onPressed: () async {
                     if (_taskStudentController.selectedAnswer.isNotEmpty) {
-                        await _taskStudentController.replyQuestionnaire(
-                            idQualification,
-                           );
-                      } else {
-                        Get.defaultDialog(
-                          title: '¡Información!',
-                          middleText:
-                              'Debes responder por al menos una pregunta',
-                          textConfirm: 'OK',
-                          onConfirm: () => Get.back(),
-                        );
-                    }
-                    /*List<int> idTypeQuestion = [];
-                    var questions = activityData['actividad']['preguntas'];
-                    for (var question in questions) {
-                      idTypeQuestion.add(question["idTipoPregunta"]);
-                    }
-                    if (idTypeQuestion.contains(1) ||
-                        idTypeQuestion.contains(3) &&
-                            idTypeQuestion.contains(4)) {
-                      if (_taskStudentController
-                              .valuesInputQuestionnaire.isNotEmpty ||
-                          _taskStudentController.selectedAnswer.isNotEmpty) {
-                        await _taskStudentController.replyQuestionnaire1(
-                            idQualification, showModalInfoAnswer(context));
-                        await _taskStudentController
-                            .replyQuestionnaire(idQualification);
-                      } else {
-                        Get.defaultDialog(
-                          title: '¡Información!',
-                          middleText:
-                              'Debes responder por al menos una pregunta',
-                          textConfirm: 'OK',
-                          onConfirm: () => Get.back(),
-                        );
-                      }
+                      await _taskStudentController.replyQuestionnaire(
+                        idQualification,
+                      );
                     } else {
-                      if (_taskStudentController.selectedAnswer.isNotEmpty) {
-                        await _taskStudentController.replyQuestionnaire(
-                            idQualification,
-                            alert: showModalQualification(context));
-                      } else {
-                        Get.defaultDialog(
-                          title: '¡Información!',
-                          middleText:
-                              'Debes responder por al menos una pregunta',
-                          textConfirm: 'OK',
-                          onConfirm: () => Get.back(),
-                        );
-                      }
-                    }**/
-                    _taskStudentController.reiniciarRespuestas();
+                      Get.defaultDialog(
+                        title: '¡INFORMACIÓN!',
+                        middleText: 'DEBES RESPONDER AL MENOS UNA PREGUNTA',
+                        textConfirm: 'OK',
+                        onConfirm: () => Get.back(),
+                      );
+                    }
+                    _taskStudentController.resetAnswers();
                     _taskStudentController.getActivitiesStudent();
                   },
-                  child: const Text('Enviar cuestionario'),
+                  child: const Text('ENVIAR CUESTIONRIO'),
                 ),
               ],
             ),
@@ -669,19 +723,22 @@ class ActivitiesStudentScreen extends StatelessWidget {
         ),
       );
     } else if (activityData['estado']['estado'] == 'PENDIENTE') {
-      return showModalPastActivity(context, 'El cuestionario ya no esta disponible');
+      return showModalPastActivity(context,
+          title: 'El cuestionario ya no esta disponible');
     } else if (activityData['estado']['estado'] == 'CALIFICADO') {
-      return showModalPastActivity(
-          context, 'Su profesor ya califico su cuestionario');
+      return showModalPastActivity(context,
+          title: 'Su profesor ya califico su cuestionario');
     } else {
       //validar con la fecha
-      return showModalPastActivity(
-          context, 'Se vencio el plazo de su cuestionario');
+      return showModalPastActivity(context,
+          title: 'SE VENCIO EL PLAZO DE SU CUESTIONARIO');
     }
   }
 
-  Widget showModalPastActivity(BuildContext context, String title) {
+  Widget showModalPastActivity(BuildContext context,
+      {String? title, String? qualification, String? commentTeacher}) {
     Color themeColor = Theme.of(context).dialogBackgroundColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       height: 400,
@@ -696,53 +753,73 @@ class ActivitiesStudentScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const ContSup(),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              'Información',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
             child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              '¡INFORMACIÓN!',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        textStyle: const TextStyle(fontSize: 12),
-                      ),
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: const Text(
-                        'Ok',
-                        style: TextStyle(color: Colors.blue),
-                      ),
+          const Divider(thickness: 1, color: Colors.grey),
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
-                  ],
+                textAlign: TextAlign.left,
+              ),
+            ),
+          if (qualification != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                'CALIFICACIÓN: $qualification',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          if (commentTeacher != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                'COMENTARIO DOCENTE: $commentTeacher',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          const Spacer(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              onPressed: () => Get.back(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: listColor[15],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+              ),
+              child: const Text(
+                'ACEPTAR',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
@@ -771,9 +848,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              'Información',
+              '¡INFORMACIÓN!',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -783,9 +860,9 @@ class ActivitiesStudentScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              '¡Debes estar pendiente, el \n profesor enviará la nota final!',
+              '¡DEBES ESTAR PENDIENTE, EL \n PROFESOR ENVIARÁ LA NOTA FINAL!',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -810,7 +887,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
                         Get.back();
                       },
                       child: const Text(
-                        'Ok',
+                        'OK',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -851,7 +928,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
             const ContSup(),
             const SizedBox(height: 20),
             const Text(
-              'Respuestas',
+              'RESPUESTAS',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -908,7 +985,7 @@ class ActivitiesStudentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Calificacion final: $qualification',
+                  'CALIFICACIÓN FINAL: $qualification',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -927,14 +1004,14 @@ class ActivitiesStudentScreen extends StatelessWidget {
                         Get.back();
                       },
                       child: const Text(
-                        'Ok',
+                        'OK',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
                   ),
                 ),
                 Text(
-                  'Cantidad de aciertos: $successes de $allQuestion ($percentage%)',
+                  'CANTIDAD DE ACIERTOS: $successes DE $allQuestion ($percentage%)',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,

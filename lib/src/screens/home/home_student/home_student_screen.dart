@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:vtschool/src/providers/push_notification_controller.dart';
 
 import 'package:vtschool/src/screens/calendar/calendar_screen.dart';
+import 'package:vtschool/src/screens/posts/histories_screen.dart';
 import 'package:vtschool/src/screens/profile/profile_user_controller.dart';
 
 class HomeStudentScreen extends StatelessWidget {
@@ -55,11 +56,9 @@ class HomeStudentScreen extends StatelessWidget {
                             height: 60,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                ),
-                              );
+                              return Image.asset('assets/images/profile.png', width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,);
                             },
                           ),
                         ),
@@ -70,11 +69,11 @@ class HomeStudentScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              '¡Hola! ',
+                              '¡HOLA! ',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'CM Sans Serif',
-                                fontSize: 14.0,
+                                fontSize: 13.0,
                                 //height: 1.5,
                               ),
                             ),
@@ -127,16 +126,20 @@ class HomeStudentScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                  HistoriasWidget(),
+                    const SizedBox(
+                      height: 15,
+                    ),
               const Center(
                 child: Text(
-                  '¡Tu semana al instante!',
+                  '¡TU SEMANA AL INSTANTE!',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'CM Sans Serif',
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),
@@ -165,6 +168,10 @@ class HomeStudentScreen extends StatelessWidget {
                   ),
                 ),
               ),
+                  ],
+                ),
+              )
+             
             ],
           ),
         );
